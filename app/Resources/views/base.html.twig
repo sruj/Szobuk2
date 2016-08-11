@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Wilcome!{% endblock %}</title>
+    {% block stylesheets %}
+        <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="{{ asset('bundles/app/css/style.css') }}" media="screen" />
+    {#    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />#}
+    {% endblock %}
+</head>
+<body>
+{% block body %}{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+{#    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>#}
+
+{#    <script src="{{ asset('bundles/app/js/jquery-2.1.3.js') }}"></script>#}
+    <script src="{{ asset('bundles/app/js/jquery-1.11.2.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/aktualizacjaKoszyka.js') }}"></script>
+{% endblock javascripts %}
+</body>
+</html>

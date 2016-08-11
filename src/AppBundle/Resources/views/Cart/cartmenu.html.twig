@@ -1,0 +1,97 @@
+{% extends '::layout.html.twig' %}
+
+{#{% block navbar_IsTabActive %}            
+            <div class="NavTabs"> <a class="NavTab NavTab--home" href="{{ path('index') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Home</span></a> <a class="NavTab NavTab--katalog" href="{{ path('ksiazka') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Katalog</span></a> <a class="NavTab NavTab--kategorie" href="{{ path('kategoria') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Kategorie</span></a> </div> 
+{% endblock navbar_IsTabActive %}  #}
+
+{% block contents %}
+    
+{% if pusty is defined %}
+    <!--start nav-level-->
+    <div class="nav-level">
+      <div class="nav-level-layout wrapper">
+        <div class="PageTabs page-section-tab active">Kosz pusty!</div>
+      </div>
+    </div>
+    <!--end nav-level--> 
+{% else %}
+    <!--start nav-level-->
+    <div class="nav-level">
+      <div class="nav-level-layout wrapper">
+        <div class="PageTabs page-section-tab active">Zawartość koszyka</div>
+      </div>
+    </div>
+    <!--end nav-level--> 
+
+    <div class="yield">
+
+    <div class="tableCartMenu">
+      <table class="Table-all">
+        <thead>
+            <th class="thLeftBorderRadius">isbn</th>
+            <th>tytuł</th>
+            <th>autor</th>
+            <th>cena</th>
+            <th>ilość</th>
+            <th>razem</th>
+            <th class="thRightBorderRadius"></th>
+        </thead>
+        <tbody class="cartmenuTable">
+
+                {% for ksiazka in ksiazki %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('ksiazka_show',{'id':ksiazka.isbn}) }} ">
+                                {{ ksiazka.isbn}}</a>
+                        </td>
+                        <td>
+                            {{ ksiazka.tytul }}
+                        </td>
+                        <td>
+                            {{ ksiazka.autor }}
+                        </td>
+                        <td class="cena">
+                            {{ ksiazka.cena }}
+                        </td>
+                        <td>
+                            <input type="number" class="inputISBN inputQuantity" min="1" max="10" size="2" name="{{ ksiazka.isbn }}" 
+                                   value="{{ ksiazka.quantity }}" onchange="aktualizacjaKoszyka()"><br>
+                        </td>
+                        <td class="razem" align="right">
+                            {{ (ksiazka.quantity*ksiazka.cena)|number_format(2)}}
+                        </td>
+                        <td>
+                            <a class="tableUsunButton" href="{{ path('cartmenu',{'deleteisbn':ksiazka.isbn}) }} ">
+                                usuń</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+        <td id="leftTD"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Suma: </td>                        
+        <td id="suma">{{ suma|number_format(2) }}</td>
+{#                          <td id="suma">{{ suma|number_format(2) }}</td>#}
+        <td id="rightTD"></td>
+                    </tr>
+                </tfoot>
+        </table>
+    <div class="centeredButton cartmenu">
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        <a class="OrangeButton" href="{{ path('zamawiam') }}">zamawiam</a> 
+    {% else %}
+        <a class="OrangeButton" href="{{ path('autoryzacja') }} ">zamawiam</a>  
+    {% endif %}
+    </div> 
+    <div class="centeredButton cartmenu">
+        <a class="OrangeButton" href="{{ path('cartclear') }} ">wyczyść koszyk</a>
+    </div> 
+</div>
+</div>   
+{% endif %}
+{% endblock contents %}   
+    

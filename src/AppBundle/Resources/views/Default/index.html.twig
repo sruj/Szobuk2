@@ -1,0 +1,59 @@
+{% extends '::layout.html.twig' %}
+
+{% block navbar_IsTabActive %}            
+            <div class="NavTabs"> 
+                <a class="NavTab NavTab--home active" href="{{ path('index') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Home</span></a>
+                <a class="NavTab NavTab--katalog" href="{{ path('ksiazka') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Katalog</span></a> 
+                <a class="NavTab NavTab--kategorie" href="{{ path('kategoria') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Kategorie</span></a> 
+                {% if app.user and is_granted('ROLE_ADMIN') %}
+                <a class="NavTab NavTab--menu" href="{{ path('menuZarzadca') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Menu</span></a> 
+                <a class="NavTab NavTab--zamowienia" href="{{ path('panelSortFromDetails') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Zamówienia</span></a> 
+                {% endif %}
+            </div> 
+{% endblock navbar_IsTabActive %} 
+
+{% block contents %}
+    <!--start nav-level-->
+    <div class="nav-level">
+        <div class="nav-level-layout wrapper">
+            <div class="PageTabs"> <a class="page-section-tab" href="{{ path('popularne') }}">Popularne</a> <a class="page-section-tab " href="{{ path('nowosci') }}">Nowości</a> <a class="page-section-tab active " href="{{ path('index') }}">Wszystkie</a> </div>
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+        </div>
+    </div>
+    <!--end nav-level-->    
+
+    <!--start Produkty-->
+    <div class="yield"><!--start yield-->
+        <div class="wrapper"><!--start wrapper-->
+            <div class="cards-container ready"><!--start cards-container ready-->
+                {% for entity in pagination %}
+                    <div class="ProductCard product is-imageLoaded" >
+                        <div class="ProductCard-imageContainer product-img-container" > 
+                            <a href="{{ path('ksiazka_show', { 'id': entity.isbn }) }}" >
+                                <div class="ProductCard-image product-image" style="opacity: 1; background-image:url({{ asset("bundles/app/images/ilustracje/#{entity.obrazek}" ) }});" ></div>
+                                <div class="tlo"></div>
+                        </div>
+                        <div class="dolny">
+                            <div class="card-autor">{{ entity.autor }}</div>
+                            <div class="card-tytul">{{ entity.tytul }}</div>
+                        </div>
+                        <div class="top-right">{{ entity.cena }}<span> ZŁ<span></div>
+                        <div class="top-left">
+                            <div class="card-AddToBasket"> <a href="{{ path('addtocart', {'isbn': entity.isbn }) }}" class="card-lockup">
+                                    <div class="card-basket"></div>
+                                </a> </div>
+                        </div>
+                        </a> 
+                    </div>    
+                {% endfor %} 
+            <div class="wrapper">
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}    

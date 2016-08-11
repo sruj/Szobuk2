@@ -1,0 +1,77 @@
+{% extends '::layout.html.twig' %}
+
+{#{% block navbar_IsTabActive %}            
+            <div class="NavTabs"> <a class="NavTab NavTab--home" href="{{ path('index') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Home</span></a> <a class="NavTab NavTab--katalog" href="{{ path('ksiazka') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Katalog</span></a> <a class="NavTab NavTab--kategorie" href="{{ path('kategoria') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Kategorie</span></a> </div> 
+{% endblock navbar_IsTabActive %}  #}
+{% block contents %}
+    
+<div class="boxMy">
+    <div id="boxMyinside">
+    <h3>Dostawa - formularz</h3>
+    <fieldset>      
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+<div>
+    {{ form_errors(form.imie) }}
+    {{ form_widget(form.imie, {'attr': {'placeholder': 'Imię'} }) }}
+</div>
+<div>
+    {{ form_errors(form.nazwisko) }}
+    {{ form_widget(form.nazwisko, {'attr': {'placeholder': 'Nazwisko','class': 'border-top-none'} }) }}
+</div>
+<div>
+    {{ form_errors(form.email) }}
+    {{ form_widget(form.email, {'attr': {'placeholder': 'E-mail','class': 'border-top-none'} }) }}
+</div>
+<div>
+    {{ form_errors(form.ulica) }}
+    {{ form_widget(form.ulica, {'attr': {'placeholder': 'Ulica','class': 'border-top-none'} }) }}
+</div>
+<div>
+    {{ form_errors(form.nrDomu) }}
+    {{ form_widget(form.nrDomu, {'attr': {'placeholder': 'Nr Domu','class': 'border-top-none'} }) }}
+</div>
+<div>
+    {{ form_errors(form.nrMieszkania) }}
+    {{ form_widget(form.nrMieszkania, {'attr': {'placeholder': 'Nr Mieszkania','class': 'border-top-none'} }) }}
+</div>
+<div>
+    {{ form_errors(form.kodPocztowy) }}
+    {{ form_widget(form.kodPocztowy, {'attr': {'placeholder': 'Kod Pocztowy','class': 'border-top-none'} }) }}
+</div>
+<div>
+    {{ form_errors(form.miasto) }}
+    {{ form_widget(form.miasto, {'attr': {'placeholder': 'Miasto','class': 'border-top-none'} }) }}
+</div>
+<div>
+    {{ form_errors(form.nip) }}
+    {{ form_widget(form.nip, {'attr': {'placeholder': 'NIP','class': 'border-top-none'} }) }}
+</div>
+<div>
+    {{ form_errors(form.nrTelefonu) }}
+    {{ form_widget(form.nrTelefonu, {'attr': {'placeholder': 'Nr Telefonu','class': 'border-top-none'} }) }}
+</div>
+{{ form_end(form) }}    
+ </fieldset>
+    </div>
+</div>
+{% endblock contents %}
+
+
+
+
+
+
+
+
+
+
+{#    wersja pierwsza oryginalna{{ form(form) }}#}
+
+{# wersja najrozsądniejsza niedziałająca bo to inspiracja ze stack
+{% block widget_attributes %}
+{% spaceless %}
+    {% set attr = attr|merge({'placeholder': label}) %}
+    {{ parent() }}
+{% endspaceless %}
+{% endblock widget_attributes %}#}

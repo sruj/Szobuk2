@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <p>Złożono nowe zamówienie o godzinie: {{ zamowienie.datazlozenia|date('Y-m-d H:i:s') }} <br>
+        na kwotę: {{ suma|number_format(2) }} zł <br>
+        przez {{ zamowienie.idklient.imie }} {{ zamowienie.idklient.nazwisko }}. <br>
+        Id zamówienia to: {{ zamowienie.idzamowienie }} . <br>
+        Idź do <a href="{{ path('panelSort') }}">panelu zamówień</a></p>
+    </body>
+</html>

@@ -1,0 +1,20 @@
+{% extends '::layout.html.twig' %}
+
+{#{% block navbar_IsTabActive %}            
+            <div class="NavTabs"> <a class="NavTab NavTab--home" href="{{ path('index') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Home</span></a> <a class="NavTab NavTab--katalog" href="{{ path('ksiazka') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Katalog</span></a> <a class="NavTab NavTab--kategorie" href="{{ path('kategoria') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Kategorie</span></a> </div> 
+{% endblock navbar_IsTabActive %}  #}
+{% block contents %}
+    
+{% trans_default_domain 'FOSUserBundle' %}    
+    
+<div class="boxMy szerokie">
+    <div id="boxMyinside">
+    <h3 class="szaryKlocek">{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</h3>
+  </div> <!-- end login-form -->
+</div>
+
+    {% if app.session is not empty %}
+        {% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}
+        {% if targetUrl is not empty %}<p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>{% endif %}
+    {% endif %}
+{% endblock contents %}

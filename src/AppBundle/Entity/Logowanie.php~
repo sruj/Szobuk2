@@ -1,0 +1,95 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Logowanie
+ *
+ * @ORM\Table(name="logowanie")
+ * @ORM\Entity
+ */
+class Logowanie
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="login", type="string", length=45, nullable=false)
+     */
+    private $login;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="haslo", type="string", length=60, nullable=false)
+     */
+    private $haslo;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idLogowanie", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idlogowanie;
+
+
+
+    /**
+     * Set login
+     *
+     * @param string $login
+     * @return Logowanie
+     */
+    public function setLogin($login)
+    {
+        $this->login = $login;
+
+        return $this;
+    }
+
+    /**
+     * Get login
+     *
+     * @return string 
+     */
+    public function getLogin()
+    {
+        return $this->login;
+    }
+
+    /**
+     * Set haslo
+     *
+     * @param string $haslo
+     * @return Logowanie
+     */
+    public function setHaslo($haslo)
+    {
+        $this->haslo = $haslo;
+
+        return $this;
+    }
+
+    /**
+     * Get haslo
+     *
+     * @return string 
+     */
+    public function getHaslo()
+    {
+        return $this->haslo;
+    }
+
+    /**
+     * Get idlogowanie
+     *
+     * @return integer 
+     */
+    public function getIdlogowanie()
+    {
+        return $this->idlogowanie;
+    }
+}

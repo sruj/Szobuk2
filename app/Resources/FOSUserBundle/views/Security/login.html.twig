@@ -1,0 +1,35 @@
+{% extends '::layout.html.twig' %}
+
+{#{% block navbar_IsTabActive %}            
+            <div class="NavTabs"> <a class="NavTab NavTab--home" href="{{ path('index') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Home</span></a> <a class="NavTab NavTab--katalog" href="{{ path('ksiazka') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Katalog</span></a> <a class="NavTab NavTab--kategorie" href="{{ path('kategoria') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Kategorie</span></a> </div> 
+{% endblock navbar_IsTabActive %}  #}
+{% block contents %}
+    {% trans_default_domain 'FOSUserBundle' %}
+    <div class="boxMy">
+        <div id="boxMyinside">
+            <h3>Login</h3>
+            <fieldset> 
+                {% if error %}
+                    <div class="loginError">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+                <form action="{{ path("fos_user_security_check") }}" method="post">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+                    <input type="text" id="username" name="_username" value="{{ last_username }}" required="required"
+                           placeholder="Nazwa użytkownika" />
+
+                    <input type="password" id="password" name="_password" required="required" placeholder="Hasło"/>
+                    <div class="FormLoginLabel">
+                        <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                        <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+                        <div class="FormLoginLink"><br/>
+                            <a href="{{ path('fos_user_resetting_request') }}">Zapomniałeś hasło?</a>
+                        </div>
+                        
+                    </div>
+                    <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+                </form>
+            </fieldset>
+        </div> 
+    </div> 
+{% endblock contents %}

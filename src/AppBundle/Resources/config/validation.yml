@@ -1,0 +1,10 @@
+## nie działa chociaż zgodne z dokumentacją. Nie ma wpływu na walidację nie mowiąc o komunikacie błędu
+---
+AppBundle\Entity\Klient:
+    properties:
+        nrtelefonu:
+            - Length:
+                min: 2
+                max: 18
+                minMessage: "Your nrtelefonu must be at least {{ limit }} characters long"
+                maxMessage: "Your nrtelefonu cannot be longer than {{ limit }} characters"

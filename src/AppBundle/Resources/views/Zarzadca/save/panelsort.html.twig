@@ -1,0 +1,65 @@
+{% extends '::layout.html.twig' %}
+
+{#{% block navbar_IsTabActive %}            
+            <div class="NavTabs"> <a class="NavTab NavTab--home" href="{{ path('index') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Home</span></a> <a class="NavTab NavTab--katalog" href="{{ path('ksiazka') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Katalog</span></a> <a class="NavTab NavTab--kategorie" href="{{ path('kategoria') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Kategorie</span></a> </div> 
+{% endblock navbar_IsTabActive %}  #}
+
+{% block contents %}
+<!--start nav-level-->
+<div class="nav-level">
+    <div class="nav-level-layout wrapper">
+        <div class="PageTabs"> <a class="page-section-tab" href="#Popularne">Popularne</a> <a class="page-section-tab " href="#nowosci">Nowości</a> <a class="page-section-tab active " href="#wszystkie">Wszystkie</a> </div>
+    </div>
+</div>
+<!--end nav-level-->  
+    <div class="yield"><!--start yield-->
+    <div class="nav-level-layout wrapper">
+        {{ form(StatusForm) }}
+        {{ form(DataZamForm) }}
+        {{ form(NrKlientaForm) }}
+        
+    </div>        
+    <div class="allBooks">
+            <table class="Table-all"> 
+                <thead>
+                    <tr>
+                        <th style="background-color: #3e3e3e" class="thLeftBorderRadius"><a href="{{ path('panelSort',{ 'sortArr':sortArr.Numer ,'query':query,'EntFldName':EntFldName,'orderBy':'idzamowienie'}) }}">nr z.<span class="{{ sortArr.Numer }}"></span></a></th>
+                        <th><a href="{{ path('panelSort',{ 'sortArr':sortArr.Data ,'query':query,'EntFldName':EntFldName,'orderBy':'datazlozenia'}) }}">Data złożenia<span class="{{ sortArr.Data }}"></span></a></th>
+                        <th>ilość prod.</th>
+                        <th>kwota razem</th>
+                        <th><a href="{{ path('panelSort',{ 'sortArr':sortArr.Klient ,'query':query,'EntFldName':EntFldName, 'orderBy':'idklient'}) }}">nr klienta<span class="{{ sortArr.Klient }}"></span></a></th>
+                        <th><a href="{{ path('panelSort',{ 'sortArr':sortArr.Status ,'query':query, 'EntFldName':EntFldName,'orderBy':'idstatus'}) }}">status z.<span class="{{ sortArr.Status }}"></span></a></th>
+                        <th class="thRightBorderRadius">Szczególy</th>
+                    </tr>
+                </thead>            
+                <tbody>
+                    {{ form_start(form) }} 
+                    {% for formul in form.zamowienia %}
+                        <tr>
+                            <td>{{ formul.vars.value.idzamowienie }}</td>
+                            <td>{{ formul.vars.value.datazlozenia|date('Y-m-d H:i:s') }}</td>
+                        {% set ilosc = 0 %}
+                        {% set kwota = 0 %}
+                        {% for zamowienieProdukt in zamowieniaProdukty %}
+                            {% if zamowienieProdukt.idzamowienie.idzamowienie ==  formul.vars.value.idzamowienie %}
+                                {% set ilosc = ilosc + zamowienieProdukt.ilosc %}
+                                {% set kwota = kwota + zamowienieProdukt.ilosc * zamowienieProdukt.cenaproduktu %}
+                            {% endif %}
+                        {% endfor %}
+                            <td>{{ ilosc }}</td>
+                            <td>{{ kwota|number_format(2) }}</td>
+                            <td>{{ formul.vars.value.idklient.idklient }}</td>
+    {#                            <td>{{ zamowienie.idstatus.status }}</td>#}
+
+<td>
+{{ form_row(formul.idstatus) }}
+</td>
+<td><a href="#">więcej</a></td>
+                        </tr>
+                    {% endfor %}        
+            </table>
+                    {{ form_widget(form.zapisz) }}
+{{ form_end(form) }}
+        </div>  
+    </div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends '::layout.html.twig' %}
+
+{% block navbar_IsTabActive %}            
+            <div class="NavTabs"> 
+                <a class="NavTab NavTab--home" href="{{ path('index') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Home</span></a>
+                <a class="NavTab NavTab--katalog " href="{{ path('ksiazka') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Katalog</span></a> 
+                <a class="NavTab NavTab--kategorie active" href="{{ path('kategoria') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Kategorie</span></a> 
+                {% if app.user and is_granted('ROLE_ADMIN') %}
+                <a class="NavTab NavTab--menu" href="{{ path('menuZarzadca') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Menu</span></a> 
+                <a class="NavTab NavTab--zamowienia" href="{{ path('panelSortFromDetails') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Zamówienia</span></a> 
+                {% endif %}
+            </div> 
+{% endblock navbar_IsTabActive %} 
+{% block contents %}
+    <!--start nav-level-->
+    <div class="nav-level">
+        <div class="nav-level-layout wrapper"></div>
+    </div>
+    <!--end nav-level--> 
+    <!--end Nav-->
+    <div class="yield">
+        <div class="wrapper">
+            <div class="product-detail-page">
+                <h1 class="h1Content">Kategorie</h1>
+                <ul class="columnUl">
+                    {% for entity in entities %}
+                        <li>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('kategoria_edit', { 'id': entity.idkategoria }) }}">edit</a>
+                            {% endif %}                
+                            <a href="{{ path('kategoria_show', { 'id': entity.idkategoria }) }}">{{ entity.nazwa }}</a></td>
+                        </li>
+                    {% endfor %}
+                </ul>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class="ButtonCreate"> <a class="OrangeButton" href="{{ path('kategoria_new') }}">Dodaj Nową Kategorię</a>
+                    {% endif %}    
+                </div>
+            </div>
+        </div>
+{% endblock %}
+
+

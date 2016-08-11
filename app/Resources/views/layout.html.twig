@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div id="content">  <!--start div content-->  
+{% block navbar %}
+    <div class="Nav-spacer"></div><!--kilkadziesiąt pikseli przestrzeni--> 
+    <!--start Nav-->
+    <div class="Nav">
+        <div class="NavLayout wrapper">
+{% block navbar_IsTabActive %}            
+            <div class="NavTabs"> 
+                <a class="NavTab NavTab--home" href="{{ path('index') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Home</span></a>
+                <a class="NavTab NavTab--katalog" href="{{ path('ksiazka') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Katalog</span></a> 
+                <a class="NavTab NavTab--kategorie" href="{{ path('kategoria') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Kategorie</span></a> 
+                {% if app.user and is_granted('ROLE_ADMIN') %}
+                <a class="NavTab NavTab--menu" href="{{ path('menuZarzadca') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Menu</span></a> 
+                <a class="NavTab NavTab--zamowienia" href="{{ path('panelSortFromDetails') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Zamówienia</span></a> 
+                {% endif %}
+            </div> 
+{% endblock navbar_IsTabActive %}            
+            <div class="Nav-userSection">
+                <div class="NavSearch-container">
+                    {% render (controller('AppBundle:Ksiazka:search')) %}
+{#                    <input class="NavSearch" placeholder="szukaj książki" id="#" autocorrect="off">
+                    <label class="NavSearch-searchIcon"></label>#}
+                </div>
+            </div>
+            <div class="Nav-userSection">
+                <div class="Nav-kosz"> <a href="{{ path('cartmenu') }}" id="lockup">
+                        <div id="kosz">
+                            <div class="quantityKosz" id="quantityBasket">{% render (controller('AppBundle:Cart:cartcontent')) %}</div><!--ilość produktów w koszyku (nie JavaScript)--> 
+                        </div>
+                    </a> </div>
+            </div>
+            {% if app.user and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class="Nav-userSection"> <a href="{{ path('fos_user_profile_show') }}" class="Nav-loginButton">{{ app.user.username }}</a><a href="{{ path('fos_user_security_logout') }}" class="Nav-signupButton">Wyloguj</a></div>
+                {% else %}
+                    <div class="Nav-userSection"> <a href="{{ path('fos_user_profile_show') }}" class="Nav-loginButton">Jesteś zalogowany jako: {{ app.user.username }}</a><a href="{{ path('fos_user_security_logout') }}" class="Nav-signupButton">Wyloguj</a></div>
+                {% endif %}
+            {% else %}
+{#            <div class="Nav-userSection"> <a href="{{ path('fos_user_security_login',{ 'proces_zamowienia': '0' }) }}" class="Nav-loginButton">Zaloguj się</a><a href="{{ path('fos_user_registration_register',{ 'proces_zamowienia': '0' }) }}" class="Nav-signupButton">Załóż konto</a></div>#}
+            <div class="Nav-userSection"> <a href="{{ path('fos_user_security_login',{ 'proces_zamowienia': '0' }) }}" class="Nav-loginButton">Zaloguj się</a><a href="{{ path('fos_user_registration_register') }}" class="Nav-signupButton">Załóż konto</a></div>
+            {% endif %}
+        </div>
+    </div>
+    <!--end Nav--> 
+{% endblock navbar %}
+{% block contents %}
+{% endblock contents %}
+    </div><!--end content--> 
+{% block footer %}<!--start footer-->
+<footer class="footerMain" >
+  <div class="wrapper">
+    <div class="footer-content-container">
+      <div class="footer-proper">
+        <h1 class="footer-tagline"> </h1>
+      </div>
+      <div class="footer-right-side" > </div>
+    </div>
+  </div>
+</footer>
+{% endblock footer %}<!--end footer-->
+{% endblock body %}

@@ -1,0 +1,12 @@
+{% extends '::layout.html.twig' %}
+{% block contents %}
+    <div class="boxMy szerokie">
+        <div id="boxMyinside">
+            {% if status_code is defined %}
+                <h3 class="szaryKlocek">Błąd. {{ exception.message }}</h3>
+            {% else %}
+                <h3 class="szaryKlocek">Błąd. Coś poszło nie tak, powiadom administratora jeśli jesteś pewien, że strona powinna zostać wyświetlona poprawnie.</h3>
+            {% endif %}
+        </div> 
+    </div>
+{% endblock %}  

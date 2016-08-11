@@ -1,0 +1,130 @@
+{% extends '::layout.html.twig' %}
+
+{#{% block navbar_IsTabActive %}            
+    <div class="NavTabs"> <a class="NavTab NavTab--home" href="{{ path('index') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Home</span></a> <a class="NavTab NavTab--katalog" href="{{ path('ksiazka') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Katalog</span></a> <a class="NavTab NavTab--kategorie" href="{{ path('kategoria') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Kategorie</span></a> </div> 
+{% endblock navbar_IsTabActive %}  #}
+
+{% block contents %}
+    <div class="boxMy szerokie">
+        <div id="boxMyinside">
+            <h3>Dane do wysyłki:</h3>
+            <div class="boxDown">
+                <ul>
+                    <li>{{ zamowienie.idklient.imie }} {{ zamowienie.idklient.nazwisko }}</li>
+                    <li>{{ zamowienie.idklient.ulica }} {{ zamowienie.idklient.nrDomu }} {{ zamowienie.idklient.nrmieszkania }}</li>
+                    <li>{{ zamowienie.idklient.kodpocztowy }}, {{ zamowienie.idklient.miasto }} </li>
+                    <li>{{ zamowienie.idklient.email }} </li>
+                    <li>Tel.: {{ zamowienie.idklient.nrtelefonu }} </li>
+                </ul>
+            </div>
+        </div>
+        <div id="boxMyinside">
+            <h3>zamówione produkty:</h3>
+            <div class="boxDown">
+                {% for produkt in produkty  %}
+                    <ul>
+                        <li><span class="greyLeft">tytuł: </span><span class="potwierdzenieRight">{{ produkt.tytul }}</span></li>
+                        <li><span class="greyLeft">autor: </span><span class="potwierdzenieRight">{{ produkt.autor }}</span></li>
+                        <li><span class="greyLeft">cena: </span><span class="potwierdzenieRight">{{ produkt.cenaProduktu }}</span></li>
+                        <li><span class="greyLeft">ilość: </span><span class="potwierdzenieRight">{{ produkt.ilosc }}</span></li>
+                    </ul>
+                {% endfor %}
+            </div>
+        </div>
+        <div id="boxMyinside">
+            <h3>Do zapłaty:</h3>
+            <div class="boxDown">
+                <p>{{ suma|number_format(2) }} ( dostawa za darmo )</p>
+            </div>
+        </div>
+        <div id="boxMyinside">
+            <h3>Wpłacić na rachunek:</h3>
+            <div class="boxDown">
+                <ul>
+                    <li>Paweł Szaweł</li>
+                    <li>Księgarnia Szobuk</li>
+                    <li>Bank Zachodni Lubin</li>
+                    <li>123-123-123-123-123-0</li>
+                </ul>
+            </div>
+
+        </div>
+        <div id="boxMyinside">
+            <div class="boxDown">
+                <p>Na adres mailowy {{ zamowienie.idklient.email }} przesłano wiadomość ze szczegółami zamówienia.
+                </p>
+            </div>
+        </div>
+        <div id="boxMyinside">
+            <h3>zapłać teraz</h3>
+            <fieldset class="potwierdzenie">
+                <a class="OrangeButtonSimple" href="#">PayU</a>
+                <a class="OrangeButtonSimple" style="float: right" href="#">PayPal</a>
+            </fieldset>
+        </div>
+
+    </div>                
+</div>
+{% endblock contents %}
+
+{#<h1>Dostawa - potwierdzenie</h1>
+<h2>Dane do wysyłki:</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Imie</th>
+            <th>Nazwisko</th>
+            <th>Email</th>
+            <th>Ulica</th>
+            <th>Nr domu</th>
+            <th>Nr mieszkania</th>
+            <th>Kod pocztowy</th>
+            <th>Miasto</th>
+            <th>Nip</th>
+            <th>Nr telefonu</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ zamowienie.idklient.imie }}</td>
+            <td>{{ zamowienie.idklient.nazwisko }}</td>
+            <td>{{ zamowienie.idklient.email }}</td>
+            <td>{{ zamowienie.idklient.ulica }}</td>
+            <td>{{ zamowienie.idklient.nrDomu }}</td>
+            <td>{{ zamowienie.idklient.nrmieszkania }}</td>
+            <td>{{ zamowienie.idklient.kodpocztowy }}</td>
+            <td>{{ zamowienie.idklient.miasto }}</td>
+            <td>{{ zamowienie.idklient.nip }}</td>
+            <td>{{ zamowienie.idklient.nrtelefonu }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>zamówione produkty:</h2>
+<table>
+    <thead>
+        <tr>
+            <th>isbn</th>
+            <th>tytul</th>
+            <th>autor</th>
+            <th>cena</th>
+            <th>ilosc</th>
+            <th>rok wydania</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for produkt in produkty  %}
+            <tr>
+                <td>{{ produkt.isbn.isbn }}</td>
+                <td>{{ produkt.tytul }}</td>
+                <td>{{ produkt.autor }}</td>
+                <td>{{ produkt.cenaProduktu }}</td>
+                <td>{{ produkt.ilosc }}</td>
+                <td>{{ produkt.rokWydania }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<h4>Do zapłaty:</h4>
+<p>{{ suma|number_format(2) }} ( + przesyłka )</p>#}
+

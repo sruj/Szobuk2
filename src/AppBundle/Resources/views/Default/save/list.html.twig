@@ -1,0 +1,28 @@
+{# total items count #}
+<div class="count">
+    {{ pagination.getTotalItemCount }}
+</div>
+<table>
+<tr>
+{# sorting of properties based on query components #}
+{#    <th>nr</th>#}
+    <th>{{ knp_pagination_sortable(pagination, 'nr',null) }}</th>
+    <th>{{ knp_pagination_sortable(pagination, 'isbn', 'a.isbn') }}</th>
+    <th{% if pagination.isSorted('a.tytul') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'tytul', 'a.tytul') }}</th>
+</tr>
+
+{# table body #}
+{% for article in pagination %}
+<tr>
+    <td>{{ loop.index }}</td>
+    <td>{{ article.isbn }}</td>
+    <td>{{ article.tytul }}</td>
+</tr>
+{% endfor %}
+</table>
+{# display navigation #}
+            <div class="wrapper">
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            </div>

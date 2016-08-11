@@ -1,0 +1,63 @@
+{% extends '::layout.html.twig' %}
+
+{#{% block navbar_IsTabActive %}            
+    <div class="NavTabs"> <a class="NavTab NavTab--home" href="{{ path('index') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Home</span></a> <a class="NavTab NavTab--katalog" href="{{ path('ksiazka') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Katalog</span></a> <a class="NavTab NavTab--kategorie" href="{{ path('kategoria') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Kategorie</span></a> </div> 
+{% endblock navbar_IsTabActive %}  #}
+
+{% block contents %}
+    <div class="boxMy szerokie">
+        <div id="boxMyinside">
+            {% if is_granted('ROLE_ADMIN') %}
+                <h3> Szczegóły Zamówienia nr: {{ zamowienie.idzamowienie }}, złożonego: {{ zamowienie.datazlozenia|date('Y-m-d H:i:s') }} 
+                    przez Klienta nr <a href="{{ path('panelSortFromDetails',{ 'findBy':'idklient', 'Identifier':zamowienie.idklient.idklient}) }}">{{ zamowienie.idklient.idklient }}</a>
+                </h3>
+            {% else %}
+                <h3> Szczegóły Zamówienia nr: {{ zamowienie.idzamowienie }}, złożonego: {{ zamowienie.datazlozenia|date('Y-m-d H:i:s') }} 
+                    przez {{ app.user.username }}
+                </h3>
+            {% endif %}
+        </div>
+        <div id="boxMyinside">
+            <p><h3>Dane do wysyłki:</h3>
+            <ul>
+                <li>{{ zamowienie.idklient.imie }} {{ zamowienie.idklient.nazwisko }}</li>
+                <li>{{ zamowienie.idklient.ulica }} {{ zamowienie.idklient.nrDomu }} {{ zamowienie.idklient.nrmieszkania }}</li>
+                <li>{{ zamowienie.idklient.kodpocztowy }}, {{ zamowienie.idklient.miasto }} </li>
+            </ul>
+            </p>
+        </div>
+        <div id="boxMyinside">
+            <p>
+            <h3>Produkty:</h3>
+            {% set ilosc = 0 %}
+            {% set kwota = 0 %}
+            {% for produkt in produkty  %}
+                <ul>
+                    <li><span class="greyLeft">ISBN: </span><span class="potwierdzenieRight">{{ produkt.isbn.isbn }}</span></li>
+                    <li><span class="greyLeft">tytuł: </span><span class="potwierdzenieRight">{{ produkt.tytul }}</span></li>
+                    <li><span class="greyLeft">autor: </span><span class="potwierdzenieRight">{{ produkt.autor }}</span></li>
+                    <li><span class="greyLeft">cena: </span><span class="potwierdzenieRight">{{ produkt.cenaProduktu }}</span></li>
+                    <li><span class="greyLeft">ilość: </span><span class="potwierdzenieRight">{{ produkt.ilosc }}</span></li>
+                </ul>
+                {% set ilosc = ilosc + produkt.ilosc %}
+                {% set kwota = kwota + produkt.ilosc * produkt.cenaproduktu %}
+
+            {% endfor %}
+            </p></div>
+        <div id="boxMyinside"><p>
+                Kwota: {{ kwota|number_format(2) }}, Razem Produktów: {{ ilosc }}
+            </p></div>
+        <div id="boxMyinside"><p>
+                {% if is_granted('ROLE_ADMIN') %}
+                    Status zamówienia: {{ form(StatusForm) }}
+                {% else %}
+                    Status zamówienia: {{ zamowienie.idstatus.status }}
+                {% endif %}
+            </p>
+        </div>
+    </div>
+{% endblock contents %}
+
+
+{# <pre>{{ dump(zam) }}</pre> #}
+

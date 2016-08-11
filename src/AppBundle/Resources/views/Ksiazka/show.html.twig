@@ -1,0 +1,76 @@
+{% extends '::layout.html.twig' %}
+
+{#{% block navbar_IsTabActive %}            
+            <div class="NavTabs"> <a class="NavTab NavTab--home" href="{{ path('index') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Home</span></a> <a class="NavTab NavTab--katalog" href="{{ path('ksiazka') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Katalog</span></a> <a class="NavTab NavTab--kategorie" href="{{ path('kategoria') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Kategorie</span></a> </div> 
+{% endblock navbar_IsTabActive %}  #}
+
+{% block contents %}
+    <!--start nav-level-->
+    <div class="nav-level">
+        <div class="nav-level-layout wrapper"></div>
+    </div>
+    <!--end nav-level--> 
+
+    <div class="yield">
+        <div class="wrapper">
+            <div class="product-detail-page">
+                <div class="product-header">
+                    <div class="details-image-container">
+                        <div class="product-image" style="background-image:url({{ asset("bundles/app/images/ilustracje/#{entity.obrazek}" ) }});"></div>
+                    </div>
+                    <div class="product-info">
+                        <table class="grey">
+                            <tbody>
+                                <tr>
+                                    <th>Tytuł</th>
+                                    <td>{{ entity.tytul }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Autor</th>
+                                    <td><a href="{{ path('showBooksBy', {'findby': 'autor','what': entity.autor }) }}">{{ entity.autor }}</a></td>
+                                </tr>
+                                <tr>
+                                    <th>Opis</th>
+                                    <td>{{ entity.opis }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Cena</th>
+                                    <td>{{ entity.cena }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Wydawnictwo</th>
+                                    <td><a href="{{ path('showBooksBy', {'findby': 'wydawnictwo','what': entity.wydawnictwo }) }}">{{ entity.wydawnictwo }}</a></td>
+                                </tr>
+                                <tr>
+                                    <th>Rok wydania</th>
+                                    <td><a href="{{ path('showBooksBy', {'findby': 'rokwydania','what': entity.rokwydania }) }}">{{ entity.rokwydania }}</a></td>
+                                </tr>
+                                {% if is_granted('ROLE_ADMIN') %} 
+                                <tr>
+                                    <th>Isbn</th>
+                                    <td>{{ entity.isbn }}</td>
+                                </tr>                                                                       
+                                {% endif %}
+                                <tr>
+                                    <th>Kategoria</th>
+                                    <td><a href="{{ path('kategoria_show', {'id': entity.idkategoria.idkategoria }) }}">{{ entity.idkategoria }}</a></td>
+                                </tr>                                                                       
+                            </tbody>
+                        </table>
+                    </div> 
+                    <!--end product-info -->
+                </div>
+                {% if is_granted('ROLE_ADMIN') %}   
+                <a class="OrangeButton" href="{{ path('addtocart', {'isbn': entity.isbn }) }}">Do Koszyka</a>
+	 	<a class="OrangeButton" href="{{ path('ksiazka') }}">Wróć do Listy</a>
+ 		<a class="OrangeButton" href="{{ path('ksiazka_edit', { 'id': entity.isbn }) }}">Edycja</a> 
+                {{ form_start(delete_form) }}
+                {{ form_widget(delete_form.submit, { 'attr': {'class': 'OrangeButton'} }) }}
+                {{ form_end(delete_form) }} 
+                {% else %}
+                <div class="ButtonCreate ksiazka"> <a class="OrangeButton" href="{{ path('addtocart', {'isbn': entity.isbn }) }}"> Dodaj do koszyka </a></div>
+                {% endif %}
+        </div>
+    </div>
+</div>    
+{% endblock contents %}

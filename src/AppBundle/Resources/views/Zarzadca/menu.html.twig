@@ -1,0 +1,28 @@
+{% extends '::layout.html.twig' %}
+
+{% block navbar_IsTabActive %}            
+            <div class="NavTabs"> 
+                <a class="NavTab NavTab--home" href="{{ path('index') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Home</span></a>
+                <a class="NavTab NavTab--katalog" href="{{ path('ksiazka') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Katalog</span></a> 
+                <a class="NavTab NavTab--kategorie" href="{{ path('kategoria') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Kategorie</span></a> 
+                {% if app.user and is_granted('ROLE_ADMIN') %}
+                <a class="NavTab NavTab--menu active" href="{{ path('menuZarzadca') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Menu</span></a> 
+                <a class="NavTab NavTab--zamowienia " href="{{ path('panelSortFromDetails') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Zamówienia</span></a> 
+                {% endif %}
+            </div> 
+{% endblock navbar_IsTabActive %} 
+
+{% block contents %}
+    <div class="boxMy">
+        <div id="boxMyinside">
+          <h3>Menu</h3>
+          <div class="AutoryzajcaFlex">
+               <a class="OrangeButton" href="{{ path('panelSortFromDetails') }}">zamówienia</a> 
+               <a class="OrangeButton" href="{{ path('kategoria') }}">kategorie - edycja</a> 
+               <a class="OrangeButton" href="{{ path('kategoria_new') }}">dodaj kategorię</a> 
+               <a class="OrangeButton" href="{{ path('ksiazka') }}">książki - edycja</a> 
+               <a class="OrangeButton" href="{{ path('ksiazka_new') }}">dodaj książkę</a> 
+          </div>
+        </div>
+    </div>
+{% endblock contents %}

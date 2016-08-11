@@ -1,0 +1,106 @@
+{% extends '::layout.html.twig' %}
+
+{% block navbar_IsTabActive %}            
+    <div class="NavTabs"> 
+        <a class="NavTab NavTab--home" href="{{ path('index') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Home</span></a>
+        <a class="NavTab NavTab--katalog active" href="{{ path('ksiazka') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Katalog</span></a> 
+        <a class="NavTab NavTab--kategorie" href="{{ path('kategoria') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Kategorie</span></a> 
+                {% if app.user and is_granted('ROLE_ADMIN') %}
+            <a class="NavTab NavTab--menu" href="{{ path('menuZarzadca') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Menu</span></a> 
+            <a class="NavTab NavTab--zamowienia" href="{{ path('panelSortFromDetails') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Zamówienia</span></a> 
+                {% endif %}
+    </div> 
+{% endblock navbar_IsTabActive %} 
+
+{% block contents %}
+    <!--start nav-level-->
+    <div class="nav-level">
+        {% if is_granted('ROLE_ADMIN') %}
+        {% else %}
+            <div class="nav-level-layout wrapper">
+                <div class="PageTabs">  </div>
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <!--end nav-level-->             
+
+    <div class="yield"><!--start yield-->
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="ButtonCenter" id="margin_top_buttons"> <a class="OrangeButton" href="{{ path('ksiazka_new') }}"> Dodaj nową książkę </a></div>
+            {#            <div class="ButtonCenter"> {{ form_widget(form.zapisz) }} </div>#}
+        {% endif %}
+        <div class="allBooks">
+            <table class="Table-all">
+                <thead>
+                    <tr>
+                        {#   {% if is_granted('ROLE_ADMIN') %}
+                           {% else %}#}  
+                        <th class="thLeftBorderRadius">{{ knp_pagination_sortable(pagination, 'Tytuł', 'a.tytul') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Autor', 'a.autor') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Cena', 'a.cena') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Wydawnictwo', 'a.wydawnictwo') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Rok Wydania', 'a.rokwydania') }}</th>
+                            {#                        {% endif %}#}
+                            {% if is_granted('ROLE_ADMIN') %}
+                            <th>{{ knp_pagination_sortable(pagination, 'Ilosc', 'a.ilosc') }}</th>
+                                {#                            <th>Ilosc</th>#}
+                            <th>Do Koszyka</th>
+                            <th>Szczególy</th>
+                            <th class="thRightBorderRadius">Edytuj</th>
+                            {% else %}
+                            <th>Do Koszyka</th>
+                            <th class="thRightBorderRadius">Szczególy</th>
+                            {% endif %}
+                    </tr>
+                </thead>            
+                <tbody>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        {{ form_start(form) }} 
+                        {% for entity in pagination %}
+                            <tr>
+                                <td><a href="{{ path('ksiazka_show', { 'id': entity.isbn }) }}">{{ entity.tytul }}</a></td>
+                                <td><a href="{{ path('showBooksBy', { 'findby': 'autor','what': entity.autor }) }}">{{ entity.autor }}</a></td>
+                                <td>{{ entity.cena }}</td>
+                                <td><a href="{{ path('showBooksBy', { 'findby': 'wydawnictwo','what': entity.wydawnictwo }) }}">{{ entity.wydawnictwo }}</a></td>
+                                <td><a href="{{ path('showBooksBy', { 'findby': 'rokwydania','what': entity.rokwydania }) }}">{{ entity.rokwydania }}</a></td>
+                                    {% for formul in form.ksiazki %}
+                                        {% if entity.isbn == formul.vars.value.isbn %}
+                                        <td>{{ form_row(formul.ilosc) }}</td>
+                                    {% endif %}
+                                {% endfor %}                              
+                                <td><a href="{{ path('addtocart', {'isbn': entity.isbn }) }}">do koszyka</a></td>
+                                <td><a href="{{ path('ksiazka_show', { 'id': entity.isbn }) }}">więcej</a></td>
+                                <td><a href="{{ path('ksiazka_edit', { 'id': entity.isbn }) }}">edytuj</a></td>
+                            </tr>
+                        {% endfor %}                              
+                    {% else %}
+                        {% for entity in pagination %}
+                            <tr>
+                                <td><a href="{{ path('ksiazka_show', { 'id': entity.isbn }) }}">{{ entity.tytul }}</a></td>
+                                <td><a href="{{ path('showBooksBy', { 'findby': 'autor','what': entity.autor }) }}">{{ entity.autor }}</a></td>
+                                <td>{{ entity.cena }}</td>
+                                <td><a href="{{ path('showBooksBy', { 'findby': 'wydawnictwo','what': entity.wydawnictwo }) }}">{{ entity.wydawnictwo }}</a></td>
+                                <td><a href="{{ path('showBooksBy', { 'findby': 'rokwydania','what': entity.rokwydania }) }}">{{ entity.rokwydania }}</a></td>
+                                <td><a href="{{ path('addtocart', {'isbn': entity.isbn }) }}">do koszyka</a></td>
+                                <td><a href="{{ path('ksiazka_show', { 'id': entity.isbn }) }}">więcej</a></td>
+                            </tr>
+                        {% endfor %}       
+                    {% endif %}
+            </table>
+            <div class="wrapper">
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            </div>
+            {% if is_granted('ROLE_ADMIN') %}
+                {#{{ form_widget(form.zapisz) }}#}
+                <div class="ButtonCenter"> {{ form_widget(form.zapisz) }} </div>
+                {#                <div class="ButtonCenter"> <a class="OrangeButton" href="{{ path('ksiazka_new') }}"> Dodaj ksiązkę </a></div>#}
+                {{ form_end(form) }}
+            {% endif %}
+        </div>  
+    </div>
+{% endblock %}
