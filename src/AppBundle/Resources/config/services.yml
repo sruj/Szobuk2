@@ -1,7 +1,7 @@
 # Learn more about services, parameters and containers at
 # http://symfony.com/doc/current/book/service_container.html
 parameters:
-#    parameter_name: value
+    app.paginator_aware.class: AppBundle\Repository\KsiazkaRepository
 
 services:
 #    service_name:
@@ -10,3 +10,9 @@ services:
     my_cart:
         class:  AppBundle\Utils\CartUtil
         arguments: [ "@request_stack", "@doctrine.orm.entity_manager" ]
+
+    app.ksiazka_repository:
+        class: "%app.paginator_aware.class%"
+        arguments: [ "@doctrine.orm.entity_manager" ]
+        tags:
+            -  { name: knp_paginator.injectable, paginator: '@knp_paginator' }

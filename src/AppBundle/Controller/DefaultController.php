@@ -1,44 +1,37 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Ksiazka;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 
-class DefaultController extends Controller {
-
-
+class DefaultController extends Controller
+{
     /**
+     * Kontroler przygotowujący dane do wyświetlenia książek używane na stronie głównej (wszystkie, nowości, popularne)
+     *
      * @Route("/", name="index")
      * @Template()
      */
-    public function indexAction(Request $request) {
+    public function indexAction(Request $request)
+    {
+        //REFAKTOR: poniżej to jakieś paskództwo, albo to przenieśc albo coś z tym zrobić
+
         //jeśli w trakcie zakupów w wyborze autoryzacji wybrałem zaloguj lub zarejestruj to przenoszę się do *gdzieśtam*
         $session = $request->getSession();
         $proces_zamowienia=$session->get('proces_zamowienia');
-        if($proces_zamowienia=='tak'){
-//            return $this->redirect($this->generateUrl('zamawiam'));
+        if($proces_zamowienia == 'tak'){
             $session->remove('proces_zamowienia');
             return $this->redirectToRoute('zamawiam');
         };
         
-        $em    = $this->get('doctrine.orm.entity_manager');
-        $dql   = "SELECT a FROM AppBundle:Ksiazka a";
-        $query = $em->createQuery($dql);
+        $ksi_rep = $this->get('app.ksiazka_repository');
+        $ksiazki = $ksi_rep->findAllMy($request->query->getInt('page', 1));
 
-        $paginator  = $this->get('knp_paginator');
-
-        $pagination = $paginator->paginate(
-            $query,
-            $request->query->getInt('page', 1)/*page number*/,
-            45/*limit per page*/
-        );
-
-        return array(
-            'pagination' => $pagination,
-        );
+        return ['ksiazki' => $ksiazki];
     }
 
     
@@ -46,29 +39,12 @@ class DefaultController extends Controller {
      * @Route("/popularne", name="popularne")
      * @Template()
      */
-    public function popularneAction(Request $request) {
-        $em = $this->getDoctrine()->getManager();
+    public function popularneAction(Request $request)
+    {
+        $ksi_rep = $this->get('app.ksiazka_repository');
+        $ksiazki = $ksi_rep->findPopularne($request->query->getInt('page', 1));
 
-        $query = $em->createQuery(
-            'SELECT k
-            FROM AppBundle:Ksiazka k
-            WHERE k.cena < :cena
-            ORDER BY k.tytul ASC'
-        )->setParameter('cena', '50');
-
-        $paginator  = $this->get('knp_paginator');
-
-        $pagination = $paginator->paginate(
-            $query,
-            $request->query->getInt('page', 1)/*page number*/,
-            45/*limit per page*/
-        );
-        
-        $ksiazki = $query->getResult();
-
-        return array(
-            'entities' => $pagination,
-        );
+        return ['ksiazki' => $ksiazki];
     }
 
     
@@ -76,27 +52,11 @@ class DefaultController extends Controller {
      * @Route("/nowosci", name="nowosci")
      * @Template()
      */
-    public function nowosciAction(Request $request) {
-        $em = $this->getDoctrine()->getManager();
+    public function nowosciAction(Request $request)
+    {
+        $ksi_rep = $this->get('app.ksiazka_repository');
+        $ksiazki = $ksi_rep->findAllMy($request->query->getInt('page', 1));
 
-        $query = $em->createQuery(
-            'SELECT k
-            FROM AppBundle:Ksiazka k
-            ORDER BY k.created DESC'
-        );
-
-        $paginator  = $this->get('knp_paginator');
-
-        $pagination = $paginator->paginate(
-            $query,
-            $request->query->getInt('page', 1)/*page number*/,
-            45/*limit per page*/
-        );
-        
-        $ksiazki = $query->getResult();
-        
-        return array(
-            'entities' => $pagination,
-        );
+        return ['ksiazki' => $ksiazki];
     }
 }
