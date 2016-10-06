@@ -29,16 +29,10 @@ class KlientController extends Controller {
             ->findOneBy(array('idlogowanie' => $idLog) );
         
         $idklient = $klient->getIdklient();
+
+        $zam_rep = $this->get('app.zamowienie_repository');
+        $zamowienia = $zam_rep->findAllMy($request->query->getInt('page', 1),$idklient);       
         
-        //łączę entity Zamowienie ze Status by móc w szablonie sortować wg Status. Muszę tak robić gdyż tradycyjny zapis z.idstatus.status wywala błąd przy próbie sortowania według tegoż.
-        $query = $em->createQuery('SELECT z,s FROM AppBundle:Zamowienie z JOIN z.idstatus s WHERE z.idklient = :idklient ORDER BY z.idzamowienie ASC');
-        $query->setParameter('idklient', $idklient);
-
-        $pagination = $paginator->paginate($query,$request->query->getInt('page', 1),91);        
-//            echo '<pre>',print_r($klient),'</pre>'; 
-
-        return array('pagination' => $pagination
-        );
+        return ['zamowienia' => $zamowienia];
     }
-
 }

@@ -10,7 +10,7 @@ use DateTime;
  * Zamowienie
  *
  * @ORM\Table(name="zamowienie", indexes={@ORM\Index(name="idKlient_idx", columns={"idKlient"}), @ORM\Index(name="idStatus_idx", columns={"idStatus"})})
- * @ORM\Entity(repositoryClass="AppBundle\Entity\ZamowienieRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ZamowienieRepository")
  */
 class Zamowienie
 {
