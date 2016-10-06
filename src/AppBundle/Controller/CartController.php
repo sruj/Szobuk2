@@ -26,11 +26,9 @@ class CartController extends Controller
      */
     public function addtocartAction(Request $request, $isbn)
     {
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('AppBundle:Ksiazka')->find($isbn);        
-        if (!$entity) {
-            throw new \Exception('Książka z numerem isbn: '.$isbn.' nie istnieje w bazie');
-        }
+        $entity = $this->getDoctrine()->getRepository('AppBundle:Ksiazka')->find($isbn);
+
+        if (!$entity) { throw new \Exception('Książka z numerem isbn: '.$isbn.' nie istnieje w bazie'); }
         
         $session = $request->getSession();
         
@@ -66,6 +64,7 @@ class CartController extends Controller
     public function cartcontentAction(Request $request)
     {
         $session = $request->getSession();
+
         if($session->has('cart'))//jeśli zmienna sesji cart juz jest to:
         {         
             $cart = $session->get('cart');
@@ -122,7 +121,7 @@ class CartController extends Controller
      * @Route("/cartmenu/{deleteisbn}", name="cartmenu")
      * @Template()
      */    
-    public function cartmenuAction(Request $request,$deleteisbn='')
+    public function cartmenuAction(Request $request, $deleteisbn='')
     {
         
         $cart_obiekt = $this->get('my_cart'); // serwis
@@ -144,8 +143,7 @@ class CartController extends Controller
 
     }
     
-//     * @Route( name="zmianaQuantity", options={"expose"=true})
-    
+
     /**
      * zmiana ilości w cartmenu prowadzi przez skrypt JavaScript tutaj.
      * usunałem template bo zdaje sie ze niepotrzebne
@@ -155,19 +153,13 @@ class CartController extends Controller
      */
     public function zmianaQuantityAction(Request $request)
     {
+        $data = $request->request->get('data');
+        $session = $request->getSession();
 
-        $data = $request->request->get('data');    
-        
-//        $cartZserwisu=$cart_obiekt->cart;
-        $session = $request->getSession(); 
-        
         $session->set('cart',$data );
-        
 
-        
-        
         $cart_obiekt = $this->get('my_cart'); // serwis
-        $cart_obiekt->przygotujZawartoscKoszyka(); 
+        $cart_obiekt->przygotujZawartoscKoszyka();
         $session->set('suma',$cart_obiekt->suma );
         
         return array(); 
@@ -218,13 +210,11 @@ class CartController extends Controller
         {    
             //if (wypełniał wcześniej formularz){
             $idlogowanie = $this->getUser()->getId();
-//                   echo '<pre>',print_r($idlogowanie),'</pre>'; 
             $klient= $this->getDoctrine()
                 ->getRepository('AppBundle:Klient')
                 ->findOneBy(array('idlogowanie' => $idlogowanie));
             // jeśli zalogowany nigdy nie wypełniał formularza dostawy
                 if (! is_object($klient)){$klient = new Klient();}
-
         }
         else
         {
@@ -281,9 +271,7 @@ class CartController extends Controller
             $request->getSession()->getFlashBag()->add(
                 'idzamowienie',
                 $idzamowienia);
-//                        echo '<pre>',print_r($idzamowienia),'</pre>';  
             return $this->redirect($this->generateUrl('potwierdzenie')
-//                return $this->redirect($this->generateUrl('test')
                     );
         }
         return array('form' => $form->createView());    
@@ -317,11 +305,9 @@ class CartController extends Controller
                         ->findBy(array('idzamowienie'=>$id));
         }
         $suma=$request->getSession()->get('suma');
-//          echo '<pre>',print_r($zamowienie->getIdzamowienie()),'</pre>';
-          
+
     //mail do klienta ze szczegółami zamówienia   
-    $Klient=new Klient();
-    $Klient=$this->getDoctrine()
+    $Klient = $this->getDoctrine()
                         ->getRepository('AppBundle:Klient')
                         ->find($zamowienie->getIdklient());
     $mailKlient=$Klient->getEmail();
@@ -370,196 +356,4 @@ class CartController extends Controller
         return array('zamowienie'=>$zamowienie, 'produkty'=>$produkty,
             'suma'=>$suma);
     }
-
-    
-    
-    
-    
-    
-    
-    
-    
-    /**
-     * test1.
-     * 
-     * @Route("/test1", name="test1")
-     * @Template()
-     */
-    public function test1Action(Request $request)
-    {
-        $cart_obiekt = $this->get('my_cart'); // serwis
-        
-        if($cart_obiekt->session->has('cart'))
-        { 
-            $cart_obiekt->przygotujZawartoscKoszyka(); // utworzenie tablicy 'ksiazki' z danymi o każdej z nich i ilością w koszyku
-            
-            // utworzenie zmiennej sesji 'suma' czyli kwoty do zapłaty (przyda się w podsumowaniu zakupu)
-            $session = $request->getSession();
-            $session->set('suma',$cart_obiekt->suma );
-            
-            return $this->render('AppBundle:Cart:test1.html.twig', 
-                array('ksiazki' => $cart_obiekt->ksiazki, 
-                    'suma'=>$cart_obiekt->suma));
-        }
-         else 
-        {
-            return $this->render('AppBundle:Cart:cartmenu.html.twig', 
-                array('pusty'=>'Kosz pusty!'));
-        }
- 
-        
-        
-               return array();          
-    }
-    
-    
-    /**
-     * test.
-     * 
-     * @Route("/test", name="test", options={"expose"=true})
-     * @Template()
-     */
-    public function testAction(Request $request)
-    {
-
-     $data = $request->request->get('data');    
-        echo '<pre>',print_r($data),'</pre>'; 
-        
-        
-        
-        $session = $request->getSession();    
-        $session->set('data',$data );
-//        return new Response("data set");
-        return array(); 
-    }
-
-
-  /**
-     * test.
-     * 
-     * @Route("/test2", name="test2")
-     * @Template()
-     */
-    public function test2Action(Request $request)
-    {
-
-        $marek='marek';
-        $session = $request->getSession();    
-        $data = $session->get('data');
-        
-        echo '<pre>',print_r($data),'</pre>'; 
-        echo '<pre>',var_dump($data),'</pre>'; 
-        
-        return array();
-    }
-    
-    /**
-     * test4.
-     * 
-     * @Route("/test4", name="test4")
-     * @Template()
-     */    
-    public function test4Action(Request $request)
-        {
-        
-        $session = $request->getSession();   
-//        $session->clear();
-        $lata = $session->get('data');
-        $cart = $session->get('cart');
-//        $cartZserwisu = $session->get('cartZserwisu');
-        
-        echo '<pre>',print_r($lata),'</pre>'; 
-        echo '<pre>',var_dump($lata),'</pre>'; 
-        echo '<pre>',print_r($cart),'</pre>'; 
-        echo '<pre>',var_dump($cart),'</pre>'; 
-//        echo '<pre>',print_r($cartZserwisu),'</pre>'; 
-//        echo '<pre>',var_dump($cartZserwisu),'</pre>'; 
-        
-        return array();
-        }    
-    
-    
-    
-  /**
-     * test.
-     * 
-     * @Route("/test5", name="test5")
-     * @Template()
-     */
-    public function test5Action(Request $request)
-    {
-
-        $session = $request->getSession();    
-        $marek='marek';
-        $session->set('marek',$marek);
-        $data=$session->get('marek');
-        echo '<pre>',print_r($data),'</pre>'; 
-        echo '<pre>',var_dump($data),'</pre>'; 
-        
-        return array();
-    }
-  /**
-     * test.
-     * 
-     * @Route("/test6", name="test6")
-     * @Template()
-     */
-    public function test6Action(Request $request)
-    {
-$entity = new Ksiazka();
-
-        $em = $this->getDoctrine()->getManager();
-        $ksiazki = $em->getRepository('AppBundle:Ksiazka')->findAll();
-        
-//        $dobra=$ksiazki[0]->setTytul('dupa2');
-//        
-//                 $em->persist($dobra);
-//                $em->flush();
-                $plk = file('../data/professions.txt');
-                
-//                  echo '<pre>',print_r($plk),'</pre>';    
-                $i=0;
-                $j=100;
-        foreach($ksiazki as $ksiazka){
-            if($j===164){$j=100;};
-            $isbn=$ksiazka->getIsbn();
-            $y= $this->getDoctrine()
-                    ->getRepository('AppBundle:Ksiazka')
-                    ->findOneBy(array('isbn' => $isbn));
-            $y->setTytul($plk[$i]);
-            $y->setObrazek('book_nr_'.$j.'.jpg');
-            
-            $em->persist($y);
-            $i=$i+3;
-            $j++;
-        }
-         $em->flush();
-        
-                
-        
-//        $TablicaliczbyObrazki= zamieńkazdyWierszPiktekstowynaTablice(open($pathdopliku))        ;
-//        $TablicaTytulow= zamieńkazdyWierszPiktekstowynaTablice(open($pathdopliku))        ;
-//        
-//        foreach ($ksiazka)      {
-//            foreach($TablicaliczbyObrazki as $nazwaPliku){
-//                $entity->setObrazek($nazwaPliku);
-//                $entity->setTytul($tytul);                
-//            }
-//            
-//            setObrazek()
-//        }
-                
-//                  echo '<pre>',print_r($no),'</pre>';       
-        
-//        
-//        $em->persist($entity);
-//        $em->flush();
-
-
-        return array();
-    }
-    
-    
-
 }
-//        echo '<pre>',print_r($ksiazki),'</pre>';  
