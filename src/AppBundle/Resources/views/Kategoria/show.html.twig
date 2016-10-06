@@ -16,7 +16,7 @@
 <!--start nav-level-->
 <div class="nav-level">
   <div class="nav-level-layout wrapper">
-    <div class="PageTabs page-section-tab active">Kategoria: {{ entity.nazwa }}</div>
+    <div class="PageTabs page-section-tab active">Kategoria: {{ kategoria.nazwa }}</div>
   </div>
 </div>
 <!--end nav-level--> 
@@ -41,17 +41,17 @@
                     </tr>
                 </thead>            
                 <tbody>
-                    {% for entity in ksiazki %}
+                    {% for kategoria in ksiazki %}
                         <tr>
-                            <td><a href="{{ path('ksiazka_show', { 'id': entity.isbn }) }}">{{ entity.tytul }}</a></td>
-                            <td><a href="{{ path('showBooksBy', { 'findby': 'autor','what': entity.autor }) }}">{{ entity.autor }}</a></td>
-                            <td>{{ entity.cena }}</td>
-                            <td><a href="{{ path('showBooksBy', { 'findby': 'wydawnictwo','what': entity.wydawnictwo }) }}">{{ entity.wydawnictwo }}</a></td>
-                            <td><a href="{{ path('showBooksBy', { 'findby': 'rokwydania','what': entity.rokwydania }) }}">{{ entity.rokwydania }}</a></td>
-                            <td><a href="{{ path('addtocart', {'isbn': entity.isbn }) }}">do koszyka</a></td>
-                            <td><a href="{{ path('ksiazka_show', { 'id': entity.isbn }) }}">więcej</a></td>
+                            <td><a href="{{ path('ksiazka_show', { 'id': kategoria.isbn }) }}">{{ kategoria.tytul }}</a></td>
+                            <td><a href="{{ path('showBooksBy', { 'findby': 'autor','what': kategoria.autor }) }}">{{ kategoria.autor }}</a></td>
+                            <td>{{ kategoria.cena }}</td>
+                            <td><a href="{{ path('showBooksBy', { 'findby': 'wydawnictwo','what': kategoria.wydawnictwo }) }}">{{ kategoria.wydawnictwo }}</a></td>
+                            <td><a href="{{ path('showBooksBy', { 'findby': 'rokwydania','what': kategoria.rokwydania }) }}">{{ kategoria.rokwydania }}</a></td>
+                            <td><a href="{{ path('addtocart', {'isbn': kategoria.isbn }) }}">do koszyka</a></td>
+                            <td><a href="{{ path('ksiazka_show', { 'id': kategoria.isbn }) }}">więcej</a></td>
                             {% if is_granted('ROLE_ADMIN') %}
-                                <td><a href="{{ path('ksiazka_edit', { 'id': entity.isbn }) }}">edytuj</a></td>
+                                <td><a href="{{ path('ksiazka_edit', { 'id': kategoria.isbn }) }}">edytuj</a></td>
                             {% endif %}
                         </tr>
                     {% endfor %}       
@@ -59,7 +59,7 @@
             <div id="margin_top_buttons">
 <div class="centeredButton kategoria"><a class="OrangeButton" href="{{ path('kategoria') }}">Wróć do Listy</a></div>
 {% if is_granted('ROLE_ADMIN') %}
-    <div class="centeredButton kategoria"><a class="OrangeButton" href="{{ path('kategoria_edit', { 'id': entity.idkategoria }) }}">Edytuj Kategorię</a></div> 
+    <div class="centeredButton kategoria"><a class="OrangeButton" href="{{ path('kategoria_edit', { 'id': kategoria.idkategoria }) }}">Edytuj Kategorię</a></div> 
 {% endif %}
             </div>
 </div>  

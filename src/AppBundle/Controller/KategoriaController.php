@@ -27,14 +27,11 @@ class KategoriaController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        $entities = $this->getDoctrine()->getRepository('AppBundle:Kategoria')->findAll();
 
-        $entities = $em->getRepository('AppBundle:Kategoria')->findAll();
-
-        return array(
-            'entities' => $entities,
-        );
+        return ['entities' => $entities,];
     }
+
 //     * @Route("/admin/create", name="kategoria_create")
     /**
      * Creates a new Kategoria entity.
@@ -101,7 +98,7 @@ class KategoriaController extends Controller
     }
 
     /**
-     * Finds and displays a Kategoria entity.
+     * Wyszukuje i wyświetla książki wybranej kategorii.
      *
      * @Route("/{id}", name="kategoria_show")
      * @Method("GET")
@@ -110,10 +107,9 @@ class KategoriaController extends Controller
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
+        $kategoria = $em->getRepository(Kategoria::class)->find($id);
 
-        $entity = $em->getRepository('AppBundle:Kategoria')->find($id);
-
-        if (!$entity) {
+        if (!$kategoria) {
             throw $this->createNotFoundException('Nie można znaleźć kategorii.');
         }
 
@@ -122,7 +118,7 @@ class KategoriaController extends Controller
                 ->findBy(array('idkategoria' => $id));
         
         return array(
-            'entity'      => $entity,
+            'kategoria'   => $kategoria,
             'ksiazki'     => $ksiazki,
             'delete_form' => $deleteForm->createView(),
         );
@@ -137,19 +133,16 @@ class KategoriaController extends Controller
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $kategoria = $this->getDoctrine()->getRepository('AppBundle:Kategoria')->find($id);
 
-        $entity = $em->getRepository('AppBundle:Kategoria')->find($id);
-
-        if (!$entity) {
+        if (!$kategoria) {
             throw $this->createNotFoundException('Nie można znaleźć kategorii.');
         }
 
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($kategoria);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
@@ -218,6 +211,8 @@ class KategoriaController extends Controller
             'delete_form' => $deleteForm->createView(),
         );
     }
+    
+    
     /**
      * Deletes a Kategoria entity.
      *
@@ -226,12 +221,6 @@ class KategoriaController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-//        $em = $this->getDoctrine()->getManager();
-//        $entity = $em->getRepository('AppBundle:Kategoria')->find($id);
-//        if (!$entity) {
-//            throw $this->createNotFoundException('Nie można znaleźć kategorii.');
-//        }
-        
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
@@ -246,9 +235,7 @@ class KategoriaController extends Controller
             try {
                 $em->remove($entity);
                 $em->flush();
-//            } catch (\PDOException $pdo_ex) {
             } catch (\Doctrine\DBAL\DBALException $pdo_ex) {
-//            } catch (\Exception $pdo_ex) {
                 throw $this->createNotFoundException("Próbujesz usunąć kategorię, do której przypisane są istniejące książki. Najpierw usuń te książki.\n\n\n\nOryginalna treść błędu PDOException: \n\n".$pdo_ex->getMessage().''.(int)$pdo_ex->getCode());
             }
 
