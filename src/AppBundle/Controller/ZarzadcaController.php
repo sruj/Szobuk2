@@ -28,21 +28,16 @@ class ZarzadcaController extends Controller
      * @Route("/", name="menuZarzadca")
      * @Template()
      */
-    public function menuAction() {
-
-        return array(
-        );
+    public function menuAction()
+    {
+        return array();
     }    
     
-    //@Method("GET")
     /**
      * @Route("/panel/{findBy}-{Identifier}", name="panelSortFromDetails")
      * @Route("/panel/{sortArr}/{orderBy}/{query}/{EntFldName}", name="panelSort")
      * @Template()
      */
-//    public function panelsortAction(Request $request,$sortArr=false, $orderBy='idzamowienie', $query=false,$EntFldName=false
-//  )
-//    {
     public function panelsortAction(Request $request,$sortArr=false, $orderBy='idzamowienie', $query=false,$EntFldName=false,
             $findBy = false, $Identifier = false)
     {
@@ -52,7 +47,7 @@ class ZarzadcaController extends Controller
         //else
         //tworzę tablicę $sortArr każdy element ustawiam na 'null' 
         //poza klikniętym który zmieniam ASC na DESC i odwrotnie    .
-/*1*/        if(!($sortArr)){$sortArr=$this->setAllNullNumerASC();}
+/*1*/   if(!($sortArr)){$sortArr=$this->setAllNullNumerASC();}
         else{
         $sortArr = $this->setSortVar($sortArr);  
         $sortArr = $this->AscDescChanger($sortArr,$orderBy);        
@@ -273,71 +268,4 @@ class ZarzadcaController extends Controller
 
         return $findBy;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-   
-    /**
-    * @Route("/test88", name="test88")
-    * @Template()
-    */
-   public function test88Action()
-   { 
-
-       
-        return array(  );    
-   } 
-    
-//     * @Method("GET")
-    /**
-     * test.
-     * @Route("/test15/{dwa}",name="test15")
-     * @Template()
-     */
-    public function test15Action($dwa)
-    {
-        //wniosek: jesli Request $request to bez ślicznych URLi tj @Route("/test15/{dwa}"
-        //bo request sciaga zmienna z url gdy jest klasycznie ?dwa=2 a nie /2 .
-  
-        echo $dwa;
-        
-//        $get=$request->query->get('dwa'); // get a $_GET parameter
-//        
-//        echo '<pre>',print_r($get),'</pre>'; 
-//        echo '<pre>',print_r($dwa),'</pre>'; 
-        
-        return array();
-    }    
-    
-    
-    
-    /**
-     * test.
-     * @Route("/test16/{clicked}", defaults={"clicked" = 1},name="test16")
-     * @Method("GET")
-     * @Template()
-     */
-    public function test16Action($clicked)
-    {
-
-//        $DataSort=true;
-//        if ($clicked==!'null'){
-//            $DataSort=!$DataSort;
-//        }
-    echo '<pre>',print_r($clicked),'</pre>'; 
-//    echo '<pre>',print_r($DataSort),'</pre>'; 
-        return array(
-            'clicked'=>$clicked);
-    }    
 }
