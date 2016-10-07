@@ -78,16 +78,39 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
             ORDER BY k.created DESC'
         );
     }
+    
+    public function queryWyszukiwarka($word)
+    {
+        $repository = $this->em->getRepository('AppBundle:Ksiazka');
+        return $query = $repository->createQueryBuilder('a')
+            ->where('a.tytul LIKE :word')
+            ->orWhere('a.autor LIKE :word')
+            ->orWhere('a.wydawnictwo LIKE :word')
+            ->setParameter('word', '%' . $word . '%')
+            ->getQuery();
+    }
 
+    /**
+     * @return Query
+     */
+    public function queryByWhat($findby, $what)
+    {
+        return $this->em->createQuery(
+            'SELECT a
+            FROM AppBundle:Ksiazka a
+            WHERE a.'.$findby.' = :param'
+        )->setParameter('param', $what);            
+    }    
+    
     /**
      * @param int $page
      */
-    public function findAllMy($page)
+    public function findAllMy($page, $limit = 45)
     {
         return $this->paginator->paginate(
             $this->queryAll(),
             $page/*page number*/,
-            45/*limit per page*/
+            $limit/*limit per page*/
         );
     }
 
@@ -110,6 +133,24 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
     {
         return $this->paginator->paginate(
             $this->queryNowosci(),
+            $page/*page number*/,
+            45/*limit per page*/
+        );
+    }
+    
+    public function findWyszukiwarka($word, $page)
+    {
+        return $this->paginator->paginate(
+            $this->queryWyszukiwarka($word),
+            $page/*page number*/,
+            45/*limit per page*/
+        );
+    }   
+    
+    public function findByWhat($findby, $what, $page)
+    {
+        return $this->paginator->paginate(
+            $this->queryByWhat($findby, $what),
             $page/*page number*/,
             45/*limit per page*/
         );

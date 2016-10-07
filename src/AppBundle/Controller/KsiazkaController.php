@@ -9,7 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppBundle\Entity\Ksiazka;
 use AppBundle\Form\KsiazkaType;
-
 use AppBundle\Form\KsiazkaListType;
 use AppBundle\Entity\KsiazkaList;
 
@@ -20,31 +19,17 @@ use AppBundle\Entity\KsiazkaList;
  */
 class KsiazkaController extends Controller {
 
-//     * @Method("GET")
     /**
      * Lists all Ksiazka entities.
      *
      * @Route("/", name="ksiazka")
      * @Template()
      */
-    public function indexAction(Request $request) {
-        $em = $this->getDoctrine()->getManager();
-        $ksiazki = $em->getRepository('AppBundle:Ksiazka')->findAll();
-
-        
-        $em    = $this->get('doctrine.orm.entity_manager');
-        $dql   = "SELECT a FROM AppBundle:Ksiazka a";
-        $query = $em->createQuery($dql);
-
-        $paginator  = $this->get('knp_paginator');
-        if ($this->isGranted('ROLE_ADMIN')) {$lpr=99999;}else{$lpr=30;}/*limit per page. 9999 bo form_end przy paginacji na pierwszej stronie dodaje brakujáce elementy formularzy calej zawartoßci*/
-
-        $pagination = $paginator->paginate(
-            $query,
-            $request->query->getInt('page', 1)/*page number*/,
-            $lpr/*limit per page*/
-        );
-        
+    public function indexAction(Request $request)
+    {
+        $ksi_rep = $this->get('app.ksiazka_repository');
+        if ($this->isGranted('ROLE_ADMIN')) {$lpr=9999;}/*limit per page. 9999 bo form_end przy paginacji na pierwszej stronie dodaje brakujáce elementy formularzy calej zawartoßci*/
+        $ksiazki = $ksi_rep->findAllMy($request->query->getInt('page', 1), $lpr);
 
         //[-Formularz Główny-]Ładowanie $zamowieniaList - zmiennej potrzebnej do głównego formularza. 
         //To kluczowa zmienna. Obiekt ZamowienieList() to kolekcja formularzy
@@ -67,11 +52,11 @@ class KsiazkaController extends Controller {
                 $em->merge($task);
             }
             $em->flush();
-        }        
-        
-        
+        }
+
+
         return array(
-            'pagination' => $pagination,'form' => $form->createView(),
+            'ksiazki' => $ksiazki,'form' => $form->createView(),
         );
     }
 
@@ -132,10 +117,10 @@ class KsiazkaController extends Controller {
             return $this->redirect($this->generateUrl('ksiazka_show', array('id' => $entity->getIsbn())));
         }
 
-        return array(
+        return [
             'entity' => $entity,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -147,16 +132,15 @@ class KsiazkaController extends Controller {
      * @Template()
      */
     public function showAction($id) {
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('AppBundle:Ksiazka')->find($id);
+        $entity = $this->getDoctrine()->getRepository('AppBundle:Ksiazka')->find($id);
         if (!$entity) {throw new \Exception('Nie można znaleźć książki');}
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
+        return [
             'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -168,18 +152,17 @@ class KsiazkaController extends Controller {
      * @Template()
      */
     public function editAction($id) {
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('AppBundle:Ksiazka')->find($id);
+        $entity = $this->getDoctrine()->getRepository('AppBundle:Ksiazka')->find($id);
         if (!$entity) {throw $this->createNotFoundException('Nie można znaleźć książki.');}
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
+        return [
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -225,13 +208,14 @@ class KsiazkaController extends Controller {
             return $this->redirect($this->generateUrl('ksiazka_edit', array('id' => $id)));
         }
 
-        return array(
+        return [
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ];
     }
 
+    
     /**
      * Deletes a Ksiazka entity.
      *
@@ -255,6 +239,7 @@ class KsiazkaController extends Controller {
         return $this->redirect($this->generateUrl('ksiazka'));
     }
 
+    
     /**
      * Creates a form to delete a Ksiazka entity by id.
      *
@@ -268,13 +253,10 @@ class KsiazkaController extends Controller {
                         ->setMethod('DELETE')
                         ->add('submit', 'submit', array('label' => 'Usuń',
                             'attr' => array('class' => 'OrangeButton')))
-//            ->add('submit', 'submit', array('label' => 'Usuń'))
                         ->getForm()
         ;
     }
 
-//            ->add('submit', 'submit', array('label' => 'Usuń', 
-//                                            'attr' => array('class' => 'OrangeButton')))
 
     /**
      * wyszukiwarka.
@@ -287,22 +269,23 @@ class KsiazkaController extends Controller {
         ->setAction($this->generateUrl('search'))
         ->setMethod('GET')
         ->add('input', 'text', 
-            array('attr' => array('placeholder' => 'szukaj książki','class' => 'NavSearch'),
-                'label' => false))
-        ->add('szukaj', 'submit', array(
-                    'attr' => array('class' => 'NavSearch-searchIcon')))
+            ['attr' => ['placeholder' => 'szukaj książki','class' => 'NavSearch'],
+                'label' => false])
+        ->add('szukaj', 'submit', [
+                    'attr' => ['class' => 'NavSearch-searchIcon']])
                 ->getForm();
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $data = $form->get('input')->getData();
-            return $this->redirect($this->generateUrl('search_results', array('word' => $data)));
+            return $this->redirect($this->generateUrl('search_results', ['word' => $data]));
         }
 
-        return $this->render('AppBundle:Ksiazka:search.html.twig', array('form' => $form->createView()));
+        return $this->render('AppBundle:Ksiazka:search.html.twig', ['form' => $form->createView()]);
     }
 
+    
     /**
      * wyszukiwarka.
      *
@@ -310,146 +293,29 @@ class KsiazkaController extends Controller {
      * @Method("GET")
      */
     public function searchResultsAction(Request $request, $word = false) {
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('AppBundle:Ksiazka');
-        $query = $repository->createQueryBuilder('a')
-                ->where('a.tytul LIKE :word')
-                ->orWhere('a.autor LIKE :word')
-                ->orWhere('a.wydawnictwo LIKE :word')
-                ->setParameter('word', '%' . $word . '%')
-                ->getQuery();
-//        $ksiazki = $query->getResult();
+        $ksi_rep = $this->get('app.ksiazka_repository');
+        $ksiazki = $ksi_rep->findWyszukiwarka($word, $request->query->getInt('page', 1));
 
-        $paginator  = $this->get('knp_paginator');
-
-        $pagination = $paginator->paginate(
-            $query,
-            $request->query->getInt('page', 1)/*page number*/,
-            45/*limit per page*/
-        );          
-        
-//        $entities = $em->getRepository('AppBundle:Ksiazka')->find($id);
-//        if (!$ksiazki) {
-//            throw $this->createNotFoundException('Nie ma powiązanych książek, autorów lub wydawnictw z hasłem: "'.$word.'".');
-//        }
-        $word = strtolower($word);
-        
-        return $this->render('AppBundle:Ksiazka:searchResults.html.twig', array(
-                    'entities' => $pagination, 'word' => $word));
+        return $this->render('AppBundle:Ksiazka:searchResults.html.twig',
+            ['entities' => $ksiazki, 'word' => strtolower($word)]);
     }
     
-    
+
     /**
-     * ksiazki wg wybranego parametru.
+     * ksiazki wg wybranego parametru. (np /ksiazka/rokwydania-1956/showBooksBy)
      *
      * @Route("/{findby}-{what}/showBooksBy", name="showBooksBy")
      * @Method("GET")
      */
     public function showBooksByAction(Request $request, $findby = false, $what = false) {
-        $em = $this->getDoctrine()->getManager();
+        $ksi_rep = $this->get('app.ksiazka_repository');
+        $ksiazki = $ksi_rep->findByWhat($findby, $what, $request->query->getInt('page', 1));
 
-        $query = $em->createQuery(
-            'SELECT a
-            FROM AppBundle:Ksiazka a
-            WHERE a.'.$findby.' = :param'
-        )->setParameter('param', $what);
-        
-        $paginator  = $this->get('knp_paginator');
 
-        $pagination = $paginator->paginate(
-            $query,
-            $request->query->getInt('page', 1)/*page number*/,
-            45/*limit per page*/
-        );        
-        
-        
-        return $this->render('AppBundle:Ksiazka:showBooksBy.html.twig', array(
+        return $this->render('AppBundle:Ksiazka:showBooksBy.html.twig', [
             'findby'      => $findby,
             'what'        => $what,
-            'pagination'  => $pagination,
-        ));
+            'pagination'  => $ksiazki,
+        ]);
     }
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    /**
-     * test.
-     *
-     * @Route("/atest", name="atest")
-     * @Method("GET")
-     */
-    public function atestAction() {
-        return $this->render('AppBundle:Ksiazka:atest.html.twig', array());
-    }
-
-    /**
-     * test.
-     *
-     * @Route("/a", name="a")
-     * @Method("GET")
-     */
-    public function aAction(Request $request) {
-        return $this->render('AppBundle:Ksiazka:a.html.twig', array());
-    }
-
-    /**
-     * test.
-     *
-     * @Route("/asearch", name="asearch")
-     * @Method("GET")
-     */
-    public function asearchAction(Request $request) {
-        $form = $this->createFormBuilder()
-                ->setAction($this->generateUrl('asearch'))
-                ->setMethod('GET')
-                ->add('input', 'text')
-                ->add('save', 'submit')
-                ->getForm();
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $data = $form->get('input')->getData();
-            echo 'dupa';
-            echo '<pre>', print_r($data), '</pre>';
-            $ksiazki = $data;
-            return $this->redirect($this->generateUrl('asearch_results', array('ksiazki' => $ksiazki)));
-        } else {
-            echo'niewalid';
-        }
-
-        return
-                $this->render('AppBundle:Ksiazka:asearch.html.twig', array('form' => $form->createView()));
-    }
-
-//     * @Route("/asearch/results/", name="asearch_results")
-    /**
-     * wyszukiwarka.
-     *
-     * @Route("/asearch/results/{ksiazki}", name="asearch_results")
-     * @Method("GET")
-     */
-    public function asearchResultsAction(Request $request, $ksiazki = false) {
-
-        return $this->render('AppBundle:Ksiazka:searchResults.html.twig', array(
-                    'entity' => $ksiazki));
-//        return $this->render('AppBundle:Ksiazka:searchResults.html.twig');
-    }
-
 }
