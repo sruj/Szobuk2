@@ -26,17 +26,15 @@ class ZarzadcaController extends Controller
 {
     /**
      * @Route("/", name="menuZarzadca")
-     * @Template()
      */
     public function menuAction()
     {
-        return array();
+        return $this->render('AppBundle:Zarzadca:menu.html.twig',[]);
     }    
     
     /**
      * @Route("/panel/{findBy}-{Identifier}", name="panelSortFromDetails")
      * @Route("/panel/{sortArr}/{orderBy}/{query}/{EntFldName}", name="panelSort")
-     * @Template()
      */
     public function panelsortAction(Request $request,$sortArr=false, $orderBy='idzamowienie', $query=false,$EntFldName=false,
             $findBy = false, $Identifier = false)
@@ -166,9 +164,10 @@ class ZarzadcaController extends Controller
                 $em->merge($task);
             }
             $em->flush();
-        }        
-        
-        return array('zamowieniaProdukty'=>$zamowieniaProdukty, 
+        }
+
+        return $this->render('AppBundle:Zarzadca:panelsort.html.twig',[
+            'zamowieniaProdukty'=>$zamowieniaProdukty, 
             'sortArr' => $sortArr,
             'form' => $form->createView(),
             'EntFldName' => $EntFldName, 
@@ -177,12 +176,8 @@ class ZarzadcaController extends Controller
             'StatusForm' => $StatusForm->createView(),
             'DataZamForm' => $DataZamForm->createView(),
             'NrKlientaForm' => $NrKlientaForm->createView(),
-        );
+        ]);
     }
-    
-    
-    
-    
     
     
     //[-Sortowanie-]Jeśli pierwszy raz otwieram stronę to tworzę tablicę $sortArr

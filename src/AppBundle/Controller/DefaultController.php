@@ -14,7 +14,6 @@ class DefaultController extends Controller
      * Kontroler przygotowujący dane do wyświetlenia książek używane na stronie głównej (wszystkie, nowości, popularne)
      *
      * @Route("/", name="index")
-     * @Template()
      */
     public function indexAction(Request $request)
     {
@@ -31,32 +30,38 @@ class DefaultController extends Controller
         $ksi_rep = $this->get('app.ksiazka_repository');
         $ksiazki = $ksi_rep->findAllMy($request->query->getInt('page', 1));
 
-        return ['ksiazki' => $ksiazki];
+        return $this->render('AppBundle:Default:index.html.twig',[
+            'ksiazki' => $ksiazki
+        ]);
     }
 
     
     /**
      * @Route("/popularne", name="popularne")
-     * @Template()
      */
     public function popularneAction(Request $request)
     {
         $ksi_rep = $this->get('app.ksiazka_repository');
         $ksiazki = $ksi_rep->findPopularne($request->query->getInt('page', 1));
 
-        return ['ksiazki' => $ksiazki];
+        return $this->render('AppBundle:Default:popularne.html.twig',[
+            'ksiazki' => $ksiazki
+        ]);        
+        
     }
 
     
     /**
      * @Route("/nowosci", name="nowosci")
-     * @Template()
      */
     public function nowosciAction(Request $request)
     {
         $ksi_rep = $this->get('app.ksiazka_repository');
         $ksiazki = $ksi_rep->findAllMy($request->query->getInt('page', 1));
 
-        return ['ksiazki' => $ksiazki];
+        return $this->render('AppBundle:Default:nowosci.html.twig',[
+            'ksiazki' => $ksiazki
+        ]);
+
     }
 }

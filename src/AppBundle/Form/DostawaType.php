@@ -33,36 +33,3 @@ class DostawaType extends AbstractType {
         ));
     }
 }
-//}     $builder
-//                ->add('imie', 
-//                    array('attr' => array('placeholder' => 'E-mail',), 'label' => false,))
-//                ->add('nazwisko', 
-//                    array('attr' => array('placeholder' => 'E-mail',), 'label' => false,))
-//                ->add('email', 
-//                    array('attr' => array('placeholder' => 'E-mail',), 'label' => false,))
-//                ->add('ulica', 
-//                    array('attr' => array('placeholder' => 'E-mail',), 'label' => false,))
-//                ->add('nrDomu', 
-//                    array('attr' => array('placeholder' => 'E-mail',), 'label' => false,))
-//                ->add('nrMieszkania', 
-//                    array('attr' => array('placeholder' => 'E-mail',), 'label' => false,))
-//                ->add('kodPocztowy', 
-//                    array('attr' => array('placeholder' => 'E-mail',), 'label' => false,))
-//                ->add('miasto', 
-//                    array('attr' => array('placeholder' => 'E-mail',), 'label' => false,))
-//                ->add('nip', 
-//                    array('attr' => array('placeholder' => 'E-mail',), 'label' => false,))
-//                ->add('nrTelefonu', 
-//                    array('attr' => array('placeholder' => 'E-mail',), 'label' => false,))
-//                ->add('save', 'submit', 
-//                    array('attr' => array('placeholder' => 'E-mail',), 'label' => false,));
-
-
-
-
-
-
-
-
-
-

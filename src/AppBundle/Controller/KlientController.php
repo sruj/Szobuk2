@@ -11,7 +11,6 @@ class KlientController extends Controller {
 
     /**
      * @Route("/historiaPanel", name="historiaZamowien")
-     * @Template()
      */
     public function historiaPanelAction(Request $request) 
     {
@@ -19,20 +18,18 @@ class KlientController extends Controller {
         (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw $this->createAccessDeniedException();
         }
-        $em = $this->getDoctrine()->getManager();
-        $paginator  = $this->get('knp_paginator');
-        
-        $idLog = $this->getUser()->getId();
 
         $klient= $this->getDoctrine()
             ->getRepository('AppBundle:Klient')
-            ->findOneBy(array('idlogowanie' => $idLog) );
+            ->findOneBy(['idlogowanie' => $this->getUser()->getId()]);
         
         $idklient = $klient->getIdklient();
 
         $zam_rep = $this->get('app.zamowienie_repository');
-        $zamowienia = $zam_rep->findAllMy($request->query->getInt('page', 1),$idklient);       
-        
-        return ['zamowienia' => $zamowienia];
+        $zamowienia = $zam_rep->findAllMy($request->query->getInt('page', 1),$idklient);
+
+        return $this->render('AppBundle:Klient:historiaPanel.html.twig',[
+            'zamowienia' => $zamowienia
+        ]);
     }
 }

@@ -20,19 +20,19 @@ class ZamowienieRepository extends EntityRepository implements PaginatorAwareInt
      */
     protected $paginator;
 
-    /**
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * ZamowienieRepository constructor.
-     * @param EntityManager $entityManager
-     */
-    public function __construct(EntityManager $entityManager)
-    {
-        $this->em = $entityManager;
-    }
+//    /**
+//     * @var EntityManager
+//     */
+//    protected $_em;
+//
+//    /**
+//     * ZamowienieRepository constructor.
+//     * @param EntityManager $entityManager
+//     */
+//    public function __construct(EntityManager $entityManager)
+//    {
+//        $this->_em = $entityManager;
+//    }
 
     /**
      * @param Paginator $paginator
@@ -51,7 +51,7 @@ class ZamowienieRepository extends EntityRepository implements PaginatorAwareInt
      */
     public function queryAll($idklient)
     {
-        $query = $this->em->createQuery('
+        $query = $this->_em->createQuery('
                 SELECT z,s 
                 FROM AppBundle:Zamowienie z 
                 JOIN z.idstatus s 
@@ -90,7 +90,7 @@ class ZamowienieRepository extends EntityRepository implements PaginatorAwareInt
                 $sort=$sortArr['Numer'];
         }
 
-        return $this->em
+        return $this->_em
             ->createQuery(
                 'SELECT z FROM AppBundle:Zamowienie z ORDER BY z.'.$OrderBy.' '.$sort.''
             )
@@ -114,7 +114,7 @@ class ZamowienieRepository extends EntityRepository implements PaginatorAwareInt
                 $sort=$sortArr['Numer'];
         }
 
-        return $this->em
+        return $this->_em
             ->createQuery(
                 'SELECT z 
                 FROM AppBundle:Zamowienie z 

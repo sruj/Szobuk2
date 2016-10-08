@@ -23,22 +23,21 @@ class KategoriaController extends Controller
      *
      * @Route("/", name="kategoria")
      * @Method("GET")
-     * @Template()
      */
     public function indexAction()
     {
         $entities = $this->getDoctrine()->getRepository('AppBundle:Kategoria')->findAll();
 
-        return ['entities' => $entities,];
+        return $this->render('AppBundle:',[
+            'entities' => $entities
+        ]);
     }
 
-//     * @Route("/admin/create", name="kategoria_create")
     /**
      * Creates a new Kategoria entity.
      *
      * @Route(name="kategoria_create")
      * @Method("POST")
-     * @Template("AppBundle:Kategoria:new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -53,11 +52,11 @@ class KategoriaController extends Controller
 
             return $this->redirect($this->generateUrl('kategoria_show', array('id' => $entity->getIdkategoria())));
         }
-
-        return array(
+        
+        return $this->render('AppBundle:Kategoria:new.html.twig',[
             'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+            'form'   => $form->createView()
+        ]);
     }
 
     /**
@@ -84,17 +83,16 @@ class KategoriaController extends Controller
      *
      * @Route("/admin/new", name="kategoria_new")
      * @Method("GET")
-     * @Template()
      */
     public function newAction()
     {
         $entity = new Kategoria();
         $form   = $this->createCreateForm($entity);
 
-        return array(
+        return $this->render('AppBundle:',[
             'entity' => $entity,
             'form'   => $form->createView(),
-        );
+        ]);
     }
 
     /**
@@ -102,7 +100,6 @@ class KategoriaController extends Controller
      *
      * @Route("/{id}", name="kategoria_show")
      * @Method("GET")
-     * @Template()
      */
     public function showAction($id)
     {
@@ -116,12 +113,12 @@ class KategoriaController extends Controller
         $deleteForm = $this->createDeleteForm($id);
         $ksiazki = $em->getRepository('AppBundle:Ksiazka')
                 ->findBy(array('idkategoria' => $id));
-        
-        return array(
+
+        return $this->render('AppBundle:Kategoria:show.html.twig',[
             'kategoria'   => $kategoria,
             'ksiazki'     => $ksiazki,
             'delete_form' => $deleteForm->createView(),
-        );
+        ]);
     }
 
     /**
@@ -129,7 +126,6 @@ class KategoriaController extends Controller
      *
      * @Route("/admin/{id}/edit", name="kategoria_edit")
      * @Method("GET")
-     * @Template()
      */
     public function editAction($id)
     {
@@ -142,10 +138,10 @@ class KategoriaController extends Controller
         $editForm = $this->createEditForm($kategoria);
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
+        return $this->render('AppBundle:Kategoria:edit.html.twig',[
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ]);
     }
 
     /**
@@ -183,7 +179,6 @@ class KategoriaController extends Controller
      *
      * @Route("/admin/{id}/edits", name="kategoria_update")
      * @Method("PUT")
-     * @Template("AppBundle:Kategoria:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
@@ -204,12 +199,11 @@ class KategoriaController extends Controller
 
             return $this->redirect($this->generateUrl('kategoria_edit', array('id' => $id)));
         }
-
-        return array(
+        return $this->render('AppBundle:Kategoria:edit.html.twig',[
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ]);
     }
     
     

@@ -16,7 +16,6 @@ class PanelZamowieniaSzczegolyController extends Controller {
     /**
      * @Route("/panel/szczegoly-zamowienia/{idzamowienie}/{userid}/", name="panelDetails")
      * @Route("/panel/szczegoly-zamowienia/{idzamowienie}/", name="ZarzadcaPanelDetails")
-     * @Template()
      */
     public function detailsAction(Request $request, $idzamowienie = false, $userid = false) 
     {
@@ -58,8 +57,8 @@ class PanelZamowieniaSzczegolyController extends Controller {
             $em->merge($StatusForm->getData());
             $em->flush();
         }
-
-        return array('zamowienie' => $zamowienieRep, 'produkty' => $produkty,
-            'StatusForm' => $StatusForm->createView());
+        return $this->render('AppBundle:PanelZamowieniaSzczegoly:details.html.twig',[
+            'zamowienie' => $zamowienieRep, 'produkty' => $produkty,
+            'StatusForm' => $StatusForm->createView()]);
     }
 }

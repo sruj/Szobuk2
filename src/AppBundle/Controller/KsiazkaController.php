@@ -23,7 +23,6 @@ class KsiazkaController extends Controller {
      * Lists all Ksiazka entities.
      *
      * @Route("/", name="ksiazka")
-     * @Template()
      */
     public function indexAction(Request $request)
     {
@@ -54,10 +53,9 @@ class KsiazkaController extends Controller {
             $em->flush();
         }
 
-
-        return array(
+        return $this->render('AppBundle:Ksiazka:index.html.twig',[
             'ksiazki' => $ksiazki,'form' => $form->createView(),
-        );
+        ]);
     }
 
     /**
@@ -66,16 +64,16 @@ class KsiazkaController extends Controller {
      *
      * @Route("/admin/new", name="ksiazka_new")
      * @Method("GET")
-     * @Template()
      */
     public function newAction() {
         $entity = new Ksiazka();
         $form = $this->createCreateForm($entity);
-
-        return array(
+        
+        return $this->render('AppBundle:Ksiazka:new.html.twig',[
             'entity' => $entity,
             'form' => $form->createView(),
-        );
+
+        ]);
     }
 
     /**
@@ -103,7 +101,6 @@ class KsiazkaController extends Controller {
      *
      * @Route("/admin/create", name="ksiazka_create")
      * @Method("GET")
-     * @Template("AppBundle:Ksiazka:new.html.twig")
      */
     public function createAction(Request $request) {
         $entity = new Ksiazka();
@@ -116,11 +113,10 @@ class KsiazkaController extends Controller {
             $em->flush();
             return $this->redirect($this->generateUrl('ksiazka_show', array('id' => $entity->getIsbn())));
         }
-
-        return [
+        return $this->render('AppBundle:Ksiazka:new.html.twig',[
             'entity' => $entity,
             'form' => $form->createView(),
-        ];
+        ]);
     }
 
     /**
@@ -129,18 +125,18 @@ class KsiazkaController extends Controller {
      *
      * @Route("/show/{id}", name="ksiazka_show")
      * @Method("GET")
-     * @Template()
      */
     public function showAction($id) {
         $entity = $this->getDoctrine()->getRepository('AppBundle:Ksiazka')->find($id);
         if (!$entity) {throw new \Exception('Nie można znaleźć książki');}
 
         $deleteForm = $this->createDeleteForm($id);
-
-        return [
+        
+        return $this->render('AppBundle:Ksiazka:show.html.twig',[
             'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
-        ];
+
+        ]);
     }
 
     /**
@@ -149,7 +145,6 @@ class KsiazkaController extends Controller {
      *
      * @Route("/admin/edit/{id}", name="ksiazka_edit")
      * @Method("GET")
-     * @Template()
      */
     public function editAction($id) {
         $entity = $this->getDoctrine()->getRepository('AppBundle:Ksiazka')->find($id);
@@ -157,12 +152,12 @@ class KsiazkaController extends Controller {
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
-
-        return [
+        
+        return $this->render('AppBundle:Ksiazka:show.html.twig',[
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        ];
+        ]);
     }
 
     /**
@@ -191,7 +186,6 @@ class KsiazkaController extends Controller {
      *
      * @Route("/admin/{id}/update", name="ksiazka_update")
      * @Method("PUT")
-     * @Template("AppBundle:Ksiazka:edit.html.twig")
      */
     public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
@@ -207,12 +201,11 @@ class KsiazkaController extends Controller {
 
             return $this->redirect($this->generateUrl('ksiazka_edit', array('id' => $id)));
         }
-
-        return [
+        return $this->render('AppBundle:Ksiazka:edit.html.twig',[
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        ];
+        ]);
     }
 
     
@@ -249,10 +242,10 @@ class KsiazkaController extends Controller {
      */
     private function createDeleteForm($id) {
         return $this->createFormBuilder()
-                        ->setAction($this->generateUrl('ksiazka_delete', array('id' => $id)))
+                        ->setAction($this->generateUrl('ksiazka_delete', ['id' => $id]))
                         ->setMethod('DELETE')
-                        ->add('submit', 'submit', array('label' => 'Usuń',
-                            'attr' => array('class' => 'OrangeButton')))
+                        ->add('submit', 'submit', ['label' => 'Usuń',
+                            'attr' => ['class' => 'OrangeButton']])
                         ->getForm()
         ;
     }
