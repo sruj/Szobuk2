@@ -12,6 +12,10 @@ services:
         class:  AppBundle\Utils\CartUtil
         arguments: [ "@request_stack", "@doctrine.orm.entity_manager" ]
 
+    app.cart:
+        class:  AppBundle\Utils\Cart
+        arguments: [ "@session" ]
+
     app.ksiazka_repository:
         class: "%app.ksiazka.paginator_aware.class%"
         arguments: [ "@doctrine.orm.entity_manager" ]

@@ -27,26 +27,9 @@ class CartController extends Controller
         $entity = $this->getDoctrine()->getRepository('AppBundle:Ksiazka')->find($isbn);
 
         if (!$entity) { throw new \Exception('Książka z numerem isbn: '.$isbn.' nie istnieje w bazie'); }
-        
-        $session = $request->getSession();
-        
-        if($session->has('cart'))//jeśli zmienna sesji cart juz jest to:
-        { 
-            $cart = $session->get('cart');
-            if(!array_key_exists($isbn,$cart))//jeśli isbn nie jest w koszu
-            {
-                $cart[$isbn]=1; // = 1
-            }
-            else
-            {
-              $cart[$isbn]++; //to zwiększ wartość ++
-            }
-        }
-        else
-        {
-            $cart[$isbn]=1;
-        }
-            $session->set('cart',$cart );
+
+        $serwis = $this->get('app.cart');
+        $serwis->addToCart($isbn);
             
         return $this->redirect($this->generateUrl('cartmenu'));
     }
@@ -355,4 +338,6 @@ class CartController extends Controller
             'suma'=>$suma
         ]);
     }
+
+
 }
