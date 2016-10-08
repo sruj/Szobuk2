@@ -220,7 +220,7 @@ class CartController extends Controller
         {
             $klient = new Klient();
         }
-        $form= $this->createForm(new DostawaType(), $klient, array(
+        $form= $this->createForm(DostawaType::class, $klient, array(
         'attr' => array('class' => 'form_dostawa')));
 
         $form->handleRequest($request);

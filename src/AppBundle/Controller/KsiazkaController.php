@@ -41,7 +41,7 @@ class KsiazkaController extends Controller {
 
         //[-Formularz Główny-]Główny formularz $form. Struktura to kolekcja formularzy KsiazkaListType()
         //a zawartość to $KsiazkiList
-        $form = $this->createForm(new KsiazkaListType(), $KsiazkiList);
+        $form = $this->createForm(KsiazkaListType::class, $KsiazkiList);
 
         //[-Formularz Główny-]Jeśli w panelu zmienionio ilos i kliknięto zapisz to odbieram 
         //zawartość formularza i aktualizuję bazę danych
@@ -87,7 +87,7 @@ class KsiazkaController extends Controller {
      * @return \Symfony\Component\Form\Form The form
      */
     private function createCreateForm(Ksiazka $entity) {
-        $form = $this->createForm(new KsiazkaType(), $entity, array(
+        $form = $this->createForm(KsiazkaType::class, $entity, array(
             'action' => $this->generateUrl('ksiazka_create'),
             'method' => 'GET','attr' => array('class' => 'form_new_book')
         ));
@@ -174,7 +174,7 @@ class KsiazkaController extends Controller {
      * @return \Symfony\Component\Form\Form The form
      */
     private function createEditForm(Ksiazka $entity) {
-        $form = $this->createForm(new KsiazkaType(), $entity, array(
+        $form = $this->createForm(KsiazkaType::class, $entity, array(
             'action' => $this->generateUrl('ksiazka_update', array('id' => $entity->getIsbn())),
             'method' => 'PUT',
         ));

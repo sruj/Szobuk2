@@ -69,7 +69,7 @@ class KategoriaController extends Controller
      */
     private function createCreateForm(Kategoria $entity)
     {
-        $form = $this->createForm(new KategoriaType(), $entity, array(
+        $form = $this->createForm(KategoriaType::class, $entity, array(
             'action' => $this->generateUrl('kategoria_create'),
             'method' => 'POST',
         ));
@@ -157,7 +157,7 @@ class KategoriaController extends Controller
     */
     private function createEditForm(Kategoria $entity)
     {
-        $form = $this->createForm(new KategoriaType(), $entity, array(
+        $form = $this->createForm(KategoriaType::class, $entity, array(
             'action' => $this->generateUrl('kategoria_update', array('id' => $entity->getIdkategoria())),
             'method' => 'PUT',
         ));

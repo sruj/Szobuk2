@@ -54,14 +54,14 @@ class ZarzadcaController extends Controller
         }
 
         //[-Formularze-] Tworzę formularze o strukturze XxxType. Bez zawartości.
-        $StatusForm = $this->createForm(new StatusType(),null, array(
+        $StatusForm = $this->createForm(StatusType::class,null, array(
         'action' => $this->generateUrl('panelSortFromDetails')));
-        $DataZamForm = $this->createForm(new DataZamType(),null, array(
+        $DataZamForm = $this->createForm(DataZamType::class,null, array(
         'action' => $this->generateUrl('panelSortFromDetails')));
-//        $DataZamForm = $this->createForm(new DataZamType());
-        $NrKlientaForm = $this->createForm(new NrKlientaType(),null, array(
+//        $DataZamForm = $this->createForm(DataZamType::class);
+        $NrKlientaForm = $this->createForm(NrKlientaType::class,null, array(
         'action' => $this->generateUrl('panelSortFromDetails')));
-//        $NrKlientaForm = $this->createForm(new NrKlientaType());
+//        $NrKlientaForm = $this->createForm(NrKlientaType::class);
 
         //[-Formularze-]Jeśli wypełniłem formularz to odbieram zawartość
         $StatusForm->handleRequest($request);
@@ -155,7 +155,7 @@ class ZarzadcaController extends Controller
 
         //[-Formularz Główny-]Główny formularz $form. Struktura to kolekcja formularzy ZamowienieListType()
         //a zawartość to $zamowieniaList
-        $form = $this->createForm(new ZamowienieListType(), $zamowieniaList);
+        $form = $this->createForm(ZamowienieListType::class, $zamowieniaList);
 
         //[-Formularz Główny-]Jeśli w panelu zmienionio jakiś status i kliknięto zapisz to odbieram 
         //zawartość formularza i aktualizuję bazę danych

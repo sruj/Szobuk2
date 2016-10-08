@@ -50,7 +50,7 @@ class PanelZamowieniaSzczegolyController extends Controller {
                 ->getRepository('AppBundle:ZamowienieProdukt')
                 ->findBy(array('idzamowienie' => $idzamowienie));
 
-        $StatusForm = $this->createForm(new ZamowienieType(), $zamowienieRep)->add('zmień status', 'submit');
+        $StatusForm = $this->createForm(ZamowienieType::class, $zamowienieRep)->add('zmień status', 'submit');
         //[-Formularze-]Jeśli wypełniłem formularz to odbieram zawartość
         $StatusForm->handleRequest($request);
         if ($StatusForm->isValid()) {
