@@ -144,29 +144,16 @@ class CartUtil {
     
     /**
      * zmiana ilości w cartmenu prowadzi przez skrypt JavaScript
-     * do zmianaQuantityAction i tam jest wywoływana na funckcja.
+     * do zmianaQuantityAction i tam jest wywoływana ta funckcja.
      * 
      * @return tablica $ksiazki i $suma
      * 
      */    
-    public function zmianaQuantityKoszyka()
+    public function zmien_quantity_produktow()
     {
-        foreach ($this->cart as $isbn => $quantity)
-        {   
-            $this->ksiazka = $this->getKsiazka($isbn);
-            $this->numAssocArrayKsiazka($this->ksiazka, 
-                    $quantity);
-            
-            // jeśli zmieniono ilość zamawianej książki w cartmenu. Gówno prawda, warunek jest prawdziwy dla każdego produktu w koszyku, nie tylko dla zmienionego. (Pod warunkiem, że kliknięto przycisk formularza z cartmenu.html.twig, Inaczej, tj gdy pierwszy raz przechodzę z cartmenuAction, ->request->has($isbn) nie będzie miał żadnego isbn)
-            if($this->request->request->has($isbn)) // Co to?    - To jest to samo co w kontrolerze obiekt Request. W serwisach (a teraz jesteś w serwisie) nie można używać obiektu Request, zamiast tego jest obiekt RequestStack http://symfony.com/blog/new-in-symfony-2-4-the-request-stack
-            {                                       // Ale co on if-uje?    -W cartmenu.html.twig jest <from> wyświetlający zawartość koszyka. Są w nim inputy ze zmienną o nazwie numeru ISBN konkretnej książki o jakiejś wartości. Formularz ten ma przycisk 'zatwierdź zmiany. Klikając przesyłam do path('cartmenu') metodą POST zmienne a w kontrolerze Symfony aktualizuje obiekt Request. A w tym serwisie obiekt RequestStack ma metodę '->request->has' którą sprawdzam zawartość obiektu jakie zmienne posiada. 
-                $this->quantityUpdate($isbn);
-            }
+        $this->session->set('cart',$this->request->get('data') ); //pobieram parametr data z requestu którym jest tablica produktów koszyka isbn=>ilość, i aktualizuję zmienną sesji tablicę "cart"
+        $this->przygotuj_zawartosc_koszyka();
+    }
 
-            $this->razem=$this->ksiazki[$this->i]['cena']*$this->ksiazki[$this->i]['quantity'];
-            $this->suma+=$this->razem;
-            $this->i++;
-        } 
-    } 
     
 }

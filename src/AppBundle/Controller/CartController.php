@@ -88,10 +88,10 @@ class CartController extends Controller
      * 
      * @Route("/cartmenu/{deleteisbn}", defaults={"deleteisbn" = false}, name="cartmenu")
      */    
-    public function cartmenuAction(Request $request, $deleteisbn)
+    public function cartmenuAction($deleteisbn)
     {
         $serwis = $this->get('my_cart'); // serwis
-        
+
         if(!$serwis->session->has('cart')){
             throw new \Exception('Koszyk pusty.');
         }
@@ -118,15 +118,9 @@ class CartController extends Controller
      */
     public function zmianaQuantityAction(Request $request)
     {
-        $data = $request->request->get('data');
-        $session = $request->getSession();
+        $serwis = $this->get('my_cart'); // serwis
+        $serwis->zmien_quantity_produktow();
 
-        $session->set('cart',$data );
-
-        $cart_obiekt = $this->get('my_cart'); // serwis
-        $cart_obiekt->przygotuj_zawartosc_koszyka();
-        $session->set('suma',$cart_obiekt->suma );
-        
         return []; 
     }
     
