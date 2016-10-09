@@ -27,6 +27,7 @@ class KsiazkaController extends Controller {
     public function indexAction(Request $request)
     {
         $ksi_rep = $this->get('app.ksiazka_repository');
+        $lpr = 45;
         if ($this->isGranted('ROLE_ADMIN')) {$lpr=9999;}/*limit per page. 9999 bo form_end przy paginacji na pierwszej stronie dodaje brakujáce elementy formularzy calej zawartoßci*/
         $ksiazki = $ksi_rep->findAllMy($request->query->getInt('page', 1), $lpr);
 

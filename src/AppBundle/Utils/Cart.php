@@ -27,7 +27,7 @@ class Cart
     /**
      * @param $isbn
      */
-    public function addToCart($isbn)
+    public function addProductToCart($isbn)
     {
         if (!($this->session->has('cart')))//jeśli zmienna sesji cart nie istnieje to:
         {
@@ -47,6 +47,25 @@ class Cart
         $this->session->set('cart', $cart);
     }
 
+    public function getCartQuantity()
+    {
+        $cartquantity = 0;
+
+        if($this->session->has('cart'))//jeśli zmienna sesji cart juz jest to:
+        {
+            $cart = $this->session->get('cart');
+            $cartquantity = array_sum($cart)  ;
+        }
+        
+        return $cartquantity;
+
+    }
+
+    public function sessionInvalidate()
+    {
+        $this->session->invalidate();
+    }
+    
     /**
      * @param $isbn
      * @param $cart

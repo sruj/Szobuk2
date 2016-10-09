@@ -28,7 +28,7 @@ class KategoriaController extends Controller
     {
         $entities = $this->getDoctrine()->getRepository('AppBundle:Kategoria')->findAll();
 
-        return $this->render('AppBundle:',[
+        return $this->render('AppBundle:Kategoria:index.html.twig',[
             'entities' => $entities
         ]);
     }

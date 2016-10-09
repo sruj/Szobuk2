@@ -29,32 +29,22 @@ class CartController extends Controller
         if (!$entity) { throw new \Exception('Książka z numerem isbn: '.$isbn.' nie istnieje w bazie'); }
 
         $serwis = $this->get('app.cart');
-        $serwis->addToCart($isbn);
+        $serwis->addProductToCart($isbn);
             
         return $this->redirect($this->generateUrl('cartmenu'));
     }
 
-    
-    
+
     /**
      * Ilość produktów w koszyku.
-     * 
+     *
      * Akcja używana przez layout jako {% render ... %}
      * Wyswietlane tam gdzie {% extends '::layout.html.twig' %}
-     */        
-    public function cartcontentAction(Request $request)
+     */
+    public function cartcontentAction()
     {
-        $session = $request->getSession();
-
-        if($session->has('cart'))//jeśli zmienna sesji cart juz jest to:
-        {         
-            $cart = $session->get('cart');
-            $cartquantity = array_sum($cart)  ;        
-        }
-        else
-        {
-            $cartquantity = 0;
-        }
+        $serwis = $this->get('app.cart');
+        $cartquantity = $serwis->getCartQuantity();
 
         return $this->render('AppBundle:Cart:cartcontent.html.twig', ['cartquantity' => $cartquantity]);
     }
@@ -67,10 +57,10 @@ class CartController extends Controller
      * 
      * @Route("/cartclear", name="cartclear")
      */
-    public function cartclearAction(Request $request)
+    public function cartclearAction()
     {
-        $session = $request->getSession();
-        $session->invalidate();
+        $serwis = $this->get('app.cart');
+        $serwis->sessionInvalidate();        
 
         return $this->render('AppBundle:Cart:cartclear.html.twig', []);
     }
@@ -83,7 +73,7 @@ class CartController extends Controller
      * 
      * @Route("/autoryzacja", name="autoryzacja")
      */
-    public function autoryzacjaAction(Request $request)
+    public function autoryzacjaAction()
     {
         return $this->render('AppBundle:Cart:autoryzacja.html.twig', []);
     }
@@ -96,25 +86,25 @@ class CartController extends Controller
      * 
      * @Route("/cartmenu/{deleteisbn}", name="cartmenu")
      */    
-    public function cartmenuAction(Request $request, $deleteisbn='')
+    public function cartmenuAction($deleteisbn='')
     {
         
-        $cart_obiekt = $this->get('my_cart'); // serwis
+        $serwis = $this->get('my_cart'); // serwis
         
-        if(!$cart_obiekt->session->has('cart')){
+        if(!$serwis->session->has('cart')){
             throw new \Exception('Koszyk pusty.');
         }
         
-        $cart_obiekt->deleteKsiazkaKoszyk($deleteisbn); // gdy kliknięto 'usuń' przy książce w cartmenu
-        $cart_obiekt->przygotujZawartoscKoszyka(); // utworzenie tablicy 'ksiazki' z danymi o każdej z nich i ilością w koszyku
+        $serwis->deleteKsiazkaKoszyk($deleteisbn); // gdy kliknięto 'usuń' przy książce w cartmenu
+        $serwis->przygotujZawartoscKoszyka(); // utworzenie tablicy 'ksiazki' z danymi o każdej z nich i ilością w koszyku
 
         // utworzenie zmiennej sesji 'suma' czyli kwoty do zapłaty (przyda się w podsumowaniu zakupu)
         $session = $request->getSession();
-        $session->set('suma',$cart_obiekt->suma );
+        $session->set('suma',$serwis->suma );
 
         return $this->render('AppBundle:Cart:cartmenu.html.twig',[
-            'ksiazki' => $cart_obiekt->ksiazki,
-            'suma'=>$cart_obiekt->suma
+            'ksiazki' => $serwis->ksiazki,
+            'suma'=>$serwis->suma
         ]);
 
     }
