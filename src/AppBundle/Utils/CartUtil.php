@@ -101,7 +101,7 @@ class CartUtil {
      * @return tablica $ksiazki i $suma
      * 
      */    
-    public function przygotujZawartoscKoszyka()
+    public function przygotuj_zawartosc_koszyka()
     {
         foreach ($this->cart as $isbn => $quantity)
         {   
@@ -118,15 +118,21 @@ class CartUtil {
             $this->razem=$this->ksiazki[$this->i]['cena']*$this->ksiazki[$this->i]['quantity'];
             $this->suma+=$this->razem;
             $this->i++;
-        } 
-    }    
+        }
+        $this->setSumaSession();
+    }
 
-    
+    protected function setSumaSession()
+    {
+        $this->session->set('suma',$this->suma );
+    }
+
+
     /**
      * Usuwanie książki z koszyka
      * 
      */    
-    function deleteKsiazkaKoszyk($deleteisbn)
+    function usun_ksiazke_z_koszyka($deleteisbn)
     {
         if(!($deleteisbn==''))
         { 

@@ -83,24 +83,24 @@ class CartController extends Controller
     
     /**
      * Koszyk.
+     * Tu trafiam po dodaniu produktu do koszyka lub po kliknięciu w koszyk.
+     * Tu również kierowane jest żądanie gdy wybieram "usuń" chcąc usunąć książkę z koszyka.
      * 
-     * @Route("/cartmenu/{deleteisbn}", name="cartmenu")
+     * @Route("/cartmenu/{deleteisbn}", defaults={"deleteisbn" = false}, name="cartmenu")
      */    
-    public function cartmenuAction($deleteisbn='')
+    public function cartmenuAction(Request $request, $deleteisbn)
     {
-        
         $serwis = $this->get('my_cart'); // serwis
         
         if(!$serwis->session->has('cart')){
             throw new \Exception('Koszyk pusty.');
         }
-        
-        $serwis->deleteKsiazkaKoszyk($deleteisbn); // gdy kliknięto 'usuń' przy książce w cartmenu
-        $serwis->przygotujZawartoscKoszyka(); // utworzenie tablicy 'ksiazki' z danymi o każdej z nich i ilością w koszyku
 
-        // utworzenie zmiennej sesji 'suma' czyli kwoty do zapłaty (przyda się w podsumowaniu zakupu)
-        $session = $request->getSession();
-        $session->set('suma',$serwis->suma );
+        if($deleteisbn) { // gdy kliknięto 'usuń' przy książce w cartmenu
+            $serwis->usun_ksiazke_z_koszyka($deleteisbn);
+        }
+
+        $serwis->przygotuj_zawartosc_koszyka();
 
         return $this->render('AppBundle:Cart:cartmenu.html.twig',[
             'ksiazki' => $serwis->ksiazki,
@@ -124,7 +124,7 @@ class CartController extends Controller
         $session->set('cart',$data );
 
         $cart_obiekt = $this->get('my_cart'); // serwis
-        $cart_obiekt->przygotujZawartoscKoszyka();
+        $cart_obiekt->przygotuj_zawartosc_koszyka();
         $session->set('suma',$cart_obiekt->suma );
         
         return []; 
