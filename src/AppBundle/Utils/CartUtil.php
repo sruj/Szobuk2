@@ -127,7 +127,20 @@ class CartUtil {
         $this->session->set('suma',$this->suma );
     }
 
-
+    public function wybierz_route($autoryzacja)
+    {
+        switch ($autoryzacja){
+            case 'zaloguj':
+                return 'fos_user_security_login';
+                break;
+            case 'zarejestruj':
+                return 'fos_user_registration_register';
+                break;
+        }
+    }
+    
+    
+    
     /**
      * Usuwanie książki z koszyka
      * 

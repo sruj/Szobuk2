@@ -123,31 +123,27 @@ class CartController extends Controller
 
         return []; 
     }
-    
+
+
+
     /**
-     * 
-     * @Route("/przejsciowka/{autoryzacja}", name="przejsciowka")
-     * 
+     * - Jeśli nie jestem zalogowany i będąc w cartmenu klikam "zamawiam" to jestem przekierowany do /autoryzacja a
+     *  po wybraniu "zaloguj" lub "zarejestruj" zostaję przeniesiony TU.
+     * - TU ustawiam nową zmienną sesji 'proces_zamowienia', która będzie potrzebna w dalszym etapie by przekierować
+     *  w odpowiedni route po zalogowaniu.
+     *
+     * @Route("/przejsciowka/{autoryzacja}", defaults={"autoryzacja" = "zaloguj"}, name="przejsciowka")
      */
-    public function przejsciowkaAction(Request $request,$autoryzacja)
+    public function przejsciowkaAction($autoryzacja)
     {
-        $session = $request->getSession();
-        $session->set('proces_zamowienia', 'tak');    
-        
-        switch ($autoryzacja){
-            case 'zaloguj':
-                return $this->redirectToRoute('fos_user_security_login');
-                break;
-            case 'zarejestruj':
-                return $this->redirectToRoute('fos_user_registration_register');
-                break;
-        }
-        
-        return [];
+        $serwis = $this->get('my_cart'); // serwis
+        $serwis->session->set('proces_zamowienia', 'tak'); // zmianna sesji by w dalszym etapie przekierować w odpowiedni route
+        $route = $serwis->wybierz_route($autoryzacja); // wybiera nazwę route zaloguj lub rejestruj
+
+        return $this->redirectToRoute($route);
     }
 
-    
-    
+
     /**
      * Formularz danych adresowych klienta.
      * 
