@@ -146,94 +146,31 @@ class CartController extends Controller
 
     /**
      * Formularz danych adresowych klienta.
+     * - jeśli poprawnie wypełniono formularz, zamówienie i dane klienta zapisane w bazie.
      * 
      * @Route("/zamawiam", name="zamawiam")
      */
     public function zamawiamAction(Request $request)
     {
-        $session = $request->getSession();
-        $em = $this->getDoctrine()->getManager();
-        $logged = $this->get('security.authorization_checker')
-                ->isGranted('IS_AUTHENTICATED_FULLY');
-        
-        if(!$session->has('cart')){
-            throw new \Exception('Koszyk pusty.');
-        }
-         
-        if ($logged) //jeśli zalogowany użytkownik
-        {    
-            //if (wypełniał wcześniej formularz){
-            $idlogowanie = $this->getUser()->getId();
-            $klient= $this->getDoctrine()
-                ->getRepository('AppBundle:Klient')
-                ->findOneBy(array('idlogowanie' => $idlogowanie));
-            // jeśli zalogowany nigdy nie wypełniał formularza dostawy
-                if (! is_object($klient)){$klient = new Klient();}
-        }
-        else
-        {
-            $klient = new Klient();
-        }
+        $session = $this->get('session');
+        if(!$session->has('cart')){throw new \Exception('Koszyk pusty.');}
+
+        $klient= $this->getDoctrine()
+            ->getRepository('AppBundle:Klient')
+            ->findOneBy(['idlogowanie' => $this->getUser()->getId()]); // zalogowany wypełniał kiedyś formularz
+        if (!$klient){$klient = new Klient();} // jeśli zalogowany nigdy nie wypełniał formularza dostawy lub jeśli niezalogowany
+
         $form= $this->createForm(DostawaType::class, $klient, array(
         'attr' => array('class' => 'form_dostawa')));
 
-        $form->handleRequest($request);
-
-        if ($form->isValid())
-        {
-            //linijka dla zalogowanego użytkownika
-            if ($logged){
-            $klient->setIdlogowanie($this->getUser());
-            }
-            //wypełnienie tabeli Zamowienie
-            $zamowienie = new Zamowienie();
-            $zamowienie->setIdklient($klient);
-            $status = $this->getDoctrine()
-                    ->getRepository('AppBundle:Status')
-                    ->find('1');
-            $zamowienie->setIdstatus($status);
-            $zamowienie->setDatazlozeniacurrent();
-            //wypełnienie tabeli Zamowienie_Produkt
-            $cart = $session->get('cart');
-            foreach ($cart as $isbn => $quantity)
-            {   
-                $ksiazka = $this->getDoctrine()
-                    ->getRepository('AppBundle:Ksiazka')
-                    ->find($isbn);
-                $isbn=$ksiazka->getIsbn();        
-                $tytul=$ksiazka->getTytul();        
-                $autor=$ksiazka->getAutor();
-                $cena=$ksiazka->getCena();        
-                $rokwydania=$ksiazka->getRokwydania();        
-                $ilosc=$quantity;        
-                $zamowienieProdukt = new ZamowienieProdukt();
-                $zamowienieProdukt->setIdzamowienie($zamowienie); 
-                $zamowienieProdukt->setIsbn($ksiazka);
-                $zamowienieProdukt->setTytul($tytul);
-                $zamowienieProdukt->setAutor($autor);
-                $zamowienieProdukt->setCenaproduktu($cena);
-                $zamowienieProdukt->setRokwydania($rokwydania);
-                $zamowienieProdukt->setIlosc($ilosc);
-                $em->persist($zamowienieProdukt);
-            }  
-
-            $em->persist($klient);
-            $em->persist($zamowienie);
-            $em->flush();    
-
-            $idzamowienia=$zamowienie->getIdzamowienie();
-            $request->getSession()->getFlashBag()->add(
-                'idzamowienie',
-                $idzamowienia);
-            return $this->redirect($this->generateUrl('potwierdzenie')
-                    );
-        }
-
+        $formHandler = $this->get('app.form_handler.zamowienie');
+        if($formHandler->handle($form, $request)){
+            return $this->redirectToRoute('potwierdzenie');
+        };
 
         return $this->render('AppBundle:Cart:zamawiam.html.twig',[
             'form' => $form->createView()
         ]);
-
     }
     
     

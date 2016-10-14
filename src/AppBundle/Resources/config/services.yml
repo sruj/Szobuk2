@@ -27,3 +27,11 @@ services:
         arguments: [ "@doctrine.orm.entity_manager" ]
         tags:
             -  { name: knp_paginator.injectable, paginator: '@knp_paginator' }
+
+    app.form_handler.zamowienie:
+        class: AppBundle\Utils\CreateZamowienieFormHandler
+        arguments: ["@app.zamowienie_manager"]
+
+    app.zamowienie_manager:
+        class: AppBundle\Utils\ZamowienieManager
+        arguments: [ "@doctrine.orm.entity_manager", "@security.token_storage","@security.authorization_checker", "@session" ]
