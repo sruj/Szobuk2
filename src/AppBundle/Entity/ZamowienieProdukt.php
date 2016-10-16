@@ -428,9 +428,10 @@ class ZamowienieProdukt
      * @param \AppBundle\Entity\Zamowienie $idzamowienie
      * @return ZamowienieProdukt
      */
-    public function setIdzamowienie(\AppBundle\Entity\Zamowienie $idzamowienie = null)
+    public function setIdzamowienie(\AppBundle\Entity\Zamowienie $zamowienie = null)
     {
-        $this->idzamowienie = $idzamowienie;
+        $this->idzamowienie = $zamowienie;
+        $zamowienie->addZamowienieProdukt($this);
 
         return $this;
     }

@@ -4,20 +4,15 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\DostawaType;
 use AppBundle\Entity\Klient;
 use AppBundle\Entity\Zamowienie;
-use AppBundle\Entity\ZamowienieProdukt;
-use AppBundle\Entity\Status;
 use AppBundle\Entity\Ksiazka;
-use DateTime;
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class CartController extends Controller
 {
-    
     
     /**
      * @Route("/addtocart/{isbn}", name="addtocart")
@@ -35,6 +30,7 @@ class CartController extends Controller
     }
 
 
+
     /**
      * Ilość produktów w koszyku.
      *
@@ -50,8 +46,7 @@ class CartController extends Controller
     }
     
     
-    
-    
+
     /**
      * Czyszczenie koszyka.
      * 
@@ -66,8 +61,7 @@ class CartController extends Controller
     }
     
     
-    
-    
+
     /**
      * Zapłać. Formularz
      * 
@@ -77,9 +71,8 @@ class CartController extends Controller
     {
         return $this->render('AppBundle:Cart:autoryzacja.html.twig', []);
     }
-    
-    
-    
+
+
     
     /**
      * Koszyk.
@@ -109,6 +102,7 @@ class CartController extends Controller
 
     }
     
+
 
     /**
      * zmiana ilości w cartmenu prowadzi przez skrypt JavaScript tutaj.
@@ -144,6 +138,7 @@ class CartController extends Controller
     }
 
 
+
     /**
      * Formularz danych adresowych klienta.
      * - jeśli poprawnie wypełniono formularz, zamówienie i dane klienta zapisane w bazie.
@@ -173,88 +168,30 @@ class CartController extends Controller
         ]);
     }
     
-    
-    
+
     
     /**
      * Potwierdzenie.
      * 
      * @Route("/potwierdzenie", name="potwierdzenie")
-     * @Template()
      */
     public function potwierdzenieAction(Request $request)
     {
         $idzamowienie=$request->getSession()->getFlashBag()->get('idzamowienie');
-        
         if (!$idzamowienie) {
             throw new \Exception('To jest strona potwierdzająca zamówienie. Aby złożyć zamówienie dodaj produkt do koszyka i tak dalej...');
         }
-        
-        foreach($idzamowienie as $id)
-        {
-        $zamowienie= $this->getDoctrine()
-                        ->getRepository('AppBundle:Zamowienie')
-                        ->find($id);
 
-        $produkty= $this->getDoctrine()
-                        ->getRepository('AppBundle:ZamowienieProdukt')
-                        ->findBy(array('idzamowienie'=>$id));
-        }
+        $zamowienie = $this->getDoctrine()
+            ->getRepository('AppBundle:Zamowienie')
+            ->find($idzamowienie[0]);
+        $produkty = $zamowienie->getZamowienieProdukty();
         $suma=$request->getSession()->get('suma');
-
-        //mail do klienta ze szczegółami zamówienia
-        $Klient=$this->getDoctrine()
-                            ->getRepository('AppBundle:Klient')
-                            ->find($zamowienie->getIdklient());
-        $mailKlient=$Klient->getEmail();
-        $messageToKlient = \Swift_Message::newInstance()
-            ->setSubject('Księgarnia Szobuk - potwierdzenie zamówienia')
-            ->setFrom('send@example.com')
-            ->setTo($mailKlient)
-            ->setBody(
-                $this->renderView(
-                    'AppBundle:Cart:potwierdzenieMail.html.twig',
-                    array('zamowienie'=>$zamowienie, 'produkty'=>$produkty,
-                'suma'=>$suma)
-                ),
-                'text/html'
-            )
-                        ->addPart(
-                $this->renderView(
-                    'AppBundle:Cart:potwierdzenieMail.html.twig',
-                    array('zamowienie'=>$zamowienie, 'produkty'=>$produkty,
-                'suma'=>$suma)
-                ),
-                'text/plain'
-            );
-
-        //mail do zarządcy informujący o nowym zamówieniu
-            $mailZarzadca='chryplewiczpawel@gmail.com';
-            $messageToZarzadca = \Swift_Message::newInstance()
-            ->setSubject('Księgarnia Szobuk - Złożono nowe zamówienie')
-            ->setFrom('send@example.com')
-            ->setTo($mailZarzadca)
-            ->setBody(
-                $this->renderView(
-                    'AppBundle:Cart:potwierdzenieMailZarzadca.html.twig',
-                    array('zamowienie'=>$zamowienie, 'produkty'=>$produkty,
-                'suma'=>$suma)
-                ),
-                'text/html'
-            )
-            ->addPart('Złożono nowe zamówienie',
-                'text/plain'
-            )
-            ;
-
-        $this->get('mailer')->send($messageToKlient);
-        $this->get('mailer')->send($messageToZarzadca);
-
+        
         return $this->render('AppBundle:Cart:potwierdzenie.html.twig',[
             'zamowienie'=>$zamowienie, 'produkty'=>$produkty,
             'suma'=>$suma
         ]);
     }
-
 
 }

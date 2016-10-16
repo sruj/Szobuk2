@@ -34,4 +34,16 @@ services:
 
     app.zamowienie_manager:
         class: AppBundle\Utils\ZamowienieManager
-        arguments: [ "@doctrine.orm.entity_manager", "@security.token_storage","@security.authorization_checker", "@session" ]
+        arguments: ["@doctrine.orm.entity_manager","@security.token_storage","@security.authorization_checker","@session","@event_dispatcher" ]
+
+    app.email_notify_client_listener:
+        class: AppBundle\EventListener\SendEmailNotificationToClientListener
+        arguments:  [ "@mailer", "@twig", "@session" ]
+        tags:
+            - { name: kernel.event_listener, event: order.placed }
+
+    app.email_notify_admin_listener:
+        class: AppBundle\EventListener\SendEmailNotificationToAdminListener
+        arguments:  [ "@mailer", "@twig", "@session" ]
+        tags:
+            - { name: kernel.event_listener, event: order.placed }
