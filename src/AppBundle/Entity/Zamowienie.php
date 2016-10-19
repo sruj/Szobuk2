@@ -179,9 +179,6 @@ class Zamowienie
 //     public function __construct() {
 //        $this->przesylki = new ArrayCollection();
 //    }    
-//    public function __construct() {
-//        $this->zamowienie_produkty = new ArrayCollection();
-//    }     
 
     /**
      * Add faktury
