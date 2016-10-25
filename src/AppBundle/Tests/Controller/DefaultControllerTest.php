@@ -16,9 +16,9 @@ class DefaultControllerTest extends WebTestCase
         $response = $client->getResponse();
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertGreaterThan(0, $crawler->filter('a.active:contains("Wszystkie")')->count(),
-            'Podstrona "Wszystkie" działa.');
+            'Podstrona "Wszystkie" nie działa.');
         $this->assertCount(Ksiazka::NUM_ITEMS, $crawler->filterXPath('//div[@class=\'top-right\']'),
-            'Strona wyświetla odpowiednią ilość produktów.(div top-right czyli tam gdzie cena)');
+            'Strona nie wyświetla odpowiednią ilość produktów.(div top-right czyli tam gdzie cena)');
 
     }
 
@@ -31,9 +31,9 @@ class DefaultControllerTest extends WebTestCase
         $response = $client->getResponse();
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertGreaterThan(0, $crawler->filter('a.active:contains("Popularne")')->count(),
-            'Podstrona "Popularne" działa.');
+            'Podstrona "Popularne" nie działa.');
         $this->assertCount(Ksiazka::NUM_ITEMS, $crawler->filterXPath('//div[@class=\'top-right\']'),
-            'Strona wyświetla odpowiednią ilość produktów.(div top-right czyli tam gdzie cena)');
+            'Strona nie wyświetla odpowiednią ilość produktów.(div top-right czyli tam gdzie cena)');
     }
 
     public function testNowosci()
@@ -45,9 +45,9 @@ class DefaultControllerTest extends WebTestCase
         $response = $client->getResponse();
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertGreaterThan(0, $crawler->filter('a.active:contains("Nowości")')->count(),
-            'Podstrona "Nowości" działa.');
+            'Podstrona "Nowości" nie działa.');
         $this->assertCount(Ksiazka::NUM_ITEMS, $crawler->filterXPath('//div[@class=\'top-right\']'),
-            'Strona wyświetla odpowiednią ilość produktów.(div top-right czyli tam gdzie cena)');
+            'Strona nie wyświetla odpowiednią ilość produktów.(div top-right czyli tam gdzie cena)');
     }
 
 }

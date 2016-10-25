@@ -34,6 +34,32 @@ class KategoriaController extends Controller
     }
 
     /**
+     * Wyświetla książki wybranej kategorii.
+     *
+     * @Route("/{id}", name="kategoria_show")
+     * @Method("GET")
+     */
+    public function showAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $kategoria = $em->getRepository(Kategoria::class)->find($id);
+
+        if (!$kategoria) {
+            throw $this->createNotFoundException('Nie można znaleźć kategorii.');
+        }
+
+        $deleteForm = $this->createDeleteForm($id);
+        $ksiazki = $em->getRepository('AppBundle:Ksiazka')
+                ->findBy(array('idkategoria' => $id));
+
+        return $this->render('AppBundle:Kategoria:show.html.twig',[
+            'kategoria'   => $kategoria,
+            'ksiazki'     => $ksiazki,
+            'delete_form' => $deleteForm->createView(),
+        ]);
+    }
+
+    /**
      * Creates a new Kategoria entity.
      *
      * @Route(name="kategoria_create")
@@ -89,35 +115,9 @@ class KategoriaController extends Controller
         $entity = new Kategoria();
         $form   = $this->createCreateForm($entity);
 
-        return $this->render('AppBundle:',[
+        return $this->render('AppBundle:Kategoria:new.html.twig',[
             'entity' => $entity,
             'form'   => $form->createView(),
-        ]);
-    }
-
-    /**
-     * Wyszukuje i wyświetla książki wybranej kategorii.
-     *
-     * @Route("/{id}", name="kategoria_show")
-     * @Method("GET")
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $kategoria = $em->getRepository(Kategoria::class)->find($id);
-
-        if (!$kategoria) {
-            throw $this->createNotFoundException('Nie można znaleźć kategorii.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $ksiazki = $em->getRepository('AppBundle:Ksiazka')
-                ->findBy(array('idkategoria' => $id));
-
-        return $this->render('AppBundle:Kategoria:show.html.twig',[
-            'kategoria'   => $kategoria,
-            'ksiazki'     => $ksiazki,
-            'delete_form' => $deleteForm->createView(),
         ]);
     }
 
