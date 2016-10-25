@@ -15,9 +15,9 @@ class CartControllerTest extends WebTestCase
         $client->request('GET', '/addtocart/978-0010465284');
         $this->assertTrue($client->getResponse()->isRedirect('/cartmenu'));
         $client->request('GET', '/addtocart/978-0040892976');
+        $crawler = $client->followRedirect();
 
         //testuję od razu CartController:cartcontentAction(), czyli liczba produktów w koszyku.
-        $crawler = $client->request('GET', '/cartmenu');
         $this->assertTrue($crawler->filter('div.quantityKosz:contains("2")')->count() > 0);
 
         //testuję od razu usuwanie jednego produktu CartController:cartmenuAction() gdy kliknięto "usuń" przy produkcie.
@@ -57,6 +57,41 @@ class CartControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/cartclear');
         $this->assertTrue($crawler->filter('h3.szaryKlocek:contains("Koszyk pusty")')->count() > 0);
         $this->assertTrue($crawler->filter('div.quantityKosz:contains("0")')->count() > 0);
+    }
+    
+    public function testBuyProductByUnregisteredCustomer()
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/addtocart/978-0010465284');
+        $crawler = $client->followRedirect();
+
+        //wybiera "zamawiam" i zostaję przekierowany do wyboru autoryzacji.
+        $link = $crawler->filter('a:contains("zamawiam")')->link();
+        $crawler = $client->click($link);
+        $this->assertTrue($crawler->filter('html:contains("Wybierz sposób autoryzacji")')->count() > 0);
+
+        //wybieram "kup bez rejestracji"
+        $link = $crawler->filter('a:contains("kup bez rejestracji")')->link();
+        $crawler = $client->click($link);
+        $this->assertTrue($crawler->filter('html:contains("Dostawa - formularz")')->count() > 0);
+
+        //wypełniam dane, zatwierdzam i dostaję przekierowany do podsumowania zamówienia.
+        $form = $crawler->selectButton('dostawa[zapisz]')->form();
+        $client->submit($form,[
+            'dostawa[imie]'=>'paweł',
+            'dostawa[nazwisko]'=>'chryplewicz',
+            'dostawa[email]'=>'chryplewiczpawel@wp.pl',
+            'dostawa[ulica]'=>'ddd',
+            'dostawa[nrDomu]'=>'22',
+            'dostawa[nrMieszkania]'=>'2',
+            'dostawa[kodPocztowy]'=>'59-300',
+            'dostawa[miasto]'=>'Lubin',
+            'dostawa[nip]'=>'1234567890',
+            'dostawa[nrTelefonu]'=>'78687677',
+        ]);
+        $crawler = $client->followRedirect();
+        $this->assertTrue($crawler->filter('html:contains("zamówione produkty:")')->count() > 0);
     }
 
     public function testAutoryzacja()
