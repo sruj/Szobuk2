@@ -2,6 +2,7 @@
 
 namespace AppBundle\Tests\Controller;
 
+use AppBundle\Entity\Ksiazka;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class DefaultControllerTest extends WebTestCase
@@ -14,13 +15,13 @@ class DefaultControllerTest extends WebTestCase
 
         $response = $client->getResponse();
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertTrue($crawler->filter('html:contains("Wszystkie")')->count() > 0);
-        $this->assertTrue($crawler->filter('html:contains("ZŁ")')->count() > 0);
-        $this->assertGreaterThan(0, $crawler->filter('a.active')->count());
-        $this->assertTrue($crawler->filter('div.quantityKosz:contains("0")')->count() > 0);
+        $this->assertGreaterThan(0, $crawler->filter('a.active:contains("Wszystkie")')->count(),
+            'Podstrona "Wszystkie" działa.');
+        $this->assertCount(Ksiazka::NUM_ITEMS, $crawler->filterXPath('//div[@class=\'top-right\']'),
+            'Strona wyświetla odpowiednią ilość produktów.(div top-right czyli tam gdzie cena)');
 
     }
-    
+
     public function testPopularne()
     {
         $client = static::createClient();
@@ -29,8 +30,10 @@ class DefaultControllerTest extends WebTestCase
 
         $response = $client->getResponse();
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertTrue($crawler->filter('html:contains("Popularne")')->count() > 0);
-        $this->assertTrue($crawler->filter('html:contains("ZŁ")')->count() > 0);
+        $this->assertGreaterThan(0, $crawler->filter('a.active:contains("Popularne")')->count(),
+            'Podstrona "Popularne" działa.');
+        $this->assertCount(Ksiazka::NUM_ITEMS, $crawler->filterXPath('//div[@class=\'top-right\']'),
+            'Strona wyświetla odpowiednią ilość produktów.(div top-right czyli tam gdzie cena)');
     }
 
     public function testNowosci()
@@ -41,17 +44,10 @@ class DefaultControllerTest extends WebTestCase
 
         $response = $client->getResponse();
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertTrue($crawler->filter('html:contains("Nowości")')->count() > 0);
-        $this->assertTrue($crawler->filter('html:contains("ZŁ")')->count() > 0);
+        $this->assertGreaterThan(0, $crawler->filter('a.active:contains("Nowości")')->count(),
+            'Podstrona "Nowości" działa.');
+        $this->assertCount(Ksiazka::NUM_ITEMS, $crawler->filterXPath('//div[@class=\'top-right\']'),
+            'Strona wyświetla odpowiednią ilość produktów.(div top-right czyli tam gdzie cena)');
     }
-
-//    public function testUsunFormularz()
-//    {
-//        $client = static::createClient();
-//
-//        $crawler = $client->request('GET', '/login');
-//
-//        $this->assertEquals('', $crawler->filter('form input[name=_username]')->attr('value'));
-//    }
 
 }

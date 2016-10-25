@@ -16,6 +16,11 @@ use AppBundle\Validator\Constraints as AcmeAssert;
  */
 class Ksiazka
 {
+
+    /**
+     * liczba książek na stronie (głównej)
+     */
+    const NUM_ITEMS = 12;
     
     /**
      * @var \DateTime $created

@@ -15,6 +15,8 @@ use Knp\Component\Pager\Paginator;
  */
 class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterface
 {
+    
+
     /**
      * @var
      */
@@ -105,7 +107,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
     /**
      * @param int $page
      */
-    public function findAllMy($page, $limit = 45)
+    public function findAllMy($page, $limit = Ksiazka::NUM_ITEMS)
     {
         return $this->paginator->paginate(
             $this->queryAll(),
@@ -122,7 +124,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
         return $this->paginator->paginate(
             $this->queryPopularne(),
             $page/*page number*/,
-            45/*limit per page*/
+            Ksiazka::NUM_ITEMS/*limit per page*/
         );
     }
     
@@ -134,7 +136,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
         return $this->paginator->paginate(
             $this->queryNowosci(),
             $page/*page number*/,
-            45/*limit per page*/
+            Ksiazka::NUM_ITEMS/*limit per page*/
         );
     }
     
@@ -143,7 +145,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
         return $this->paginator->paginate(
             $this->queryWyszukiwarka($word),
             $page/*page number*/,
-            45/*limit per page*/
+            Ksiazka::NUM_ITEMS/*limit per page*/
         );
     }   
     
@@ -152,7 +154,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
         return $this->paginator->paginate(
             $this->queryByWhat($findby, $what),
             $page/*page number*/,
-            45/*limit per page*/
+            Ksiazka::NUM_ITEMS/*limit per page*/
         );
     }
 
