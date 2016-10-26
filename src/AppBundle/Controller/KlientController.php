@@ -14,6 +14,10 @@ class KlientController extends Controller {
      */
     public function historiaPanelAction(Request $request) 
     {
+        //refaktor: Type error: Argument 2 passed to Doctrine\ORM\EntityRepository::__construct() must be an instance of Doctrine\ORM\Mapping\ClassMetadata, none given, called in C:\wamp64\www\Szobuk2\app\cache\dev\appDevDebugProjectContainer.php on line 455
+        //500 Internal Server Error - FatalThrowableError        
+        
+        
         if
         (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw $this->createAccessDeniedException();

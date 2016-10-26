@@ -27,23 +27,23 @@ class KsiazkaController extends Controller {
     public function indexAction(Request $request)
     {
         $ksi_rep = $this->get('app.ksiazka_repository');
-        $lpr = 45;
+        $lpr = KsiazkaList::NUM_ITEMS;
         if ($this->isGranted('ROLE_ADMIN')) {$lpr=9999;}/*limit per page. 9999 bo form_end przy paginacji na pierwszej stronie dodaje brakujáce elementy formularzy calej zawartoßci*/
         $ksiazki = $ksi_rep->findAllMy($request->query->getInt('page', 1), $lpr);
 
-        //[-Formularz Główny-]Ładowanie $zamowieniaList - zmiennej potrzebnej do głównego formularza. 
+        //[-Formularz Główny-]Ładowanie $zamowieniaList - zmiennej potrzebnej do głównego formularza.
         //To kluczowa zmienna. Obiekt ZamowienieList() to kolekcja formularzy
         //pozwala na stworzenie wielu formularzy z jednym buttonem
-        $KsiazkiList = new KsiazkaList();     
+        $KsiazkiList = new KsiazkaList();
         foreach ($ksiazki as $ksiazka) {
             $KsiazkiList->getKsiazki()->add($ksiazka);
-        }  
+        }
 
         //[-Formularz Główny-]Główny formularz $form. Struktura to kolekcja formularzy KsiazkaListType()
         //a zawartość to $KsiazkiList
         $form = $this->createForm(KsiazkaListType::class, $KsiazkiList);
 
-        //[-Formularz Główny-]Jeśli w panelu zmienionio ilos i kliknięto zapisz to odbieram 
+        //[-Formularz Główny-]Jeśli w panelu zmienionio ilos i kliknięto zapisz to odbieram
         //zawartość formularza i aktualizuję bazę danych
         $form->handleRequest($request);
         if ($form->isValid()) {
@@ -154,7 +154,7 @@ class KsiazkaController extends Controller {
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
         
-        return $this->render('AppBundle:Ksiazka:show.html.twig',[
+        return $this->render('AppBundle:Ksiazka:edit.html.twig',[
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
