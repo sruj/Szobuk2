@@ -18,7 +18,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
     
 
     /**
-     * @var
+     * @var Paginator
      */
     protected $paginator;
 
@@ -53,6 +53,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
         return $this->em->createQuery('
                 SELECT a 
                 FROM AppBundle:Ksiazka a
+                ORDER BY a.tytul ASC
             ');
     }
 
@@ -101,7 +102,8 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
             'SELECT a
             FROM AppBundle:Ksiazka a
             WHERE a.'.$findby.' = :param'
-        )->setParameter('param', $what);            
+        )->setParameter('param', $what);
+
     }    
     
     /**
@@ -109,7 +111,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
      */
     public function findAllMy($page, $limit = Ksiazka::NUM_ITEMS)
     {
-        return $this->paginator->paginate(
+        return  $this->paginator->paginate(
             $this->queryAll(),
             $page/*page number*/,
             $limit/*limit per page*/

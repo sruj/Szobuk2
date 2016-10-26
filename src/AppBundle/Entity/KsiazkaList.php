@@ -8,6 +8,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 class KsiazkaList
 {
+    /**
+     * liczba książek na stronie (katalog: /ksiazka/)
+     */
+    const NUM_ITEMS = 45;
 
     private $ksiazki;
 
