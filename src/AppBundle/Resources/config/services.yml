@@ -3,7 +3,8 @@
 parameters:
     app.ksiazka.paginator_aware.class: AppBundle\Repository\KsiazkaRepository
     app.zamowienie.paginator_aware.class: AppBundle\Repository\ZamowienieRepository
-
+    app.zamowienie.entity: AppBundle\Entity\Zamowienie
+    app.ksiazka.entity: AppBundle\Entity\Ksiazka
 services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
@@ -18,13 +19,15 @@ services:
 
     app.ksiazka_repository:
         class: "%app.ksiazka.paginator_aware.class%"
-        arguments: [ "@doctrine.orm.entity_manager" ]
+        factory: ["@doctrine", getRepository]
+        arguments: ["%app.ksiazka.entity%"]
         tags:
             -  { name: knp_paginator.injectable, paginator: '@knp_paginator' }
 
     app.zamowienie_repository:
         class: "%app.zamowienie.paginator_aware.class%"
-        arguments: [ "@doctrine.orm.entity_manager" ]
+        factory: ["@doctrine", getRepository]
+        arguments: ["%app.zamowienie.entity%"]
         tags:
             -  { name: knp_paginator.injectable, paginator: '@knp_paginator' }
 

@@ -24,6 +24,7 @@ class KsiazkaControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/ksiazka/');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(),"Unexpected HTTP status code for GET /ksiazka/");
         $isSort = $this->columnSortChecker->isAlphabetic('//tbody/tr[', ']/td[1]/a', $crawler);
         $this->assertTrue($isSort,'Kolumna tytuł nieposortowana');
 

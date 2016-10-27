@@ -12,7 +12,7 @@ use AppBundle\Validator\Constraints as AcmeAssert;
  * Ksiazka
  *
  * @ORM\Table(name="ksiazka", indexes={@ORM\Index(name="idKategoria_idx", columns={"idKategoria"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\KsiazkaRepository")
  */
 class Ksiazka
 {

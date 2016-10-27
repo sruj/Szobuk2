@@ -22,20 +22,6 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
      */
     protected $paginator;
 
-    /**
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * KsiazkaRepository constructor.
-     * @param EntityManager $entityManager
-     */
-    public function __construct(EntityManager $entityManager)
-    {
-        $this->em = $entityManager;
-    }
-
 
     /**
      * @param Paginator $paginator
@@ -50,7 +36,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
      */
     public function queryAll()
     {
-        return $this->em->createQuery('
+        return $this->_em->createQuery('
                 SELECT a 
                 FROM AppBundle:Ksiazka a
                 ORDER BY a.tytul ASC
@@ -62,7 +48,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
      */
     public function queryPopularne()
     {
-        return $this->em->createQuery('
+        return $this->_em->createQuery('
             SELECT k
             FROM AppBundle:Ksiazka k
             WHERE k.cena < :cena
@@ -75,7 +61,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
      */
     public function queryNowosci()
     {
-        return $this->em->createQuery('
+        return $this->_em->createQuery('
             SELECT k
             FROM AppBundle:Ksiazka k
             ORDER BY k.created DESC'
@@ -84,7 +70,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
     
     public function queryWyszukiwarka($word)
     {
-        $repository = $this->em->getRepository('AppBundle:Ksiazka');
+        $repository = $this->_em->getRepository('AppBundle:Ksiazka');
         return $query = $repository->createQueryBuilder('a')
             ->where('a.tytul LIKE :word')
             ->orWhere('a.autor LIKE :word')
@@ -98,7 +84,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
      */
     public function queryByWhat($findby, $what)
     {
-        return $this->em->createQuery(
+        return $this->_em->createQuery(
             'SELECT a
             FROM AppBundle:Ksiazka a
             WHERE a.'.$findby.' = :param'

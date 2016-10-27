@@ -20,20 +20,7 @@ class ZamowienieRepository extends EntityRepository implements PaginatorAwareInt
      */
     protected $paginator;
 
-//    /**
-//     * @var EntityManager
-//     */
-//    protected $_em;
-//
-//    /**
-//     * ZamowienieRepository constructor.
-//     * @param EntityManager $entityManager
-//     */
-//    public function __construct(EntityManager $entityManager)
-//    {
-//        $this->_em = $entityManager;
-//    }
-
+    
     /**
      * @param Paginator $paginator
      */
