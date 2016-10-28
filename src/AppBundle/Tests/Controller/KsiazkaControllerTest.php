@@ -113,5 +113,3 @@ class KsiazkaControllerTest extends WebTestCase
 
     }
 }
-//        $content = $client->getResponse()->getContent();
-//        $f=0;
