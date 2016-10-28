@@ -6,17 +6,15 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class RegistrationControllerTest extends WebTestCase
 {
-    //TODO: testy funkcjonalne dla rejestracji, profile/edit, 
-//  /login
-//  /login_check
-//  /logout
-//   /profile/
-///profile/edit
-//  /register/
-
 
 
     public function testIndex()
     {
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/register/');
+
+        $response = $client->getResponse();
+        $this->assertEquals(200, $response->getStatusCode());
     }
 }
