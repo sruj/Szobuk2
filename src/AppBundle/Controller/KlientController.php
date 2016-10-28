@@ -14,8 +14,8 @@ class KlientController extends Controller {
      */
     public function historiaPanelAction(Request $request) 
     {
-        //refaktor: Type error: Argument 2 passed to Doctrine\ORM\EntityRepository::__construct() must be an instance of Doctrine\ORM\Mapping\ClassMetadata, none given, called in C:\wamp64\www\Szobuk2\app\cache\dev\appDevDebugProjectContainer.php on line 455
-        //500 Internal Server Error - FatalThrowableError        
+        //refaktor: zalogowany user który nigdy nie robił zakupów odiwedzając historiapanel dostaje exception
+        // Call to a member function getIdklient() on null
         
         
         if
