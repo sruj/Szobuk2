@@ -29,8 +29,75 @@ class ZarzadcaControllerTest extends WebTestCase
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
     }
 
+    public function testCompleteScenario()
+    {
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'wazny',
+            'PHP_AUTH_PW' => 'wazny',
+        ]);
+        $crawler = $client->request('GET', '/zarzadca/');
+        $this->assertGreaterThan(0, $crawler->filter('h3:contains("Menu")')->count(),
+            'Strona /zarzadca/ nie zawiera h3:contains("Menu")');
+
+        //czy działa link 'zamówienia'
+        $link = $crawler->filterXPath('//*[text()[contains(.,\'zamówienia\')]]')->link();
+        $crawler = $client->click($link);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+        $this->assertGreaterThan(4, $crawler->filterXPath('//thead/tr/th')->count(), 'Missing elements //thead/tr/th - means there is no table head ' );
+        $this->assertEquals(3, $crawler->filter('button:contains("Filtruj")')->count(),
+            'Missing elements button:contains("Filtruj") - means there are no 3 filter buttons');
+        $crawler = $client->back();
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+
+        //czy działa link 'kategorie - edycja'
+        $link = $crawler->filterXPath('//*[text()[contains(.,\'kategorie - edycja\')]]')->link();
+        $crawler = $client->click($link);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+        $this->assertGreaterThan(20, $crawler->filterXPath('//li/a[text()[contains(.,\'edit\')]]')->count(), 'Missing elements //li/a[text()[contains(.,edit)]]- means there is no edit elements' );
+        $this->assertEquals(1, $crawler->filter('a:contains("Dodaj Nową Kategorię")')->count(),
+            'Missing elements a:contains("Dodaj Nową Kategorię") - means there are no button "Dodaj Nową Kategorię"');
+        $crawler = $client->back();
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+
+        //czy działa link 'dodaj kategorię'
+        $link = $crawler->filterXPath('//*[text()[contains(.,\'dodaj kategorię\')]]')->link();
+        $crawler = $client->click($link);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+        $this->assertGreaterThan(0, $crawler->filterXPath('//h3[text()[contains(.,\'dodaj kategorię\')]]')->count(), 'Missing elements //h3[text()[contains(.,\'dodaj kategorię\')]]' );
+        $this->assertEquals(1, $crawler->filter('button:contains("Dodaj")')->count(),
+            'Missing elements button:contains("Dodaj") ');
+        $crawler = $client->back();
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+
+        //czy działa link 'książki - edycja'
+        $link = $crawler->filterXPath('//*[text()[contains(.,\'książki - edycja\')]]')->link();
+        $crawler = $client->click($link);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+        $this->assertGreaterThan(4, $crawler->filterXPath('//thead/tr/th')->count(), 'Missing elements //thead/tr/th - means there is no table head ' );
+        $this->assertEquals(1, $crawler->filter('a:contains("Dodaj nową książkę")')->count(),
+            'Missing elements a:contains("Dodaj nową książkę") - means there are no button');
+        $this->assertEquals(1, $crawler->filter('button:contains("Zapisz zmiany")')->count(),
+            'Missing elements button:contains("Zapisz zmiany") - means there are no button');
+        $crawler = $client->back();
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+
+        //czy działa link 'dodaj książkę'
+        $link = $crawler->filterXPath('//*[text()[contains(.,\'dodaj książkę\')]]')->link();
+        $crawler = $client->click($link);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+        $this->assertEquals(1, $crawler->filter('button:contains("Dodaj")')->count(),
+            'Missing elements button:contains("Dodaj") - means there are no button');
+        $this->assertEquals(1, $crawler->filter('h3:contains("Dodaj Książkę")')->count(),
+            'Missing elements h3:contains("Dodaj Książkę")');
+        $crawler = $client->back();
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+
+    }
 
 }
+
+
+
 
 
 
