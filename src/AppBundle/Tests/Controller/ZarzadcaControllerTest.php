@@ -29,7 +29,171 @@ class ZarzadcaControllerTest extends WebTestCase
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
     }
 
-    public function testCompleteScenario()
+
+    public function testFilterStatus()
+    {
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'wazny',
+            'PHP_AUTH_PW' => 'wazny',
+        ]);
+
+        $crawler = $client->request('GET', '/zarzadca/panel');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+
+        $form = $crawler->selectButton('status[filtruj]')->form();
+        $form['status[status]']->select(3); //wysłane
+        $crawler = $client->submit($form);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "");
+
+        $rowWyslane = $crawler->filterXPath('//td/div/select/option[@selected=\'selected\'][text()[contains(.,\'wyslane\')]]')->count();
+        $rowsNum = $crawler->filterXPath('//tr/td[1]')->count();
+        $this->assertTrue($rowWyslane==$rowsNum, "Filtrowanie złe. Wszystkie zamówienia powinny mieć status 'wysłane' ");
+
+        $form = $crawler->selectButton('status[filtruj]')->form();
+        $form['status[status]']->select(1); //nie zaplacone
+        $crawler = $client->submit($form);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "");
+
+        $rowWyslane = $crawler->filterXPath('//td/div/select/option[@selected=\'selected\'][text()[contains(.,\'nie zaplacone\')]]')->count();
+        $rowsNum = $crawler->filterXPath('//tr/td[1]')->count();
+        $this->assertTrue($rowWyslane==$rowsNum, "Filtrowanie złe. Wszystkie zamówienia powinny mieć status 'nie zaplacone' ");
+
+        $form = $crawler->selectButton('status[filtruj]')->form();
+        $form['status[status]']->select(2); //zaplacone
+        $crawler = $client->submit($form);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "");
+
+        $rowWyslane = $crawler->filterXPath('//td/div/select/option[@selected=\'selected\'][text()[contains(.,\'zaplacone\')]]')->count();
+        $rowsNum = $crawler->filterXPath('//tr/td[1]')->count();
+        $this->assertTrue($rowWyslane==$rowsNum, "Filtrowanie złe. Wszystkie zamówienia powinny mieć status 'zaplacone' ");
+
+    }
+
+
+    public function testFilterData()
+    {
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'wazny',
+            'PHP_AUTH_PW' => 'wazny',
+        ]);
+
+        $crawler = $client->request('GET', '/zarzadca/panel');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+
+        $form = $crawler->selectButton('data[filtruj]')->form();
+        $form['data[do][year]']->select(2014);
+        $crawler = $client->submit($form);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "");
+
+    }
+
+
+    public function testFilterKlient()
+    {
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'wazny',
+            'PHP_AUTH_PW' => 'wazny',
+        ]);
+
+        $crawler = $client->request('GET', '/zarzadca/panel');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+
+        $form = $crawler->selectButton('idklient[filtruj]')->form();
+        $form['idklient[idklient]']->select(2); //wysłane
+        $crawler = $client->submit($form);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "");
+
+    }
+
+
+    public function testPanel_0()
+    {
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'wazny',
+            'PHP_AUTH_PW' => 'wazny',
+        ]);
+        $crawler = $client->request('GET', '/zarzadca/panel');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+    }
+
+    public function testPanel_1()
+    {
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'wazny',
+            'PHP_AUTH_PW' => 'wazny',
+        ]);
+        $crawler = $client->request('GET', '/zarzadca/panel/DESC/datazlozenia');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/DESC/datazlozenia");
+    }
+
+    public function testPanel_2()
+    {
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'wazny',
+            'PHP_AUTH_PW' => 'wazny',
+        ]);
+
+        $crawler = $client->request('GET', '/zarzadca/panel/ASC/idstatus');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/ASC/idstatus");
+    }
+
+    public function testPanel_3()
+    {
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'wazny',
+            'PHP_AUTH_PW' => 'wazny',
+        ]);
+
+        $crawler = $client->request('GET', '/zarzadca/panel/ASC/idklient');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/ASC/idklient");
+    }
+
+    public function testPanel_4()
+    {
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'wazny',
+            'PHP_AUTH_PW' => 'wazny',
+        ]);
+
+        $crawler = $client->request('GET', '/zarzadca/panel/null/idstatus');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/null/idstatus");
+    }
+
+    public function testPanel_5()
+    {
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'wazny',
+            'PHP_AUTH_PW' => 'wazny',
+        ]);
+
+        $crawler = $client->request('GET', '/zarzadca/panel/ASC/idklient');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/ASC/idklient");
+    }
+
+    public function testPanel_6()
+    {
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'wazny',
+            'PHP_AUTH_PW' => 'wazny',
+        ]);
+
+        $crawler = $client->request('GET', '/zarzadca/panel/null/idklient');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/ASC/datazlozenia");
+    }
+
+    public function testPanel_7()
+    {
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'wazny',
+            'PHP_AUTH_PW' => 'wazny',
+        ]);
+        $crawler = $client->request('GET', '/zarzadca/panel/ASC/datazlozenia');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+    }
+
+
+
+    public function testCompleteScenarioManuAdmin()
     {
         $client = static::createClient([], [
             'PHP_AUTH_USER' => 'wazny',
@@ -91,103 +255,7 @@ class ZarzadcaControllerTest extends WebTestCase
             'Missing elements h3:contains("Dodaj Książkę")');
         $crawler = $client->back();
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
-
     }
 
 }
 
-
-
-
-
-
-
-
-//    /**
-//     * @dataProvider getPublicUrls
-//     */
-//    public function testPublicUrls($url)
-//    {
-//        $client = self::createClient();
-//        $client->request('GET', $url);
-//        $this->assertTrue(
-//            $client->getResponse()->isSuccessful(),
-//            sprintf('The %s public URL loads correctly.', $url)
-//        );
-//    }
-//    /**
-//     * @dataProvider getSecureUrls
-//     */
-//    public function testSecureUrls($url)
-//    {
-//        $client = self::createClient();
-//        $client->request('GET', $url);
-//        $this->assertTrue($client->getResponse()->isRedirect());
-//        $this->assertEquals(
-//            'http://localhost/en/login',
-//            $client->getResponse()->getTargetUrl(),
-//            sprintf('The %s secure URL redirects to the login form.', $url)
-//        );
-//    }
-//    public function getPublicUrls()
-//    {
-//        return array(
-//            array('/'),
-//            array('/popularne'),
-//            array('/nowosci'),
-//            array('/cartmenu'),
-//            array('/kategoria'),
-//            array('/login'),
-////            array('/'),
-//        );
-//    }
-//    public function getSecureUrls()
-//    {
-//        return array(
-//            array('/zarzadca'),
-//            array('/ksiazka/admin/create'),
-//            // ...
-//        );
-//    }
-//}
-///addtocart/{isbn}
-//  /cartclear
-//  /autoryzacja
-//  /cartmenu/{deleteisbn}
-//  /zmianaQuantity
-//  /przejsciowka/{autoryzacja}
-//  /zamawiam
-//  /potwierdzenie
-//  /
-///popularne
-///nowosci
-///kategoria/
-///kategoria
-///kategoria/admin/new
-///kategoria/{id}
-///kategoria/admin/{id}/edit
-///kategoria/admin/{szatan}
-///kategoria/admin/{id}/edits
-///kategoria/admin/{id}/deletes
-///historiaPanel
-///ksiazka/
-///ksiazka/admin/new
-///ksiazka/admin/create
-//  /ksiazka/show/{id}
-//  /ksiazka/admin/edit/{id}
-//  /ksiazka/admin/{id}/update
-//  /ksiazka/admin/{id}/delete
-//  /ksiazka/search/
-///ksiazka/search/results/{word}
-///ksiazka/{findby}-{what}/showBooksBy
-///panel/szczegoly-zamowienia/{idzamowienie}/{userid}/
-//  /panel/szczegoly-zamowienia/{idzamowienie}/
-//  /zarzadca/
-///zarzadca/panel/{findBy}-{Identifier}
-//  /zarzadca/panel/{sortArr}/{orderBy}/{query}/{EntFldName}
-//  /login
-//  /login_check
-//  /logout
-//   /profile/
-///profile/edit
-//  /register/
