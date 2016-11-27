@@ -18,6 +18,8 @@ use AppBundle\Form\Filter\NrKlientaType;
 
 
 /**
+ * REFAKTOR: Cała klasa do wymiany. Milion liń kodu, tysiąc elsów. Przenieść.Przerobić.Zaorać.
+ *
  * Kategoria controller.
  *
  * @Route("/zarzadca")
@@ -33,6 +35,8 @@ class ZarzadcaController extends Controller
     }    
     
     /**
+     * REFAKTOR: Milion liń kodu, tysiąc elsów. Przenieść.Przerobić.Zaorać.
+     *
      * @Route("/panel/{findBy}-{Identifier}", name="panelSortFromDetails")
      * @Route("/panel/{sortArr}/{orderBy}/{query}/{EntFldName}", name="panelSort")
      */
