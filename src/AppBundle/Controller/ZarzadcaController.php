@@ -52,7 +52,7 @@ class ZarzadcaController extends Controller
      *     "filterField": false,
      *     })
      */
-    public function panelsortAction(Request $request, $columnsSortOrder, $columnSort, $query, $filterField,$filter, $identifier)
+    public function panelsortAction(Request $request, $columnsSortOrder, $columnSort, $query, $filterField, $filter, $identifier)
     {
         $tableDetails = [
             'columnsSortOrder' => $columnsSortOrder,
