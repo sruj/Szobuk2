@@ -28,7 +28,7 @@ class KsiazkaController extends Controller {
     {
         $ksi_rep = $this->get('app.ksiazka_repository');
         $lpr = KsiazkaList::NUM_ITEMS;
-        if ($this->isGranted('ROLE_ADMIN')) {$lpr=9999;}/*limit per page. 9999 bo form_end przy paginacji na pierwszej stronie dodaje brakujáce elementy formularzy calej zawartoßci*/
+        if ($this->isGranted('ROLE_ADMIN')) {$lpr=9999;}
         $ksiazki = $ksi_rep->findAllMy($request->query->getInt('page', 1), $lpr);
 
         //[-Formularz Główny-]Ładowanie $zamowieniaList - zmiennej potrzebnej do głównego formularza.
