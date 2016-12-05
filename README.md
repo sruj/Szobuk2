@@ -1,167 +1,124 @@
-Księgarnia/Sklep 
+Księgarnia/Sklep - Symfony2.8
 ========================
 
-Projekt zaliczeniowy jako praca dyplomowa inżynierska obroniona 13-11-2015. Później w tym projekcie wprowadzane nowe funkcjonalności w ramach nauki.
+Projekt zaliczeniowy jako praca dyplomowa inżynierska obroniona 13-11-2015. Do dziś wprowadzane nowe funkcjonalności w ramach nauki. Jest to mój pierwszy i jedyny projekt w Symfony. Projekt ten nigdy nie powstawał z zamiarem późniejszego udostępniania jako pokaz moich umiejętności, stąd mogą mocno razić np. mieszane polsko-angielskie nazewnictwo klas/metod/zmiennych lub kometarze.
 
+Uwagi:
+----------------------------------
+- Projekt ten nigdy nie powstawał z zamiarem późniejszego udostęnniania jako pokaz moich umiejętności.
+- beznadziejne mieszane polsko-angielskie nazewnictwo klas/metod/zmiennych wynika z tego, że projekt rozpoczynałem w momencie nauki PHP/Symfony na podstawie polskojęzycznych książek, gdzie stosowano polskie nazwy zmiennych/metod/klas. (Późniejsze potworki typu "getZamowienieProdukt" wynikały z konieczności łączenia nazw klas Entity, itp). 
 
-
-Zastosowane:
+Zastosowane m.in.:
 ----------------------------------
 
-When it comes to installing the Symfony Standard Edition, you have the
-following options.
+### 1) Symfony
 
-### Use Composer (*recommended*)
+  * własne usługi (services)
 
-As Symfony uses [Composer][2] to manage its dependencies, the recommended way
-to create a new project is to use it.
+  * własne listener-events
 
-If you don't have Composer yet, download it following the instructions on
-http://getcomposer.org/ or just run the following command:
+  * własne listener-events
 
-    curl -s http://getcomposer.org/installer | php
+  * własne listener-events
 
-Then, use the `create-project` command to generate a new Symfony application:
+  * własne listener-events
 
-    php composer.phar create-project symfony/framework-standard-edition path/to/install
+  * własne listener-events
 
-Composer will install Symfony and all its dependencies under the
-`path/to/install` directory.
+  * własne listener-events
 
-### Download an Archive File
+  * własne listener-events
 
-To quickly test Symfony, you can also download an [archive][3] of the Standard
-Edition and unpack it somewhere under your web server root directory.
+  * własne listener-events
 
-If you downloaded an archive "without vendors", you also need to install all
-the necessary dependencies. Download composer (see above) and run the
-following command:
+  * własne listener-events
 
-    php composer.phar install
+  * własne listener-events
 
-2) Checking your System Configuration
--------------------------------------
+  * własne listener-events
 
-Before starting coding, make sure that your local system is properly
-configured for Symfony.
+  * własne listener-events
 
-Execute the `check.php` script from the command line:
+  * własne listener-events
 
-    php app/check.php
+  * własne listener-events
 
-The script returns a status code of `0` if all mandatory requirements are met,
-`1` otherwise.
+  * własne listener-events
 
-Access the `config.php` script from a browser:
+  * własne listener-events
 
-    http://localhost/path-to-project/web/config.php
+  * własne listener-events
 
-If you get any warnings or recommendations, fix them before moving on.
 
-3) Browsing the Demo Application
---------------------------------
 
-Congratulations! You're now ready to use Symfony.
-
-From the `config.php` page, click the "Bypass configuration and go to the
-Welcome page" link to load up your first Symfony page.
-
-You can also use a web-based configurator by clicking on the "Configure your
-Symfony Application online" link of the `config.php` page.
-
-To see a real-live Symfony page in action, access the following page:
-
-    web/app_dev.php/demo/hello/Fabien
-
-4) Getting started with Symfony
--------------------------------
-
-This distribution is meant to be the starting point for your Symfony
-applications, but it also contains some sample code that you can learn from
-and play with.
-
-A great way to start learning Symfony is via the [Quick Tour][4], which will
-take you through all the basic features of Symfony2.
-
-Once you're feeling good, you can move onto reading the official
-[Symfony2 book][5].
-
-A default bundle, `AcmeDemoBundle`, shows you Symfony2 in action. After
-playing with it, you can remove it by following these steps:
+### 2) JavaScript
 
   * delete the `src/Acme` directory;
 
   * remove the routing entry referencing AcmeDemoBundle in `app/config/routing_dev.yml`;
 
-  * remove the AcmeDemoBundle from the registered bundles in `app/AppKernel.php`;
+If you don't have Composer yet, download it following the instructions on
 
-  * remove the `web/bundles/acmedemo` directory;
+### 3) CSS
 
-  * empty the `security.yml` file or tweak the security configuration to fit
-    your needs.
+  * delete the `src/Acme` directory;
 
-What's inside?
----------------
+  * remove the routing entry referencing AcmeDemoBundle in `app/config/routing_dev.yml`;
 
-The Symfony Standard Edition is configured with the following defaults:
+If you don't have Composer yet, download it following the instructions on
 
-  * Twig is the only configured template engine;
+### 1) Twig
 
-  * Doctrine ORM/DBAL is configured;
+  * delete the `src/Acme` directory;
 
-  * Swiftmailer is configured;
+  * remove the routing entry referencing AcmeDemoBundle in `app/config/routing_dev.yml`;
 
-  * Annotations for everything are enabled.
+If you don't have Composer yet, download it following the instructions on
 
-It comes pre-configured with the following bundles:
+### 1) DQL
 
-  * **FrameworkBundle** - The core Symfony framework bundle
+  * delete the `src/Acme` directory;
 
-  * [**SensioFrameworkExtraBundle**][6] - Adds several enhancements, including
-    template and routing annotation capability
+  * remove the routing entry referencing AcmeDemoBundle in `app/config/routing_dev.yml`;
 
-  * [**DoctrineBundle**][7] - Adds support for the Doctrine ORM
+If you don't have Composer yet, download it following the instructions on
 
-  * [**TwigBundle**][8] - Adds support for the Twig templating engine
+### 1) Testy funkcjonalne
 
-  * [**SecurityBundle**][9] - Adds security by integrating Symfony's security
-    component
+  * delete the `src/Acme` directory;
 
-  * [**SwiftmailerBundle**][10] - Adds support for Swiftmailer, a library for
-    sending emails
+  * remove the routing entry referencing AcmeDemoBundle in `app/config/routing_dev.yml`;
 
-  * [**MonologBundle**][11] - Adds support for Monolog, a logging library
+If you don't have Composer yet, download it following the instructions on
 
-  * [**AsseticBundle**][12] - Adds support for Assetic, an asset processing
-    library
+### 1) Testy jednostkowe
 
-  * **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
-    the web debug toolbar
+  * delete the `src/Acme` directory;
 
-  * **SensioDistributionBundle** (in dev/test env) - Adds functionality for
-    configuring and working with Symfony distributions
+  * remove the routing entry referencing AcmeDemoBundle in `app/config/routing_dev.yml`;
 
-  * [**SensioGeneratorBundle**][13] (in dev/test env) - Adds code generation
-    capabilities
+If you don't have Composer yet, download it following the instructions on
 
-  * **AcmeDemoBundle** (in dev/test env) - A demo bundle with some example
-    code
+### 1) 
 
-All libraries and bundles included in the Symfony Standard Edition are
-released under the MIT or BSD license.
+  * delete the `src/Acme` directory;
 
-Enjoy!
+  * remove the routing entry referencing AcmeDemoBundle in `app/config/routing_dev.yml`;
 
-[1]:  http://symfony.com/doc/2.6/book/installation.html
-[2]:  http://getcomposer.org/
-[3]:  http://symfony.com/download
-[4]:  http://symfony.com/doc/2.6/quick_tour/the_big_picture.html
-[5]:  http://symfony.com/doc/2.6/index.html
-[6]:  http://symfony.com/doc/2.6/bundles/SensioFrameworkExtraBundle/index.html
-[7]:  http://symfony.com/doc/2.6/book/doctrine.html
-[8]:  http://symfony.com/doc/2.6/book/templating.html
-[9]:  http://symfony.com/doc/2.6/book/security.html
-[10]: http://symfony.com/doc/2.6/cookbook/email.html
-[11]: http://symfony.com/doc/2.6/cookbook/logging/monolog.html
-[12]: http://symfony.com/doc/2.6/cookbook/assetic/asset_management.html
-[13]: http://symfony.com/doc/2.6/bundles/SensioGeneratorBundle/index.html
+If you don't have Composer yet, download it following the instructions on
+
+### 1) 
+
+  * delete the `src/Acme` directory;
+
+  * remove the routing entry referencing AcmeDemoBundle in `app/config/routing_dev.yml`;
+
+If you don't have Composer yet, download it following the instructions on
+
+### 1) 
+
+  * delete the `src/Acme` directory;
+
+  * remove the routing entry referencing AcmeDemoBundle in `app/config/routing_dev.yml`;
+
+If you don't have Composer yet, download it following the instructions on
