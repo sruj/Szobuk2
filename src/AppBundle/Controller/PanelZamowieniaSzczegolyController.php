@@ -16,7 +16,6 @@ class PanelZamowieniaSzczegolyController extends Controller {
     /**
      * @Route("/panel/szczegoly-zamowienia/{idzamowienie}/{userid}/", name="panelDetails")
      * @Route("/panel/szczegoly-zamowienia/{idzamowienie}/", name="ZarzadcaPanelDetails")
-     * @Template()
      */
     public function detailsAction(Request $request, $idzamowienie = false, $userid = false) 
     {
@@ -50,7 +49,7 @@ class PanelZamowieniaSzczegolyController extends Controller {
                 ->getRepository('AppBundle:ZamowienieProdukt')
                 ->findBy(array('idzamowienie' => $idzamowienie));
 
-        $StatusForm = $this->createForm(new ZamowienieType(), $zamowienieRep)->add('zmień status', 'submit');
+        $StatusForm = $this->createForm(ZamowienieType::class, $zamowienieRep)->add('zmień status', 'submit');
         //[-Formularze-]Jeśli wypełniłem formularz to odbieram zawartość
         $StatusForm->handleRequest($request);
         if ($StatusForm->isValid()) {
@@ -58,79 +57,9 @@ class PanelZamowieniaSzczegolyController extends Controller {
             $em->merge($StatusForm->getData());
             $em->flush();
         }
-
-        return array('zamowienie' => $zamowienieRep, 'produkty' => $produkty,
-            'StatusForm' => $StatusForm->createView());
+        return $this->render('AppBundle:PanelZamowieniaSzczegoly:details.html.twig',[
+            'zamowienie' => $zamowienieRep, 'produkty' => $produkty,
+            'StatusForm' => $StatusForm->createView()]);
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    /**
-     * @Route("/testtt")
-     * @Template()
-     */
-    public function testttAction() 
-    {
-
-        
-        $klient= $this->getDoctrine()
-            ->getRepository('AppBundle:Klient')
-            ->findOneBy(array('idlogowanie' => 2) );
-        
-        
-        $zamowienie = $this->getDoctrine()
-            ->getRepository('AppBundle:Zamowienie')
-            ->find(43);
-        
-                //sprawdzam czy id klienta zalogowanego użytkownika tożsame jest z id klienta 
-//        $klient= $this->getDoctrine()
-//            ->getRepository('AppBundle:Klient')
-//            ->findOneBy(array('idlogowanie' => $LoggedUserId) );
-//        $idklientK = $klient->getIdklient();
-//        
-//        $idZam = $zamowienie;    
-//        
-//        $idklientZ = $zamowienie->getIdklient()->getIdklient();
-//         
-//        if(!($idklientZ==$idklientK)){
-//           throw $this->createAccessDeniedException(); 
-//        }
-        
-      
-
-         
-        
-        echo $klient->getIdklient();
-        echo $zamowienie->getIdklient()->getIdklient();
-        
-        return array('zamowienie' => $zamowienie, 'klient' => $klient);
-    }
-    
-    
-    
-    
-    
-    
-    
 }
+    

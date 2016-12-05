@@ -1,117 +1,55 @@
 {% extends '::layout.html.twig' %}
-
-{#{% block navbar_IsTabActive %}            
-    <div class="NavTabs"> <a class="NavTab NavTab--home" href="{{ path('index') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Home</span></a> <a class="NavTab NavTab--katalog" href="{{ path('ksiazka') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Katalog</span></a> <a class="NavTab NavTab--kategorie" href="{{ path('kategoria') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Kategorie</span></a> </div> 
-{% endblock navbar_IsTabActive %}  #}
-
 {% block contents %}
     <!--start nav-level-->
     <div class="nav-level">
         <div class="nav-level-layout wrapper">
             <div class="navigation">
-                {{ knp_pagination_render(pagination) }}
+                {{ knp_pagination_render(zamowienia) }}
             </div>
         </div>
     </div>
-    <!--end nav-level-->    
-    
+    <!--end nav-level-->
+
     <div class="yield"><!--start yield-->
         <div class="allBooks">
-            <table class="Table-all"> 
+            <table class="Table-all">
                 <thead>
-                    <tr>
-{#                        <th class="thLeftBorderRadius">{{ knp_pagination_sortable(pagination, 'nr. Zam', 'a.idzamowienie') }}</th>
-                        <th>{{ knp_pagination_sortable(pagination, 'Data złożenia', 'a.datazlozenia') }}</th>
-                        <th>ilość prod.</th>
-                        <th>kwota razem</th>
-                        <th>status z.</th>
-                        <th class="thRightBorderRadius">Szczególy</th>                        #}
-                        <th class="thLeftBorderRadius">{{ knp_pagination_sortable(pagination, 'nr. Zam', 'z.idzamowienie') }}</th>
-                        <th>{{ knp_pagination_sortable(pagination, 'Data złożenia', 'z.datazlozenia') }}</th>
-                        <th>ilość prod.</th>
-                        <th>kwota razem</th>
-                        <th>{{ knp_pagination_sortable(pagination, 'status z.', 's.status') }}</th>
-                        <th class="thRightBorderRadius">Szczególy</th>                        
-                    </tr>
-                </thead>            
+                <tr>
+                    <th class="thLeftBorderRadius">{{ knp_pagination_sortable(zamowienia, 'nr. Zam', 'z.idzamowienie') }}</th>
+                    <th>{{ knp_pagination_sortable(zamowienia, 'Data złożenia', 'z.datazlozenia') }}</th>
+                    <th>ilość prod.</th>
+                    <th>kwota razem</th>
+                    <th>{{ knp_pagination_sortable(zamowienia, 'status z.', 's.status') }}</th>
+                    <th class="thRightBorderRadius">Szczególy</th>
+                </tr>
+                </thead>
                 <tbody>
-                    {% for zamowienie in pagination %}
-                        <tr>
-                            <td>{{ zamowienie.idzamowienie }}</td>
-                            <td>{{ zamowienie.datazlozenia|date('Y-m-d H:i:s') }}</td>
-                            {% set ilosc = 0 %}
-                            {% set kwota = 0 %}
-                            {% for zamowienieProdukt in zamowienie.ZamowienieProdukty %}
-{#                            {% for zamowienieProdukt in zamowienie.zamowienie_produkty %}#}
-                                    {% set ilosc = ilosc + zamowienieProdukt.ilosc %}
-                                    {% set kwota = kwota + zamowienieProdukt.ilosc * zamowienieProdukt.cenaproduktu %}
-                            {% endfor %}
-                            <td>{{ ilosc }}</td>
-                            <td>{{ kwota|number_format(2) }}</td>
-                            <td>{{ zamowienie.idstatus.status }}</td>
-                            <td><a href="{{ path('panelDetails',{ 'idzamowienie': zamowienie.idzamowienie, 'userid': app.user.id }) }}">więcej</a></td>
-                        </tr>
-                    {% endfor %}        
-                    
-                    
-{#                <tbody>
-                    {% for formul in form.zamowienia %}
-                        <tr>
-                            <td><td>{{ loop.index }}</td></td>
-                            <td>{{ formul.vars.value.datazlozenia|date('Y-m-d H:i:s') }}</td>
-                            {% set ilosc = 0 %}
-                            {% set kwota = 0 %}
-                            {% for zamowienieProdukt in zamowieniaProdukty %}
-                                {% if zamowienieProdukt.idzamowienie.idzamowienie ==  formul.vars.value.idzamowienie %}
-                                    {% set ilosc = ilosc + zamowienieProdukt.ilosc %}
-                                    {% set kwota = kwota + zamowienieProdukt.ilosc * zamowienieProdukt.cenaproduktu %}
-                                {% endif %}
-                            {% endfor %}
-                            <td>{{ ilosc }}</td>
-                            <td>{{ kwota|number_format(2) }}</td>
-                            <td>{{ zamowienie.idstatus.status }}</td>
-                            <td><a href="{{ path('panelDetails',{ 'zamowienie':formul.vars.value.idzamowienie }) }}">więcej</a></td>
-                        </tr>
-                    {% endfor %}  #}      
+                {% for zamowienie in zamowienia %}
+                    <tr>
+                        <td>{{ zamowienie.idzamowienie }}</td>
+                        <td>{{ zamowienie.datazlozenia|date('Y-m-d H:i:s') }}</td>
+                        {% set ilosc = 0 %}
+                        {% set kwota = 0 %}
+                        {% for zamowienieProdukt in zamowienie.ZamowienieProdukty %}
+                            {% set ilosc = ilosc + zamowienieProdukt.ilosc %}
+                            {% set kwota = kwota + zamowienieProdukt.ilosc * zamowienieProdukt.cenaproduktu %}
+                        {% endfor %}
+                        <td>{{ ilosc }}</td>
+                        <td>{{ kwota|number_format(2) }}</td>
+                        <td>{{ zamowienie.idstatus.status }}</td>
+                        <td>
+                            <a href="{{ path('panelDetails',{ 'idzamowienie': zamowienie.idzamowienie, 'userid': app.user.id }) }}">więcej</a>
+                        </td>
+                    </tr>
+                {% endfor %}
             </table>
-                        <div class="wrapper">
+            <div class="wrapper">
                 <div class="navigation">
-                    {{ knp_pagination_render(pagination) }}
+                    {{ knp_pagination_render(zamowienia) }}
                 </div>
             </div>
-        </div>  
+        </div>
     </div>
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{#<p>Username: {{ app.user.username }}</p>
-<ul>
-    {% for zamowienie in zamowienia %}
-        <h3>id zamowienia: {{ zamowienie.idzamowienie }}</h3>
-        {% for produkty in zamowienie.ZamowienieProdukty %}
-            <li>{{ produkty.cenaproduktu }}</li>
-            <li>{{ produkty.ilosc }}</li>
-            <li>{{ produkty.tytul }}</li>
-            <li>{{ produkty.autor }}</li>
-        {% endfor %}
-    {% endfor %}
-</ul>#}
-
-
 
 

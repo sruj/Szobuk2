@@ -1,8 +1,10 @@
 # Learn more about services, parameters and containers at
 # http://symfony.com/doc/current/book/service_container.html
 parameters:
-#    parameter_name: value
-
+    app.ksiazka.paginator_aware.class: AppBundle\Repository\KsiazkaRepository
+    app.zamowienie.paginator_aware.class: AppBundle\Repository\ZamowienieRepository
+    app.zamowienie.entity: AppBundle\Entity\Zamowienie
+    app.ksiazka.entity: AppBundle\Entity\Ksiazka
 services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
@@ -10,3 +12,51 @@ services:
     my_cart:
         class:  AppBundle\Utils\CartUtil
         arguments: [ "@request_stack", "@doctrine.orm.entity_manager" ]
+
+    app.cart:
+        class:  AppBundle\Utils\Cart
+        arguments: [ "@session" ]
+
+    app.ksiazka_repository:
+        class: "%app.ksiazka.paginator_aware.class%"
+        factory: ["@doctrine", getRepository]
+        arguments: ["%app.ksiazka.entity%"]
+        tags:
+            -  { name: knp_paginator.injectable, paginator: '@knp_paginator' }
+
+    app.zamowienie_repository:
+        class: "%app.zamowienie.paginator_aware.class%"
+        factory: ["@doctrine", getRepository]
+        arguments: ["%app.zamowienie.entity%"]
+        tags:
+            -  { name: knp_paginator.injectable, paginator: '@knp_paginator' }
+
+    app.form_handler.zamowienie:
+        class: AppBundle\Utils\CreateZamowienieFormHandler
+        arguments: ["@app.zamowienie_manager"]
+
+    app.zamowienie_manager:
+        class: AppBundle\Utils\ZamowienieManager
+        arguments: ["@doctrine.orm.entity_manager","@security.token_storage","@security.authorization_checker","@session","@event_dispatcher" ]
+
+    app.email_notify_client_listener:
+        class: AppBundle\EventListener\SendEmailNotificationToClientListener
+        arguments:  [ "@mailer", "@twig", "@session" ]
+        tags:
+            - { name: kernel.event_listener, event: order.placed }
+
+    app.email_notify_admin_listener:
+        class: AppBundle\EventListener\SendEmailNotificationToAdminListener
+        arguments:  [ "@mailer", "@twig", "@session" ]
+        tags:
+            - { name: kernel.event_listener, event: order.placed }
+
+    app.zarzadca_panel_sort:
+        class: AppBundle\Utils\Sort
+
+    app.zarzadca_panel_filter:
+        class: AppBundle\Utils\Filter
+
+    app.manager_order:
+        class: AppBundle\Utils\Manager\Order
+        arguments: ["@doctrine.orm.entity_manager"]

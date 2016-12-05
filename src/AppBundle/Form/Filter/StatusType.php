@@ -20,7 +20,6 @@ class StatusType extends AbstractType {
                     'label' => false
                 ))
                 ->add('filtruj', 'submit');
-//                ->setAction($this->generateUrl('panelSortFromDetails'));
             ;
     }
 

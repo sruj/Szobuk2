@@ -10,7 +10,7 @@ use DateTime;
  * Zamowienie
  *
  * @ORM\Table(name="zamowienie", indexes={@ORM\Index(name="idKlient_idx", columns={"idKlient"}), @ORM\Index(name="idStatus_idx", columns={"idStatus"})})
- * @ORM\Entity(repositoryClass="AppBundle\Entity\ZamowienieRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ZamowienieRepository")
  */
 class Zamowienie
 {
@@ -73,87 +73,6 @@ class Zamowienie
     * @ORM\OneToMany(targetEntity="ZamowienieProdukt", mappedBy="idzamowienie")
     */
     protected $zamowienie_produkty;
-
-//
-//    /**
-//     * Set datazlozenia
-//     *
-//     * @param \DateTime $datazlozenia
-//     * @return Zamowienie
-//     */
-//    public function setDatazlozenia($datazlozenia)
-//    {
-//        $this->datazlozenia = $datazlozenia;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get datazlozenia
-//     *
-//     * @return \DateTime 
-//     */
-//    public function getDatazlozenia()
-//    {
-//        return $this->datazlozenia;
-//    }
-//
-//    /**
-//     * Get idzamowienie
-//     *
-//     * @return integer 
-//     */
-//    public function getIdzamowienie()
-//    {
-//        return $this->idzamowienie;
-//    }
-//
-//    /**
-//     * Set idstatus
-//     *
-//     * @param \AppBundle\Entity\Status $idstatus
-//     * @return Zamowienie
-//     */
-//    public function setIdstatus(\AppBundle\Entity\Status $idstatus = null)
-//    {
-//        $this->idstatus = $idstatus;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get idstatus
-//     *
-//     * @return \AppBundle\Entity\Status 
-//     */
-//    public function getIdstatus()
-//    {
-//        return $this->idstatus;
-//    }
-//
-//    /**
-//     * Set idklient
-//     *
-//     * @param \AppBundle\Entity\Klient $idklient
-//     * @return Zamowienie
-//     */
-//    public function setIdklient(\AppBundle\Entity\Klient $idklient = null)
-//    {
-//        $this->idklient = $idklient;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get idklient
-//     *
-//     * @return \AppBundle\Entity\Klient 
-//     */
-//    public function getIdklient()
-//    {
-//        return $this->idklient;
-//    }
-
 
 
 
@@ -255,13 +174,11 @@ class Zamowienie
     }
     public function __construct() {
         $this->faktury = new ArrayCollection();
+        $this->zamowienie_produkty = new ArrayCollection();
     }
 //     public function __construct() {
 //        $this->przesylki = new ArrayCollection();
 //    }    
-//    public function __construct() {
-//        $this->zamowienie_produkty = new ArrayCollection();
-//    }     
 
     /**
      * Add faktury
@@ -335,9 +252,11 @@ class Zamowienie
      * @param \AppBundle\Entity\ZamowienieProdukt $zamowienieProdukty
      * @return Zamowienie
      */
-    public function addZamowienieProdukty(\AppBundle\Entity\ZamowienieProdukt $zamowienieProdukty)
+    public function addZamowienieProdukt(\AppBundle\Entity\ZamowienieProdukt $zamowienieProdukt)
     {
-        $this->zamowienie_produkty[] = $zamowienieProdukty;
+        if(!$this->zamowienie_produkty->contains($zamowienieProdukt)) {
+            $this->zamowienie_produkty[] = $zamowienieProdukt;
+        }
 
         return $this;
     }
@@ -347,9 +266,9 @@ class Zamowienie
      *
      * @param \AppBundle\Entity\ZamowienieProdukt $zamowienieProdukty
      */
-    public function removeZamowienieProdukty(\AppBundle\Entity\ZamowienieProdukt $zamowienieProdukty)
+    public function removeZamowienieProdukty(\AppBundle\Entity\ZamowienieProdukt $zamowienieProdukt)
     {
-        $this->zamowienie_produkty->removeElement($zamowienieProdukty);
+        $this->zamowienie_produkty->removeElement($zamowienieProdukt);
     }
 
     /**

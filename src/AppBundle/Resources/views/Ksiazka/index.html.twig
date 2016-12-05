@@ -20,7 +20,7 @@
             <div class="nav-level-layout wrapper">
                 <div class="PageTabs">  </div>
                 <div class="navigation">
-                    {{ knp_pagination_render(pagination) }}
+                    {{ knp_pagination_render(ksiazki) }}
                 </div>
             </div>
         {% endif %}
@@ -38,14 +38,14 @@
                     <tr>
                         {#   {% if is_granted('ROLE_ADMIN') %}
                            {% else %}#}  
-                        <th class="thLeftBorderRadius">{{ knp_pagination_sortable(pagination, 'Tytuł', 'a.tytul') }}</th>
-                        <th>{{ knp_pagination_sortable(pagination, 'Autor', 'a.autor') }}</th>
-                        <th>{{ knp_pagination_sortable(pagination, 'Cena', 'a.cena') }}</th>
-                        <th>{{ knp_pagination_sortable(pagination, 'Wydawnictwo', 'a.wydawnictwo') }}</th>
-                        <th>{{ knp_pagination_sortable(pagination, 'Rok Wydania', 'a.rokwydania') }}</th>
+                        <th class="thLeftBorderRadius">{{ knp_pagination_sortable(ksiazki, 'Tytuł', 'a.tytul') }}</th>
+                        <th>{{ knp_pagination_sortable(ksiazki, 'Autor', 'a.autor') }}</th>
+                        <th>{{ knp_pagination_sortable(ksiazki, 'Cena', 'a.cena') }}</th>
+                        <th>{{ knp_pagination_sortable(ksiazki, 'Wydawnictwo', 'a.wydawnictwo') }}</th>
+                        <th>{{ knp_pagination_sortable(ksiazki, 'Rok Wydania', 'a.rokwydania') }}</th>
                             {#                        {% endif %}#}
                             {% if is_granted('ROLE_ADMIN') %}
-                            <th>{{ knp_pagination_sortable(pagination, 'Ilosc', 'a.ilosc') }}</th>
+                            <th>{{ knp_pagination_sortable(ksiazki, 'Ilosc', 'a.ilosc') }}</th>
                                 {#                            <th>Ilosc</th>#}
                             <th>Do Koszyka</th>
                             <th>Szczególy</th>
@@ -59,7 +59,7 @@
                 <tbody>
                     {% if is_granted('ROLE_ADMIN') %}
                         {{ form_start(form) }} 
-                        {% for entity in pagination %}
+                        {% for entity in ksiazki %}
                             <tr>
                                 <td><a href="{{ path('ksiazka_show', { 'id': entity.isbn }) }}">{{ entity.tytul }}</a></td>
                                 <td><a href="{{ path('showBooksBy', { 'findby': 'autor','what': entity.autor }) }}">{{ entity.autor }}</a></td>
@@ -77,7 +77,7 @@
                             </tr>
                         {% endfor %}                              
                     {% else %}
-                        {% for entity in pagination %}
+                        {% for entity in ksiazki %}
                             <tr>
                                 <td><a href="{{ path('ksiazka_show', { 'id': entity.isbn }) }}">{{ entity.tytul }}</a></td>
                                 <td><a href="{{ path('showBooksBy', { 'findby': 'autor','what': entity.autor }) }}">{{ entity.autor }}</a></td>
@@ -92,7 +92,7 @@
             </table>
             <div class="wrapper">
                 <div class="navigation">
-                    {{ knp_pagination_render(pagination) }}
+                    {{ knp_pagination_render(ksiazki) }}
                 </div>
             </div>
             {% if is_granted('ROLE_ADMIN') %}

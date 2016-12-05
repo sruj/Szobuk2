@@ -18,7 +18,7 @@
         <div class="nav-level-layout wrapper">
             <div class="PageTabs"> <a class="page-section-tab active" href="{{ path('popularne') }}">Popularne</a> <a class="page-section-tab " href="{{ path('nowosci') }}">Nowości</a> <a class="page-section-tab" href="{{ path('index') }}">Wszystkie</a> </div>
             <div class="navigation">
-                {{ knp_pagination_render(entities) }}
+                {{ knp_pagination_render(ksiazki) }}
             </div>
         </div>
     </div>
@@ -30,7 +30,7 @@
     <div class="cards-container ready"><!--start cards-container ready-->
       
 
-    {% for entity in entities %}
+    {% for entity in ksiazki %}
       <div class="ProductCard product is-imageLoaded" >
         <div class="ProductCard-imageContainer product-img-container" > 
             <a href="{{ path('ksiazka_show', { 'id': entity.isbn }) }}" >
@@ -51,7 +51,7 @@
       </div>   
     {% endfor %} 
                 <div class="navigation">
-                    {{ knp_pagination_render(entities) }}
+                    {{ knp_pagination_render(ksiazki) }}
                 </div>
             </div>
         </div>

@@ -27,7 +27,7 @@
                         <li>
                             {% if is_granted('ROLE_ADMIN') %}
                                 <a href="{{ path('kategoria_edit', { 'id': entity.idkategoria }) }}">edit</a>
-                            {% endif %}                
+                            {% endif %}
                             <a href="{{ path('kategoria_show', { 'id': entity.idkategoria }) }}">{{ entity.nazwa }}</a></td>
                         </li>
                     {% endfor %}
