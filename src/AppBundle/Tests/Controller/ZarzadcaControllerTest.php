@@ -29,8 +29,18 @@ class ZarzadcaControllerTest extends WebTestCase
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
     }
 
+    public function testZarzadcaPanelStatusCode()
+    {
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'wazny',
+            'PHP_AUTH_PW' => 'wazny',
+        ]);
 
-    public function testFilterStatus()
+        $crawler = $client->request('GET', '/zarzadca/panel');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+    }
+
+    public function testFilterStatus1()
     {
         $client = static::createClient([], [
             'PHP_AUTH_USER' => 'wazny',
@@ -49,6 +59,17 @@ class ZarzadcaControllerTest extends WebTestCase
         $rowsNum = $crawler->filterXPath('//tr/td[1]')->count();
         $this->assertTrue($rowWyslane==$rowsNum, "Filtrowanie złe. Wszystkie zamówienia powinny mieć status 'wysłane' ");
 
+    }
+    
+    public function testFilterStatus2()
+    {
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'wazny',
+            'PHP_AUTH_PW' => 'wazny',
+        ]);
+
+        $crawler = $client->request('GET', '/zarzadca/panel');
+    
         $form = $crawler->selectButton('status[filtruj]')->form();
         $form['status[status]']->select(1); //nie zaplacone
         $crawler = $client->submit($form);
