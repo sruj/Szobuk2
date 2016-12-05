@@ -1,14 +1,11 @@
-Symfony Standard Edition
+Księgarnia/Sklep 
 ========================
 
-Welcome to the Symfony Standard Edition - a fully-functional Symfony2
-application that you can use as the skeleton for your new applications.
+Projekt zaliczeniowy jako praca dyplomowa inżynierska obroniona 13-11-2015. Później w tym projekcie wprowadzane nowe funkcjonalności w ramach nauki.
 
-This document contains information on how to download, install, and start
-using Symfony. For a more detailed explanation, see the [Installation][1]
-chapter of the Symfony Documentation.
 
-1) Installing the Standard Edition
+
+Zastosowane:
 ----------------------------------
 
 When it comes to installing the Symfony Standard Edition, you have the
