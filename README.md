@@ -17,7 +17,7 @@ Zastosowane m.in.:
   
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/config/services.yml
 
-  * custom event-listener, np:
+  * custom event-listeners, np:
   
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Utils/ZamowienieManager.php#L70
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Event/OrderPlacedEvent.php
@@ -29,25 +29,27 @@ Zastosowane m.in.:
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/views/Kategoria/edit.html.twig#L8
   
 
-  * form (custom form type, form in controller) np:
+  * forms
   
+  form type, form in controller, np:
+   
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Form/KsiazkaIloscType.php
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Controller/KsiazkaController.php#L262
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/views/Cart/zamawiam.html.twig
 
-  * form handler outside controller, custom service,  np:
+  form handler outside controller, custom service,  np:
   
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Utils/CreateZamowienieFormHandler.php
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Utils/ZamowienieManager.php
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/config/services.yml#L34
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Controller/CartController.php#L161
   
-  * [Collection of Forms](https://symfony.com/doc/current/form/form_collections.html), np:
+  [Collection of Forms](https://symfony.com/doc/current/form/form_collections.html), np:
   
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Controller/KsiazkaController.php#L44
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Entity/KsiazkaList.php
 
-  * custom validation constraints, np:
+  custom validation constraints, np:
   
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Validator/Constraints/PhoneNumberValidator.php
   
