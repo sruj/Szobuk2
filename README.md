@@ -167,6 +167,7 @@ Zastosowane m.in.:
   
 ### 3) JavaScript, Ajax
 
+Tylko jedna funkcja:
 https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/public/js/aktualizacjaKoszyka.js
 https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/views/Cart/cartmenu.html.twig#L58
 
