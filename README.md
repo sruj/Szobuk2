@@ -33,9 +33,6 @@ Zastosowane m.in.:
   
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Form/KsiazkaIloscType.php
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Controller/KsiazkaController.php#L262
-  
-  * configuration form in twig
-  
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/views/Cart/zamawiam.html.twig
 
   * form handler outside controller, custom service,  np:
@@ -168,6 +165,7 @@ Zastosowane m.in.:
 ### 3) JavaScript, Ajax
 
 Tylko jedna funkcja:
+
 https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/public/js/aktualizacjaKoszyka.js
 https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/views/Cart/cartmenu.html.twig#L58
 
