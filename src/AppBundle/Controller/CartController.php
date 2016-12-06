@@ -11,6 +11,8 @@ use AppBundle\Entity\Klient;
 use AppBundle\Entity\Zamowienie;
 use AppBundle\Entity\Ksiazka;
 
+
+//refaktor: zmienić nazwy metod PL-EN
 class CartController extends Controller
 {
     

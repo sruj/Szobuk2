@@ -14,6 +14,7 @@ use AppBundle\Entity\Status;
 class PanelZamowieniaSzczegolyController extends Controller {
 
     /**
+     * refaktor: elsy
      * @Route("/panel/szczegoly-zamowienia/{idzamowienie}/{userid}/", name="panelDetails")
      * @Route("/panel/szczegoly-zamowienia/{idzamowienie}/", name="ZarzadcaPanelDetails")
      */

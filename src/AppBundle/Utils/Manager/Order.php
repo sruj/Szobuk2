@@ -10,6 +10,8 @@ namespace AppBundle\Utils\Manager;
 
 use Doctrine\ORM\EntityManager;
 
+
+//refaktor : if else else else else else else else else else else else else else else else else
 class Order
 {
     private $em;
