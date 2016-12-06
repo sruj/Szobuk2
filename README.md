@@ -26,6 +26,7 @@ Zastosowane m.in.:
   * security (firewalls, access_control, role_hierarchy)
   
   https://github.com/sruj/szobuk2/blob/master/app/config/security.yml
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/views/Kategoria/edit.html.twig#L8
     
 
   * form (custom form type, form in controller) np:
@@ -90,12 +91,11 @@ Zastosowane m.in.:
 
   * knp-paginator, knp_pagination_sortable np:
   
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Repository/ZamowienieRepository.php
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/views/Default/popularne.html.twig#L21
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/views/Ksiazka/index.html.twig#L42
   
-  * restrict content in twig (ROLE_ADMIN), np:
   
-  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/views/Kategoria/edit.html.twig#L8
 
 ### 2) Doctrine ORM
 
