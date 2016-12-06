@@ -65,31 +65,3 @@
 </div>  
 </div>
 {% endblock %}
-{#<table class="Table-all">
-  <thead>
-    <tr>
-        <th class="thLeftBorderRadius">ISBN</th>
-        <th>Tytuł</th>
-        <th>Autor</th>
-        <th>Cena</th>
-        <th>Wydawnictwo</th>
-        <th>Rok Wydania</th>
-        <th>Szczegóły</th>
-        <th class="thRightBorderRadius">Dodaj do Koszyka</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for ksiazka in ksiazki %}
-    <tr>
-        <td><a href="{{ path('ksiazka_show',{'id':ksiazka.isbn}) }} ">{{ ksiazka.isbn}}</a></td>
-        <td><a href="">{{ ksiazka.tytul }}</a></td>
-        <td>{{ ksiazka.autor }}</td>
-        <td>{{ ksiazka.cena }}</td>
-        <td>{{ ksiazka.wydawnictwo }}</td>
-        <td>{{ ksiazka.rokWydania}}</td>
-        <td><a href="{{ path('ksiazka_show',{'id':ksiazka.isbn}) }} ">więcej</a></td>
-        <td><a href="{{ path('addtocart', {'isbn': ksiazka.isbn }) }}">do koszyka</a></td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table> #}

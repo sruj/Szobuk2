@@ -34,38 +34,6 @@ class Kategoria {
      */
     protected $ksiazki;
 
-//    /**
-//     * Set nazwa
-//     *
-//     * @param string $nazwa
-//     * @return Kategoria
-//     */
-//    public function setNazwa($nazwa)
-//    {
-//        $this->nazwa = $nazwa;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get nazwa
-//     *
-//     * @return string 
-//     */
-//    public function getNazwa()
-//    {
-//        return $this->nazwa;
-//    }
-//
-//    /**
-//     * Get idkategoria
-//     *
-//     * @return integer 
-//     */
-//    public function getIdkategoria()
-//    {
-//        return $this->idkategoria;
-//    }
 
 
     /**

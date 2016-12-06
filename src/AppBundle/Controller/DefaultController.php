@@ -17,7 +17,6 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        //REFAKTOR: poniżej to jakieś paskództwo, albo to przenieśc albo coś z tym zrobić
 
         //jeśli w trakcie zakupów w wyborze autoryzacji wybrałem zaloguj lub zarejestruj to przenoszę się do *gdzieśtam*
         $session = $request->getSession();

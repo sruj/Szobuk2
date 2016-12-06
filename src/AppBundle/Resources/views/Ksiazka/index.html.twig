@@ -30,14 +30,11 @@
     <div class="yield"><!--start yield-->
         {% if is_granted('ROLE_ADMIN') %}
             <div class="ButtonCenter" id="margin_top_buttons"> <a class="OrangeButton" href="{{ path('ksiazka_new') }}"> Dodaj nową książkę </a></div>
-            {#            <div class="ButtonCenter"> {{ form_widget(form.zapisz) }} </div>#}
         {% endif %}
         <div class="allBooks">
             <table class="Table-all">
                 <thead>
                     <tr>
-                        {#   {% if is_granted('ROLE_ADMIN') %}
-                           {% else %}#}  
                         <th class="thLeftBorderRadius">{{ knp_pagination_sortable(ksiazki, 'Tytuł', 'a.tytul') }}</th>
                         <th>{{ knp_pagination_sortable(ksiazki, 'Autor', 'a.autor') }}</th>
                         <th>{{ knp_pagination_sortable(ksiazki, 'Cena', 'a.cena') }}</th>
@@ -46,7 +43,6 @@
                             {#                        {% endif %}#}
                             {% if is_granted('ROLE_ADMIN') %}
                             <th>{{ knp_pagination_sortable(ksiazki, 'Ilosc', 'a.ilosc') }}</th>
-                                {#                            <th>Ilosc</th>#}
                             <th>Do Koszyka</th>
                             <th>Szczególy</th>
                             <th class="thRightBorderRadius">Edytuj</th>
@@ -96,9 +92,7 @@
                 </div>
             </div>
             {% if is_granted('ROLE_ADMIN') %}
-                {#{{ form_widget(form.zapisz) }}#}
                 <div class="ButtonCenter"> {{ form_widget(form.zapisz) }} </div>
-                {#                <div class="ButtonCenter"> <a class="OrangeButton" href="{{ path('ksiazka_new') }}"> Dodaj ksiązkę </a></div>#}
                 {{ form_end(form) }}
             {% endif %}
         </div>  
