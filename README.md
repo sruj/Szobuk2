@@ -6,34 +6,44 @@ Projekt zaliczeniowy jako praca dyplomowa inżynierska obroniona 13-11-2015. Do 
 Uwagi:
 ----------------------------------
 - Projekt ten nigdy nie powstawał z zamiarem późniejszego udostęnniania jako pokaz moich umiejętności.
-- beznadziejne mieszane polsko-angielskie nazewnictwo klas/metod/zmiennych wynika z tego, że projekt rozpoczynałem w momencie nauki PHP/Symfony na podstawie polskojęzycznych książek, gdzie stosowano polskie nazwy zmiennych/metod/klas. (Późniejsze potworki typu "getZamowienieProdukt" wynikały z konieczności łączenia nazw klas Entity, itp). 
+- beznadziejne mieszane polsko-angielskie nazewnictwo klas/metod/zmiennych wynika z tego, że projekt rozpoczynałem w momencie nauki PHP/Symfony na podstawie polskojęzycznych książek, gdzie stosowano polskie nazwy zmiennych/metod/klas. (Późniejsze potworki typu "getZamowienieProdukt", "findNowosci" wynikały z konieczności łączenia nazw klas Entity z konwencjami nazewnictwa Symfony, itp). 
 
 Zastosowane m.in.:
 ----------------------------------
 
 ### 1) Symfony
 
-  * własne usługi (services), np:
-  
-    
-  * entity
-
+  * services, (directives: factory,tags,arguments) np:
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/config/services.yml
 
   * custom event-listener, np:
   
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Utils/ZamowienieManager.php#L70
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Event/OrderPlacedEvent.php
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/EventListener/SendEmailNotificationToAdminListener.php
+  
+  * security (firewalls, access_control, role_hierarchy)
+  
+  
+  * 
+  
+  
+  * 
+  
+  
+  * 
+  
+  
+  
 
-  * custom form type, np:
+  * form (custom form type, form in controller) np:
   
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Form/KsiazkaIloscType.php
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Controller/KsiazkaController.php#L262
   
   * configuration form in twig
   
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/views/Cart/zamawiam.html.twig
-
-
 
   * form handler outside controller, custom service,  np:
   
@@ -46,6 +56,11 @@ Zastosowane m.in.:
   * custom validation constraints, np:
   
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Validator/Constraints/PhoneNumberValidator.php
+  
+  * custom exceptions
+  
+  brak
+  --
   
 
   * custom Twig functions (twig extension) , np:
@@ -69,8 +84,18 @@ Zastosowane m.in.:
     ```
 
   * FOSUserBundle - views override, np:
+  
+  https://github.com/sruj/szobuk2/tree/master/app/Resources/FOSUserBundle/views
+  
+  * [Collection of Forms](https://symfony.com/doc/current/form/form_collections.html), np:
+  
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Controller/KsiazkaController.php#L44
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Entity/KsiazkaList.php
+  
+  
 
   * friendly configuration, np:
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/DependencyInjection/Configuration.php
 
   * knp-paginator, knp_pagination_sortable np:
   
@@ -137,7 +162,10 @@ Zastosowane m.in.:
     ```
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Entity/Klient.php#L25
   
-
+  * Fixtures
+  
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/DataFixtures/ORM/LoadKategoriaData.php
+  
 ### 2) JavaScript, Ajax
 
 https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/public/js/aktualizacjaKoszyka.js
@@ -162,10 +190,10 @@ https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Tests/Utils/ColumnSort
 
 
 ### 4) Twig
-  * blocks
-  * filters
-  * functions
-  * itd.
+
+  * blocks, include, extends, filters, functions, trans_default_domain itd., np:
+  
+  https://github.com/sruj/szobuk2/blob/master/app/Resources/FOSUserBundle/views/Registration/confirmed.html.twig
 
 
 
