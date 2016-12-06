@@ -1,8 +1,0 @@
-pomidorek
-
-zmieniam troszeczkę w pomidorku na branchu "zmiana_pomidorka"
-
-
-zminka. bez fast forward 
-
-zmianka, simple-changes branch.

@@ -80,8 +80,8 @@ class ZamowienieProdukt
      */
     private $idzamowienie;    
 
-//
-//
+
+
     /**
      * Set ilosc
      *

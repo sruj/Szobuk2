@@ -13,6 +13,7 @@ use AppBundle\Form\KsiazkaListType;
 use AppBundle\Entity\KsiazkaList;
 
 /**
+ * refaktor: komentarze, elsy. brzydka klasa
  * Ksiazka controller.
  *
  * @Route("/ksiazka")

@@ -51,12 +51,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: order.placed }
 
-    app.zarzadca_panel_sort:
-        class: AppBundle\Utils\Sort
-
-    app.zarzadca_panel_filter:
-        class: AppBundle\Utils\Filter
-
     app.manager_order:
         class: AppBundle\Utils\Manager\Order
         arguments: ["@doctrine.orm.entity_manager"]

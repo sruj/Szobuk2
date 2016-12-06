@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Pracownik
+ * Pracownik - nieużywane
  *
  * @ORM\Table(name="pracownik", indexes={@ORM\Index(name="idLogowanie_idx", columns={"idLogowanie"})})
  * @ORM\Entity

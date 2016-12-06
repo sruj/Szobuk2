@@ -11,7 +11,7 @@ use DateTime;
  *
  * @ORM\Table(name="zamowienie", indexes={@ORM\Index(name="idKlient_idx", columns={"idKlient"}), @ORM\Index(name="idStatus_idx", columns={"idStatus"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ZamowienieRepository")
- */
+*/
 class Zamowienie
 {
     /**
@@ -172,13 +172,11 @@ class Zamowienie
     {
         return $this->idklient;
     }
+
     public function __construct() {
         $this->faktury = new ArrayCollection();
         $this->zamowienie_produkty = new ArrayCollection();
     }
-//     public function __construct() {
-//        $this->przesylki = new ArrayCollection();
-//    }    
 
     /**
      * Add faktury

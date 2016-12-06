@@ -1,9 +1,5 @@
 {% extends '::layout.html.twig' %}
 
-{#{% block navbar_IsTabActive %}            
-            <div class="NavTabs"> <a class="NavTab NavTab--home" href="{{ path('index') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Home</span></a> <a class="NavTab NavTab--katalog" href="{{ path('ksiazka') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Katalog</span></a> <a class="NavTab NavTab--kategorie" href="{{ path('kategoria') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Kategorie</span></a> </div> 
-{% endblock navbar_IsTabActive %}  #}
-
 {% block contents %}
     <div class="boxMy bszerokie">
         <div id="boxMyinside">
@@ -16,13 +12,3 @@
         </div> <!-- end login-form -->
     </div>
 {% endblock %}
-
-{#    <form name="form" method="post" action="/Szobuk2/web/app_dev.php/ksiazka/978-0117156390">
-      <input type="hidden" name="_method" value="DELETE" />
-      <div id="form">
-        <div class="center">
-          <input type="submit" id="form_submit" name="form[submit]" value="Usuń">
-        </div>
-        <input type="hidden" id="form__token" name="form[_token]" value="gXl2ZJECDPlZUch7O0NxM4X21Mhgu9aY_Mn9pMMXPXY" />
-      </div>
-    </form>#}

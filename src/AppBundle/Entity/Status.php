@@ -33,41 +33,6 @@ class Status
     */
     protected $zamowienia;
 
-    
-    
-//    
-//    /**
-//     * Set status
-//     *
-//     * @param string $status
-//     * @return Status
-//     */
-//    public function setStatus($status)
-//    {
-//        $this->status = $status;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get status
-//     *
-//     * @return string 
-//     */
-//    public function getStatus()
-//    {
-//        return $this->status;
-//    }
-//
-//    /**
-//     * Get idstatus
-//     *
-//     * @return integer 
-//     */
-//    public function getIdstatus()
-//    {
-//        return $this->idstatus;
-//    }
 
     /**
      * Set status
@@ -102,7 +67,7 @@ class Status
         return $this->idstatus;
     }
 
-        public function __construct() {
+    public function __construct() {
         $this->zamowienia = new ArrayCollection();
     } 
 
@@ -139,7 +104,7 @@ class Status
         return $this->zamowienia;
     }
     
-        public function __toString()
+    public function __toString()
     {
         return $this->getStatus();
     }
