@@ -15,110 +15,54 @@ Zastosowane m.in.:
 
   * własne usługi (services)
 
-  * własne listener-events
+
+
+  * custom listener-events
+
+
+  * custom form type
+
+
+
+  * custom repository
+
+
+
+  * custom validation
+  
+
+  * custom Twig functions (twig extension) 
+  
+  https://github.com/sruj/szobuk2/blob/master/app/config/services.yml#L14
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Twig/AppExtension.php
+  
 
   * własne listener-events
+ 
 
-  * własne listener-events
+  * FOSUserBundle - views override
 
-  * własne listener-events
+  * friendly configuration
 
-  * własne listener-events
-
-  * własne listener-events
-
-  * własne listener-events
-
-  * własne listener-events
-
-  * własne listener-events
-
-  * własne listener-events
-
-  * własne listener-events
-
-  * własne listener-events
-
-  * własne listener-events
-
-  * własne listener-events
-
-  * własne listener-events
-
-  * własne listener-events
-
-  * własne listener-events
+  * knp-paginator
 
 
 
 ### 2) JavaScript
 
-  * delete the `src/Acme` directory;
-
-  * remove the routing entry referencing AcmeDemoBundle in `app/config/routing_dev.yml`;
-
-If you don't have Composer yet, download it following the instructions on
 
 ### 3) CSS
 
-  * delete the `src/Acme` directory;
 
-  * remove the routing entry referencing AcmeDemoBundle in `app/config/routing_dev.yml`;
 
-If you don't have Composer yet, download it following the instructions on
-
-### 1) Twig
-
-  * delete the `src/Acme` directory;
-
-  * remove the routing entry referencing AcmeDemoBundle in `app/config/routing_dev.yml`;
-
-If you don't have Composer yet, download it following the instructions on
 
 ### 1) DQL
 
-  * delete the `src/Acme` directory;
-
-  * remove the routing entry referencing AcmeDemoBundle in `app/config/routing_dev.yml`;
-
-If you don't have Composer yet, download it following the instructions on
 
 ### 1) Testy funkcjonalne
 
-  * delete the `src/Acme` directory;
 
-  * remove the routing entry referencing AcmeDemoBundle in `app/config/routing_dev.yml`;
-
-If you don't have Composer yet, download it following the instructions on
 
 ### 1) Testy jednostkowe
 
-  * delete the `src/Acme` directory;
 
-  * remove the routing entry referencing AcmeDemoBundle in `app/config/routing_dev.yml`;
-
-If you don't have Composer yet, download it following the instructions on
-
-### 1) 
-
-  * delete the `src/Acme` directory;
-
-  * remove the routing entry referencing AcmeDemoBundle in `app/config/routing_dev.yml`;
-
-If you don't have Composer yet, download it following the instructions on
-
-### 1) 
-
-  * delete the `src/Acme` directory;
-
-  * remove the routing entry referencing AcmeDemoBundle in `app/config/routing_dev.yml`;
-
-If you don't have Composer yet, download it following the instructions on
-
-### 1) 
-
-  * delete the `src/Acme` directory;
-
-  * remove the routing entry referencing AcmeDemoBundle in `app/config/routing_dev.yml`;
-
-If you don't have Composer yet, download it following the instructions on
