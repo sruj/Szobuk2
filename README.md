@@ -13,42 +13,67 @@ Zastosowane m.in.:
 
 ### 1) Symfony
 
-  * własne usługi (services)
+  * własne usługi (services), np:
+  
+    
+  * entity
+
+
+  * custom event-listener, np:
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Utils/ZamowienieManager.php#L70
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Event/OrderPlacedEvent.php
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/EventListener/SendEmailNotificationToAdminListener.php
+
+  * custom form type, np:
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Form/KsiazkaIloscType.php
+  
+  * configuration form in twig
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/views/Cart/zamawiam.html.twig
 
 
 
-  * custom listener-events
+  * form handler outside controller, custom service,  np:
+https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Utils/CreateZamowienieFormHandler.php
+https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Utils/ZamowienieManager.php
+https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/config/services.yml#L34
+https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Controller/CartController.php#L161
 
 
-  * custom form type
-
-
-
-  * custom repository
-
-
-
-  * custom validation
+  * custom validation constraints, np:
+  
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Validator/Constraints/PhoneNumberValidator.php
   
 
-  * custom Twig functions (twig extension) 
+  * custom Twig functions (twig extension) , np:
   
   https://github.com/sruj/szobuk2/blob/master/app/config/services.yml#L14
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Twig/AppExtension.php
   
 
-  * własne listener-events
+  * własne listener-events, np:
  
+ 
+  * EntityRepository
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Repository/KsiazkaRepository.php
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Repository/ZamowienieRepository.php
+  
 
-  * FOSUserBundle - views override
+  * FOSUserBundle - views override, np:
 
-  * friendly configuration
+  * friendly configuration, np:
 
-  * knp-paginator
+  * knp-paginator, knp_pagination_sortable np:
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/views/Default/popularne.html.twig#L21
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/views/Ksiazka/index.html.twig#L42
+  
+  * restrict content in twig (ROLE_ADMIN), np:
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/views/Kategoria/edit.html.twig#L8
 
 
 
-### 2) JavaScript
+### 2) JavaScript, Ajax
+https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/public/js/aktualizacjaKoszyka.js
+https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/views/Cart/cartmenu.html.twig#L58
 
 
 ### 3) CSS
@@ -56,13 +81,22 @@ Zastosowane m.in.:
 
 
 
-### 1) DQL
+### 4) DQL
 
 
-### 1) Testy funkcjonalne
+### 5) Testy funkcjonalne, np:
+https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Tests/Controller/ZarzadcaControllerTest.php
+https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Tests/Utils/ColumnSortChecker.php
+
+### 6) Testy jednostkowe
 
 
 
-### 1) Testy jednostkowe
+### 4) Twig
+  * blocks
+  * filters
+  * functions
+  * itd.
+
 
 
