@@ -20,23 +20,27 @@ Zastosowane m.in.:
 
 
   * custom event-listener, np:
+  
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Utils/ZamowienieManager.php#L70
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Event/OrderPlacedEvent.php
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/EventListener/SendEmailNotificationToAdminListener.php
 
   * custom form type, np:
+  
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Form/KsiazkaIloscType.php
   
   * configuration form in twig
+  
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/views/Cart/zamawiam.html.twig
 
 
 
   * form handler outside controller, custom service,  np:
-https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Utils/CreateZamowienieFormHandler.php
-https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Utils/ZamowienieManager.php
-https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/config/services.yml#L34
-https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Controller/CartController.php#L161
+  
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Utils/CreateZamowienieFormHandler.php
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Utils/ZamowienieManager.php
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/config/services.yml#L34
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Controller/CartController.php#L161
 
 
   * custom validation constraints, np:
@@ -54,24 +58,88 @@ https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Controller/CartControl
  
  
   * EntityRepository
+  
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Repository/KsiazkaRepository.php
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Repository/ZamowienieRepository.php
-  
+    ```
+   * @ORM\Entity(repositoryClass="AppBundle\Repository\ZamowienieRepository")
+   */
+   class Zamowienie
+   {
+    ```
 
   * FOSUserBundle - views override, np:
 
   * friendly configuration, np:
 
   * knp-paginator, knp_pagination_sortable np:
+  
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/views/Default/popularne.html.twig#L21
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/views/Ksiazka/index.html.twig#L42
   
   * restrict content in twig (ROLE_ADMIN), np:
+  
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/views/Kategoria/edit.html.twig#L8
 
+### 2) Doctrine ORM
 
+  * Association Mapping, np:
+   ```
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Ksiazka", inversedBy="zamowienie_produkty")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="isbn", referencedColumnName="isbn")
+     * })
+     */
+    private $isbn;
+     ```
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Entity/ZamowienieProdukt.php#L63  
+  
+  * [edit] coś takiego (z ArrayCollection)  , np:
+  ```
+    public function __construct() {
+        $this->faktury = new ArrayCollection();
+        $this->zamowienie_produkty = new ArrayCollection();
+    }  
+    public function addZamowienieProdukt(\AppBundle\Entity\ZamowienieProdukt $zamowienieProdukt)
+    {
+        if(!$this->zamowienie_produkty->contains($zamowienieProdukt)) {
+            $this->zamowienie_produkty[] = $zamowienieProdukt;
+        }
+        return $this;
+    }
+    public function getZamowienieProdukty()
+    {
+        return $this->zamowienie_produkty;
+    }
+    ```
+
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Entity/Zamowienie.php#L177
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Entity/Zamowienie.php#L255
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Entity/ZamowienieProdukt.php#L239
+  
+  * Gedmo\Timestampable, np:
+  
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Entity/Ksiazka.php#L28
+
+
+  
+  * Validation, np:
+  ```
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 45,
+     *      minMessage = "Imię powinno zawierać co najmniej {{ limit }} znaków",
+     *      maxMessage = "Imię powinno zawierać nie więcej niż {{ limit }} znaków"
+     * )
+     * @ORM\Column(name="imie", type="string", length=45, nullable=false)
+     */
+    private $imie;
+    ```
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Entity/Klient.php#L25
+  
 
 ### 2) JavaScript, Ajax
+
 https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/public/js/aktualizacjaKoszyka.js
 https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/views/Cart/cartmenu.html.twig#L58
 
@@ -85,6 +153,7 @@ https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/views/Cart/c
 
 
 ### 5) Testy funkcjonalne, np:
+
 https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Tests/Controller/ZarzadcaControllerTest.php
 https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Tests/Utils/ColumnSortChecker.php
 
