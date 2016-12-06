@@ -14,6 +14,7 @@ Zastosowane m.in.:
 ### 1) Symfony
 
   * services, (directives: factory,tags,arguments) np:
+  
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/config/services.yml
 
   * custom event-listener, np:
@@ -23,6 +24,7 @@ Zastosowane m.in.:
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/EventListener/SendEmailNotificationToAdminListener.php
   
   * security (firewalls, access_control, role_hierarchy)
+  
   https://github.com/sruj/szobuk2/blob/master/app/config/security.yml
     
 
@@ -49,8 +51,8 @@ Zastosowane m.in.:
   
   * custom exceptions
   
-  brak
-  --
+  (brak)
+
   
 
   * custom Twig functions (twig extension) , np:
@@ -63,6 +65,7 @@ Zastosowane m.in.:
   
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Repository/KsiazkaRepository.php
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Repository/ZamowienieRepository.php
+  
     ```
    * @ORM\Entity(repositoryClass="AppBundle\Repository\ZamowienieRepository")
    */
@@ -82,6 +85,7 @@ Zastosowane m.in.:
   
 
   * friendly configuration, np:
+  
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/DependencyInjection/Configuration.php
 
   * knp-paginator, knp_pagination_sortable np:
@@ -96,6 +100,7 @@ Zastosowane m.in.:
 ### 2) Doctrine ORM
 
   * Association Mapping, np:
+  
    ```
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Ksiazka", inversedBy="zamowienie_produkty")
      * @ORM\JoinColumns({
@@ -107,6 +112,7 @@ Zastosowane m.in.:
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Entity/ZamowienieProdukt.php#L63  
   
   * [edit] coś takiego (z ArrayCollection)  , np:
+  
   ```
     public function __construct() {
         $this->faktury = new ArrayCollection();
@@ -133,9 +139,9 @@ Zastosowane m.in.:
   
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Entity/Ksiazka.php#L28
 
-
   
   * Validation, np:
+  
   ```
      * @Assert\Length(
      *      min = 2,
@@ -147,6 +153,7 @@ Zastosowane m.in.:
      */
     private $imie;
     ```
+    
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Entity/Klient.php#L25
   
   * Fixtures
@@ -169,8 +176,6 @@ https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/views/Cart/c
 https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/public/css/style.css
 
 
-
-
 ### 5) Testy funkcjonalne, np:
 
 https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Tests/Controller/ZarzadcaControllerTest.php
@@ -179,8 +184,7 @@ https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Tests/Utils/ColumnSort
 ### 6) Testy jednostkowe
 
 
-
-### 4) Twig
+### 7) Twig
 
   * blocks, include, extends, filters, functions, trans_default_domain itd., np:
   
