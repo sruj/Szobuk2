@@ -27,7 +27,7 @@ Zastosowane m.in.:
   
   https://github.com/sruj/szobuk2/blob/master/app/config/security.yml
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/views/Kategoria/edit.html.twig#L8
-    
+  
 
   * form (custom form type, form in controller) np:
   
@@ -41,7 +41,11 @@ Zastosowane m.in.:
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Utils/ZamowienieManager.php
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/config/services.yml#L34
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Controller/CartController.php#L161
-
+  
+  * [Collection of Forms](https://symfony.com/doc/current/form/form_collections.html), np:
+  
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Controller/KsiazkaController.php#L44
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Entity/KsiazkaList.php
 
   * custom validation constraints, np:
   
@@ -50,41 +54,16 @@ Zastosowane m.in.:
   * custom exceptions
   
   **(TODO)**
-
-  
-
-  * custom Twig functions (twig extension) , np:
-  
-  https://github.com/sruj/szobuk2/blob/master/app/config/services.yml#L14
-  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Twig/AppExtension.php
-  
- 
-  * EntityRepository
-  
-  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Repository/KsiazkaRepository.php
-  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Repository/ZamowienieRepository.php
-  
-    ```
-   * @ORM\Entity(repositoryClass="AppBundle\Repository\ZamowienieRepository")
-   */
-   class Zamowienie
-   {
-    ```
-
-  * FOSUserBundle - views override, np:
-  
-  https://github.com/sruj/szobuk2/tree/master/app/Resources/FOSUserBundle/views
-  
-  * [Collection of Forms](https://symfony.com/doc/current/form/form_collections.html), np:
-  
-  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Controller/KsiazkaController.php#L44
-  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Entity/KsiazkaList.php
-  
   
 
   * friendly configuration, np:
   
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/DependencyInjection/Configuration.php
+  
+  
+  * FOSUserBundle - views override, np:
+  
+  https://github.com/sruj/szobuk2/tree/master/app/Resources/FOSUserBundle/views
 
   * knp-paginator, knp_pagination_sortable np:
   
@@ -131,6 +110,19 @@ Zastosowane m.in.:
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Entity/Zamowienie.php#L177
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Entity/Zamowienie.php#L255
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Entity/ZamowienieProdukt.php#L239
+  
+     
+  * EntityRepository
+  
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Repository/KsiazkaRepository.php
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Repository/ZamowienieRepository.php
+  
+    ```
+   * @ORM\Entity(repositoryClass="AppBundle\Repository\ZamowienieRepository")
+   */
+   class Zamowienie
+   {
+    ```
   
   * Gedmo\Timestampable, np:
   
@@ -189,6 +181,12 @@ https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Tests/Utils/ColumnSort
   * blocks, include, extends, filters, functions, trans_default_domain itd., np:
   
   https://github.com/sruj/szobuk2/blob/master/app/Resources/FOSUserBundle/views/Registration/confirmed.html.twig
+    
+
+  * custom functions (twig extension) , np:
+  
+  https://github.com/sruj/szobuk2/blob/master/app/config/services.yml#L14
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Twig/AppExtension.php
 
 
 
