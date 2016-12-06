@@ -23,18 +23,8 @@ Zastosowane m.in.:
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/EventListener/SendEmailNotificationToAdminListener.php
   
   * security (firewalls, access_control, role_hierarchy)
-  
-  
-  * 
-  
-  
-  * 
-  
-  
-  * 
-  
-  
-  
+  https://github.com/sruj/szobuk2/blob/master/app/config/security.yml
+    
 
   * form (custom form type, form in controller) np:
   
@@ -68,9 +58,6 @@ Zastosowane m.in.:
   https://github.com/sruj/szobuk2/blob/master/app/config/services.yml#L14
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Twig/AppExtension.php
   
-
-  * własne listener-events, np:
- 
  
   * EntityRepository
   
@@ -166,18 +153,22 @@ Zastosowane m.in.:
   
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/DataFixtures/ORM/LoadKategoriaData.php
   
-### 2) JavaScript, Ajax
+
+  * DQL
+  
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Repository/ZamowienieRepository.php
+  
+### 3) JavaScript, Ajax
 
 https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/public/js/aktualizacjaKoszyka.js
 https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/views/Cart/cartmenu.html.twig#L58
 
 
-### 3) CSS
+### 4) CSS
+
+https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/public/css/style.css
 
 
-
-
-### 4) DQL
 
 
 ### 5) Testy funkcjonalne, np:
