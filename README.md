@@ -49,7 +49,7 @@ Zastosowane m.in.:
   
   * custom exceptions
   
-  (brak)
+  **(TODO)**
 
   
 
@@ -182,6 +182,7 @@ https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Tests/Utils/ColumnSort
 
 ### 6) Testy jednostkowe
 
+**(TODO)**
 
 ### 7) Twig
 
