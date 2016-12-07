@@ -6,7 +6,7 @@ Projekt zaliczeniowy jako praca dyplomowa inżynierska obroniona 13-11-2015. Do 
 Uwagi:
 ----------------------------------
 - projekt nie powstawał z zamiarem późniejszego udostępniania jako pokaz moich umiejętności.
-- mieszane polsko-angielskie nazewnictwo klas/metod/zmiennych wynika z tego, że projekt rozpoczynałem w momencie nauki PHP/Symfony na podstawie polskojęzycznych książek, gdzie stosowano polskie nazwy zmiennych/metod/klas. (Późniejsze potworki typu "getZamowienieProdukt", "findNowosci" wynikały z konieczności łączenia nazw klas Entity z konwencjami nazewnictwa Symfony, itp). 
+- mieszane polsko-angielskie nazewnictwo klas/metod/zmiennych wynika z tego, że projekt rozpoczynałem w momencie nauki PHP/Symfony na podstawie polskojęzycznych książek, gdzie stosowano polskie nazwy zmiennych/metod/klas. (Późniejsze potworki typu "CreateZamowienieFormHandler" wynikały z konieczności łączenia nazw klas Entity z konwencjami nazewnictwa Symfony, itp). 
 
 Zastosowane m.in.:
 ----------------------------------
