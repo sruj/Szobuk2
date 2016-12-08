@@ -32,9 +32,6 @@ class Order
         $this->setFilter();
         
         $this->prepareRepository();
-        
-        
-        
     }
     
     private function setFields(array $fields, array $forms)
@@ -81,7 +78,7 @@ class Order
             ($this->forms['DataZamForm']->isValid())or
             ($this->forms['NrKlientaForm']->isValid()))
         {
-            return 1;
+            return true;
         }
     }
 
