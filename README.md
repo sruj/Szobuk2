@@ -177,7 +177,7 @@ https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Tests/Utils/ColumnSort
 ### 6) Testy jednostkowe
 
 **(TODO)** 
-(testy jednostkowe nie mają sensu dla klas jednokrotnego użytku (jak u mnie), gdzie obiekt klasy wykorzystywana jest tylko w jednym miejscu tylko po to by wynieść kod z kontrolera. Gdy arg kontruktora lub setera takiej klasy zawsze są takie same, więc bez sensu jest testować taką klasę z innymi argumentami).
+(Próbowałem robić T.J. dla Utils, ale testy jednostkowe nie mają sensu dla klas jednokrotnego użytku (jak u mnie), gdzie obiekt klasy wykorzystywana jest tylko w jednym miejscu tylko po to by wynieść kod z kontrolera. Gdy arg kontruktora lub setera takiej klasy zawsze są takie same, więc bez sensu jest testować taką klasę z innymi argumentami).
 
 ### 7) Twig
 
