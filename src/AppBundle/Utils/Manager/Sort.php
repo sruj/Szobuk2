@@ -23,12 +23,6 @@ class Sort
     }
 
 
-
-    /**
-     * @param $sortArr
-     * @param $orderBy
-     * @return array|string
-     */
     private function prepareColumnsSortOrder()
     {
         if (!($this->columnsSortOrder)) {
@@ -95,7 +89,7 @@ class Sort
 
     
     /**
-     * @return mixed
+     * @return array
      */
     public function getColumnsSortOrder()
     {
