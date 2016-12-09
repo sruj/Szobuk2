@@ -31,7 +31,7 @@ class Order
         $this->setFalse();
         $this->setFilter();
         
-        $this->prepareRepository();
+        $this->orders = $this->prepareRepository();
     }
     
     private function setFields(array $fields, array $forms)
@@ -85,7 +85,7 @@ class Order
     private function prepareRepository()
     {
         if($this->tableDetails['filter'] == 'all'){
-            $this->orderRepositoryMakerAndSortArrChangerForAll();
+            return $this->orderRepositoryMakerAndSortArrChangerForAll();
         }elseif($this->tableDetails['filter'] == 'idstatus'){
             if(!($this->tableDetails['query'])){
                 if(!$this->tableDetails['identifier']){
@@ -95,7 +95,7 @@ class Order
                 $this->tableDetails['query'] = 'idstatus = '.$this->tableDetails['identifier'];
             }
             $this->tableDetails['filterField'] = 'idstatus';
-            $this->orderRepositoryMakerAndSortArrChangerNotForAll();
+            return $this->orderRepositoryMakerAndSortArrChangerNotForAll();
 
         }
         elseif($this->tableDetails['filter'] == 'data'){
@@ -108,8 +108,8 @@ class Order
 
             }
             $this->tableDetails['filterField'] = 'data';
-            $this->orderRepositoryMakerAndSortArrChangerNotForAll();
             $this->tableDetails['query'] = urlencode($this->tableDetails['query']);
+            return $this->orderRepositoryMakerAndSortArrChangerNotForAll();
 
         }elseif($this->tableDetails['filter'] == 'idklient'){
             if(!($this->tableDetails['query'])){
@@ -119,7 +119,7 @@ class Order
                 }
                 $this->tableDetails['query'] = 'idklient = '.$this->tableDetails['identifier'];
             }
-            $this->orderRepositoryMakerAndSortArrChangerNotForAll();
+            return $this->orderRepositoryMakerAndSortArrChangerNotForAll();
         }else{
             throw new \Exception('Nie można znaleźć zamówień dla '.$this->tableDetails['filter']);
         }        
@@ -127,21 +127,25 @@ class Order
     
     private function orderRepositoryMakerAndSortArrChangerForAll()
     {
-        $this->orders = $this->em->getRepository('AppBundle:Zamowienie')
+        $repo = $this->em->getRepository('AppBundle:Zamowienie')
             ->findAllOrderedByY(
                 $this->tableDetails['columnsSortOrder'], 
                 $this->tableDetails['columnSort']);
-        if (!$this->orders) {throw new \Exception('Nie można znaleźć zamówień');}
+        if (!$repo) {throw new \Exception('Nie można znaleźć zamówień');}
+
+        return $repo;
     }
 
     private function orderRepositoryMakerAndSortArrChangerNotForAll()
     {
-        $this->orders = $this->em->getRepository('AppBundle:Zamowienie')
+        $repo = $this->em->getRepository('AppBundle:Zamowienie')
             ->findByXOrderedByY(
                 $this->tableDetails['query'],
                 $this->tableDetails['columnsSortOrder'], 
                 $this->tableDetails['columnSort']);
-        if (!$this->orders) {throw new \Exception('Nie można znaleźć zamówień');}
+        if (!$repo) {throw new \Exception('Nie można znaleźć zamówień');}
+
+        return $repo;
     }
 
 
