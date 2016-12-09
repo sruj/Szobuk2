@@ -10,6 +10,10 @@ namespace AppBundle\Tests\Utils\Manager;
 
 use AppBundle\Utils\Manager\Sort;
 
+/**
+ * Class SortTest
+ * @package AppBundle\Tests\Utils\Manager
+ */
 class SortTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -20,9 +24,12 @@ class SortTest extends \PHPUnit_Framework_TestCase
     {
         $object = new Sort($tableConfigDetails);
         $this->assertEquals($expected,$object->getColumnsSortOrder());
-
     }
 
+
+    /**
+     * @return \Generator
+     */
     public function getTableConfigDetails()
     {
         yield [['columnsSortOrder' => 'null','columnSort'=>'idzamowienie' ],
@@ -52,13 +59,13 @@ class SortTest extends \PHPUnit_Framework_TestCase
         yield [['columnsSortOrder' => 'DESC','columnSort'=>'idklient' ],
             ['Status'=>'null','Klient'=>'ASC','Data'=>'null','Numer'=>'null']];
 
+        yield [['columnsSortOrder' => 'BAD-IDEA','columnSort'=>'idklient' ],
+            ['Status'=>'null','Klient'=>'ASC','Data'=>'null','Numer'=>'null']];
+        yield [['columnsSortOrder' => 'BAD-IDEA','columnSort'=>'BAD-IDEA' ],
+            ['Status'=>'null','Klient'=>'null','Data'=>'null','Numer'=>'ASC']];
+
+
 
     }
-
-
-
-
-
-
 
 }
