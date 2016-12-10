@@ -11,151 +11,194 @@ namespace AppBundle\Utils\Manager;
 use Doctrine\ORM\EntityManager;
 
 
-//refaktor : if else else else else else else else else else else else else else else else else
+
 class Order
 {
     private $em;
     private $orders;
     private $tableDetails;
-    private $forms;
 
     function __construct(EntityManager $em)
     {
         $this->em = $em;
     }
 
-    public function prepareOrder($tableDetails, $tmpForms)
+    public function getTableDetails()
     {
-        $this->setFields($tableDetails, $tmpForms);
-     
-        $this->setFalse();
-        $this->setFilter();
-        
-        $this->orders = $this->prepareRepository();
+        return $this->tableDetails;
+    }
+
+    public function getOrder()
+    {
+        return $this->orders;
+    }
+
+    public function prepareOrder(array $tableDetails, array $tmpForms)
+    {
+        $tableDetails = $this->setFalse($tableDetails, $tmpForms);
+        $tableDetails = $this->setFilter($tableDetails, $tmpForms);
+        $this->orders = $this->prepareRepository($tableDetails, $tmpForms);
     }
     
-    private function setFields(array $fields, array $forms)
-    {
-        $this->tableDetails = $fields;
-        $this->forms = $forms;
-    }
 
-    private function setFalse()
+    private function setFalse($tb, $fms)
     {
-        if ($this->isAnyFormValid()){
-            $this->tableDetails['filterField'] = false;
-            $this->tableDetails['query'] = false;
+        if ($this->isAnyFormValid($fms)){
+            $tb['filterField'] = false;
+            $tb['query'] = false;
         }
 
-        if(!($this->tableDetails['filterField']))
+        if(!($tb['filterField']))
         {
-            $this->tableDetails['query'] = false;
+            $tb['query'] = false;
         }
+
+        return $tb;
     }
     
-    private function setFilter()
+    private function setFilter($td,$forms)
     {
-        if(!($this->tableDetails['filter']))
+        if(!($td['filter']))
         {
-            $this->prepareFilterValue();
+            $td = $this->prepareFilterValue($forms,$td);
         }
+
+        return $td;
     }
 
-    private function prepareFilterValue(){
-        if(!($this->tableDetails['filterField'])){
-            if($this->forms['StatusForm']->isValid()){ $this->tableDetails['filter'] = 'idstatus';}
-            elseif($this->forms['DataZamForm']->isValid()){ $this->tableDetails['filter'] = 'data';}
-            elseif($this->forms['NrKlientaForm']->isValid()){ $this->tableDetails['filter'] = 'idklient';}
-            else{ $this->tableDetails['filter'] = 'all';}
-        }else{$this->tableDetails['filter'] = $this->tableDetails['filterField'] ;}
+    private function prepareFilterValue($fms,$td){
+        if($td['filterField']){
+            $td['filter'] = $td['filterField'];
+            return $td;
+        }
+        if($fms['StatusForm']->isValid()){
+            $td['filter'] = 'idstatus';
+            return $td;
+        }
+        if($fms['DataZamForm']->isValid()) {
+            $td['filter'] = 'data';
+            return $td;
+        }
+        if($fms['NrKlientaForm']->isValid()){
+            $td['filter'] = 'idklient';
+            return $td;
+        }
+
+        $td['filter'] = 'all';
+        return $td;
     }
 
 
-
-    private function isAnyFormValid()
+    private function isAnyFormValid($forms)
     {
-        if(($this->forms['StatusForm']->isValid())or
-            ($this->forms['DataZamForm']->isValid())or
-            ($this->forms['NrKlientaForm']->isValid()))
+        if(($forms['StatusForm']->isValid())or
+            ($forms['DataZamForm']->isValid())or
+            ($forms['NrKlientaForm']->isValid()))
         {
             return true;
         }
     }
 
-    private function prepareRepository()
+    private function prepareRepository($td, $forms)
     {
-        if($this->tableDetails['filter'] == 'all'){
-            return $this->orderRepositoryMakerAndSortArrChangerForAll();
-        }elseif($this->tableDetails['filter'] == 'idstatus'){
-            if(!($this->tableDetails['query'])){
-                if(!$this->tableDetails['identifier']){
-                    $this->tableDetails['identifier'] = $this->forms['StatusForm']->get('status')->getData();
-                    $this->tableDetails['identifier'] = $this->tableDetails['identifier']->getIdstatus();
-                }
-                $this->tableDetails['query'] = 'idstatus = '.$this->tableDetails['identifier'];
-            }
-            $this->tableDetails['filterField'] = 'idstatus';
-            return $this->orderRepositoryMakerAndSortArrChangerNotForAll();
-
+        if($td['filter'] == 'all'){
+            $repos = $this->orderRepositoryMakerAndSortArrChangerForAll($td);
+            return $repos;
         }
-        elseif($this->tableDetails['filter'] == 'data'){
-            if(!($this->tableDetails['query'])){
-                $od = $this->forms['DataZamForm']->get('od')->getData()->format('Y-m-d H:i:s');
-                $do = $this->forms['DataZamForm']->get('do')->getData()->format('Y-m-d H:i:s');
-                $this->tableDetails['query'] = "datazlozenia BETWEEN '".$od."' AND '".$do."'";
-            }  else {
-                $this->tableDetails['query'] = urldecode($this->tableDetails['query']);
+        
+        if($td['filter'] == 'idstatus'){
+            $td = $this->prepareStatusFilter($td, $forms);
+            $repos = $this->orderRepositoryMakerAndSortArrChangerNotForAll($td);
+            return $repos;
+        }
 
-            }
-            $this->tableDetails['filterField'] = 'data';
-            $this->tableDetails['query'] = urlencode($this->tableDetails['query']);
-            return $this->orderRepositoryMakerAndSortArrChangerNotForAll();
+        if($td['filter'] == 'data') {
+            $td = $this->prepareDataFilter($td, $forms);
+            $repos = $this->orderRepositoryMakerAndSortArrChangerNotForAll($td);
+            return $repos;
+        }
 
-        }elseif($this->tableDetails['filter'] == 'idklient'){
-            if(!($this->tableDetails['query'])){
-                if(!$this->tableDetails['identifier']){
-                    $this->tableDetails['identifier'] = $this->forms['NrKlientaForm']->get('idklient')->getData();
-                    $this->tableDetails['identifier'] = $this->tableDetails['identifier']->getIdklient();
-                }
-                $this->tableDetails['query'] = 'idklient = '.$this->tableDetails['identifier'];
-            }
-            return $this->orderRepositoryMakerAndSortArrChangerNotForAll();
-        }else{
-            throw new \Exception('Nie można znaleźć zamówień dla '.$this->tableDetails['filter']);
-        }        
+        if($td['filter'] == 'idklient'){
+            $td = $this->prepareKlientFilter($td, $forms);
+            $repos = $this->orderRepositoryMakerAndSortArrChangerNotForAll($td);
+            return $repos;
+        }
+        
+        throw new \Exception('Nie można znaleźć zamówień dla '.$td['filter']);
     }
     
-    private function orderRepositoryMakerAndSortArrChangerForAll()
+    private function orderRepositoryMakerAndSortArrChangerForAll($td)
     {
+        $this->tableDetails = $td;
         $repo = $this->em->getRepository('AppBundle:Zamowienie')
             ->findAllOrderedByY(
-                $this->tableDetails['columnsSortOrder'], 
-                $this->tableDetails['columnSort']);
+                $td['columnsSortOrder'],
+                $td['columnSort']);
         if (!$repo) {throw new \Exception('Nie można znaleźć zamówień');}
 
         return $repo;
     }
 
-    private function orderRepositoryMakerAndSortArrChangerNotForAll()
+    private function orderRepositoryMakerAndSortArrChangerNotForAll($td)
     {
+        $this->tableDetails = $td;
         $repo = $this->em->getRepository('AppBundle:Zamowienie')
             ->findByXOrderedByY(
-                $this->tableDetails['query'],
-                $this->tableDetails['columnsSortOrder'], 
-                $this->tableDetails['columnSort']);
+                $td['query'],
+                $td['columnsSortOrder'],
+                $td['columnSort']);
         if (!$repo) {throw new \Exception('Nie można znaleźć zamówień');}
 
         return $repo;
     }
 
 
-    public function getTableDetails()
+    private function prepareStatusFilter($td, $forms)
     {
-        return $this->tableDetails;
+        if((!$td['query']) and (!$td['identifier'])) {
+            $td['identifier'] = $forms['StatusForm']->get('status')->getData()->getIdstatus();
+        }
+        
+        if((!$td['query']) and ($td['identifier'])) {
+            $td['query'] = 'idstatus = ' . $td['identifier'];
+        }
+
+        $td['filterField'] = 'idstatus';
+
+        return $td;
     }
-    
-    public function getOrder()
+
+    private function prepareDataFilter($td, $forms)
     {
-        return $this->orders;
+        if($td['query']) {
+            $td['query'] = urldecode($td['query']);
+        }
+
+        if (!$td['query']) {
+            $od = $forms['DataZamForm']->get('od')->getData()->format('Y-m-d H:i:s');
+            $do = $forms['DataZamForm']->get('do')->getData()->format('Y-m-d H:i:s');
+            $td['query'] = "datazlozenia BETWEEN '" . $od . "' AND '" . $do . "'";
+        }
+
+        $td['filterField'] = 'data';
+        $td['query'] = urlencode($td['query']);
+
+        return $td;
     }
+
+    private function prepareKlientFilter($td, $forms)
+    {
+        if ((!($td['query'])) and (!$td['identifier'])) {
+            $td['identifier'] = $forms['NrKlientaForm']->get('idklient')->getData()->getIdklient();
+            return $td;
+        }
+
+        if ((!($td['query'])) and $td['identifier']) {
+            $td['query'] = 'idklient = ' . $td['identifier'];
+            return $td;
+        }
+
+        return $td;
+    }
+
 }
