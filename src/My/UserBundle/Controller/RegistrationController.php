@@ -142,18 +142,23 @@ class RegistrationController extends BaseController
 
     /**
      * Tell the user his account is now confirmed
+     *
+     * nadpisuję ten kontroler by ...6 pierwszych linijek.
+     *
+     * jednak komentuję bo działa jak należy bez tego.
      */
-    public function confirmedAction(Request $request)
-    {
-        //jeśli w trakcie zakupów w wyborze autoryzacji wybrałem zaloguj lub zarejestruj to przenoszę się do *gdzieśtam*
-        $session = $request->getSession();
-        $proces_zamowienia=$session->get('proces_zamowienia');
-        if($proces_zamowienia=='tak'){
-//            return $this->redirect($this->generateUrl('zamawiam'));
-            $session->remove('proces_zamowienia');
-            return $this->redirectToRoute('zamawiam');
-        };      
-        
+    public function confirmedAction(){
+////    public function confirmedAction(Request $request)
+//
+//        //jeśli w trakcie zakupów w wyborze autoryzacji wybrałem zaloguj lub zarejestruj to przenoszę się do *gdzieśtam*
+//        $session = $this->getRequest()->getSession();
+////        $session = $request->getSession();
+//        $proces_zamowienia=$session->get('proces_zamowienia');
+//        if($proces_zamowienia=='tak'){
+//            $session->remove('proces_zamowienia');
+//            return $this->redirectToRoute('zamawiam');
+//        };
+
         $user = $this->getUser();
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');

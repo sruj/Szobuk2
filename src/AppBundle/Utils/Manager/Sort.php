@@ -23,13 +23,7 @@ class Sort
     }
 
 
-
-    /**
-     * @param $sortArr
-     * @param $orderBy
-     * @return array|string
-     */
-    protected function prepareColumnsSortOrder()
+    private function prepareColumnsSortOrder()
     {
         if (!($this->columnsSortOrder)) {
             $this->setAllNullNumerASC();
@@ -44,7 +38,7 @@ class Sort
 
     //[-Sortowanie-]Jeśli pierwszy raz otwieram stronę to tworzę tablicę $sortArr
     //i każdy element ustawiam na DESC
-    public function setAllNullNumerASC(){
+    private function setAllNullNumerASC(){
         $this->columnsSortOrder = [
             'Data'=>'null',
             'Klient'=>'null',
@@ -69,7 +63,7 @@ class Sort
     //[-Sortowanie-]W zależności od wartości zmiennej $OrderBy ustawia elementy tablicy
     //$sortArr na 'null' poza elementem tablicy tożsamym z $OrderBy.
     //Czyli jeśli $OrderBy=='datazlozenia' to ustawi $sortArr['Data']
-    public function AscDescChanger(){
+    private function AscDescChanger(){
         switch ($this->column) {
             case "datazlozenia":
                 $this->columnsSortOrder = ['Status'=>'null','Klient'=>'null','Numer'=>'null',
@@ -95,7 +89,7 @@ class Sort
 
     
     /**
-     * @return mixed
+     * @return array
      */
     public function getColumnsSortOrder()
     {
