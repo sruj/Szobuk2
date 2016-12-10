@@ -9,6 +9,7 @@
 namespace AppBundle\Utils\Manager;
 
 use Doctrine\ORM\EntityManager;
+use AppBundle\Utils\Manager\Filter;
 
 
 
@@ -17,10 +18,12 @@ class Order
     private $em;
     private $orders;
     private $tableDetails;
+    private $ftr;
 
-    function __construct(EntityManager $em)
+    function __construct(EntityManager $em, Filter $ftr)
     {
         $this->em = $em;
+        $this->ftr = $ftr;
     }
 
     public function getTableDetails()
@@ -102,32 +105,32 @@ class Order
     private function prepareRepository($td, $forms)
     {
         if($td['filter'] == 'all'){
-            $repos = $this->orderRepositoryMakerAndSortArrChangerForAll($td);
+            $repos = $this->orderRepositoryMakerForAll($td);
             return $repos;
         }
         
         if($td['filter'] == 'idstatus'){
-            $td = $this->prepareStatusFilter($td, $forms);
-            $repos = $this->orderRepositoryMakerAndSortArrChangerNotForAll($td);
+            $td = $this->ftr->prepareStatusFilter($td, $forms);
+            $repos = $this->orderRepositoryMakerNotForAll($td);
             return $repos;
         }
 
         if($td['filter'] == 'data') {
-            $td = $this->prepareDataFilter($td, $forms);
-            $repos = $this->orderRepositoryMakerAndSortArrChangerNotForAll($td);
+            $td = $this->ftr->prepareDataFilter($td, $forms);
+            $repos = $this->orderRepositoryMakerNotForAll($td);
             return $repos;
         }
 
         if($td['filter'] == 'idklient'){
-            $td = $this->prepareKlientFilter($td, $forms);
-            $repos = $this->orderRepositoryMakerAndSortArrChangerNotForAll($td);
+            $td = $this->ftr->prepareKlientFilter($td, $forms);
+            $repos = $this->orderRepositoryMakerNotForAll($td);
             return $repos;
         }
         
         throw new \Exception('Nie można znaleźć zamówień dla '.$td['filter']);
     }
     
-    private function orderRepositoryMakerAndSortArrChangerForAll($td)
+    private function orderRepositoryMakerForAll($td)
     {
         $this->tableDetails = $td;
         $repo = $this->em->getRepository('AppBundle:Zamowienie')
@@ -139,7 +142,7 @@ class Order
         return $repo;
     }
 
-    private function orderRepositoryMakerAndSortArrChangerNotForAll($td)
+    private function orderRepositoryMakerNotForAll($td)
     {
         $this->tableDetails = $td;
         $repo = $this->em->getRepository('AppBundle:Zamowienie')
@@ -153,52 +156,6 @@ class Order
     }
 
 
-    private function prepareStatusFilter($td, $forms)
-    {
-        if((!$td['query']) and (!$td['identifier'])) {
-            $td['identifier'] = $forms['StatusForm']->get('status')->getData()->getIdstatus();
-        }
-        
-        if((!$td['query']) and ($td['identifier'])) {
-            $td['query'] = 'idstatus = ' . $td['identifier'];
-        }
 
-        $td['filterField'] = 'idstatus';
-
-        return $td;
-    }
-
-    private function prepareDataFilter($td, $forms)
-    {
-        if($td['query']) {
-            $td['query'] = urldecode($td['query']);
-        }
-
-        if (!$td['query']) {
-            $od = $forms['DataZamForm']->get('od')->getData()->format('Y-m-d H:i:s');
-            $do = $forms['DataZamForm']->get('do')->getData()->format('Y-m-d H:i:s');
-            $td['query'] = "datazlozenia BETWEEN '" . $od . "' AND '" . $do . "'";
-        }
-
-        $td['filterField'] = 'data';
-        $td['query'] = urlencode($td['query']);
-
-        return $td;
-    }
-
-    private function prepareKlientFilter($td, $forms)
-    {
-        if ((!($td['query'])) and (!$td['identifier'])) {
-            $td['identifier'] = $forms['NrKlientaForm']->get('idklient')->getData()->getIdklient();
-            return $td;
-        }
-
-        if ((!($td['query'])) and $td['identifier']) {
-            $td['query'] = 'idklient = ' . $td['identifier'];
-            return $td;
-        }
-
-        return $td;
-    }
 
 }

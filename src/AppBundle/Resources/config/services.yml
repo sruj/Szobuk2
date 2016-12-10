@@ -53,4 +53,8 @@ services:
 
     app.manager_order:
         class: AppBundle\Utils\Manager\Order
-        arguments: ["@doctrine.orm.entity_manager"]
+        arguments: ["@doctrine.orm.entity_manager","@app.utils_filter"]
+
+    app.utils_filter:
+        class: AppBundle\Utils\Manager\Filter
+
