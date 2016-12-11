@@ -16,14 +16,11 @@ use AppBundle\Utils\Manager\Filter;
 class Order
 {
     private $em;
-    private $orders;
     private $tableDetails;
-    private $ftr;
 
-    function __construct(EntityManager $em, Filter $ftr)
+    function __construct(EntityManager $em)
     {
         $this->em = $em;
-        $this->ftr = $ftr;
     }
 
     public function getTableDetails()
@@ -31,106 +28,18 @@ class Order
         return $this->tableDetails;
     }
 
-    public function getOrder()
+    public function prepareOrder($td_f)
     {
-        return $this->orders;
-    }
-
-    public function prepareOrder(array $tableDetails, array $tmpForms)
-    {
-        $tableDetails = $this->setFalse($tableDetails, $tmpForms);
-        $tableDetails = $this->setFilter($tableDetails, $tmpForms);
-        $this->orders = $this->prepareRepository($tableDetails, $tmpForms);
-    }
-    
-
-    private function setFalse($tb, $fms)
-    {
-        if ($this->isAnyFormValid($fms)){
-            $tb['filterField'] = false;
-            $tb['query'] = false;
-        }
-
-        if(!($tb['filterField']))
-        {
-            $tb['query'] = false;
-        }
-
-        return $tb;
-    }
-    
-    private function setFilter($td,$forms)
-    {
-        if(!($td['filter']))
-        {
-            $td = $this->prepareFilterValue($forms,$td);
-        }
-
-        return $td;
-    }
-
-    private function prepareFilterValue($fms,$td){
-        if($td['filterField']){
-            $td['filter'] = $td['filterField'];
-            return $td;
-        }
-        if($fms['StatusForm']->isValid()){
-            $td['filter'] = 'idstatus';
-            return $td;
-        }
-        if($fms['DataZamForm']->isValid()) {
-            $td['filter'] = 'data';
-            return $td;
-        }
-        if($fms['NrKlientaForm']->isValid()){
-            $td['filter'] = 'idklient';
-            return $td;
-        }
-
-        $td['filter'] = 'all';
-        return $td;
-    }
-
-
-    private function isAnyFormValid($forms)
-    {
-        if(($forms['StatusForm']->isValid())or
-            ($forms['DataZamForm']->isValid())or
-            ($forms['NrKlientaForm']->isValid()))
-        {
-            return true;
-        }
-    }
-
-    private function prepareRepository($td, $forms)
-    {
-        if($td['filter'] == 'all'){
-            $repos = $this->orderRepositoryMakerForAll($td);
-            return $repos;
+        if($td_f['query']){
+            return $this->prepareOrderRepositoryForFilterSelected($td_f);
         }
         
-        if($td['filter'] == 'idstatus'){
-            $td = $this->ftr->prepareStatusFilter($td, $forms);
-            $repos = $this->orderRepositoryMakerNotForAll($td);
-            return $repos;
+        if(!$td_f['query']) {
+            return $this->prepareOrderRepositoryUnfiltered($td_f);
         }
-
-        if($td['filter'] == 'data') {
-            $td = $this->ftr->prepareDataFilter($td, $forms);
-            $repos = $this->orderRepositoryMakerNotForAll($td);
-            return $repos;
-        }
-
-        if($td['filter'] == 'idklient'){
-            $td = $this->ftr->prepareKlientFilter($td, $forms);
-            $repos = $this->orderRepositoryMakerNotForAll($td);
-            return $repos;
-        }
-        
-        throw new \Exception('Nie można znaleźć zamówień dla '.$td['filter']);
     }
     
-    private function orderRepositoryMakerForAll($td)
+    private function prepareOrderRepositoryUnfiltered($td)
     {
         $this->tableDetails = $td;
         $repo = $this->em->getRepository('AppBundle:Zamowienie')
@@ -142,7 +51,7 @@ class Order
         return $repo;
     }
 
-    private function orderRepositoryMakerNotForAll($td)
+    private function prepareOrderRepositoryForFilterSelected($td)
     {
         $this->tableDetails = $td;
         $repo = $this->em->getRepository('AppBundle:Zamowienie')
@@ -154,8 +63,6 @@ class Order
 
         return $repo;
     }
-
-
 
 
 }

@@ -2,6 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Utils\Manager\Filter;
+use AppBundle\Utils\Manager\FilterQuery;
+use AppBundle\Utils\Manager\Order;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -83,10 +86,15 @@ class ZarzadcaController extends Controller
             'NrKlientaForm' => $NrKlientaForm,
         ];
 
+        
+        $fltr = new Filter();
+        $fltrqry = new FilterQuery();
+        $tds = $fltr->prepareFilterAndQuery($tableDetails, $tmpForms, $fltrqry);
+        
         $manager_order = $this->get('app.manager_order');
-        $manager_order->prepareOrder($tableDetails, $tmpForms);
-        $orders = $manager_order->getOrder();
+        $orders = $manager_order->prepareOrder($tds);
         $tableDetails = $manager_order->getTableDetails();
+
 
         $ordersProducts= $this->getDoctrine()
             ->getRepository('AppBundle:ZamowienieProdukt')

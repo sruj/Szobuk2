@@ -8,63 +8,109 @@
 
 namespace AppBundle\Utils\Manager;
 
+use AppBundle\Utils\Manager\IFilterQuery;
 
 class Filter
 {
-
-    public function prepareStatusFilter($td, $forms)
+    public function prepareFilterAndQuery($td, $forms, IFilterQuery $fq)
     {
-        if((!$td['query']) and (!$td['identifier'])) {
-            $td['identifier'] = $forms['StatusForm']->get('status')->getData()->getIdstatus();
-        }
+        $td = $this->prepareDetails($td,$forms);
+        $tds = $this->makeFilterAndQuery($td,$forms,$fq);
 
-        if((!$td['query']) and ($td['identifier'])) {
-            $td['query'] = 'idstatus = ' . $td['identifier'];
-        }
+        return $tds;
 
-        $td['filterField'] = 'idstatus';
-
-        return $td;
     }
 
-    public function prepareDataFilter($td, $forms)
+    
+    private function prepareDetails(array $tableDetails, array $tmpForms)
     {
-        if($td['query']) {
-            $td['query'] = urldecode($td['query']);
-        }
+        $tableDetails = $this->setFalse($tableDetails, $tmpForms);
+        $tableDetails = $this->setFilter($tableDetails, $tmpForms);
 
-        if (!$td['query']) {
-            $od = $forms['DataZamForm']->get('od')->getData()->format('Y-m-d H:i:s');
-            $do = $forms['DataZamForm']->get('do')->getData()->format('Y-m-d H:i:s');
-            $td['query'] = "datazlozenia BETWEEN '" . $od . "' AND '" . $do . "'";
-        }
-
-        $td['filterField'] = 'data';
-        $td['query'] = urlencode($td['query']);
-
-        return $td;
+        return $tableDetails;
     }
-
-    public function prepareKlientFilter($td, $forms)
+    
+    private function makeFilterAndQuery($td, $forms, IFilterQuery $fq)
     {
-        if ((!($td['query'])) and (!$td['identifier'])) {
-            $td['identifier'] = $forms['NrKlientaForm']->get('idklient')->getData()->getIdklient();
+        if($td['filter'] == 'all'){
             return $td;
         }
 
-        if ((!($td['query'])) and $td['identifier']) {
-            $td['query'] = 'idklient = ' . $td['identifier'];
-            return $td;
+        if($td['filter'] == 'idstatus'){
+            $td['filterField'] = 'idstatus';
+            $tds = $fq->prepareStatusFilterQuery($td, $forms);
+            return $tds;
+        }
+
+        if($td['filter'] == 'data') {
+            $td['filterField'] = 'data';
+            $tds = $fq->prepareDataFilterQuery($td, $forms);
+            return $tds;
+        }
+
+        if($td['filter'] == 'idklient'){
+            $tds = $fq->prepareKlientFilterQuery($td, $forms);
+            return $tds;
+        }
+    }
+
+    private function setFalse($tb, $fms)
+    {
+        if ($this->isAnyFormValid($fms)){
+            $tb['filterField'] = false;
+            $tb['query'] = false;
+        }
+
+        if(!($tb['filterField']))
+        {
+            $tb['query'] = false;
+        }
+
+        return $tb;
+    }
+
+    private function isAnyFormValid($forms)
+    {
+        if(($forms['StatusForm']->isValid())or
+            ($forms['DataZamForm']->isValid())or
+            ($forms['NrKlientaForm']->isValid()))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private function setFilter($td,$forms)
+    {
+        if(!($td['filter']))
+        {
+            $td = $this->prepareFilterValue($forms,$td);
         }
 
         return $td;
     }
-    
-    
-    
-    
-    
-    
-    
+
+    private function prepareFilterValue($fms,$td){
+        if($td['filterField']){
+            $td['filter'] = $td['filterField'];
+            return $td;
+        }
+        if($fms['StatusForm']->isValid()){
+            $td['filter'] = 'idstatus';
+            return $td;
+        }
+        if($fms['DataZamForm']->isValid()) {
+            $td['filter'] = 'data';
+            return $td;
+        }
+        if($fms['NrKlientaForm']->isValid()){
+            $td['filter'] = 'idklient';
+            return $td;
+        }
+
+        $td['filter'] = 'all';
+        return $td;
+    }
 
 }
