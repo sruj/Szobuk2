@@ -36,8 +36,6 @@ class FilterQuery implements IFilterQuery
             $td['query'] = "datazlozenia BETWEEN '" . $od . "' AND '" . $do . "'";
         }
 
-        $td['query'] = urlencode($td['query']);
-
         return $td;
     }
 
@@ -55,6 +53,5 @@ class FilterQuery implements IFilterQuery
         }
 
         return $td;
-    }    
-
+    }     
 }

@@ -112,5 +112,4 @@ class Filter
         $td['filter'] = 'all';
         return $td;
     }
-
 }
