@@ -12,17 +12,16 @@ use AppBundle\Utils\Manager\IFilterQuery;
 
 class Filter
 {
-    public function prepareFilterAndQuery($td, $forms, IFilterQuery $fq)
+    public function prepareFilterAndQuery(TableDetails $td, $forms, IFilterQuery $fq)
     {
         $td = $this->prepareDetails($td,$forms);
         $tds = $this->makeFilterAndQuery($td,$forms,$fq);
 
         return $tds;
-
     }
 
     
-    private function prepareDetails(array $tableDetails, array $tmpForms)
+    private function prepareDetails(TableDetails $tableDetails, array $tmpForms)
     {
         $tableDetails = $this->setFalse($tableDetails, $tmpForms);
         $tableDetails = $this->setFilter($tableDetails, $tmpForms);
@@ -30,40 +29,40 @@ class Filter
         return $tableDetails;
     }
     
-    private function makeFilterAndQuery($td, $forms, IFilterQuery $fq)
+    private function makeFilterAndQuery(TableDetails $td, $forms, IFilterQuery $fq)
     {
-        if($td['filter'] == 'all'){
+        if($td->getFilter() == 'all'){
             return $td;
         }
 
-        if($td['filter'] == 'idstatus'){
-            $td['filterField'] = 'idstatus';
+        if($td->getFilter() == 'idstatus'){
+            $td->setFilterField('idstatus');
             $tds = $fq->prepareStatusFilterQuery($td, $forms);
             return $tds;
         }
 
-        if($td['filter'] == 'data') {
-            $td['filterField'] = 'data';
+        if($td->getFilter() == 'data') {
+            $td->setFilterField('data');
             $tds = $fq->prepareDataFilterQuery($td, $forms);
             return $tds;
         }
 
-        if($td['filter'] == 'idklient'){
+        if($td->getFilter() == 'idklient'){
             $tds = $fq->prepareKlientFilterQuery($td, $forms);
             return $tds;
         }
     }
 
-    private function setFalse($tb, $fms)
+    private function setFalse(TableDetails $tb, $fms)
     {
         if ($this->isAnyFormValid($fms)){
-            $tb['filterField'] = false;
-            $tb['query'] = false;
+            $tb->setFilterField(false);
+            $tb->setQuery(false);
         }
 
-        if(!($tb['filterField']))
+        if(!($tb->getFilterField()))
         {
-            $tb['query'] = false;
+            $tb->setQuery(false);
         }
 
         return $tb;
@@ -81,9 +80,9 @@ class Filter
         return false;
     }
 
-    private function setFilter($td,$forms)
+    private function setFilter(TableDetails $td,$forms)
     {
-        if(!($td['filter']))
+        if(!($td->getFilter()))
         {
             $td = $this->prepareFilterValue($forms,$td);
         }
@@ -91,25 +90,25 @@ class Filter
         return $td;
     }
 
-    private function prepareFilterValue($fms,$td){
-        if($td['filterField']){
-            $td['filter'] = $td['filterField'];
+    private function prepareFilterValue($fms,TableDetails $td){
+        if($td->getFilterField()){
+            $td->setFilter($td->getFilterField());
             return $td;
         }
         if($fms['StatusForm']->isValid()){
-            $td['filter'] = 'idstatus';
+            $td->setFilter('idstatus');
             return $td;
         }
         if($fms['DataZamForm']->isValid()) {
-            $td['filter'] = 'data';
+            $td->setFilter('data');
             return $td;
         }
         if($fms['NrKlientaForm']->isValid()){
-            $td['filter'] = 'idklient';
+            $td->setFilter('idklient');
             return $td;
         }
 
-        $td['filter'] = 'all';
+        $td->setFilter('all');
         return $td;
     }
 }

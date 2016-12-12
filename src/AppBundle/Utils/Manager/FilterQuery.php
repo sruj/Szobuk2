@@ -11,47 +11,47 @@ namespace AppBundle\Utils\Manager;
 
 class FilterQuery implements IFilterQuery
 {
-    public function prepareStatusFilterQuery($td, $forms)
+    public function prepareStatusFilterQuery(TableDetails $td, $forms)
     {
-        if((!$td['query']) and (!$td['identifier'])) {
-            $td['identifier'] = $forms['StatusForm']->get('status')->getData()->getIdstatus();
+        if((!$td->getQuery()) and (!$td->getIdentifier())) {
+            $td->setIdentifier($forms['StatusForm']->get('status')->getData()->getIdstatus());
         }
 
-        if((!$td['query']) and ($td['identifier'])) {
-            $td['query'] = 'idstatus = ' . $td['identifier'];
+        if((!$td->getQuery()) and ($td->getIdentifier())) {
+            $td->setQuery('idstatus = ' . $td->getIdentifier());
         }
 
         return $td;
     }
 
-    public function prepareDataFilterQuery($td, $forms)
+    public function prepareDataFilterQuery(TableDetails $td, $forms)
     {
-        if($td['query']) {
-            $td['query'] = urldecode($td['query']);
+        if($td->getQuery()) {
+            $td->setQuery(urldecode($td->getQuery()));
         }
 
-        if (!$td['query']) {
+        if (!$td->getQuery()) {
             $od = $forms['DataZamForm']->get('od')->getData()->format('Y-m-d H:i:s');
             $do = $forms['DataZamForm']->get('do')->getData()->format('Y-m-d H:i:s');
-            $td['query'] = "datazlozenia BETWEEN '" . $od . "' AND '" . $do . "'";
+            $td->setQuery("datazlozenia BETWEEN '" . $od . "' AND '" . $do . "'");
         }
 
         return $td;
     }
 
-    public function prepareKlientFilterQuery($td, $forms)
+    public function prepareKlientFilterQuery(TableDetails $td, $forms)
     {
-        if ((!($td['query'])) and (!$td['identifier'])) {
-            $td['identifier'] = $forms['NrKlientaForm']->get('idklient')->getData()->getIdklient();
-            $td['query'] = 'idklient = ' . $td['identifier'];
+        if ((!($td->getQuery())) and (!$td->getIdentifier())) {
+            $td->setIdentifier($forms['NrKlientaForm']->get('idklient')->getData()->getIdklient());
+            $td->setQuery('idklient = ' . $td->getIdentifier());
             return $td;
         }
 
-        if ((!($td['query'])) and $td['identifier']) {
-            $td['query'] = 'idklient = ' . $td['identifier'];
+        if ((!($td->getQuery())) and $td->getIdentifier()) {
+            $td->setQuery('idklient = ' . $td->getIdentifier());
             return $td;
         }
 
         return $td;
-    }     
+    }
 }

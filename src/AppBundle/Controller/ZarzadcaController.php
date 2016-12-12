@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Utils\Manager\Filter;
 use AppBundle\Utils\Manager\FilterQuery;
 use AppBundle\Utils\Manager\Order;
+use AppBundle\Utils\Manager\TableDetails;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -57,17 +58,16 @@ class ZarzadcaController extends Controller
      */
     public function panelsortAction(Request $request, $columnsSortOrder, $columnSort, $query, $filterField, $filter, $identifier)
     {
-        $tableDetails = [
-            'columnsSortOrder' => $columnsSortOrder,
-            'columnSort' => $columnSort,
-            'filterField' => $filterField,
-            'query' => $query,
-            'filter' => $filter,
-            'identifier' => $identifier,
-        ];
+        $tableDetails = new TableDetails();
+        $tableDetails->setColumnsSortOrder($columnsSortOrder);
+        $tableDetails->setColumnSort($columnSort);
+        $tableDetails->setFilterField($filterField);
+        $tableDetails->setQuery($query);
+        $tableDetails->setFilter($filter);
+        $tableDetails->setIdentifier($identifier);
 
         $sort = new Sort($tableDetails);
-        $tableDetails['columnsSortOrder'] = $sort->getColumnsSortOrder();
+        $tableDetails->setColumnsSortOrder($sort->getColumnsSortOrder());
 
         $StatusForm = $this->createForm(StatusType::class,null, array(
             'action' => $this->generateUrl('panelSortFromDetails')));
@@ -117,10 +117,10 @@ class ZarzadcaController extends Controller
 
         return $this->render('AppBundle:Zarzadca:panelsort.html.twig',[
             'zamowieniaProdukty'=>$ordersProducts,
-            'filterField' => $tableDetails['filterField'],
-            'query' => $tableDetails['query'],
-            'identifier' => $tableDetails['identifier'],
-            'columnsSortOrder' => $tableDetails['columnsSortOrder'],
+            'filterField' => $tableDetails->getFilterField(),
+            'query' => $tableDetails->getQuery(),
+            'identifier' => $tableDetails->getIdentifier(),
+            'columnsSortOrder' => $tableDetails->getColumnsSortOrder(),
             'form' => $form->createView(),
             'StatusForm' => $StatusForm->createView(),
             'DataZamForm' => $DataZamForm->createView(),

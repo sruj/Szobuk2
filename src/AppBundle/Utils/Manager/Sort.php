@@ -14,10 +14,10 @@ class Sort
     private $columnsSortOrder;
     private $column;
 
-    function __construct(array $tableConfigDetails)
+    function __construct(TableDetails $tableConfigDetails)
     {
-        $this->columnsSortOrder = $tableConfigDetails['columnsSortOrder'];
-        $this->column = $tableConfigDetails['columnSort'];
+        $this->columnsSortOrder = $tableConfigDetails->getColumnSort();
+        $this->column = $tableConfigDetails->getColumnSort();
 
         $this->prepareColumnsSortOrder();
     }

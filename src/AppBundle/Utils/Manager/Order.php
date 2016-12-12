@@ -23,46 +23,48 @@ class Order
         $this->em = $em;
     }
 
+    /**
+     * @return TableDetails
+     */
     public function getTableDetails()
     {
         return $this->tableDetails;
     }
 
-    public function prepareOrder($td_f)
+    public function prepareOrder(TableDetails $td_f)
     {
-        if($td_f['query']){
+        if($td_f->getQuery()){
             return $this->prepareOrderRepositoryForFilterSelected($td_f);
         }
         
-        if(!$td_f['query']) {
+        if(!$td_f->getQuery()) {
             return $this->prepareOrderRepositoryUnfiltered($td_f);
         }
     }
     
-    private function prepareOrderRepositoryUnfiltered($td)
+    private function prepareOrderRepositoryUnfiltered(TableDetails $td)
     {
         $this->tableDetails = $td;
         $repo = $this->em->getRepository('AppBundle:Zamowienie')
             ->findAllOrderedByY(
-                $td['columnsSortOrder'],
-                $td['columnSort']);
+                $td->getColumnsSortOrder(),
+                $td->getColumnSort());
         if (!$repo) {throw new \Exception('Nie można znaleźć zamówień');}
 
         return $repo;
     }
 
-    private function prepareOrderRepositoryForFilterSelected($td)
+    private function prepareOrderRepositoryForFilterSelected(TableDetails $td)
     {
         $this->tableDetails = $td;
         $repo = $this->em->getRepository('AppBundle:Zamowienie')
             ->findByXOrderedByY(
-                $td['query'],
-                $td['columnsSortOrder'],
-                $td['columnSort']);
+                $td->getQuery(),
+                $td->getColumnsSortOrder(),
+                $td->getColumnSort());
         if (!$repo) {throw new \Exception('Nie można znaleźć zamówień');}
 
         return $repo;
     }
-
-
+    
 }

@@ -9,9 +9,9 @@ namespace AppBundle\Utils\Manager;
 
 interface IFilterQuery
 {
-    public function prepareStatusFilterQuery($td, $forms);
+    public function prepareStatusFilterQuery(TableDetails $td, $forms);
 
-    public function prepareDataFilterQuery($td, $forms);
+    public function prepareDataFilterQuery(TableDetails $td, $forms);
 
-    public function prepareKlientFilterQuery($td, $forms);
+    public function prepareKlientFilterQuery(TableDetails $td, $forms);
 }
