@@ -32,22 +32,42 @@ class FormsManagerExtended extends FormsManager
 
     public function getIdStatusFromStatusForm()
     {
-        return $this->forms['StatusForm']->get('status')->getData()->getIdstatus();
+        $idstatus = $this->forms['StatusForm']->get('status')->getData()->getIdstatus();
+        if(isset($idstatus)){
+            return $idstatus;
+        }
+        //todo: custom exception
+//        throw ; exception-brak cośtam.
     }
 
     public function getOdFromDataZamForm()
     {
-        return $this->forms['DataZamForm']->get('od')->getData()->format('Y-m-d H:i:s');
+        $od = $this->forms['DataZamForm']->get('od')->getData()->format('Y-m-d H:i:s');
+        if(isset($od)){
+            return $od;
+        }
+        //todo: custom exception
+//        throw ; exception-brak cośtam.
     }
 
     public function getDoFromDataZamForm()
     {
-        return $this->forms['DataZamForm']->get('do')->getData()->format('Y-m-d H:i:s');
+        $do = $this->forms['DataZamForm']->get('do')->getData()->format('Y-m-d H:i:s');
+        if(isset($do)){
+            return $do;
+        }
+        //todo: custom exception
+//        throw ; exception-brak cośtam.
     }
 
     public function getIdKlientFromNrKlientaForm()
     {
-        return $this->forms['NrKlientaForm']->get('idklient')->getData()->getIdklient();
+        $idklient = $this->forms['NrKlientaForm']->get('idklient')->getData()->getIdklient();
+        if(isset($idklient)){
+            return $idklient;
+        }
+        //todo: custom exception
+//        throw ; exception-brak cośtam.
     }
 
 
