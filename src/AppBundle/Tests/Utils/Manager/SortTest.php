@@ -16,7 +16,7 @@ use AppBundle\Utils\Manager\Sort;
  */
 class SortTest extends \PHPUnit_Framework_TestCase
 {
-
+//todo: nie działa bo zmieniłem pierwszy argument na obiekt (była tablica)
     /**
      * @dataProvider getTableConfigDetails
      */

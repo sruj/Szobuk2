@@ -12,7 +12,7 @@ use AppBundle\Utils\Manager\IFilterQuery;
 
 class Filter
 {
-    public function prepareFilterAndQuery(TableDetails $td, $forms, IFilterQuery $fq)
+    public function prepareFilterAndQuery(TableDetails $td, FormsManagerExtended $forms, IFilterQuery $fq)
     {
         $td = $this->prepareDetails($td,$forms);
         $tds = $this->makeFilterAndQuery($td,$forms,$fq);
@@ -21,7 +21,7 @@ class Filter
     }
 
     
-    private function prepareDetails(TableDetails $tableDetails, array $tmpForms)
+    private function prepareDetails(TableDetails $tableDetails,FormsManagerExtended $tmpForms)
     {
         $tableDetails = $this->setFalse($tableDetails, $tmpForms);
         $tableDetails = $this->setFilter($tableDetails, $tmpForms);
@@ -29,7 +29,7 @@ class Filter
         return $tableDetails;
     }
     
-    private function makeFilterAndQuery(TableDetails $td, $forms, IFilterQuery $fq)
+    private function makeFilterAndQuery(TableDetails $td,FormsManagerExtended $forms, IFilterQuery $fq)
     {
         if($td->getFilter() == 'all'){
             return $td;
@@ -53,7 +53,7 @@ class Filter
         }
     }
 
-    private function setFalse(TableDetails $tb, $fms)
+    private function setFalse(TableDetails $tb, FormsManagerExtended $fms)
     {
         if ($this->isAnyFormValid($fms)){
             $tb->setFilterField(false);
@@ -68,16 +68,10 @@ class Filter
         return $tb;
     }
 
-    private function isAnyFormValid($forms)
+    
+    private function isAnyFormValid(FormsManager $forms)
     {
-        if(($forms['StatusForm']->isValid())or
-            ($forms['DataZamForm']->isValid())or
-            ($forms['NrKlientaForm']->isValid()))
-        {
-            return true;
-        }
-
-        return false;
+        return $forms->isAnyFormValid();
     }
 
     private function setFilter(TableDetails $td,$forms)
@@ -90,20 +84,21 @@ class Filter
         return $td;
     }
 
-    private function prepareFilterValue($fms,TableDetails $td){
+    
+    private function prepareFilterValue(FormsManagerExtended $fms,TableDetails $td){
         if($td->getFilterField()){
             $td->setFilter($td->getFilterField());
             return $td;
         }
-        if($fms['StatusForm']->isValid()){
+        if($fms->isStatusFormValid()){
             $td->setFilter('idstatus');
             return $td;
         }
-        if($fms['DataZamForm']->isValid()) {
+        if($fms->isDataZamFormValid()) {
             $td->setFilter('data');
             return $td;
         }
-        if($fms['NrKlientaForm']->isValid()){
+        if($fms->isNrKlientaFormValid()){
             $td->setFilter('idklient');
             return $td;
         }

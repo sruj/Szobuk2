@@ -11,10 +11,10 @@ namespace AppBundle\Utils\Manager;
 
 class FilterQuery implements IFilterQuery
 {
-    public function prepareStatusFilterQuery(TableDetails $td, $forms)
+    public function prepareStatusFilterQuery(TableDetails $td, FormsManagerExtended $forms)
     {
         if((!$td->getQuery()) and (!$td->getIdentifier())) {
-            $td->setIdentifier($forms['StatusForm']->get('status')->getData()->getIdstatus());
+            $td->setIdentifier($forms->getIdStatusFromStatusForm());
         }
 
         if((!$td->getQuery()) and ($td->getIdentifier())) {
@@ -24,25 +24,25 @@ class FilterQuery implements IFilterQuery
         return $td;
     }
 
-    public function prepareDataFilterQuery(TableDetails $td, $forms)
+    public function prepareDataFilterQuery(TableDetails $td, FormsManagerExtended $forms)
     {
         if($td->getQuery()) {
             $td->setQuery(urldecode($td->getQuery()));
         }
 
         if (!$td->getQuery()) {
-            $od = $forms['DataZamForm']->get('od')->getData()->format('Y-m-d H:i:s');
-            $do = $forms['DataZamForm']->get('do')->getData()->format('Y-m-d H:i:s');
+            $od = $forms->getOdFromDataZamForm();
+            $do = $forms->getDoFromDataZamForm();
             $td->setQuery("datazlozenia BETWEEN '" . $od . "' AND '" . $do . "'");
         }
 
         return $td;
     }
 
-    public function prepareKlientFilterQuery(TableDetails $td, $forms)
+    public function prepareKlientFilterQuery(TableDetails $td, FormsManagerExtended $forms)
     {
         if ((!($td->getQuery())) and (!$td->getIdentifier())) {
-            $td->setIdentifier($forms['NrKlientaForm']->get('idklient')->getData()->getIdklient());
+            $td->setIdentifier($forms->getIdKlientFromNrKlientaForm());
             $td->setQuery('idklient = ' . $td->getIdentifier());
             return $td;
         }

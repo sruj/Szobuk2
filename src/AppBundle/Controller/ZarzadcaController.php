@@ -20,6 +20,8 @@ use AppBundle\Form\Filter\StatusType;
 use AppBundle\Form\Filter\DataZamType;
 use AppBundle\Form\Filter\NrKlientaType;
 use AppBundle\Utils\Manager\Sort;
+use AppBundle\Utils\Manager\FormsManagerExtended;
+
 
 /**
  * Kategoria controller.
@@ -86,11 +88,12 @@ class ZarzadcaController extends Controller
             'NrKlientaForm' => $NrKlientaForm,
         ];
 
-        
+
+        $forms = new FormsManagerExtended($tmpForms);
         $fltr = new Filter();
         $fltrqry = new FilterQuery();
-        $tds = $fltr->prepareFilterAndQuery($tableDetails, $tmpForms, $fltrqry);
-        
+
+        $tds = $fltr->prepareFilterAndQuery($tableDetails, $forms, $fltrqry);
         $manager_order = $this->get('app.manager_order');
         $orders = $manager_order->prepareOrder($tds);
         $tableDetails = $manager_order->getTableDetails();
