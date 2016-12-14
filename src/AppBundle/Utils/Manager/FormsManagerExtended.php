@@ -14,7 +14,6 @@ class FormsManagerExtended extends FormsManager
 {
     //todo: tu wszędzie powrzucać throw exeption jeśli nie halo.
 
-    //refaktor:to do extends tej klasy wrzucić bo zbyt specyficzne
     public function isStatusFormValid()
     {
         return $this->forms['StatusForm']->isValid();

@@ -12,6 +12,9 @@ namespace AppBundle\Utils\Manager;
 class FormsManager
 {
 
+    /**
+     * @var \Symfony\Component\Form\FormInterface[] $forms
+     */
     protected $forms;
 
     /**
