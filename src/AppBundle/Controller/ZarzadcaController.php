@@ -90,9 +90,9 @@ class ZarzadcaController extends Controller
 
 
         $forms = new FormsManagerExtended($tmpForms);
-        $fltr = new Filter();
         $fltrqry = new FilterQuery();
 
+        $fltr = new Filter();
         $tds = $fltr->prepareFilterAndQuery($tableDetails, $forms, $fltrqry);
         $manager_order = $this->get('app.manager_order');
         $orders = $manager_order->prepareOrder($tds);

@@ -11,6 +11,11 @@ namespace AppBundle\Utils\Manager;
 
 class FilterQuery implements IFilterQuery
 {
+    /**
+     * @param TableDetails $td
+     * @param FormsManagerExtended $forms
+     * @return TableDetails
+     */
     public function prepareStatusFilterQuery(TableDetails $td, FormsManagerExtended $forms)
     {
         if((!$td->getQuery()) and (!$td->getIdentifier())) {
@@ -24,6 +29,11 @@ class FilterQuery implements IFilterQuery
         return $td;
     }
 
+    /**
+     * @param TableDetails $td
+     * @param FormsManagerExtended $forms
+     * @return TableDetails
+     */
     public function prepareDataFilterQuery(TableDetails $td, FormsManagerExtended $forms)
     {
         if($td->getQuery()) {
@@ -39,6 +49,11 @@ class FilterQuery implements IFilterQuery
         return $td;
     }
 
+    /**
+     * @param TableDetails $td
+     * @param FormsManagerExtended $forms
+     * @return TableDetails
+     */
     public function prepareKlientFilterQuery(TableDetails $td, FormsManagerExtended $forms)
     {
         if ((!($td->getQuery())) and (!$td->getIdentifier())) {

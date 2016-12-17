@@ -12,6 +12,12 @@ use AppBundle\Utils\Manager\IFilterQuery;
 
 class Filter
 {
+    /**
+     * @param TableDetails $td
+     * @param FormsManagerExtended $forms
+     * @param \AppBundle\Utils\Manager\IFilterQuery $fq
+     * @return TableDetails
+     */
     public function prepareFilterAndQuery(TableDetails $td, FormsManagerExtended $forms, IFilterQuery $fq)
     {
         $td = $this->prepareDetails($td,$forms);
@@ -20,16 +26,27 @@ class Filter
         return $tds;
     }
 
-    
-    private function prepareDetails(TableDetails $tableDetails,FormsManagerExtended $tmpForms)
+
+    /**
+     * @param TableDetails $tableDetails
+     * @param FormsManagerExtended $tmpForms
+     * @return TableDetails
+     */
+    private function prepareDetails(TableDetails $tableDetails, FormsManagerExtended $tmpForms)
     {
         $tableDetails = $this->setFalse($tableDetails, $tmpForms);
         $tableDetails = $this->setFilter($tableDetails, $tmpForms);
 
         return $tableDetails;
     }
-    
-    private function makeFilterAndQuery(TableDetails $td,FormsManagerExtended $forms, IFilterQuery $fq)
+
+    /**
+     * @param TableDetails $td
+     * @param FormsManagerExtended $forms
+     * @param \AppBundle\Utils\Manager\IFilterQuery $fq
+     * @return TableDetails
+     */
+    private function makeFilterAndQuery(TableDetails $td, FormsManagerExtended $forms, IFilterQuery $fq)
     {
         if($td->getFilter() == 'all'){
             return $td;
@@ -53,6 +70,11 @@ class Filter
         }
     }
 
+    /**
+     * @param TableDetails $tb
+     * @param FormsManagerExtended $fms
+     * @return TableDetails
+     */
     private function setFalse(TableDetails $tb, FormsManagerExtended $fms)
     {
         if ($this->isAnyFormValid($fms)){
@@ -68,13 +90,22 @@ class Filter
         return $tb;
     }
 
-    
+
+    /**
+     * @param FormsManager $forms
+     * @return bool
+     */
     private function isAnyFormValid(FormsManager $forms)
     {
         return $forms->isAnyFormValid();
     }
 
-    private function setFilter(TableDetails $td,$forms)
+    /**
+     * @param TableDetails $td
+     * @param $forms
+     * @return TableDetails
+     */
+    private function setFilter(TableDetails $td, $forms)
     {
         if(!($td->getFilter()))
         {
@@ -84,8 +115,13 @@ class Filter
         return $td;
     }
 
-    
-    private function prepareFilterValue(FormsManagerExtended $fms,TableDetails $td){
+
+    /**
+     * @param FormsManagerExtended $fms
+     * @param TableDetails $td
+     * @return TableDetails
+     */
+    private function prepareFilterValue(FormsManagerExtended $fms, TableDetails $td){
         if($td->getFilterField()){
             $td->setFilter($td->getFilterField());
             return $td;
