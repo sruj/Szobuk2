@@ -10,18 +10,28 @@ namespace AppBundle\Utils\Manager;
 
 use AppBundle\Utils\Manager\IFilterQuery;
 
+/**
+ * Class Filter
+ * @package AppBundle\Utils\Manager
+ */
 class Filter
 {
+
     /**
      * @param TableDetails $td
      * @param FormsManagerExtended $forms
      * @param \AppBundle\Utils\Manager\IFilterQuery $fq
      * @return TableDetails
+     * @throws
      */
     public function prepareFilterAndQuery(TableDetails $td, FormsManagerExtended $forms, IFilterQuery $fq)
     {
         $td = $this->prepareDetails($td,$forms);
         $tds = $this->makeFilterAndQuery($td,$forms,$fq);
+
+        if(!$tds instanceof TableDetails){
+            throw new \Exception('must be instance of TableDetails'); //todo: custom exception  "$tds must be instance of TableDetails"
+        }
 
         return $tds;
     }
@@ -92,10 +102,10 @@ class Filter
 
 
     /**
-     * @param FormsManager $forms
+     * @param FormsManagerExtended $forms
      * @return bool
      */
-    private function isAnyFormValid(FormsManager $forms)
+    private function isAnyFormValid(FormsManagerExtended $forms)
     {
         return $forms->isAnyFormValid();
     }
@@ -107,12 +117,22 @@ class Filter
      */
     private function setFilter(TableDetails $td, $forms)
     {
-        if(!($td->getFilter()))
+        $filter = $td->getFilter();
+
+        if(!($this->isTableAlreadyFiltered($filter)))
         {
             $td = $this->prepareFilterValue($forms,$td);
         }
 
         return $td;
+    }
+
+    private function isTableAlreadyFiltered($filter)
+    {
+        if($filter) {
+            return true;
+        }
+        return false;
     }
 
 
@@ -125,6 +145,10 @@ class Filter
         if($td->getFilterField()){
             $td->setFilter($td->getFilterField());
             return $td;
+            //refaktor: to nie mma sensu sprawdzać gdyż filterField zawsze false. 
+            //To miałoby sens gdybym łączył zapytania poprzedniego filtrowania z nowym.
+            //Czyli gdyby wyniki przefiltrowane dla klienta nr 2 dodatkowo przfiltrować zakresem dat.
+            //Póki co nowe filtrowanie zawsze kasuje poprzednie.
         }
         if($fms->isStatusFormValid()){
             $td->setFilter('idstatus');
