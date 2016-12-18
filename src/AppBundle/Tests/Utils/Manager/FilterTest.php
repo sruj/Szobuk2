@@ -72,23 +72,39 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(TableDetails::class,$res);
     }
 
-    public function testPrepareFilterAndQueryReturnInstanceOfTableDetailsForFilterFieldAlreadySeted()
+    public function testPrepareFilterAndQueryReturnInstanceOfTableDetailsForFilterFieldAlreadySetted()
     {
         $object = new Filter();
         $td = new TableDetails();
         $res = $object->prepareFilterAndQuery(
-            $this->getTableDetails(false,false,false,false,true),
+            $this->getTableDetails('idklient','idklient',false,false,'idklient'),
             $this->getFormsManagerExtended(),
             $this->getFilterQueryMock($td));
         $this->assertInstanceOf(TableDetails::class,$res);
     }
 
+    public function testPrepareFilterAndQueryReturnInstanceOfTableDetailsForFilterAlreadyMadeButChangeingSort()
+    {
+        $object = new Filter();
+        $td = new TableDetails();
+        $res = $object->prepareFilterAndQuery(
+            $this->getTableDetails('idklient',false,false,false,'idklient'),
+            $this->getFormsManagerExtended(false),
+            $this->getFilterQueryMock($td));
+        $this->assertInstanceOf(TableDetails::class,$res);
+    }
 
-
-
-
-
-
+    public function testPrepareFilterAndQueryReturnInstanceOfTableDetailsFilterAlreadyMadeButChangeingSort()
+    {
+        $object = new Filter();
+        $td = new TableDetails();
+        $res = $object->prepareFilterAndQuery(
+            $this->getTableDetails('all'),
+            $this->getFormsManagerExtended(false),
+            $this->getFilterQueryMock($td));
+        $this->assertInstanceOf(TableDetails::class,$res);
+    }
+    
     protected function getTableDetails(
         $filter1 = false,
         $filter2 = false,
@@ -99,12 +115,6 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         $columnsSortOrder = null)
     {
         $TableDetails = $this->createMock(TableDetails::class);
-//        $TableDetails->expects($this->at(0))
-//            ->method('getFilter')
-//            ->will($this->returnValue($filter2));
-//        $TableDetails->expects($this->any())
-//            ->method('getFilter')
-//            ->will($this->returnValue($filter1));
         $TableDetails->expects($this->any())
             ->method('getFilter')
             ->will($this->onConsecutiveCalls($filter2,$filter1,$filter1,$filter1,$filter1,$filter1));

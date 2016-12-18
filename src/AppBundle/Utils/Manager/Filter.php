@@ -16,7 +16,6 @@ use AppBundle\Utils\Manager\IFilterQuery;
  */
 class Filter
 {
-
     /**
      * @param TableDetails $td
      * @param FormsManagerExtended $forms
@@ -36,7 +35,6 @@ class Filter
         return $tds;
     }
 
-
     /**
      * @param TableDetails $tableDetails
      * @param FormsManagerExtended $tmpForms
@@ -48,36 +46,6 @@ class Filter
         $tableDetails = $this->setFilter($tableDetails, $tmpForms);
 
         return $tableDetails;
-    }
-
-    /**
-     * @param TableDetails $td
-     * @param FormsManagerExtended $forms
-     * @param \AppBundle\Utils\Manager\IFilterQuery $fq
-     * @return TableDetails
-     */
-    private function makeFilterAndQuery(TableDetails $td, FormsManagerExtended $forms, IFilterQuery $fq)
-    {
-        if($td->getFilter() == 'all'){
-            return $td;
-        }
-
-        if($td->getFilter() == 'idstatus'){
-            $td->setFilterField('idstatus');
-            $tds = $fq->prepareStatusFilterQuery($td, $forms);
-            return $tds;
-        }
-
-        if($td->getFilter() == 'data') {
-            $td->setFilterField('data');
-            $tds = $fq->prepareDataFilterQuery($td, $forms);
-            return $tds;
-        }
-
-        if($td->getFilter() == 'idklient'){
-            $tds = $fq->prepareKlientFilterQuery($td, $forms);
-            return $tds;
-        }
     }
 
     /**
@@ -99,7 +67,6 @@ class Filter
 
         return $tb;
     }
-
 
     /**
      * @param FormsManagerExtended $forms
@@ -127,6 +94,7 @@ class Filter
         return $td;
     }
 
+
     private function isTableAlreadyFiltered($filter)
     {
         if($filter) {
@@ -142,28 +110,57 @@ class Filter
      * @return TableDetails
      */
     private function prepareFilterValue(FormsManagerExtended $fms, TableDetails $td){
+//tu wchodzę gdy tablica nie była teraz filtrowana, ale wcześniej i teraz nowy sort
         if($td->getFilterField()){
             $td->setFilter($td->getFilterField());
             return $td;
-            //refaktor: to nie mma sensu sprawdzać gdyż filterField zawsze false. 
-            //To miałoby sens gdybym łączył zapytania poprzedniego filtrowania z nowym.
-            //Czyli gdyby wyniki przefiltrowane dla klienta nr 2 dodatkowo przfiltrować zakresem dat.
-            //Póki co nowe filtrowanie zawsze kasuje poprzednie.
         }
         if($fms->isStatusFormValid()){
             $td->setFilter('idstatus');
+            $td->setFilterField('idstatus');
             return $td;
         }
         if($fms->isDataZamFormValid()) {
             $td->setFilter('data');
+            $td->setFilterField('data');
             return $td;
         }
         if($fms->isNrKlientaFormValid()){
             $td->setFilter('idklient');
+            $td->setFilterField('idklient');
             return $td;
         }
 
         $td->setFilter('all');
         return $td;
+    }
+
+
+    /**
+     * @param TableDetails $td
+     * @param FormsManagerExtended $forms
+     * @param \AppBundle\Utils\Manager\IFilterQuery $fq
+     * @return TableDetails
+     */
+    private function makeFilterAndQuery(TableDetails $td, FormsManagerExtended $forms, IFilterQuery $fq)
+    {
+        if($td->getFilter() == 'all'){
+            return $td;
+        }
+
+        if($td->getFilter() == 'idstatus'){
+            $tds = $fq->prepareStatusFilterQuery($td, $forms);
+            return $tds;
+        }
+
+        if($td->getFilter() == 'data') {
+            $tds = $fq->prepareDataFilterQuery($td, $forms);
+            return $tds;
+        }
+
+        if($td->getFilter() == 'idklient'){
+            $tds = $fq->prepareKlientFilterQuery($td, $forms);
+            return $tds;
+        }
     }
 }
