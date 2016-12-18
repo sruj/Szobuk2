@@ -16,30 +16,98 @@ use AppBundle\Utils\Manager\FormsManagerExtended;
 class FilterTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testPrepareFilterAndQuery()
+    public function testPrepareFilterAndQueryReturnInstanceOfTableDetailsForValidStatusFilter()
     {
         $object = new Filter();
+        $td = new TableDetails();
         $res = $object->prepareFilterAndQuery(
-            $this->getTableDetails(),
-            $this->getFormsManagerExtended(),
-            $this->getFilterQueryMock());
+            $this->getTableDetails('idstatus'),
+            $this->getFormsManagerExtended(true,true),
+            $this->getFilterQueryMock($td));
         $this->assertInstanceOf(TableDetails::class,$res);
     }
 
+
+    public function testPrepareFilterAndQueryReturnExceptionForInvalidInstance()
+    {
+        $this->expectException(\Exception::class);
+        $object = new Filter();
+        $object->prepareFilterAndQuery(
+            $this->getTableDetails('idstatus'),
+            $this->getFormsManagerExtended(true,true),
+            $this->getFilterQueryMock(null));
+    }
+
+
+    public function testPrepareFilterAndQueryReturnInstanceOfTableDetailsForDataFilter()
+    {
+        $object = new Filter();
+        $td = new TableDetails();
+        $res = $object->prepareFilterAndQuery(
+            $this->getTableDetails('data'),
+            $this->getFormsManagerExtended(true,false,true),
+            $this->getFilterQueryMock($td));
+        $this->assertInstanceOf(TableDetails::class,$res);
+    }
+
+    public function testPrepareFilterAndQueryReturnInstanceOfTableDetailsForKlientFilter()
+    {
+        $object = new Filter();
+        $td = new TableDetails();
+        $res = $object->prepareFilterAndQuery(
+            $this->getTableDetails('idklient'),
+            $this->getFormsManagerExtended(true,false,false,true),
+            $this->getFilterQueryMock($td));
+        $this->assertInstanceOf(TableDetails::class,$res);
+    }
+
+    public function testPrepareFilterAndQueryReturnInstanceOfTableDetailsForNoFilter()
+    {
+        $object = new Filter();
+        $td = new TableDetails();
+        $res = $object->prepareFilterAndQuery(
+            $this->getTableDetails('idklient'),
+            $this->getFormsManagerExtended(),
+            $this->getFilterQueryMock($td));
+        $this->assertInstanceOf(TableDetails::class,$res);
+    }
+
+    public function testPrepareFilterAndQueryReturnInstanceOfTableDetailsForFilterFieldAlreadySeted()
+    {
+        $object = new Filter();
+        $td = new TableDetails();
+        $res = $object->prepareFilterAndQuery(
+            $this->getTableDetails(false,false,false,false,true),
+            $this->getFormsManagerExtended(),
+            $this->getFilterQueryMock($td));
+        $this->assertInstanceOf(TableDetails::class,$res);
+    }
+
+
+
+
+
+
+
     protected function getTableDetails(
         $filter1 = false,
-        $filter2 = 'idstatus',
+        $filter2 = false,
         $identifier = false,
         $query = false,
         $filterField = false,
         $columnSort = null,
         $columnsSortOrder = null)
     {
-        $TableDetails = $this->getMockBuilder(TableDetails::class)
-            ->getMock();
+        $TableDetails = $this->createMock(TableDetails::class);
+//        $TableDetails->expects($this->at(0))
+//            ->method('getFilter')
+//            ->will($this->returnValue($filter2));
+//        $TableDetails->expects($this->any())
+//            ->method('getFilter')
+//            ->will($this->returnValue($filter1));
         $TableDetails->expects($this->any())
             ->method('getFilter')
-            ->will($this->onConsecutiveCalls($filter1,$filter2,$filter2));
+            ->will($this->onConsecutiveCalls($filter2,$filter1,$filter1,$filter1,$filter1,$filter1));
         $TableDetails->expects($this->any())
             ->method('getQuery')
             ->will($this->returnValue($query));
@@ -55,20 +123,17 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         $TableDetails->expects($this->any())
             ->method('getFilterField')
             ->will($this->returnValue($filterField));
-        
+
         return $TableDetails;
     }
-
     
+
     protected function getFormsManagerExtended(
         $isAnyValid = true,
-        $isStatusFormValid = true,
+        $isStatusFormValid = false,
         $isDataZamFormValid = false,
-        $isNrKlientaFormValid = false,
-        $idStatus = 3,
-        $idKlient = 2,
-        $od = '2015-12-25 20:12:01',
-        $do = '2016-12-25 20:12:01')
+        $isNrKlientaFormValid = false
+    )
     {
         $FormsManagerExtended = $this->getMockBuilder(FormsManagerExtended::class)
             ->disableOriginalConstructor()
@@ -85,38 +150,26 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         $FormsManagerExtended->expects($this->any())
             ->method('isNrKlientaFormValid')
             ->will($this->returnValue($isNrKlientaFormValid));
-        $FormsManagerExtended->expects($this->any())
-            ->method('getIdStatusFromStatusForm')
-            ->will($this->returnValue($idStatus));
-        $FormsManagerExtended->expects($this->any())
-            ->method('getOdFromDataZamForm')
-            ->will($this->returnValue($od));
-        $FormsManagerExtended->expects($this->any())
-            ->method('getDoFromDataZamForm')
-            ->will($this->returnValue($do));
-        $FormsManagerExtended->expects($this->any())
-            ->method('getIdKlientFromNrKlientaForm')
-            ->will($this->returnValue($idKlient));
 
         return $FormsManagerExtended;
     }
 
     
-    protected function getFilterQueryMock()
+    protected function getFilterQueryMock($returnValue)
     {
-        $td = new TableDetails();
         $FilterQuery = $this->getMockBuilder(FilterQuery::class)
-            ->disableOriginalConstructor()
             ->getMock();
         $FilterQuery->expects($this->any())
             ->method('prepareStatusFilterQuery')
-            ->will($this->returnValue($td));
+            ->will($this->returnValue($returnValue));
         $FilterQuery->expects($this->any())
             ->method('prepareDataFilterQuery')
-            ->will($this->returnValue($td));
+            ->will($this->returnValue($returnValue));
         $FilterQuery->expects($this->any())
             ->method('prepareKlientFilterQuery')
-            ->will($this->returnValue($td));
+            ->will($this->returnValue($returnValue))
+            ->with($this->isInstanceOf(TableDetails::class))
+        ;
         
         return $FilterQuery;
     }
