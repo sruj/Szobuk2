@@ -41,18 +41,6 @@ class Order
             return $this->prepareOrderRepositoryUnfiltered($td_f);
         }
     }
-    
-    private function prepareOrderRepositoryUnfiltered(TableDetails $td)
-    {
-        $this->tableDetails = $td;
-        $repo = $this->em->getRepository('AppBundle:Zamowienie')
-            ->findAllOrderedByY(
-                $td->getColumnsSortOrder(),
-                $td->getColumnSort());
-        if (!$repo) {throw new \Exception('Nie można znaleźć zamówień');}
-
-        return $repo;
-    }
 
     private function prepareOrderRepositoryForFilterSelected(TableDetails $td)
     {
@@ -66,5 +54,17 @@ class Order
 
         return $repo;
     }
-    
+
+    private function prepareOrderRepositoryUnfiltered(TableDetails $td)
+    {
+        $this->tableDetails = $td;
+        $repo = $this->em->getRepository('AppBundle:Zamowienie')
+            ->findAllOrderedByY(
+                $td->getColumnsSortOrder(),
+                $td->getColumnSort());
+        if (!$repo) {throw new \Exception('Nie można znaleźć zamówień');}
+
+        return $repo;
+    }
+
 }
