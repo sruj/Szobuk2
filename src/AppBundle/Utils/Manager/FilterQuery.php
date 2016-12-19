@@ -20,10 +20,12 @@ class FilterQuery implements IFilterQuery
     {
         if((!$td->getQuery()) and (!$td->getIdentifier())) {
             $td->setIdentifier($forms->getIdStatusFromStatusForm());
+            return $td;
         }
 
         if((!$td->getQuery()) and ($td->getIdentifier())) {
             $td->setQuery('idstatus = ' . $td->getIdentifier());
+            return $td;
         }
 
         return $td;
@@ -38,15 +40,15 @@ class FilterQuery implements IFilterQuery
     {
         if($td->getQuery()) {
             $td->setQuery(urldecode($td->getQuery()));
+            return $td;
         }
 
         if (!$td->getQuery()) {
             $od = $forms->getOdFromDataZamForm();
             $do = $forms->getDoFromDataZamForm();
             $td->setQuery("datazlozenia BETWEEN '" . $od . "' AND '" . $do . "'");
+            return $td;
         }
-
-        return $td;
     }
 
     /**

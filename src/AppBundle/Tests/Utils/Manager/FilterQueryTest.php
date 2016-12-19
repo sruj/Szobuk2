@@ -54,6 +54,7 @@ class FilterQueryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @codeCoverageIgnore
      * @return \Generator
      */
     public function getTableConfigDetailsForPrepareStatusFilterQuery()
@@ -66,6 +67,7 @@ class FilterQueryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @codeCoverageIgnore
      * @return \Generator
      */
     public function getTableConfigDetailsForPrepareDataFilterQuery()
@@ -77,6 +79,7 @@ class FilterQueryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @codeCoverageIgnore
      * @return \Generator
      */
     public function getTableConfigDetailsForPrepareKlientFilterQuery()
@@ -88,6 +91,9 @@ class FilterQueryTest extends \PHPUnit_Framework_TestCase
         yield [ true, true, $expected];
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     protected function getTableDetails($query = false,$identifier = false)
     {
         $TableDetails = $this->createMock(TableDetails::class);
@@ -101,9 +107,9 @@ class FilterQueryTest extends \PHPUnit_Framework_TestCase
         return $TableDetails;
     }
 
-
-
-
+    /**
+     * @codeCoverageIgnore
+     */
     protected function getFormsManagerExtended()
     {
         $FormsManagerExtended = $this->getMockBuilder(FormsManagerExtended::class)
