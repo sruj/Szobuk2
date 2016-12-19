@@ -104,7 +104,10 @@ class FilterTest extends \PHPUnit_Framework_TestCase
             $this->getFilterQueryMock($td));
         $this->assertInstanceOf(TableDetails::class,$res);
     }
-    
+
+    /**
+     * @codeCoverageIgnore
+     */
     protected function getTableDetails(
         $filter1 = false,
         $filter2 = false,
@@ -136,8 +139,10 @@ class FilterTest extends \PHPUnit_Framework_TestCase
 
         return $TableDetails;
     }
-    
 
+    /**
+     * @codeCoverageIgnore
+     */
     protected function getFormsManagerExtended(
         $isAnyValid = true,
         $isStatusFormValid = false,
@@ -164,7 +169,9 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         return $FormsManagerExtended;
     }
 
-    
+    /**
+     * @codeCoverageIgnore
+     */
     protected function getFilterQueryMock($returnValue)
     {
         $FilterQuery = $this->getMockBuilder(FilterQuery::class)
