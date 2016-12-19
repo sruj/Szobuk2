@@ -48,6 +48,7 @@ class SortTest extends \PHPUnit_Framework_TestCase
 
     
     /**
+     * @codeCoverageIgnore
      * @return \Generator
      */
     public function getTableConfigDetails()
