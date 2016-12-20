@@ -26,26 +26,47 @@ class Cart
 
     /**
      * @param $isbn
+     * @return bool
      */
     public function addProductToCart($isbn)
     {
         if (!($this->session->has('cart')))//jeśli zmienna sesji cart nie istnieje to:
         {
-            $this->addOne($isbn);
-            return;
+            return $this->addOne($isbn);
         }
 
         $cart = $this->session->get('cart');
         
         if (!array_key_exists($isbn, $cart))//jeśli isbn nie jest w koszu
         {
-            $this->addOne($isbn, $cart); // = 1
-            return;
+            return $this->addOne($isbn, $cart); // = 1
         } 
         
         $cart[$isbn]++;
         $this->session->set('cart', $cart);
+        if($cart == $this->session->get('cart')){
+            return true;
+        }
+        return false;
     }
+
+    
+    /**
+     * @param $isbn
+     * @param $cart
+     * @return bool
+     */
+    protected function addOne($isbn, $cart = false)
+    {
+        $cart[$isbn] = 1;
+        $this->session->set('cart', $cart);
+
+        if($cart == $this->session->get('cart')){
+            return true;
+        }
+        return false;
+    }
+    
 
     public function getCartQuantity()
     {
@@ -58,21 +79,12 @@ class Cart
         }
         
         return $cartquantity;
-
     }
+
 
     public function sessionInvalidate()
     {
-        $this->session->invalidate();
+        return $this->session->invalidate();
     }
     
-    /**
-     * @param $isbn
-     * @param $cart
-     */
-    protected function addOne($isbn, $cart = false)
-    {
-        $cart[$isbn] = 1;
-        $this->session->set('cart', $cart);
-    }
 }
