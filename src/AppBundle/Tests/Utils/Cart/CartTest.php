@@ -6,9 +6,9 @@
  * Time: 14:42
  */
 
-namespace AppBundle\Tests\Utils;
+namespace AppBundle\Tests\Utils\Cart;
 
-use AppBundle\Utils\Cart;
+use AppBundle\Utils\Cart\Cart;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class CartTest extends \PHPUnit_Framework_TestCase

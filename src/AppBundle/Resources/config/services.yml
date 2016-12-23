@@ -10,7 +10,7 @@ services:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
     app.cart:
-        class:  AppBundle\Utils\Cart
+        class:  AppBundle\Utils\Cart\Cart
         arguments: [ "@doctrine.orm.entity_manager" ]
 
     app.ksiazka_repository:
@@ -28,11 +28,11 @@ services:
             -  { name: knp_paginator.injectable, paginator: '@knp_paginator' }
 
     app.form_handler.order:
-        class: AppBundle\Utils\CreateZamowienieFormHandler
+        class: AppBundle\Utils\Order\CreateOrderFormHandler
         arguments: ["@app.order_manager"]
 
     app.order_manager:
-        class: AppBundle\Utils\OrderManager
+        class: AppBundle\Utils\Order\OrderManager
         arguments: ["@doctrine.orm.entity_manager","@security.token_storage","@security.authorization_checker","@session","@event_dispatcher" ]
 
     app.email_notify_client_listener:

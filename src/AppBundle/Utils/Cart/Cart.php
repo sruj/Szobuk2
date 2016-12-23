@@ -6,7 +6,7 @@
  * Time: 00:01
  */
 
-namespace AppBundle\Utils;
+namespace AppBundle\Utils\Cart;
 
 use Doctrine\ORM\EntityManager;
 

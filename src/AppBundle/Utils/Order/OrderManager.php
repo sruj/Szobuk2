@@ -6,7 +6,7 @@
  * Time: 23:53
  */
 
-namespace AppBundle\Utils;
+namespace AppBundle\Utils\Order;
 
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;

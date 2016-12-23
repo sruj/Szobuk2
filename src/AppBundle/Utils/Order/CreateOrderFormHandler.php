@@ -6,12 +6,12 @@
  * Time: 23:29
  */
 
-namespace AppBundle\Utils;
+namespace AppBundle\Utils\Order;
 
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class CreateZamowienieFormHandler
+class CreateOrderFormHandler
 {
     private $orderManager;
 
