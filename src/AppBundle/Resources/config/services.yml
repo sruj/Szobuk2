@@ -9,13 +9,9 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
-    my_cart:
-        class:  AppBundle\Utils\CartUtil
-        arguments: [ "@request_stack", "@doctrine.orm.entity_manager" ]
-
     app.cart:
         class:  AppBundle\Utils\Cart
-        arguments: [ "@session" ]
+        arguments: [ "@doctrine.orm.entity_manager" ]
 
     app.ksiazka_repository:
         class: "%app.ksiazka.paginator_aware.class%"

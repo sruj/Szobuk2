@@ -98,7 +98,7 @@ class ZamowienieManager
         }
     }
     
-    public function addFlashBag($zamowienie){
+    private function addFlashBag($zamowienie){
         $idzamowienia = $zamowienie->getIdzamowienie();
         $this->session->getFlashBag()->add(
             'idzamowienie',

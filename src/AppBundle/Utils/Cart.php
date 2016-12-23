@@ -8,83 +8,124 @@
 
 namespace AppBundle\Utils;
 
-use Symfony\Component\HttpFoundation\Session\Session;
+use Doctrine\ORM\EntityManager;
 
 class Cart
 {
-    private $session;
 
-    /**
-     * Cart constructor.
-     * @param Session $session
-     */
-    public function __construct(Session $session)
+    private $em;
+
+    public function __construct(EntityManager $em)
     {
-        $this->session = $session;
+        $this->em= $em;
     }
 
 
-    /**
-     * @param $isbn
-     * @return bool
-     */
-    public function addProductToCart($isbn)
+
+    public function addProductToCart($isbn, $cart)
     {
-        if (!($this->session->has('cart')))//jeśli zmienna sesji cart nie istnieje to:
+        if (!($this->isCartInSession($cart)))
         {
-            return $this->addOne($isbn);
+            $c[$isbn] = 1;
+            return $c;
         }
 
-        $cart = $this->session->get('cart');
-        
-        if (!array_key_exists($isbn, $cart))//jeśli isbn nie jest w koszu
+        if (!($this->isProductInCart($isbn,$cart)))
         {
-            return $this->addOne($isbn, $cart); // = 1
-        } 
-        
-        $cart[$isbn]++;
-        $this->session->set('cart', $cart);
-        if($cart == $this->session->get('cart')){
-            return true;
+            $cart[$isbn] = 1;
+            return $cart;
         }
-        return false;
+
+        if ($this->isProductInCart($isbn,$cart))
+        {
+            $cart[$isbn]++;
+            return $cart;
+        }
     }
 
-    
-    /**
-     * @param $isbn
-     * @param $cart
-     * @return bool
-     */
-    protected function addOne($isbn, $cart = false)
+
+    public function removeProductFromCart($isbn, $cart)
     {
-        $cart[$isbn] = 1;
-        $this->session->set('cart', $cart);
-
-        if($cart == $this->session->get('cart')){
-            return true;
+        if(!($isbn==''))
+        {
+            unset($cart[$isbn]);
+            return $cart;
         }
-        return false;
+        return false; //todo: albo throw exeption że isbn pusty, i/albo też sprawdz czy cart nie pusty
     }
-    
 
-    public function getCartQuantity()
+
+    public function getNumerOfProductsInCart($cart)
     {
         $cartquantity = 0;
-
-        if($this->session->has('cart'))//jeśli zmienna sesji cart juz jest to:
+        if(!empty($cart))
         {
-            $cart = $this->session->get('cart');
-            $cartquantity = array_sum($cart)  ;
+            $cartquantity = array_sum($cart);
         }
-        
         return $cartquantity;
     }
 
 
-    public function sessionInvalidate()
+    /**
+     * return 'fos_user_security_login'
+     */
+    public function prepareRoute($autoryzacja)
     {
-        return $this->session->invalidate();
+        switch ($autoryzacja){
+            case 'zaloguj':
+                return 'fos_user_security_login';
+                break;
+            case 'zarejestruj':
+                return 'fos_user_registration_register';
+                break;
+        }
     }
-    
+
+
+    private function isCartInSession($cart)
+    {
+        return !empty($cart);
+    }
+
+
+    private function isProductInCart($isbn, $cart)
+    {
+        return array_key_exists($isbn, $cart);
+    }
+
+
+    public function getAllBooksFromCartDetails($cart)
+    {
+        $i = 0;
+        $ksiazki = null;
+
+        foreach ($cart as $isbn => $quantity)
+        {
+            $ksiazka = $this->em->getRepository('AppBundle:Ksiazka')->find($isbn);
+            $ksiazki[$i]['isbn'] = $ksiazka->getIsbn();
+            $ksiazki[$i]['tytul'] = $ksiazka->getTytul();
+            $ksiazki[$i]['autor'] = $ksiazka->getAutor();
+            $ksiazki[$i]['cena'] = $ksiazka->getCena();
+            $ksiazki[$i]['quantity'] = $quantity;
+            $i++;
+        }
+
+        return $ksiazki;
+    }
+
+
+    public function getSumOfAllProductsInCart($cart)
+    {
+        $sum = 0;
+
+        foreach ($cart as $isbn => $quantity)
+        {
+            $ksiazka = $this->em->getRepository('AppBundle:Ksiazka')->find($isbn);
+            $cena = (int)$ksiazka->getCena();
+            $razem = $cena*$quantity;
+            $sum += $razem;
+        }
+
+        return $sum;
+    }
 }

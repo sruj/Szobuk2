@@ -39,7 +39,7 @@ class SendEmailNotificationToAdminListener
             array(
                 'zamowienie'=>$event->getZamowienie(),
                 'produkty'=>$event->getZamowienie()->getZamowienieProdukty(),
-                'suma'=>$this->session->get('suma')
+                'suma'=>$this->session->get('sum')
             )
         );
     }
