@@ -46,14 +46,15 @@ class Cart
 
     public function removeProductFromCart($isbn, $cart)
     {
-        if(!($isbn==''))
+        if($this->isProductInCart($isbn,$cart))
         {
             unset($cart[$isbn]);
             return $cart;
         }
-        return false; //todo: albo throw exeption że isbn pusty, i/albo też sprawdz czy cart nie pusty
+        throw new \Exception('Nie można usunąć produktu z koszyka. Nie ma 
+        książki o ISBN: '.$isbn.' w koszyku');
     }
-
+    
 
     public function getNumerOfProductsInCart($cart)
     {
