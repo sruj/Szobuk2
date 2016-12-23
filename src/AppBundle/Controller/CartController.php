@@ -96,8 +96,8 @@ class CartController extends Controller
     {
         $app_cart = $this->get('app.cart');
         $session = $request->getSession();
-        $session->set('proces_zamowienia', 'tak'); // zmianna sesji by w dalszym etapie przekierować w odpowiedni route
-        $route = $app_cart->prepareRoute($autoryzacja); // wybiera nazwę route zaloguj lub rejestruj
+        $session->set('proces_zamowienia', 'tak');                                                                          // zmianna sesji by w dalszym etapie przekierować w odpowiedni route
+        $route = $app_cart->prepareRoute($autoryzacja);                                                                     // wybiera nazwę route zaloguj lub rejestruj
 
         return $this->redirectToRoute($route);
     }
@@ -149,7 +149,7 @@ class CartController extends Controller
      */
     public function zmianaQuantityAction(Request $request)
     {
-        $cart = $request->get('data');                  //todo: jaka data? zobacz co to za data i zmień nazwę zmiennej.  //Odpowiedź: z JS tablica z zawartością koszyka
+        $cart = $request->get('data');                                                                                                          //todo: jaka data? zobacz co to za data i zmień nazwę zmiennej.  //Odpowiedź: z JS tablica z zawartością koszyka
         $app_cart = $this->get('app.cart');  
         $session = $request->getSession();
         
@@ -167,7 +167,7 @@ class CartController extends Controller
      * Formularz danych adresowych klienta.
      *
      * - jeśli poprawnie wypełniono formularz, zamówienie i dane klienta zapisane w bazie.
-     * - wystrzeliwany event a listenery robią robotę.
+     * - wystrzeliwany event a listenery robią robotę (wysyłają maile potwierdzające).
      * @Route("/zamawiam", name="zamawiam")
      */
     public function zamawiamAction(Request $request)
@@ -177,15 +177,15 @@ class CartController extends Controller
 
         $klient= $this->getDoctrine()
             ->getRepository('AppBundle:Klient')
-            ->findOneBy(['idlogowanie' => $this->getUser() ? $this->getUser()->getId() : false]); // zalogowany wypełniał kiedyś formularz
-        if (!$klient){$klient = new Klient();} // jeśli zalogowany nigdy nie wypełniał formularza dostawy lub jeśli niezalogowany
+            ->findOneBy(['idlogowanie' => $this->getUser() ? $this->getUser()->getId() : false]);                                                // zalogowany wypełniał kiedyś formularz
+        if (!$klient){$klient = new Klient();}                                                                                                   // jeśli zalogowany nigdy nie wypełniał formularza dostawy lub jeśli niezalogowany
 
-        $form= $this->createForm(DostawaType::class, $klient, array(
-        'attr' => array('class' => 'form_dostawa')));
+        $form= $this->createForm(DostawaType::class, $klient, [
+        'attr' => ['class' => 'form_dostawa']]);
 
-        $formHandler = $this->get('app.form_handler.zamowienie');
-        if($formHandler->handle($form, $request)){               //wystrzeliwany event todo: może lepiej jak event bęzie wystrzeliwany w kontrolerze
-            return $this->redirectToRoute('potwierdzenie');      //todo: poza tym listener używa sesji.
+        $app_form_handler_order = $this->get('app.form_handler.order');
+        if($app_form_handler_order->handleFormAndPlaceOrder($form, $request)){                                                                                                // wystrzeliwany event todo: może lepiej jak event bęzie wystrzeliwany w kontrolerze
+            return $this->redirectToRoute('potwierdzenie');                                                                                       // todo: poza tym listener używa sesji.
         };
 
         return $this->render('AppBundle:Cart:zamawiam.html.twig',[

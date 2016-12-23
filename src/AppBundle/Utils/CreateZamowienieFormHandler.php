@@ -13,29 +13,23 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CreateZamowienieFormHandler
 {
-    private $zamowienieManager;
+    private $orderManager;
 
     /**
      * CreateZamowienieFormHandler constructor.
      */
-    public function __construct(ZamowienieManager $zamowienieManager)
+    public function __construct(OrderManager $orderManager)
     {
-        $this->zamowienieManager = $zamowienieManager;
+        $this->orderManager = $orderManager;
     }
 
-    public function handle(FormInterface $form, Request $request )
+    public function handleFormAndPlaceOrder(FormInterface $form, Request $request )
     {
         $form->handleRequest($request);
-
-        if (!$form->isValid()) {
-            return false;
-        }
-
-        $klient = $form->getData();
-
-        $this->zamowienieManager->tworzZamowienie($klient);
-
-          return true;
+        if (!$form->isValid()) {return false;}
+        $deliveryClientData = $form->getData();
+        $this->orderManager->placeOrder($deliveryClientData);
+        return true;
     }
     
 }

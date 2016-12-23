@@ -20,40 +20,32 @@ use AppBundle\Entity\Status;
 use AppBundle\Entity\Ksiazka;
 use AppBundle\Event\OrderPlacedEvent;
 
-class ZamowienieManager
+class OrderManager
 {
     private $storage;
     private $checker;
     private $session;
-    private $cart;
     private $em;
     private $dispatcher;
 
     /**
      * ZamowienieManager constructor.
      */
-    public function __construct(EntityManager $em, 
-                                TokenStorage $storage, 
-                                AuthorizationCheckerInterface $checker, 
-                                Session $session,
-                                EventDispatcherInterface $dispatcher)
+    public function __construct(EntityManager $em,TokenStorage $storage,AuthorizationCheckerInterface $checker,Session $session,EventDispatcherInterface $dispatcher)
     {
         $this->em = $em;
         $this->storage = $storage;
         $this->checker = $checker;
         $this->session = $session;
-        $this->cart = $this->session->get('cart');
         $this->dispatcher = $dispatcher;
     }
 
-    public function tworzZamowienie($klient)
+    public function placeOrder($klient)
     {
-        //linijka dla zalogowanego użytkownika
         if ($this->checker->isGranted('IS_AUTHENTICATED_FULLY')){
             $klient->setIdlogowanie($this->getUser());
         }
 
-        //wypełnienie tabeli Zamowienie
         $zamowienie = new Zamowienie();
         $zamowienie->setIdklient($klient);
         $status = $this->em
@@ -62,16 +54,14 @@ class ZamowienieManager
         $zamowienie->setIdstatus($status);
         $zamowienie->setDatazlozeniacurrent();
         
-        $this->tworzProduktyZamowienia($zamowienie);
+        $this->createOrderProducts($zamowienie);
 
         $this->em->persist($klient);
         $this->em->persist($zamowienie);
         $this->em->flush();
-        $this->dispatcher->dispatch(OrderPlacedEvent::NAME, new OrderPlacedEvent($zamowienie)); // wysyłam maile do zarzadcy i klienta
-
+        $this->dispatcher->dispatch(OrderPlacedEvent::NAME, new OrderPlacedEvent($zamowienie));                                 // wysyłam maile do zarzadcy i klienta
 
         $this->addFlashBag($zamowienie);
-        
     }
     
     private function getUser()
@@ -79,9 +69,10 @@ class ZamowienieManager
         return $this->storage->getToken()->getUser();
     }
 
-    private function tworzProduktyZamowienia($zamowienie)
+    private function createOrderProducts($zamowienie)
     {
-        foreach ($this->cart as $isbn => $quantity)
+        $cart = $this->session->get('cart');
+        foreach ($cart as $isbn => $quantity)
         {
             $ksiazka = $this->em
                 ->getRepository('AppBundle:Ksiazka')

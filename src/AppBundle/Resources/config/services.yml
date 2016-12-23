@@ -27,12 +27,12 @@ services:
         tags:
             -  { name: knp_paginator.injectable, paginator: '@knp_paginator' }
 
-    app.form_handler.zamowienie:
+    app.form_handler.order:
         class: AppBundle\Utils\CreateZamowienieFormHandler
-        arguments: ["@app.zamowienie_manager"]
+        arguments: ["@app.order_manager"]
 
-    app.zamowienie_manager:
-        class: AppBundle\Utils\ZamowienieManager
+    app.order_manager:
+        class: AppBundle\Utils\OrderManager
         arguments: ["@doctrine.orm.entity_manager","@security.token_storage","@security.authorization_checker","@session","@event_dispatcher" ]
 
     app.email_notify_client_listener:
