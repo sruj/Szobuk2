@@ -40,9 +40,30 @@ class OrderManager
         $this->dispatcher = $dispatcher;
     }
 
-    public function placeOrder($klient)
+    /**
+     * @param Klient $klient
+     * @return Zamowienie
+     */
+    public function placeOrder($klient, $cart)
     {
-        if ($this->checker->isGranted('IS_AUTHENTICATED_FULLY')){
+        $zamowienie = $this->prepareOrderDetailsToPersistInDatabase($klient);
+        $this->createOrderProductsAndPersistInDatabase($zamowienie,$cart);
+        $this->em->persist($klient);
+        $this->em->persist($zamowienie);
+        $this->em->flush();
+        $this->dispatchEventWithOrderToSendConfirmedEmails($zamowienie);                                 
+        $this->addFlashBagWithOrderIdVariable($zamowienie);
+
+        return $zamowienie;
+    }
+
+    /**
+     * @param Klient $klient
+     * @return Zamowienie
+     */
+    private function prepareOrderDetailsToPersistInDatabase($klient)
+    {
+        if ($this->checker->isGranted('IS_AUTHENTICATED_FULLY')) {
             $klient->setIdlogowanie($this->getUser());
         }
 
@@ -54,24 +75,14 @@ class OrderManager
         $zamowienie->setIdstatus($status);
         $zamowienie->setDatazlozeniacurrent();
         
-        $this->createOrderProducts($zamowienie);
-
-        $this->em->persist($klient);
-        $this->em->persist($zamowienie);
-        $this->em->flush();
-        $this->dispatcher->dispatch(OrderPlacedEvent::NAME, new OrderPlacedEvent($zamowienie));                                 // wysyłam maile do zarzadcy i klienta
-
-        $this->addFlashBag($zamowienie);
-    }
-    
-    private function getUser()
-    {
-        return $this->storage->getToken()->getUser();
+        return $zamowienie;
     }
 
-    private function createOrderProducts($zamowienie)
+    /**
+     * @param Zamowienie $zamowienie
+     */
+    private function createOrderProductsAndPersistInDatabase($zamowienie,$cart)
     {
-        $cart = $this->session->get('cart');
         foreach ($cart as $isbn => $quantity)
         {
             $ksiazka = $this->em
@@ -88,13 +99,31 @@ class OrderManager
             $this->em->persist($zm);
         }
     }
+
+    private function getUser()
+    {
+        return $this->storage->getToken()->getUser();
+    }
     
-    private function addFlashBag($zamowienie){
+    /**
+     * @param Zamowienie $zamowienie
+     */
+    private function addFlashBagWithOrderIdVariable($zamowienie){
         $idzamowienia = $zamowienie->getIdzamowienie();
         $this->session->getFlashBag()->add(
             'idzamowienie',
             $idzamowienia);
     }
 
-    
+    /**
+     * @param Zamowienie $zamowienie
+     */
+    private function dispatchEventWithOrderToSendConfirmedEmails($zamowienie)
+    {
+        $this->dispatcher->dispatch(OrderPlacedEvent::NAME, new OrderPlacedEvent($zamowienie));
+    }
+
+
+
+
 }

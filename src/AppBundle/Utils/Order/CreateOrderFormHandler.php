@@ -27,8 +27,9 @@ class CreateOrderFormHandler
     {
         $form->handleRequest($request);
         if (!$form->isValid()) {return false;}
+        $cart = $request->getSession()->get('cart');
         $deliveryClientData = $form->getData();
-        $this->orderManager->placeOrder($deliveryClientData);
+        $this->orderManager->placeOrder($deliveryClientData, $cart);
         return true;
     }
     
