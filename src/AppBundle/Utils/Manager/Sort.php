@@ -8,7 +8,7 @@
 
 namespace AppBundle\Utils\Manager;
 
-
+//todo: niech metody zwracają dane a nie przypisują do pól klasy. refaktor
 class Sort
 {
     private $columnsSortOrder;
