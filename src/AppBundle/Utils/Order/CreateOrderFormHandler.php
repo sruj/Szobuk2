@@ -10,6 +10,7 @@ namespace AppBundle\Utils\Order;
 
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Exception\CartNotInSessionException;
 
 class CreateOrderFormHandler
 {
@@ -36,15 +37,14 @@ class CreateOrderFormHandler
         if (!$form->isValid()) {
             return false;
         }
+        if(!$request->getSession()->has('cart')){
+            throw new CartNotInSessionException('Koszyk pusty.');
+        }
         $cart = $request->getSession()->get('cart');
-        if (empty($cart)){
-            throw new \Exception('koszyk pusty');
-        }
+
         $deliveryClientData = $form->getData();
-        $res = $this->orderManager->placeOrder($deliveryClientData, $cart);
-        if (empty($res)){
-            throw new \Exception('Nie udało się złożyć zamówienia. Weź że się zastanów co ty w ogóle robisz.');
-        }
+        $this->orderManager->placeOrder($deliveryClientData, $cart);
+
         return true;
     }
     

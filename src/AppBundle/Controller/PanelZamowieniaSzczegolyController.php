@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\Filter\StatusType;
 use AppBundle\Form\ZamowienieType;
 use AppBundle\Entity\Status;
+use AppBundle\Exception\OrderNotFoundException;
 
 
 class PanelZamowieniaSzczegolyController extends Controller {
@@ -33,7 +34,7 @@ class PanelZamowieniaSzczegolyController extends Controller {
                 ->findoneBy(array('idzamowienie' => $idzamowienie));
             
             if (!$zamowienieRep) {
-                throw new \Exception('Nie ma w bazie danych szukanego zamówienia.');
+                throw new OrderNotFoundException('Nie ma w bazie danych szukanego zamówienia.');
             }
         }else{
             $zamowienieRep = $this->getDoctrine()

@@ -10,6 +10,7 @@ namespace AppBundle\Utils\Manager;
 
 use Doctrine\ORM\EntityManager;
 use AppBundle\Utils\Manager\Filter;
+use AppBundle\Exception\OrderNotFoundException;
 
 
 
@@ -50,7 +51,7 @@ class Order
                 $td->getQuery(),
                 $td->getColumnsSortOrder(),
                 $td->getColumnSort());
-        if (!$repo) {throw new \Exception('Nie można znaleźć zamówień');}
+        if (!$repo) {throw new OrderNotFoundException('Nie można znaleźć zamówień');}
 
         return $repo;
     }
@@ -62,7 +63,7 @@ class Order
             ->findAllOrderedByY(
                 $td->getColumnsSortOrder(),
                 $td->getColumnSort());
-        if (!$repo) {throw new \Exception('Nie można znaleźć zamówień');}
+        if (!$repo) {throw new OrderNotFoundException('Nie można znaleźć zamówień');}
 
         return $repo;
     }

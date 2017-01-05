@@ -19,6 +19,7 @@ use AppBundle\Entity\ZamowienieProdukt;
 use AppBundle\Entity\Status;
 use AppBundle\Entity\Ksiazka;
 use AppBundle\Event\OrderPlacedEvent;
+use AppBundle\Exception\OrderNotFoundException;
 
 class OrderManager
 {
@@ -42,7 +43,8 @@ class OrderManager
 
     /**
      * @param Klient $klient
-     * @return Zamowienie
+     * @return boolean
+     * @throws
      */
     public function placeOrder($klient, $cart)
     {
@@ -51,10 +53,13 @@ class OrderManager
         $this->em->persist($klient);
         $this->em->persist($zamowienie);
         $this->em->flush();
-        $this->dispatchEventWithOrderToSendConfirmedEmails($zamowienie);                                 
+        $this->dispatchEventWithOrderToSendConfirmedEmails($zamowienie);
         $this->addFlashBagWithOrderIdVariable($zamowienie);
-
-        return $zamowienie;
+        
+        if (empty($this->em->getRepository('AppBundle:Zamowienie')->find($zamowienie))){
+            throw new OrderNotFoundException('Nie udało się złożyć zamówienia.');
+        }
+        return true;
     }
 
     /**

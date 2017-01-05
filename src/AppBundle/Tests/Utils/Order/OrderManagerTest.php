@@ -8,6 +8,7 @@
 
 namespace AppBundle\Tests\Utils\Order;
 
+use AppBundle\Entity\Zamowienie;
 use AppBundle\Utils\Order\OrderManager;
 use AppBundle\Entity\Klient;
 use AppBundle\Entity\Status;
@@ -22,6 +23,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Doctrine\ORM\EntityManager;
 use AppBundle\Event\OrderPlacedEvent;
+use AppBundle\Exception\OrderNotFoundException;
 
 class OrderManagerTest extends \PHPUnit_Framework_TestCase
 {
@@ -37,11 +39,23 @@ class OrderManagerTest extends \PHPUnit_Framework_TestCase
         $obj = new OrderManager($em,$storage,$checker,$session,$dispatcher);
         $cart = ['111'=>'4','222'=>'3'];
 
-        $order = $obj->placeOrder($this->getKlientMock(),$cart);
+        $this->assertTrue($obj->placeOrder($this->getKlientMock(),$cart));
+    }
 
-        $this->assertInstanceOf(Collection::class,$order->getZamowienieProdukty());
-        $this->assertEquals(2,$order->getZamowienieProdukty()->count());
-        $this->assertEquals(4,$order->getZamowienieProdukty()->first()->getIlosc());
+
+    public function testPlaceOrderReturnExceptionForGivenCart()
+    {
+        $this->expectException(OrderNotFoundException::class);
+        $em = $this->getEntityManagerMock(true);
+        $storage = $this->getTokenStorageMock();
+        $checker = $this->getAuthorizationCheckerMock();
+        $session = $this->getSessionMock();
+        $dispatcher = $this->getEventDispatcherMock(OrderPlacedEvent::NAME);
+
+        $obj = new OrderManager($em,$storage,$checker,$session,$dispatcher);
+        $cart = ['111'=>'4','222'=>'3'];
+
+        $obj->placeOrder($this->getKlientMock(),$cart);
     }
 
 
@@ -117,10 +131,12 @@ class OrderManagerTest extends \PHPUnit_Framework_TestCase
     /**
      * @codeCoverageIgnore
      */
-    public function getEntityManagerMock()
+    public function getEntityManagerMock($exception=false)
     {
         $ksiazka = $this->createMock(Ksiazka::class); //stub (wszystko zwraca null)
         $status = $this->createMock(Status::class); //stub (wszystko zwraca null)
+        $zamowienie = $this->createMock(Zamowienie::class);
+        if($exception){$zamowienie=null;};
 
         $ksiazkaRepository = $this
             ->getMockBuilder('Doctrine\ORM\EntityRepository')
@@ -140,6 +156,15 @@ class OrderManagerTest extends \PHPUnit_Framework_TestCase
             ->expects($this->any())
             ->method('find')
             ->will($this->returnValue($status));
+        $zamowienieRepository = $this
+            ->getMockBuilder('Doctrine\ORM\EntityRepository')
+            ->disableOriginalConstructor()
+            ->setMethods(['find'])
+            ->getMock();
+        $zamowienieRepository
+            ->expects($this->any())
+            ->method('find')
+            ->will($this->returnValue($zamowienie));
 
         $entityManager = $this
             ->getMockBuilder(EntityManager::class)
@@ -152,12 +177,14 @@ class OrderManagerTest extends \PHPUnit_Framework_TestCase
             ->withConsecutive(
                 $this->equalTo('AppBundle:Status'),
                 $this->equalTo('AppBundle:Ksiazka'),
-                $this->equalTo('AppBundle:Ksiazka')
+                $this->equalTo('AppBundle:Ksiazka'),
+                $this->equalTo('AppBundle:Zamowienie')
             )
             ->willReturnOnConsecutiveCalls(
                 $statusRepository,
                 $ksiazkaRepository,
-                $ksiazkaRepository
+                $ksiazkaRepository,
+                $zamowienieRepository
             );
         $entityManager->expects($this->any())
             ->method('persist')

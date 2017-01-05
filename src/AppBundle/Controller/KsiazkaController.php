@@ -11,6 +11,7 @@ use AppBundle\Entity\Ksiazka;
 use AppBundle\Form\KsiazkaType;
 use AppBundle\Form\KsiazkaListType;
 use AppBundle\Entity\KsiazkaList;
+use AppBundle\Exception\BookNotFoundException;
 
 /**
  * refaktor: komentarze, elsy. brzydka klasa
@@ -130,7 +131,7 @@ class KsiazkaController extends Controller {
      */
     public function showAction($id) {
         $entity = $this->getDoctrine()->getRepository('AppBundle:Ksiazka')->find($id);
-        if (!$entity) {throw new \Exception('Nie można znaleźć książki');}
+        if (!$entity) {throw new BookNotFoundException('Nie można znaleźć książki');}
 
         $deleteForm = $this->createDeleteForm($id);
         
@@ -150,7 +151,7 @@ class KsiazkaController extends Controller {
      */
     public function editAction($id) {
         $entity = $this->getDoctrine()->getRepository('AppBundle:Ksiazka')->find($id);
-        if (!$entity) {throw $this->createNotFoundException('Nie można znaleźć książki.');}
+        if (!$entity) {throw new BookNotFoundException('Nie można znaleźć książki.');}
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);

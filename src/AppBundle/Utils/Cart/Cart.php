@@ -9,6 +9,7 @@
 namespace AppBundle\Utils\Cart;
 
 use Doctrine\ORM\EntityManager;
+use AppBundle\Exception\ProductNotInCartException;
 
 class Cart
 {
@@ -51,7 +52,7 @@ class Cart
             unset($cart[$isbn]);
             return $cart;
         }
-        throw new \Exception('Nie można usunąć produktu z koszyka. Nie ma 
+        throw new ProductNotInCartException('Nie można usunąć produktu z koszyka. Nie ma 
         książki o ISBN: '.$isbn.' w koszyku');
     }
     

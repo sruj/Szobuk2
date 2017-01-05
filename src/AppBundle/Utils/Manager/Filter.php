@@ -9,6 +9,7 @@
 namespace AppBundle\Utils\Manager;
 
 use AppBundle\Utils\Manager\IFilterQuery;
+use AppBundle\Exception\UnexpectedInstanceOfException;
 
 /**
  * Class Filter
@@ -29,7 +30,7 @@ class Filter
         $tds = $this->makeFilterAndQuery($td,$forms,$fq);
 
         if(!$tds instanceof TableDetails){
-            throw new \Exception('must be instance of TableDetails'); //todo: custom exception  "$tds must be instance of TableDetails"
+            throw new UnexpectedInstanceOfException('Must be instance of TableDetails'); 
         }
 
         return $tds;

@@ -10,6 +10,9 @@ use AppBundle\Form\DostawaType;
 use AppBundle\Entity\Klient;
 use AppBundle\Entity\Zamowienie;
 use AppBundle\Entity\Ksiazka;
+use AppBundle\Exception\BookNotFoundException;
+use AppBundle\Exception\CartNotInSessionException;
+use AppBundle\Exception\VariableNotExistInFlashBagException;
 
 
 //refaktor: zmienić nazwy metod PL-EN
@@ -27,7 +30,7 @@ class CartController extends Controller
     {
         $entity = $this->getDoctrine()->getRepository('AppBundle:Ksiazka')->find($isbn);
 
-        if (!$entity) { throw new \Exception('Książka z numerem isbn: '.$isbn.' nie istnieje w bazie'); }
+        if (!$entity) { throw new BookNotFoundException('Książka z numerem isbn: '.$isbn.' nie istnieje w bazie'); }
 
         $app_cart = $this->get('app.cart');
         $session = $request->getSession();
@@ -117,7 +120,7 @@ class CartController extends Controller
         $session = $request->getSession();
         
         if(!$session->has('cart')){
-            throw new \Exception('Koszyk pusty.');
+            throw new CartNotInSessionException('Koszyk pusty.');
         }
 
         if($deleteisbn) { 
@@ -173,7 +176,7 @@ class CartController extends Controller
     public function zamawiamAction(Request $request)
     {
         $session = $this->get('session');
-        if(!$session->has('cart')){throw new \Exception('Koszyk pusty.');}
+        if(!$session->has('cart')){throw new CartNotInSessionException('Koszyk pusty.');}
 
         $klient= $this->getDoctrine()
             ->getRepository('AppBundle:Klient')
@@ -204,7 +207,7 @@ class CartController extends Controller
     {
         $idzamowienie = $request->getSession()->getFlashBag()->get('idzamowienie');
         if (!$idzamowienie) {
-            throw new \Exception('To jest strona potwierdzająca zamówienie. Aby złożyć zamówienie dodaj produkt do koszyka i tak dalej...');
+            throw new VariableNotExistInFlashBagException('To jest strona potwierdzająca zamówienie. Aby złożyć zamówienie dodaj produkt do koszyka i tak dalej...');
         }
 
         $zamowienie = $this->getDoctrine()

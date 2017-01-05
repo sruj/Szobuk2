@@ -40,16 +40,6 @@ class CreateOrderFormHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($o->handleFormAndPlaceOrder($this->getFormInterfaceMock(),$this->getRequestMock(false)));
     }
 
-    /**
-     * @expectedException \Exception
-     */
-    public function testhandleFormAndPlaceOrderThrowExceptionForEmptyOrder()
-    {
-        $o = new CreateOrderFormHandler($this->getOrderManagerMock(false));
-        $this->assertTrue($o->handleFormAndPlaceOrder($this->getFormInterfaceMock(),$this->getRequestMock()));
-    }
-
-
 
     protected function getOrderManagerMock($return = true)
     {
@@ -72,6 +62,8 @@ class CreateOrderFormHandlerTest extends \PHPUnit_Framework_TestCase
     {
         $session = $this->createMock(SessionInterface::class);
         $session->method('get')
+            ->willReturn($return);
+        $session->method('has')
             ->willReturn($return);
 
         $request = $this->createMock(Request::class);
