@@ -8,63 +8,160 @@
 
 namespace AppBundle\Utils\Manager;
 
+use AppBundle\Utils\Manager\IFilterQuery;
+use AppBundle\Exception\UnexpectedInstanceOfException;
 
+/**
+ * Class Filter
+ * @package AppBundle\Utils\Manager
+ */
 class Filter
 {
-
-    public function prepareStatusFilter($td, $forms)
+    /**
+     * @param TableDetails $td
+     * @param FormsManagerExtended $forms
+     * @param \AppBundle\Utils\Manager\IFilterQuery $fq
+     * @return TableDetails
+     * @throws
+     */
+    public function prepareFilterAndQuery(TableDetails $td, FormsManagerExtended $forms, IFilterQuery $fq)
     {
-        if((!$td['query']) and (!$td['identifier'])) {
-            $td['identifier'] = $forms['StatusForm']->get('status')->getData()->getIdstatus();
+        $td = $this->prepareDetails($td,$forms);
+        $tds = $this->makeFilterAndQuery($td,$forms,$fq);
+
+        if(!$tds instanceof TableDetails){
+            throw new UnexpectedInstanceOfException('Must be instance of TableDetails'); 
         }
 
-        if((!$td['query']) and ($td['identifier'])) {
-            $td['query'] = 'idstatus = ' . $td['identifier'];
+        return $tds;
+    }
+
+    /**
+     * @param TableDetails $tableDetails
+     * @param FormsManagerExtended $tmpForms
+     * @return TableDetails
+     */
+    private function prepareDetails(TableDetails $tableDetails, FormsManagerExtended $tmpForms)
+    {
+        $tableDetails = $this->setFalse($tableDetails, $tmpForms);
+        $tableDetails = $this->setFilter($tableDetails, $tmpForms);
+
+        return $tableDetails;
+    }
+
+    /**
+     * @param TableDetails $tb
+     * @param FormsManagerExtended $fms
+     * @return TableDetails
+     */
+    private function setFalse(TableDetails $tb, FormsManagerExtended $fms)
+    {
+        if ($this->isAnyFormValid($fms)){
+            $tb->setFilterField(false);
+            $tb->setQuery(false);
         }
 
-        $td['filterField'] = 'idstatus';
+        if(!($tb->getFilterField()))
+        {
+            $tb->setQuery(false);
+        }
+
+        return $tb;
+    }
+
+    /**
+     * @param FormsManagerExtended $forms
+     * @return bool
+     */
+    private function isAnyFormValid(FormsManagerExtended $forms)
+    {
+        return $forms->isAnyFormValid();
+    }
+
+    /**
+     * @param TableDetails $td
+     * @param $forms
+     * @return TableDetails
+     */
+    private function setFilter(TableDetails $td, $forms)
+    {
+        $filter = $td->getFilter();
+
+        if(!($this->isTableAlreadyFiltered($filter)))
+        {
+            $td = $this->prepareFilterValue($forms,$td);
+        }
 
         return $td;
     }
 
-    public function prepareDataFilter($td, $forms)
+
+    private function isTableAlreadyFiltered($filter)
     {
-        if($td['query']) {
-            $td['query'] = urldecode($td['query']);
+        if($filter) {
+            return true;
         }
-
-        if (!$td['query']) {
-            $od = $forms['DataZamForm']->get('od')->getData()->format('Y-m-d H:i:s');
-            $do = $forms['DataZamForm']->get('do')->getData()->format('Y-m-d H:i:s');
-            $td['query'] = "datazlozenia BETWEEN '" . $od . "' AND '" . $do . "'";
-        }
-
-        $td['filterField'] = 'data';
-        $td['query'] = urlencode($td['query']);
-
-        return $td;
+        return false;
     }
 
-    public function prepareKlientFilter($td, $forms)
-    {
-        if ((!($td['query'])) and (!$td['identifier'])) {
-            $td['identifier'] = $forms['NrKlientaForm']->get('idklient')->getData()->getIdklient();
+
+    /**
+     * @param FormsManagerExtended $fms
+     * @param TableDetails $td
+     * @return TableDetails
+     */
+    private function prepareFilterValue(FormsManagerExtended $fms, TableDetails $td){
+//tu wchodzę gdy tablica nie była teraz filtrowana, ale wcześniej i teraz nowy sort
+        if($td->getFilterField()){
+            $td->setFilter($td->getFilterField());
+            return $td;
+        }
+        if($fms->isStatusFormValid()){
+            $td->setFilter('idstatus');
+            $td->setFilterField('idstatus');
+            return $td;
+        }
+        if($fms->isDataZamFormValid()) {
+            $td->setFilter('data');
+            $td->setFilterField('data');
+            return $td;
+        }
+        if($fms->isNrKlientaFormValid()){
+            $td->setFilter('idklient');
+            $td->setFilterField('idklient');
             return $td;
         }
 
-        if ((!($td['query'])) and $td['identifier']) {
-            $td['query'] = 'idklient = ' . $td['identifier'];
+        $td->setFilter('all');
+        return $td;
+    }
+
+
+    /**
+     * @param TableDetails $td
+     * @param FormsManagerExtended $forms
+     * @param \AppBundle\Utils\Manager\IFilterQuery $fq
+     * @return TableDetails
+     */
+    private function makeFilterAndQuery(TableDetails $td, FormsManagerExtended $forms, IFilterQuery $fq)
+    {
+        if($td->getFilter() == 'all'){
             return $td;
         }
 
-        return $td;
-    }
-    
-    
-    
-    
-    
-    
-    
+        if($td->getFilter() == 'idstatus'){
+            $tds = $fq->prepareStatusFilterQuery($td, $forms);
+            return $tds;
+        }
 
+        if($td->getFilter() == 'data') {
+            $tds = $fq->prepareDataFilterQuery($td, $forms);
+            return $tds;
+        }
+
+        if($td->getFilter() == 'idklient'){
+            $tds = $fq->prepareKlientFilterQuery($td, $forms);
+            return $tds;
+        }
+    }
 }

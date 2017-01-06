@@ -9,6 +9,7 @@
 namespace AppBundle\Tests\Utils\Manager;
 
 use AppBundle\Utils\Manager\Sort;
+use AppBundle\Utils\Manager\TableDetails;
 
 /**
  * Class SortTest
@@ -16,56 +17,76 @@ use AppBundle\Utils\Manager\Sort;
  */
 class SortTest extends \PHPUnit_Framework_TestCase
 {
-
+    
     /**
      * @dataProvider getTableConfigDetails
      */
-    public function testGetColumnsSortOrder($tableConfigDetails,$expected)
+    public function testGetColumnsSortOrder($columnSortOrder,$columnSort,$expected)
     {
-        $object = new Sort($tableConfigDetails);
-        $this->assertEquals($expected,$object->getColumnsSortOrder());
+        $object = new Sort($this->getTableDetails($columnSort, $columnSortOrder));
+        $result = $object->getColumnsSortOrder();
+        $this->assertEquals( $expected, $result );
     }
 
 
     /**
+     * @codeCoverageIgnore
+     */
+    protected function getTableDetails($columnSort = null,$columnsSortOrder = null)
+    {
+        $TableDetails = $this->createMock(TableDetails::class);
+
+        $TableDetails->expects($this->any())
+            ->method('getColumnSort')
+            ->will($this->returnValue($columnSort));
+        $TableDetails->expects($this->any())
+            ->method('getColumnsSortOrder')
+            ->will($this->returnValue($columnsSortOrder));
+
+        return $TableDetails;
+    }
+
+    
+    /**
+     * @codeCoverageIgnore
      * @return \Generator
      */
     public function getTableConfigDetails()
     {
-        yield [['columnsSortOrder' => 'null','columnSort'=>'idzamowienie' ],
+        yield [ 'null','idzamowienie' ,
             ['Status'=>'null','Klient'=>'null','Data'=>'null','Numer'=>'ASC']];
-        yield [['columnsSortOrder' =>'null','columnSort'=>'datazlozenia' ],
+        yield ['null','datazlozenia' ,
             ['Status'=>'null','Klient'=>'null','Data'=>'ASC','Numer'=>'null']];
-        yield [['columnsSortOrder' =>'null','columnSort'=>'idstatus' ],
+        yield ['null','idstatus' ,
             ['Status'=>'ASC','Klient'=>'null','Data'=>'null','Numer'=>'null']];
-        yield [['columnsSortOrder' =>'null','columnSort'=>'idklient' ],
+        yield ['null','idklient' ,
             ['Status'=>'null','Klient'=>'ASC','Data'=>'null','Numer'=>'null']];
 
-        yield [['columnsSortOrder' => 'ASC','columnSort'=>'idzamowienie' ],
+        yield [ 'ASC','idzamowienie' ,
             ['Status'=>'null','Klient'=>'null','Data'=>'null','Numer'=>'DESC']];
-        yield [['columnsSortOrder' => 'ASC','columnSort'=>'datazlozenia' ],
+        yield [ 'ASC','datazlozenia' ,
             ['Status'=>'null','Klient'=>'null','Data'=>'DESC','Numer'=>'null']];
-        yield [['columnsSortOrder' => 'ASC','columnSort'=>'idstatus' ],
+        yield [ 'ASC','idstatus' ,
             ['Status'=>'DESC','Klient'=>'null','Data'=>'null','Numer'=>'null']];
-        yield [['columnsSortOrder' => 'ASC','columnSort'=>'idklient' ],
+        yield [ 'ASC','idklient' ,
             ['Status'=>'null','Klient'=>'DESC','Data'=>'null','Numer'=>'null']];
 
-        yield [['columnsSortOrder' => 'DESC','columnSort'=>'idzamowienie' ],
+        yield [ 'DESC','idzamowienie' ,
             ['Status'=>'null','Klient'=>'null','Data'=>'null','Numer'=>'ASC']];
-        yield [['columnsSortOrder' => 'DESC','columnSort'=>'datazlozenia' ],
+        yield [ 'DESC','datazlozenia' ,
             ['Status'=>'null','Klient'=>'null','Data'=>'ASC','Numer'=>'null']];
-        yield [['columnsSortOrder' => 'DESC','columnSort'=>'idstatus' ],
+        yield [ 'DESC','idstatus' ,
             ['Status'=>'ASC','Klient'=>'null','Data'=>'null','Numer'=>'null']];
-        yield [['columnsSortOrder' => 'DESC','columnSort'=>'idklient' ],
+        yield [ 'DESC','idklient' ,
             ['Status'=>'null','Klient'=>'ASC','Data'=>'null','Numer'=>'null']];
 
-        yield [['columnsSortOrder' => 'BAD-IDEA','columnSort'=>'idklient' ],
+        yield [ 'BAD-IDEA','idklient' ,
             ['Status'=>'null','Klient'=>'ASC','Data'=>'null','Numer'=>'null']];
-        yield [['columnsSortOrder' => 'BAD-IDEA','columnSort'=>'BAD-IDEA' ],
+        yield [ 'BAD-IDEA','BAD-IDEA' ,
             ['Status'=>'null','Klient'=>'null','Data'=>'null','Numer'=>'ASC']];
 
-
-
+        yield [ false,'idklient' ,
+            ['Status'=>'null','Klient'=>'null','Data'=>'null','Numer'=>'ASC']];
     }
 
 }

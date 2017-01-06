@@ -7,7 +7,7 @@
  */
 
 
-namespace AppBundle\Tests\Utils;
+namespace AppBundle\Tests;
 use Symfony\Component\DomCrawler\Crawler;
 
 

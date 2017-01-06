@@ -2,6 +2,10 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Utils\Manager\Filter;
+use AppBundle\Utils\Manager\FilterQuery;
+use AppBundle\Utils\Manager\Order;
+use AppBundle\Utils\Manager\TableDetails;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -16,6 +20,8 @@ use AppBundle\Form\Filter\StatusType;
 use AppBundle\Form\Filter\DataZamType;
 use AppBundle\Form\Filter\NrKlientaType;
 use AppBundle\Utils\Manager\Sort;
+use AppBundle\Utils\Manager\FormsManagerExtended;
+
 
 /**
  * Kategoria controller.
@@ -33,6 +39,10 @@ class ZarzadcaController extends Controller
     }
 
     /**
+     * TODO: zdaje się że był zamysł by móc filtrować już przefiltrowane dane, ale zmienne filter i filterField służą tylko do zmiany sortowania przefiltrowanych wcześniej danych.
+     * 
+     * TODO: z jakiegoś powodu, przestał zapamiętywac poprzednie filtrowanie gdy sortuję. I próba innego sortowania przefiltrowanej tabeli wyswietla wyniki dla wszystkich danych a nie poprzednio filtrowanych.  
+     * 
      * @Route("/panel/{filter}-{identifier}", name="panelSortFromDetails",
      *      defaults={
      *     "filter": false,
@@ -54,17 +64,16 @@ class ZarzadcaController extends Controller
      */
     public function panelsortAction(Request $request, $columnsSortOrder, $columnSort, $query, $filterField, $filter, $identifier)
     {
-        $tableDetails = [
-            'columnsSortOrder' => $columnsSortOrder,
-            'columnSort' => $columnSort,
-            'filterField' => $filterField,
-            'query' => $query,
-            'filter' => $filter,
-            'identifier' => $identifier,
-        ];
+        $tableDetails = new TableDetails();
+        $tableDetails->setColumnsSortOrder($columnsSortOrder);
+        $tableDetails->setColumnSort($columnSort);
+        $tableDetails->setFilterField($filterField);
+        $tableDetails->setQuery($query);
+        $tableDetails->setFilter($filter);
+        $tableDetails->setIdentifier($identifier);
 
         $sort = new Sort($tableDetails);
-        $tableDetails['columnsSortOrder'] = $sort->getColumnsSortOrder();
+        $tableDetails->setColumnsSortOrder($sort->getColumnsSortOrder());
 
         $StatusForm = $this->createForm(StatusType::class,null, array(
             'action' => $this->generateUrl('panelSortFromDetails')));
@@ -83,10 +92,16 @@ class ZarzadcaController extends Controller
             'NrKlientaForm' => $NrKlientaForm,
         ];
 
+
+        $forms = new FormsManagerExtended($tmpForms);
+        $fltrqry = new FilterQuery();
+
+        $fltr = new Filter();
+        $tds = $fltr->prepareFilterAndQuery($tableDetails, $forms, $fltrqry);
         $manager_order = $this->get('app.manager_order');
-        $manager_order->prepareOrder($tableDetails, $tmpForms);
-        $orders = $manager_order->getOrder();
+        $orders = $manager_order->prepareOrder($tds);
         $tableDetails = $manager_order->getTableDetails();
+
 
         $ordersProducts= $this->getDoctrine()
             ->getRepository('AppBundle:ZamowienieProdukt')
@@ -109,10 +124,10 @@ class ZarzadcaController extends Controller
 
         return $this->render('AppBundle:Zarzadca:panelsort.html.twig',[
             'zamowieniaProdukty'=>$ordersProducts,
-            'filterField' => $tableDetails['filterField'],
-            'query' => $tableDetails['query'],
-            'identifier' => $tableDetails['identifier'],
-            'columnsSortOrder' => $tableDetails['columnsSortOrder'],
+            'filterField' => $tableDetails->getFilterField(),
+            'query' => $tableDetails->getQuery(),
+            'identifier' => $tableDetails->getIdentifier(),
+            'columnsSortOrder' => $tableDetails->getColumnsSortOrder(),
             'form' => $form->createView(),
             'StatusForm' => $StatusForm->createView(),
             'DataZamForm' => $DataZamForm->createView(),
