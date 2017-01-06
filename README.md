@@ -53,9 +53,11 @@ Zastosowane m.in.:
   
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Validator/Constraints/PhoneNumberValidator.php
   
-  * custom exceptions
+  * custom exceptions, np:
   
-  **(TODO)**
+  https://github.com/sruj/szobuk2/tree/master/src/AppBundle/Exception
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Utils/Cart/Cart.php#L55
+  https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Utils/Manager/Filter.php#L33
   
 
   * friendly configuration, np:
@@ -174,10 +176,11 @@ https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/public/css/s
 https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Tests/Controller/ZarzadcaControllerTest.php
 https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Tests/Utils/ColumnSortChecker.php
 
-### 6) Testy jednostkowe
+### 6) Testy jednostkowe, np:
 
-**(TODO)** 
-(Próbowałem robić T.J. dla Utils, ale testy jednostkowe nie mają sensu dla klas jednokrotnego użytku (jak u mnie), gdzie obiekt klasy wykorzystywana jest tylko w jednym miejscu tylko po to by wynieść kod z kontrolera. Gdy arg kontruktora lub setera takiej klasy zawsze są takie same, więc bez sensu jest testować taką klasę z innymi argumentami).
+https://github.com/sruj/szobuk2/tree/master/src/AppBundle/Tests/Utils 
+https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Tests/Utils/Manager/FilterQueryTest.php
+https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Tests/Utils/Manager/FilterTest.php
 
 ### 7) Twig
 
