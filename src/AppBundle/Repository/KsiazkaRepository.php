@@ -39,6 +39,19 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
         return $this->_em->createQuery('
                 SELECT a 
                 FROM AppBundle:Ksiazka a
+                WHERE a.ilosc>0
+                ORDER BY a.tytul ASC
+            ');
+    }
+
+    /**
+     * @return Query
+     */
+    public function queryAllAdmin()
+    {
+        return $this->_em->createQuery('
+                SELECT a 
+                FROM AppBundle:Ksiazka a
                 ORDER BY a.tytul ASC
             ');
     }
@@ -52,6 +65,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
             SELECT k
             FROM AppBundle:Ksiazka k
             WHERE k.cena < :cena
+            WHERE k.ilosc>0
             ORDER BY k.tytul ASC'
         )->setParameter('cena', '50');
     }
@@ -64,6 +78,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
         return $this->_em->createQuery('
             SELECT k
             FROM AppBundle:Ksiazka k
+            WHERE k.ilosc>0
             ORDER BY k.created DESC'
         );
     }
@@ -99,6 +114,18 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
     {
         return  $this->paginator->paginate(
             $this->queryAll(),
+            $page/*page number*/,
+            $limit/*limit per page*/
+        );
+    } 
+    
+    /**
+     * @param int $page
+     */
+    public function findAllAdmin($page, $limit = Ksiazka::NUM_ITEMS)
+    {
+        return  $this->paginator->paginate(
+            $this->queryAllAdmin(),
             $page/*page number*/,
             $limit/*limit per page*/
         );
