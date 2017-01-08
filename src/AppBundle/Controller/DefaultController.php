@@ -56,7 +56,7 @@ class DefaultController extends Controller
     public function nowosciAction(Request $request)
     {
         $ksi_rep = $this->get('app.ksiazka_repository');
-        $ksiazki = $ksi_rep->findAllMy($request->query->getInt('page', 1));
+        $ksiazki = $ksi_rep->findNowosci($request->query->getInt('page', 1));
 
         return $this->render('AppBundle:Default:nowosci.html.twig',[
             'ksiazki' => $ksiazki
