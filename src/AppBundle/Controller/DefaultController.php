@@ -17,9 +17,7 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-
-        //jeśli w trakcie zakupów w wyborze autoryzacji wybrałem zaloguj lub zarejestruj to przenoszę się do *gdzieśtam*
-        $session = $request->getSession();
+        $session = $request->getSession();                                                                               //jeśli w trakcie zakupów w wyborze autoryzacji wybrałem zaloguj lub zarejestruj to przenoszę się do *gdzieśtam*
         $proces_zamowienia=$session->get('proces_zamowienia');
         if($proces_zamowienia == 'tak'){
             $session->remove('proces_zamowienia');

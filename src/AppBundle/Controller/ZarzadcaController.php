@@ -39,6 +39,7 @@ class ZarzadcaController extends Controller
     }
 
     /**
+     * refaktor: chyba nieco za dużo zmiennych zwraca ten kontroler 
      * TODO: zdaje się że był zamysł by móc filtrować już przefiltrowane dane, ale zmienne filter i filterField służą tylko do zmiany sortowania przefiltrowanych wcześniej danych.
      * 
      * TODO: z jakiegoś powodu, przestał zapamiętywac poprzednie filtrowanie gdy sortuję. I próba innego sortowania przefiltrowanej tabeli wyswietla wyniki dla wszystkich danych a nie poprzednio filtrowanych.  

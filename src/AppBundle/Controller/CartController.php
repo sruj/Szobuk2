@@ -187,7 +187,7 @@ class CartController extends Controller
         'attr' => ['class' => 'form_dostawa']]);
 
         $app_form_handler_order = $this->get('app.form_handler.order');
-        if($app_form_handler_order->handleFormAndPlaceOrder($form, $request)){                                                                                                // wystrzeliwany event todo: może lepiej jak event bęzie wystrzeliwany w kontrolerze
+        if($app_form_handler_order->handleFormAndPlaceOrder($form, $request)){                                                                    // wystrzeliwany event todo: może lepiej jak event bęzie wystrzeliwany w kontrolerze
             return $this->redirectToRoute('potwierdzenie');                                                                                       // todo: poza tym listener używa sesji.
         };
 
