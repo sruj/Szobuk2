@@ -39,7 +39,7 @@ class ZarzadcaController extends Controller
     }
 
     /**
-     * refaktor: nie bardzo wiadomo co tu się dzieje, nazwy zmiennych i metod nie są pomocne.
+     * refaktor: (zoostaf) nie bardzo wiadomo co tu się dzieje, nazwy zmiennych i metod nie są pomocne.
      * 
      * @Route("/panel/{filter}-{identifier}", name="panelSortFromDetails",
      *      defaults={
