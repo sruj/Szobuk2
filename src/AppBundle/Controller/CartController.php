@@ -15,7 +15,6 @@ use AppBundle\Exception\CartNotInSessionException;
 use AppBundle\Exception\VariableNotExistInFlashBagException;
 
 
-//refaktor: zmienić nazwy metod PL-EN
 class CartController extends Controller
 {
     
@@ -54,7 +53,7 @@ class CartController extends Controller
         $app_cart = $this->get('app.cart');
         $session = $request->getSession();
         $cart = $this->getCartFromSessionOrReturnNullIfNotExist($session);
-        $cartquantity = $app_cart->getNumerOfProductsInCart($cart);
+        $cartquantity = $app_cart->getNumberOfProductsInCart($cart);
 
         return $this->render('AppBundle:Cart:cartcontent.html.twig', ['cartquantity' => $cartquantity]);
     }

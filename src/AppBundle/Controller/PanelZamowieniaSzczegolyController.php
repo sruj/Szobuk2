@@ -15,7 +15,7 @@ use AppBundle\Exception\OrderNotFoundException;
 class PanelZamowieniaSzczegolyController extends Controller {
 
     /**
-     * refaktor: elsy
+     * refaktor: elsy, komentarze.
      * @Route("/panel/szczegoly-zamowienia/{idzamowienie}/{userid}/", name="panelDetails")
      * @Route("/panel/szczegoly-zamowienia/{idzamowienie}/", name="ZarzadcaPanelDetails")
      */

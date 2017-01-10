@@ -57,7 +57,7 @@ class Cart
     }
     
 
-    public function getNumerOfProductsInCart($cart)
+    public function getNumberOfProductsInCart($cart)
     {
         $cartquantity = 0;
         if(!empty($cart))

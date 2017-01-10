@@ -19,7 +19,7 @@ class KategoriaController extends Controller
 {
 
     /**
-     * Lists all Kategoria entities.
+     * Lista kategorii.
      *
      * @Route("/", name="kategoria")
      * @Method("GET")
@@ -162,6 +162,7 @@ class KategoriaController extends Controller
 
         return $form;
     }
+    
     /**
      * Cwaniackie zabezpieczenie by adresy /admin/xxxxxxx wyświetlały mój nadpisany error, a nie brzydki komunikat "No route found for "GET /kategoria/admin/xxxxxx"" 
      *
@@ -171,7 +172,6 @@ class KategoriaController extends Controller
     {
         throw $this->createNotFoundException('Strona .../kategoria/admin/'.$szatan.' nie istnieje');
     }
-    
     
     
     /**

@@ -74,7 +74,7 @@ class CartTest extends \PHPUnit_Framework_TestCase
         $cart = ['123456789' => 2, '987654321'=>2];
         $em = $this->getEntityManager();
         $obj = new Cart($em);
-        $res = $obj->getNumerOfProductsInCart($cart);
+        $res = $obj->getNumberOfProductsInCart($cart);
         $expected = 4;
         $this->assertEquals( $expected, $res );
     }
