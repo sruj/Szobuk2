@@ -42,7 +42,7 @@ class Ksiazka
     /**
      * @var string
      * 
-     * @Assert\Isbn
+     * //Assert\Isbn -wyłączam bo książki od początku mają przypisane isbn w złym formacie i próba edycji książki zawsze wywala błąd walidacji isbn
      * @ORM\Column(name="isbn", type="string", length=45)
      * @ORM\Id
      */

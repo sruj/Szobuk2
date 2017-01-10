@@ -20,6 +20,7 @@ class FilterQuery implements IFilterQuery
     {
         if((!$td->getQuery()) and (!$td->getIdentifier())) {
             $td->setIdentifier($forms->getIdStatusFromStatusForm());
+            $td->setQuery('idstatus = ' . $td->getIdentifier());
             return $td;
         }
 

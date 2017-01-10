@@ -15,6 +15,7 @@ use AppBundle\Exception\BookNotFoundException;
 
 /**
  * refaktor: komentarze, elsy. brzydka klasa
+ * 
  * Ksiazka controller.
  *
  * @Route("/ksiazka")
@@ -29,9 +30,13 @@ class KsiazkaController extends Controller {
     public function indexAction(Request $request)
     {
         $ksi_rep = $this->get('app.ksiazka_repository');
-        $lpr = KsiazkaList::NUM_ITEMS;
-        if ($this->isGranted('ROLE_ADMIN')) {$lpr=9999;}
-        $ksiazki = $ksi_rep->findAllMy($request->query->getInt('page', 1), $lpr);
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $lpr=9999;
+            $ksiazki = $ksi_rep->findAllAdmin($request->query->getInt('page', 1), $lpr);
+        }
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            $ksiazki = $ksi_rep->findAllMy($request->query->getInt('page', 1), KsiazkaList::NUM_ITEMS);
+        }
 
         //[-Formularz Główny-]Ładowanie $zamowieniaList - zmiennej potrzebnej do głównego formularza.
         //To kluczowa zmienna. Obiekt ZamowienieList() to kolekcja formularzy

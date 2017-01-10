@@ -17,9 +17,7 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-
-        //jeśli w trakcie zakupów w wyborze autoryzacji wybrałem zaloguj lub zarejestruj to przenoszę się do *gdzieśtam*
-        $session = $request->getSession();
+        $session = $request->getSession();                                                                               //jeśli w trakcie zakupów w wyborze autoryzacji wybrałem zaloguj lub zarejestruj to przenoszę się do *gdzieśtam*
         $proces_zamowienia=$session->get('proces_zamowienia');
         if($proces_zamowienia == 'tak'){
             $session->remove('proces_zamowienia');
@@ -56,7 +54,7 @@ class DefaultController extends Controller
     public function nowosciAction(Request $request)
     {
         $ksi_rep = $this->get('app.ksiazka_repository');
-        $ksiazki = $ksi_rep->findAllMy($request->query->getInt('page', 1));
+        $ksiazki = $ksi_rep->findNowosci($request->query->getInt('page', 1));
 
         return $this->render('AppBundle:Default:nowosci.html.twig',[
             'ksiazki' => $ksiazki

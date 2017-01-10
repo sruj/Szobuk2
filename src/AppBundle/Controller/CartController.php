@@ -15,7 +15,6 @@ use AppBundle\Exception\CartNotInSessionException;
 use AppBundle\Exception\VariableNotExistInFlashBagException;
 
 
-//refaktor: zmienić nazwy metod PL-EN
 class CartController extends Controller
 {
     
@@ -54,7 +53,7 @@ class CartController extends Controller
         $app_cart = $this->get('app.cart');
         $session = $request->getSession();
         $cart = $this->getCartFromSessionOrReturnNullIfNotExist($session);
-        $cartquantity = $app_cart->getNumerOfProductsInCart($cart);
+        $cartquantity = $app_cart->getNumberOfProductsInCart($cart);
 
         return $this->render('AppBundle:Cart:cartcontent.html.twig', ['cartquantity' => $cartquantity]);
     }
@@ -187,7 +186,7 @@ class CartController extends Controller
         'attr' => ['class' => 'form_dostawa']]);
 
         $app_form_handler_order = $this->get('app.form_handler.order');
-        if($app_form_handler_order->handleFormAndPlaceOrder($form, $request)){                                                                                                // wystrzeliwany event todo: może lepiej jak event bęzie wystrzeliwany w kontrolerze
+        if($app_form_handler_order->handleFormAndPlaceOrder($form, $request)){                                                                    // wystrzeliwany event todo: może lepiej jak event bęzie wystrzeliwany w kontrolerze
             return $this->redirectToRoute('potwierdzenie');                                                                                       // todo: poza tym listener używa sesji.
         };
 

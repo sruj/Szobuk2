@@ -4,19 +4,21 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Kategoria
  *
  * @ORM\Table(name="kategoria")
  * @ORM\Entity
+ * @UniqueEntity("nazwa")
  */
 class Kategoria {
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nazwa", type="string", length=45, nullable=true)
+     * @ORM\Column(name="nazwa", type="string", length=45, nullable=true, unique=true)
      */
     private $nazwa;
 
