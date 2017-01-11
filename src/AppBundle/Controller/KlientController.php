@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use AppBundle\Exception\ClientHasNoShoppingHistory;
 
 class KlientController extends Controller {
 
@@ -14,10 +15,6 @@ class KlientController extends Controller {
      */
     public function historiaPanelAction(Request $request) 
     {
-        //refaktor: zalogowany user który nigdy nie robił zakupów odiwedzając historiapanel dostaje exception
-        // Call to a member function getIdklient() on null
-        
-        
         if
         (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw $this->createAccessDeniedException();
@@ -27,6 +24,9 @@ class KlientController extends Controller {
             ->getRepository('AppBundle:Klient')
             ->findOneBy(['idlogowanie' => $this->getUser()->getId()]);
         
+        if(!$klient){
+            throw new ClientHasNoShoppingHistory('Nie masz zapisanej historii zakupów.');
+        }
         $idklient = $klient->getIdklient();
 
         $zam_rep = $this->get('app.zamowienie_repository');
