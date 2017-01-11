@@ -14,7 +14,7 @@ use AppBundle\Entity\KsiazkaList;
 use AppBundle\Exception\BookNotFoundException;
 
 /**
- * refaktor: komentarze, elsy. brzydka klasa
+ * todo (zoostaf) komentarze
  * 
  * Ksiazka controller.
  *
@@ -206,9 +206,9 @@ class KsiazkaController extends Controller {
 
         if ($editForm->isValid()) {
             $em->flush();
-
             return $this->redirect($this->generateUrl('ksiazka_edit', array('id' => $id)));
         }
+
         return $this->render('AppBundle:Ksiazka:edit.html.twig',[
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
