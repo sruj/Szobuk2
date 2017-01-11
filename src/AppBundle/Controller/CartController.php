@@ -61,7 +61,6 @@ class CartController extends Controller
     
     /**
      * Czyszczenie koszyka.
-     * todo: czyści całą sesję, nie wiem czy to najlepszy pomysł. (może ograniczyć się do usunięcia 'cart' i 'sum')
      *
      * @Route("/cartclear", name="cartclear")
      */
@@ -151,7 +150,7 @@ class CartController extends Controller
      */
     public function zmianaQuantityAction(Request $request)
     {
-        $cart = $request->get('data');                                                                                                          //todo: jaka data? zobacz co to za data i zmień nazwę zmiennej.  //Odpowiedź: z JS tablica z zawartością koszyka
+        $cart = $request->get('data');                                                                                                          //'data' to z JS tablica z zawartością koszyka
         $app_cart = $this->get('app.cart');  
         $session = $request->getSession();
         
@@ -186,8 +185,8 @@ class CartController extends Controller
         'attr' => ['class' => 'form_dostawa']]);
 
         $app_form_handler_order = $this->get('app.form_handler.order');
-        if($app_form_handler_order->handleFormAndPlaceOrder($form, $request)){                                                                    // wystrzeliwany event todo: może lepiej jak event bęzie wystrzeliwany w kontrolerze
-            return $this->redirectToRoute('potwierdzenie');                                                                                       // todo: poza tym listener używa sesji.
+        if($app_form_handler_order->handleFormAndPlaceOrder($form, $request)){                                                                   
+            return $this->redirectToRoute('potwierdzenie');
         };
 
         return $this->render('AppBundle:Cart:zamawiam.html.twig',[
