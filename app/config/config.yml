@@ -4,6 +4,7 @@ imports:
     - { resource: services.yml }
     - { resource: "@AppBundle/Resources/config/services.yml" }
     - { resource: "@MyUserBundle/Resources/config/services.yml" }
+    - { resource: "@TrenningBundle/Resources/config/services.yml" }
 framework:
     #esi:             ~
     translator:      ~

@@ -1,0 +1,29 @@
+{% extends '@Trenning/Default/base.html.twig' %}
+{% block body %}
+ <div id="main">
+  This is the original text when the page first loads.
+ </div>
+ <button id="ajax-button" type="button">Update content with Ajax</button>
+
+
+
+ <script>
+  $("#ajax-button").click(function () {
+   $.ajax({
+    url: '{{ absolute_url(asset('bundles/trenning/Utils/2016LyndaAjaxWithPHP/Chapter_03/03_02/ajax_html/new_content.php')) }}',
+    success: function(result) {
+     console.log(result);
+     $("#main").text(result);
+    },
+    error: function () {
+     $("#main").text("chuj")
+    }
+   });
+  })
+ </script>
+
+
+
+
+{% endblock body %}
+ {#value="{{ ksiazka.quantity }}" onchange="aktualizacjaKoszyka()"><br>#}
