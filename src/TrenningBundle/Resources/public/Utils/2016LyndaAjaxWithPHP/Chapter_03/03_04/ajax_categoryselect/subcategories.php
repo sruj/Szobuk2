@@ -30,14 +30,6 @@ $categories = [
   ]
 ];
 
-  $category_id = isset($_GET['category_id']) ? (int) $_GET['category_id'] : 0;
+  echo json_encode($categories);
+  
 
-  foreach($categories as $category) {
-    if($category['id'] == $category_id) {
-
-      // Code when this id matched requested id
-
-    }
-  }
-
-?>
