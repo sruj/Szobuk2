@@ -2,10 +2,12 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Ksiazka;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Serializer\Serializer;
 
 
 class DefaultController extends Controller
@@ -13,7 +15,7 @@ class DefaultController extends Controller
     /**
      * Kontroler przygotowujący dane do wyświetlenia książek używane na stronie głównej (wszystkie, nowości, popularne)
      *
-     * @Route("/", name="index")
+     * @Route("/", name="index", options={"expose"=true})
      */
     public function indexAction(Request $request)
     {
@@ -25,7 +27,33 @@ class DefaultController extends Controller
         };
         
         $ksi_rep = $this->get('app.ksiazka_repository');
-        $ksiazki = $ksi_rep->findAllMy($request->query->getInt('page', 1));
+        
+        if ($request->isXmlHttpRequest()) {
+            $ksiazki = $ksi_rep->findAllMy($request->query->getInt('page'),12);
+            $ksiazki = $ksiazki->getItems();
+            $books = [];
+            $renderData = [];
+            if (!empty($ksiazki) ) {
+                $i = 0;
+                foreach ($ksiazki as $ksiazka) {
+                    $books[$i]['isbn'] = $ksiazka->getIsbn();
+                    $books[$i]['autor'] = $ksiazka->getAutor();
+                    $books[$i]['tytul'] = $ksiazka->getTytul();
+                    $books[$i]['cena'] = $ksiazka->getCena();
+                    $books[$i]['obrazek'] = $ksiazka->getObrazek();
+                    $i++;
+                }
+                $renderData['template'] = $this->renderView('AppBundle:Default:index2.html.twig', array(
+                    'books' => $books
+                ));
+                $renderData['last_page'] = false;
+            }
+            if (sizeof($ksiazki)<12){$renderData['last_page'] = true;}
+
+            return new JsonResponse($renderData);
+        }
+        
+        $ksiazki = $ksi_rep->findAllMy($request->query->getInt('page', 1),6);
 
         return $this->render('AppBundle:Default:index.html.twig',[
             'ksiazki' => $ksiazki
