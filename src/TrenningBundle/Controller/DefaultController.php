@@ -49,7 +49,7 @@ class DefaultController extends Controller
 
     /**
      * Chapter 4
-     * @Route(name="c4", options={"expose"=true})
+     * @Route("/4b", name="c4", options={"expose"=true})
      */
     public function chap4ReceiveAction(Request $request)
     {
