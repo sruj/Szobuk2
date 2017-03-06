@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -262,10 +263,32 @@ class KsiazkaController extends Controller {
     /**
      * wyszukiwarka.
      *
-     * @Route("/search/", name="search")
+     * @Route("/search/", name="search", options={"expose"=true})
      * @Method("GET")
      */
     public function searchAction(Request $request) {
+        if ($request->isXmlHttpRequest()) {
+            $word = $request->query->keys();
+            $word = $word[0];
+            $ksi_rep = $this->get('app.ksiazka_repository');
+            $query = $ksi_rep->queryWyszukiwarka($word);
+            $ksiazki = $query->getResult();
+
+            $renderData = [];
+            if (!empty($ksiazki) ) {
+                $renderData['template'] = $this->renderView('AppBundle:Ksiazka:searchSuggestionAjax.html.twig', array(
+                    'books' => $ksiazki, 'word' => strtolower($word)
+                ));
+            }
+
+            return new JsonResponse($renderData);
+        }
+
+
+
+
+
+
         $form = $this->createFormBuilder()
         ->setAction($this->generateUrl('search'))
         ->setMethod('GET')

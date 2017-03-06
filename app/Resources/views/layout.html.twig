@@ -16,7 +16,14 @@
                 <a class="NavTab NavTab--zamowienia" href="{{ path('panelSortFromDetails') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Zamówienia</span></a> 
                 {% endif %}
             </div> 
-{% endblock navbar_IsTabActive %}            
+{% endblock navbar_IsTabActive %}
+
+            <script src="{{ asset('bundles/app/js/jquery-3.1.1.js') }}"></script>
+            <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+            <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+
+
+
             <div class="Nav-userSection">
                 <div class="NavSearch-container">
                     {% render (controller('AppBundle:Ksiazka:search')) %}
@@ -24,6 +31,27 @@
                     <label class="NavSearch-searchIcon"></label>#}
                 </div>
             </div>
+            <script>
+                $( "#form_input" ).on("keyup", function(){
+                        console.log('jojne0');
+                    if( this.value.length < 4 ) return;
+                        console.log('jojne1');
+                    $.ajax({
+                        type: "GET",
+                        url: Routing.generate('search'),
+                        data: $( "#form_input" ).val()
+                    })
+                    .done(function (response, dataType) {
+                        console.log('jojne2');
+                        $("#suggestions").html(response.template);
+                    })
+                    .fail( function () {
+                        alert('Error');
+                    })
+
+                });
+
+            </script>
             <div class="Nav-userSection">
                 <div class="Nav-kosz"> <a href="{{ path('cartmenu') }}" id="lockup">
                         <div id="kosz">
@@ -45,6 +73,12 @@
     </div>
     <!--end Nav--> 
 {% endblock navbar %}
+{% block search %}<!--start search  (ajax live suggestion for search item)-->
+    <div id="ajax-suggestions">
+        <ul id="suggestions">
+        </ul>
+    </div>
+{% endblock search %}<!--end search-->
 {% block contents %}
 {% endblock contents %}
     </div><!--end content--> 
