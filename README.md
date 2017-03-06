@@ -167,10 +167,15 @@ https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/views/Cart/c
 
 * Autosuggestion Search (podpowiadanie hasła w wyszukiwarce, na żywo)
 
+https://github.com/sruj/szobuk2/blob/master/app/Resources/views/layout.html.twig#L35
+https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Controller/KsiazkaController.php#L270
+
 * Infinity scrolling + spinner gif (pobieranie danych z db i wyświetlanie przy skrolowaniu strony)
+https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/views/Default/index.html.twig#L68
 
 * Walidacja formularza
 
+https://github.com/sruj/szobuk2/blob/master/src/TrenningBundle/Controller/DefaultController.php#L81
 
 ### 4) CSS
 
