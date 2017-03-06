@@ -160,10 +160,16 @@ Zastosowane m.in.:
   
 ### 3) JavaScript, Ajax
 
-Tylko jedna funkcja:
+* aktualizacja koszyka
 
 https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/public/js/aktualizacjaKoszyka.js
 https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Resources/views/Cart/cartmenu.html.twig#L58
+
+* Autosuggestion Search (podpowiadanie hasła w wyszukiwarce, na żywo)
+
+* Infinity scrolling + spinner gif (pobieranie danych z db i wyświetlanie przy skrolowaniu strony)
+
+* Walidacja formularza
 
 
 ### 4) CSS
