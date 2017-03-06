@@ -1,0 +1,11 @@
+{# <ul> #}
+
+{% for entity in books %}
+    <li>
+        <a href="{{ path('ksiazka_show', { 'id': entity.isbn }) }}">
+            [TYTUŁ] {{ entity.tytul|lower|replace({(word): '<span style="font-weight: bold;">'~word~'</span>'})|raw }} -
+            [AUTOR] {{ entity.autor|lower|replace({(word): '<span style="font-weight: bold;">'~word~'</span>'})|raw }} -
+            [WYDAWNICTWO] {{ entity.wydawnictwo|lower|replace({(word): '<span style="font-weight: bold;">'~word~'</span>'})|raw }}
+        </a>
+    </li>
+{% endfor %}

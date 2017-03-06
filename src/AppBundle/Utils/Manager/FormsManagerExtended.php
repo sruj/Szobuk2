@@ -9,11 +9,10 @@
 namespace AppBundle\Utils\Manager;
 
 use AppBundle\Utils\Manager\FormsManager;
+use AppBundle\Exception\NoValidDataInFormException;
 
 class FormsManagerExtended extends FormsManager
 {
-    //todo: tu wszędzie powrzucać throw exeption jeśli nie halo.
-
     public function isStatusFormValid()
     {
         return $this->forms['StatusForm']->isValid();
@@ -35,8 +34,7 @@ class FormsManagerExtended extends FormsManager
         if(isset($idstatus)){
             return $idstatus;
         }
-        //todo: custom exception
-//        throw ; exception-brak cośtam.
+        throw new NoValidDataInFormException('Nie można odczytać danych z formularza');
     }
 
     public function getOdFromDataZamForm()
@@ -45,8 +43,7 @@ class FormsManagerExtended extends FormsManager
         if(isset($od)){
             return $od;
         }
-        //todo: custom exception
-//        throw ; exception-brak cośtam.
+        throw new NoValidDataInFormException('Nie można odczytać danych z formularza');
     }
 
     public function getDoFromDataZamForm()
@@ -55,8 +52,7 @@ class FormsManagerExtended extends FormsManager
         if(isset($do)){
             return $do;
         }
-        //todo: custom exception
-//        throw ; exception-brak cośtam.
+        throw new NoValidDataInFormException('Nie można odczytać danych z formularza');
     }
 
     public function getIdKlientFromNrKlientaForm()
@@ -65,13 +61,7 @@ class FormsManagerExtended extends FormsManager
         if(isset($idklient)){
             return $idklient;
         }
-        //todo: custom exception
-//        throw ; exception-brak cośtam.
+        throw new NoValidDataInFormException('Nie można odczytać danych z formularza');
     }
-
-
-
-
-
 
 }

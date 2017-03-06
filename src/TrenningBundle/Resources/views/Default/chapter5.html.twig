@@ -1,0 +1,136 @@
+{#form ajax#}
+{#- obliczenie z 3 inputów iloczynu#}
+{#- podsiwetlenie inputa jeśli blank#}
+{#- gif spin gdy oblicza#}
+{#- atrybut disable dla guzika w trakcie wykonywania obliczenia#}
+{#(by gościu nie klikał wielokrotnie widząc że nic sie nie dzieje.)#}
+{#- drugi guzik gdy ktos nie ma włączone js (tj jeden widoczny)#}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Asynchronous Form</title>
+    <style>
+        #result {
+            display: none;
+        }
+
+        #gif {
+            display: none;
+        }
+
+        .badValid {
+            border: 3px solid red;
+        }
+
+        #form_Submit {
+            display: none;
+        }
+
+        #result_php {
+            display: none;
+        }
+    </style>
+    <script src="{{ asset('bundles/trenning/js/jquery-3.1.1.js') }}"></script>
+    <script src="{{ asset('bundles/trenning/js/index.js') }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+    <noscript>
+        <style>
+            #form_AjaxSubmit {
+                display: none;
+            }
+
+            #form_Submit {
+                display: inline;
+            }
+
+            #result_php {
+                display: inline;
+            }
+        </style>
+    </noscript>
+</head>
+<body>
+<div id="measurements">
+    <p>Enter measurements below to determine the total volume.</p>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+</div>
+<div id="result">
+    <p>The total volume is: <span id="volume"></span></p>
+</div>
+<div id="result_php">
+    <p>The total volume is: <span id="volume">{{ result }}</span></p>
+</div>
+<div id="gif">
+    <img src="{{ asset('bundles/trenning/spinner.gif') }}">
+</div>
+
+<script>
+    var length;
+    var width;
+    var height;
+    var lengthV;
+    var widthV;
+    var heightV;
+
+
+    function validate(element) {
+        var val = element.val();
+        if (!$.isNumeric(val)) {
+            element.addClass("badValid");
+            return false
+        }
+        element.removeClass("badValid");
+        return true
+    }
+
+    function display(length, width, height) {
+        var l = validate(length);
+        var w = validate(width);
+        var h = validate(height);
+        var bool = l && w && h;
+        return bool
+    }
+
+    $("#form_AjaxSubmit").click(function (event) {
+        $("#gif").css("display", "inline");
+        event.preventDefault();
+        $('#form_AjaxSubmit').prop("disabled", true);
+        setTimeout(function () {
+            var length = $("input[name='form[length]']");
+            var width = $("input[name='form[width]']");
+            var height = $("input[name='form[height]']");
+            var lengthV = length.val();
+            var widthV = width.val();
+            var heightV = height.val();
+            if (display(length, width, height)) {
+                $.ajax({
+                    type: "POST",
+                    url: "{{ path('5') }}",
+                    data: $("form").serialize(), //dzięki temu odbieram i przesyłam wszystkie inputy formularza, nie muszę pojedyńczo każdego.
+                    dataType: 'json'
+                })
+                .done(function (response, dataType) {
+                    $("#volume").text(response.result);
+                    $("#result").css("display", "inline");
+                    $("#gif").css("display", "none");
+                    $('#form_AjaxSubmit').prop("disabled", false);
+                })
+                .fail( function () {
+                    $("#gif").css("display", "none");
+                    alert('Error');
+                })
+            } else {
+                $("#result").css("display", "none");
+                $("#gif").css("display", "none");
+                $('#form_AjaxSubmit').prop("disabled", false);
+            }
+        }, 50);
+        });
+</script>
+</body>
+</html>

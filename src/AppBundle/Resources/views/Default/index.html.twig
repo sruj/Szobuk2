@@ -1,59 +1,133 @@
 {% extends '::layout.html.twig' %}
 
-{% block navbar_IsTabActive %}            
-            <div class="NavTabs"> 
-                <a class="NavTab NavTab--home active" href="{{ path('index') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Home</span></a>
-                <a class="NavTab NavTab--katalog" href="{{ path('ksiazka') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Katalog</span></a> 
-                <a class="NavTab NavTab--kategorie" href="{{ path('kategoria') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Kategorie</span></a> 
-                {% if app.user and is_granted('ROLE_ADMIN') %}
-                <a class="NavTab NavTab--menu" href="{{ path('menuZarzadca') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Menu</span></a> 
-                <a class="NavTab NavTab--zamowienia" href="{{ path('panelSortFromDetails') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Zamówienia</span></a> 
-                {% endif %}
-            </div> 
+{% block navbar_IsTabActive %}
+    <div class="NavTabs">
+        <a class="NavTab NavTab--home active" href="{{ path('index') }}"><span class="NavTab-icon"></span><span
+                    class="NavTab-text">Home</span></a>
+        <a class="NavTab NavTab--katalog" href="{{ path('ksiazka') }}"><span class="NavTab-icon"></span><span
+                    class="NavTab-text">Katalog</span></a>
+        <a class="NavTab NavTab--kategorie" href="{{ path('kategoria') }}"><span class="NavTab-icon"></span><span
+                    class="NavTab-text">Kategorie</span></a>
+        {% if app.user and is_granted('ROLE_ADMIN') %}
+            <a class="NavTab NavTab--menu" href="{{ path('menuZarzadca') }}"><span class="NavTab-icon"></span><span
+                        class="NavTab-text">Menu</span></a>
+            <a class="NavTab NavTab--zamowienia" href="{{ path('panelSortFromDetails') }}"><span
+                        class="NavTab-icon"></span><span class="NavTab-text">Zamówienia</span></a>
+        {% endif %}
+    </div>
 {% endblock navbar_IsTabActive %} 
 
 {% block contents %}
     <!--start nav-level-->
     <div class="nav-level">
         <div class="nav-level-layout wrapper">
-            <div class="PageTabs"> <a class="page-section-tab" href="{{ path('popularne') }}">Popularne</a> <a class="page-section-tab " href="{{ path('nowosci') }}">Nowości</a> <a class="page-section-tab active " href="{{ path('index') }}">Wszystkie</a> </div>
-        <div class="navigation">
-            {{ knp_pagination_render(ksiazki) }}
-        </div>
+            <div class="PageTabs"><a class="page-section-tab" href="{{ path('popularne') }}">Popularne</a> <a
+                        class="page-section-tab " href="{{ path('nowosci') }}">Nowości</a> <a
+                        class="page-section-tab active " href="{{ path('index') }}">Wszystkie</a></div>
+            <div class="navigation">
+                {{ knp_pagination_render(ksiazki) }}
+            </div>
         </div>
     </div>
-    <!--end nav-level-->    
+    <!--end nav-level-->
 
     <!--start Produkty-->
     <div class="yield"><!--start yield-->
         <div class="wrapper"><!--start wrapper-->
             <div class="cards-container ready"><!--start cards-container ready-->
-                {% for entity in ksiazki %}
-                    <div class="ProductCard product is-imageLoaded" >
-                        <div class="ProductCard-imageContainer product-img-container" > 
-                            <a href="{{ path('ksiazka_show', { 'id': entity.isbn }) }}" >
-                                <div class="ProductCard-image product-image" style="opacity: 1; background-image:url({{ asset("bundles/app/images/ilustracje/#{entity.obrazek}" ) }});" ></div>
-                                <div class="tlo"></div>
+                <div id="entities-loop">
+                    {% for entity in ksiazki %}
+                        <div class="ProductCard product is-imageLoaded">
+                            <div class="ProductCard-imageContainer product-img-container">
+                                <a href="{{ path('ksiazka_show', { 'id': entity.isbn }) }}">
+                                    <div class="ProductCard-image product-image"
+                                         style="opacity: 1; background-image:url({{ asset("bundles/app/images/ilustracje/#{entity.obrazek}" ) }});">
+                                    </div>
+                                    <div class="tlo"></div>
+                            </div>
+                            <div class="dolny">
+                                <div class="card-autor">{{ entity.autor }}</div>
+                                <div class="card-tytul">{{ entity.tytul }}</div>
+                            </div>
+                            <div class="top-right">{{ entity.cena }}<span> ZŁ</span></div>
+                            <div class="top-left">
+                                <div class="card-AddToBasket"><a href="{{ path('addtocart', {'isbn': entity.isbn }) }}"
+                                                                 class="card-lockup">
+                                        <div class="card-basket"></div>
+                                    </a></div>
+                            </div>
+                            </a>
                         </div>
-                        <div class="dolny">
-                            <div class="card-autor">{{ entity.autor }}</div>
-                            <div class="card-tytul">{{ entity.tytul }}</div>
-                        </div>
-                        <div class="top-right">{{ entity.cena }}<span> ZŁ<span></div>
-                        <div class="top-left">
-                            <div class="card-AddToBasket"> <a href="{{ path('addtocart', {'isbn': entity.isbn }) }}" class="card-lockup">
-                                    <div class="card-basket"></div>
-                                </a> </div>
-                        </div>
-                        </a> 
-                    </div>    
-                {% endfor %} 
-            <div class="wrapper">
-                <div class="navigation">
-                    {{ knp_pagination_render(ksiazki) }}
+                    {% endfor %}
                 </div>
-            </div>
+
+                <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+                <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+                <script src="{{ asset('bundles/app/js/jquery-3.1.1.js') }}"></script>
+                <script type="text/javascript">
+                    //INFINITY SCROLLING ( W RAMACH TUTORIALU AJAX-PHP-LYNDA-2016 )
+
+                    is_processing = false;
+                    last_page = false;
+                    page = 2;
+
+                    function addMoreElements() {
+                        $("#gif").css("display", "block");
+                        is_processing = true;
+                        $.ajax({
+                            type: "GET",
+                            url: Routing.generate('index', {page})
+                        })
+                        .done(function( data ) {
+                            if (typeof data.template !== 'undefined') {
+                                $('#entities-loop').append(data.template);
+                                page++;
+                                last_page = data.last_page;
+                            } else {
+                                last_page = true;
+                            }
+                            is_processing = false;
+                            $("#gif").css("display", "none");
+                        })
+                        .error( function (data) {
+                            is_processing = false;
+                            $("#gif").css("display", "none");
+                        })
+                    }
+
+
+                    $(window).scroll(function () {
+                        var wintop = $(window).scrollTop(), docheight = $(document).height(), winheight = $(window).height();
+                        //Modify this parameter to establish how far down do you want to make the ajax call
+                        var scrolltrigger = 0.80;
+                        if ((wintop / (docheight - winheight)) > scrolltrigger) {
+                            //I added the is_processing variable to keep the ajax asynchronous but avoiding making the same call multiple times
+                            if (last_page === false && is_processing === false) {
+                                addMoreElements();
+                            }
+                        }
+                    });
+
+
+                </script>
             </div>
         </div>
     </div>
-{% endblock %}    
+{% endblock %}
+{% block footer %}
+    <footer class="footerMain" >
+        <div class="wrapper">
+            <div id="gif" style="display: none; text-align: center">
+                <img src="{{ asset('bundles/app/images/ajax-loader.gif') }}">
+            </div>
+            <div class="footer-content-container">
+                <div class="footer-proper">
+                    <h1 class="footer-tagline"> </h1>
+                </div>
+                <div class="footer-right-side" > </div>
+            </div>
+        </div>
+    </footer>
+
+{% endblock %}
+

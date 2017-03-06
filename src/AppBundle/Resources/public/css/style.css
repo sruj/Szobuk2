@@ -18,7 +18,7 @@ body {
 }
 #boxMyinside h3 #OrangeButton {
 }
-div #zamowienie_zmień status {
+div #zamowienie_zmień {
 	background-color: red;
 }
 
@@ -45,7 +45,7 @@ table.SearchResults tbody tr td {
 body, input, textarea, button {
 	font-size: 16px;
 }
-h1, h2, h3, h4, h5, h24, h32 {
+h1, h2, h3, h4, h5 {
 /*	color: #525252;*/
 	color: #FF5738;
 	font-weight: 100;
@@ -664,7 +664,7 @@ a.page-section-tab:hover {
 	margin-bottom: 22px;
 }
 .cards-container {
-	font-size: 10;
+	font-size: 10px;
 	margin: -2% -2% 0;
 	position: relative
 }
@@ -1403,15 +1403,15 @@ a.tableUsunButton{
 
 /* ---------- GENERAL ---------- */
 /*dla wszystkich elementów. Zmiana border lub padding nie wpłynie na rozmiar div. Zakomentowanie niczego nie zmienia*/
-* {
-  box-sizing: border-box;
-  
-  &:before,
-  &:after {
-    box-sizing: border-box;
-  }
-  
-}
+/** {*/
+  /*box-sizing: border-box;*/
+  /**/
+  /*&:before,*/
+  /*&:after {*/
+    /*box-sizing: border-box;*/
+  /*}*/
+  /**/
+/*}*/
 
 /*nie ważne*/
 input,button {
@@ -1682,7 +1682,7 @@ border-top: 1px solid #dcdcdc;
 
 }
 
-.OrangeButtonSimple,div #zamowienie_zmień status {
+.OrangeButtonSimple {
 	background: #FF5738;
 	border-radius: 3px;
 	color: #fff;
@@ -1692,11 +1692,26 @@ border-top: 1px solid #dcdcdc;
 	font-size:14px;
 		box-shadow: 0 7px 6px -6px #777;
 }
-.OrangeButtonSimple:hover,div #zamowienie_zmień status:hover { 	
+/*div #zamowienie_zmień status {*/
+	/*background: #FF5738;*/
+	/*border-radius: 3px;*/
+	/*color: #fff;*/
+	/*float: left;*/
+	/*margin-top: 20px;*/
+	/*padding: 12px 20px;*/
+	/*font-size:14px;*/
+		/*box-shadow: 0 7px 6px -6px #777;*/
+/*}*/
+.OrangeButtonSimple:hover{
 	background-color: #FF320C;
 	text-decoration:none;
 	color:white; 
 }
+/*div #zamowienie_zmień status:hover { 	*/
+	/*background-color: #FF320C;*/
+	/*text-decoration:none;*/
+	/*color:white; */
+/*}*/
 .greyLeft{
 	display:inline-block;
 	width:20%;
@@ -1852,3 +1867,31 @@ align-items:flex-end;
 	padding: 1px 5px;
 		box-shadow: 0 7px 6px -6px #777;
 }
+
+/*LIVE SEARCH - START*/
+ul#suggestions {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	width: 208px;
+	display: inline;
+	clear:both;
+}
+
+ul#suggestions li {
+
+}
+
+ul#suggestions li a {
+	display: block;
+	min-height: 1em;
+	padding: 0.5em 10px;
+	background: #CCC;
+	color: #000;
+	text-decoration: none;
+}
+
+ul#suggestions li a:hover {
+	background: #AAA;
+}
+/*LIVE SEARCH - FINISH*/

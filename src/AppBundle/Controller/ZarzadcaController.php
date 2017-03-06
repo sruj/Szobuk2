@@ -39,8 +39,7 @@ class ZarzadcaController extends Controller
     }
 
     /**
-     * refaktor: chyba nieco za dużo zmiennych zwraca ten kontroler 
-     * refaktor: nie bardzo wiadomo co tu się dzieje, nazwy zmiennych i metod nie są pomocne.
+     * refaktor: (zoostaf) nie bardzo wiadomo co tu się dzieje, nazwy zmiennych i metod nie są pomocne.
      * 
      * @Route("/panel/{filter}-{identifier}", name="panelSortFromDetails",
      *      defaults={
@@ -94,10 +93,10 @@ class ZarzadcaController extends Controller
 
         $forms = new FormsManagerExtended($tmpForms);
         $fltrqry = new FilterQuery();
-
         $fltr = new Filter();
-        $tds = $fltr->prepareFilterAndQuery($tableDetails, $forms, $fltrqry);
         $manager_order = $this->get('app.manager_order');
+        
+        $tds = $fltr->prepareFilterAndQuery($tableDetails, $forms, $fltrqry);
         $orders = $manager_order->prepareOrder($tds);
         $tableDetails = $manager_order->getTableDetails();
 
