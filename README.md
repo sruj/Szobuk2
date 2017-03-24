@@ -147,7 +147,7 @@ Zastosowane m.in.:
      * @ORM\Column(name="imie", type="string", length=45, nullable=false)
      */
     private $imie;
-    ```
+  ```
     
   https://github.com/sruj/szobuk2/blob/master/src/AppBundle/Entity/Klient.php#L25
   
