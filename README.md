@@ -1,7 +1,7 @@
 Księgarnia/Sklep - Symfony2.8
 ========================
-www.test18842.futurehost.pl/ 
-(domena testowa do 21-03-2017, login/hasło administratora: wazny. 
+http://test19106.futurehost.pl/ 
+(domena testowa do 04-04-2017, login/hasło administratora: wazny. 
 
 Projekt zaliczeniowy jako praca dyplomowa inżynierska obroniona 13-11-2015. Do dziś wprowadzane nowe funkcjonalności w ramach nauki. Jest to mój pierwszy i jedyny projekt w Symfony. Celowo nie została wykorzystana platforma eCommerce (np Magento), by samemu jak najwięcej pokodować. Projekt ten nigdy nie powstawał z zamiarem późniejszego udostępniania jako pokaz moich umiejętności, stąd mogą mocno razić np. mieszane polsko-angielskie nazewnictwo klas/metod/zmiennych lub kometarze.
 
