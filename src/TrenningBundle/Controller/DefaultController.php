@@ -109,4 +109,28 @@ class DefaultController extends Controller
             'form' => $form->createView(), 'result'=>$result,
         ));
     }
+
+    /**
+     * @Route("/rst1", name="rst1")
+     */
+    public function rstAction()
+    {
+
+        $tablica = [3,5,2,4,6,8,12];
+
+        $w=$this->q($tablica);
+        $r=0;
+
+        return $this->render('TrenningBundle:Default:rst1.html.twig');
+    }
+
+    private function q($arr){
+        foreach($arr as $k => $v) {
+            if($v*$v < 26) {
+                unset($arr[$k]);
+            }
+        }
+        return $arr;
+    }
+
 }
