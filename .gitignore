@@ -12,3 +12,7 @@
 /composer.phar
 /_wzor_kontrolerow
 /_wzor_kontrolerow/*
+.idea/
+app/cache/
+app/logs/
+
