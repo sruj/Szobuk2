@@ -53,7 +53,8 @@
                             </div>
                             <div class="top-right">{{ entity.cena }}<span> ZŁ</span></div>
                             <div class="top-left">
-                                <div class="card-AddToBasket"><a href="{{ path('addtocart', {'isbn': entity.isbn }) }}"
+                                <div class="card-AddToBasket">
+                                    <a href="{{ path('addtocart', {'isbn': entity.isbn }) }}"
                                                                  class="card-lockup">
                                         <div class="card-basket"></div>
                                     </a></div>
