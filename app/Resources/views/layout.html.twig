@@ -53,12 +53,32 @@
 
             </script>
             <div class="Nav-userSection">
-                <div class="Nav-kosz"> <a href="{{ path('cartmenu') }}" id="lockup">
+                <div class="Nav-kosz">
+                    <a href="{{ path('cartmenu') }}" id="lockup">
                         <div id="kosz">
                             <div class="quantityKosz" id="quantityBasket">{% render (controller('AppBundle:Cart:cartcontent')) %}</div><!--ilość produktów w koszyku (nie JavaScript)--> 
                         </div>
-                    </a> </div>
+                    </a>
+                </div>
+            {# wsl: 1. Zrób niewidoczny div z obrazkiem serduszeczeczka#}
+            {# wsl: 1a. div z klasą #}
+            {# wsl: 1b. w css dla klasy przypisz obrazek #}
+            {# wsl: 1c. wrzuć obrazek do folderu bundle/img #}
+            {# wsl: 1d. w css div tej klasy visible false #}
+
+                <div class="Nav-kosz">
+                    <a href="{{ path('showwishlist') }}" id="lockup">
+                        <div id="heart" style="display: none">wishlist
+                        {#<div id="heart" style="visibility: visible">wishlist#}
+                        </div>
+                    </a>
+                </div>
+
+
             </div>
+
+
+
             {% if app.user and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                 {% if is_granted('ROLE_ADMIN') %}
                     <div class="Nav-userSection"> <a href="{{ path('fos_user_profile_show') }}" class="Nav-loginButton">{{ app.user.username }}</a><a href="{{ path('fos_user_security_logout') }}" class="Nav-signupButton">Wyloguj</a></div>

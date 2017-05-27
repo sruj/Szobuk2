@@ -401,6 +401,28 @@ a.NavTab {
 	left: 60%;
 	transform: translate(-50%, -50%)
 }
+/*------------Navbar: wishlist--------------*/
+
+
+#heart {
+	background-image: url(../images/wishlist.png);
+	/*background-size: 42px;*/
+	/*background-repeat: no-repeat;*/
+	/*background-position: center;*/
+	/*height: 100%;*/
+	/*width: 100%;*/
+	/*-webkit-transform: translateY(0);*/
+	/*-ms-transform: translateY(0);*/
+	/*transform: translateY(0);*/
+	/*-webkit-transition: all 0.1s ease-out;*/
+	/*transition: all 0.1s ease-out*/
+}
+#heart:hover {
+	background-image: url(../images/wishlist.png);
+	/*background-size: 45px;*/
+}
+
+
 /*------------Navbar: Szukaj i Logowanie---------------*/
 .Nav-userSection {
 	display: -ms-flexbox;
