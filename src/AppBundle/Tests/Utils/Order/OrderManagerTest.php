@@ -14,7 +14,7 @@ use AppBundle\Entity\Klient;
 use AppBundle\Entity\Status;
 use AppBundle\Entity\Ksiazka;
 use Doctrine\Common\Collections\Collection;
-use My\UserBundle\Entity\User;
+use UserBundle\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;

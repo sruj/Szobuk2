@@ -12,7 +12,7 @@
  * file that was distributed with this source code.
  */
 
-namespace My\UserBundle\Controller;
+namespace UserBundle\Controller;
 
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Event\FormEvent;
@@ -45,7 +45,7 @@ class RegistrationController extends BaseController
 
         $user = $userManager->createUser();
         $user->setEnabled(true);
-        
+
         $event = new GetResponseUserEvent($user, $request);
         $dispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);
 
@@ -69,12 +69,6 @@ class RegistrationController extends BaseController
                 $response = new RedirectResponse($url);
             }
 
-//            $klient = $user->getKlient();
-//            $klient->setIdlogowanie($user);
-//            $em = $this->getDoctrine()->getManager();        
-//            $em->persist($klient);
-//            $em->flush();            
-                    
             $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
 
             return $response;
@@ -108,8 +102,6 @@ class RegistrationController extends BaseController
      */
     public function confirmAction(Request $request, $token)
     {
-       
-        
         /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
         $userManager = $this->get('fos_user.user_manager');
 
@@ -143,21 +135,18 @@ class RegistrationController extends BaseController
     /**
      * Tell the user his account is now confirmed
      *
-     * nadpisuję ten kontroler by ...6 pierwszych linijek.
+     * nadpisuję ten kontroler by ...6 pierwszych linijek
+     * jeśli w trakcie zakupów w wyborze autoryzacji wybrałem zarejestruj to przenoszę się do *zamawiam*.
      *
-     * jednak komentuję bo działa jak należy bez tego.
      */
-    public function confirmedAction(){
-////    public function confirmedAction(Request $request)
-//
-//        //jeśli w trakcie zakupów w wyborze autoryzacji wybrałem zaloguj lub zarejestruj to przenoszę się do *gdzieśtam*
-//        $session = $this->getRequest()->getSession();
-////        $session = $request->getSession();
-//        $proces_zamowienia=$session->get('proces_zamowienia');
-//        if($proces_zamowienia=='tak'){
-//            $session->remove('proces_zamowienia');
-//            return $this->redirectToRoute('zamawiam');
-//        };
+    public function confirmedAction()
+    {
+        $session = $this->getRequest()->getSession();
+        $proces_zamowienia = $session->get('proces_zamowienia');
+        if ($proces_zamowienia == 'tak') {
+            $session->remove('proces_zamowienia');
+            return $this->redirectToRoute('zamawiam');
+        };
 
         $user = $this->getUser();
         if (!is_object($user) || !$user instanceof UserInterface) {

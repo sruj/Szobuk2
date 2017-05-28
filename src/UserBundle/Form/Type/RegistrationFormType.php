@@ -1,6 +1,6 @@
 <?php
 
-namespace My\UserBundle\Form\Type;
+namespace UserBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -30,12 +30,12 @@ class RegistrationFormType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'My\UserBundle\Entity\User',
+            'data_class' => 'UserBundle\Entity\User',
             'intention'  => 'registration',
         ));
     }
     public function getName()
     {
-        return 'my_user_registration';
+        return 'user_registration';
     }
 }

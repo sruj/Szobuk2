@@ -99,9 +99,9 @@ class Pracownik
     private $idpracownik;
 
     /**
-     * @var \My\UserBundle\Entity\User
+     * @var \UserBundle\Entity\User
      *
-     * @ORM\OneToOne(targetEntity="My\UserBundle\Entity\User")
+     * @ORM\OneToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idlogowanie", referencedColumnName="id")
      * })
@@ -376,10 +376,10 @@ class Pracownik
     /**
      * Set idlogowanie
      *
-     * @param \My\UserBundle\Entity\User $id
+     * @param \UserBundle\Entity\User $id
      * @return Klient
      */
-    public function setIdlogowanie(\My\UserBundle\Entity\User $id = null)
+    public function setIdlogowanie(\UserBundle\Entity\User $id = null)
     {
         $this->idlogowanie = $id;
 
@@ -389,7 +389,7 @@ class Pracownik
     /**
      * Get idlogowanie
      *
-     * @return \My\UserBundle\Entity\User
+     * @return \UserBundle\Entity\User
      */
     public function getIdlogowanie()
     {

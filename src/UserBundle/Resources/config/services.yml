@@ -9,10 +9,10 @@ services:
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
 
 #    PONIŻSZE DOTYCZY NADPISANEGO FORMULARZA REJESTRACJI, Z KTÓREGO ZREZYGNOWAŁEM    
-     my_user.registration.form.type:
-         class: My\UserBundle\Form\Type\RegistrationFormType
+     user.registration.form.type:
+         class: UserBundle\Form\Type\RegistrationFormType
          tags:
-             - { name: form.type, alias: my_user_registration }
+             - { name: form.type, alias: user_registration }
              
 
 

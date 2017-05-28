@@ -43,7 +43,7 @@ class OrderManager
 
     /**
      * @param Klient $klient
-     * @return boolean
+     * @return bool
      * @throws
      */
     public function placeOrder($klient, $cart)
