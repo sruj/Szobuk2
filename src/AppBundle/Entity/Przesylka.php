@@ -186,7 +186,7 @@ class Przesylka
     /**
      * Get idprzesylka
      *
-     * @return integer 
+     * @return int
      */
     public function getIdprzesylka()
     {

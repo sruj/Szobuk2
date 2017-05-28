@@ -57,10 +57,11 @@ class Status
         return $this->status;
     }
 
+
     /**
      * Get idstatus
      *
-     * @return integer 
+     * @return int
      */
     public function getIdstatus()
     {

@@ -329,7 +329,7 @@ class Ksiazka
     /**
      * Set rokwydania
      *
-     * @param integer $ilosc
+     * @param int $ilosc
      * @return Ksiazka
      */
     public function setIlosc($ilosc)
@@ -342,7 +342,7 @@ class Ksiazka
     /**
      * Get rokwydania
      *
-     * @return integer 
+     * @return int
      */
     public function getilosc()
     {

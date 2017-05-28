@@ -76,7 +76,7 @@ class Kategoria {
     /**
      * Get idkategoria
      *
-     * @return integer 
+     * @return int
      */
     public function getIdkategoria() {
         return $this->idkategoria;

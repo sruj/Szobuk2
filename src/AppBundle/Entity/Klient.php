@@ -406,7 +406,7 @@ class Klient
     /**
      * Get idklient
      *
-     * @return integer 
+     * @return int
      */
     public function getIdklient()
     {

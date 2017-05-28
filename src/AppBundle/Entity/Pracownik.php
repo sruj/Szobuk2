@@ -366,7 +366,7 @@ class Pracownik
     /**
      * Get idpracownik
      *
-     * @return integer 
+     * @return int
      */
     public function getIdpracownik()
     {

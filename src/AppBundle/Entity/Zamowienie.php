@@ -120,7 +120,7 @@ class Zamowienie
     /**
      * Get idzamowienie
      *
-     * @return integer 
+     * @return int
      */
     public function getIdzamowienie()
     {

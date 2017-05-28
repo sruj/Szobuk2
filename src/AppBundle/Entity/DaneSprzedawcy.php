@@ -269,7 +269,7 @@ class DaneSprzedawcy
     /**
      * Get idsprzedawca
      *
-     * @return integer 
+     * @return int
      */
     public function getIdsprzedawca()
     {

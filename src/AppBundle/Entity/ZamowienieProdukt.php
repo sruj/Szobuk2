@@ -85,7 +85,7 @@ class ZamowienieProdukt
     /**
      * Set ilosc
      *
-     * @param integer $ilosc
+     * @param int $ilosc
      * @return ZamowienieProdukt
      */
     public function setIlosc($ilosc)
@@ -98,7 +98,7 @@ class ZamowienieProdukt
     /**
      * Get ilosc
      *
-     * @return integer 
+     * @return int
      */
     public function getIlosc()
     {
@@ -200,7 +200,7 @@ class ZamowienieProdukt
     /**
      * Get idzamowienieprodukt
      *
-     * @return integer 
+     * @return int
      */
     public function getIdzamowienieprodukt()
     {
