@@ -22,25 +22,25 @@ class DefaultControllerTest extends WebTestCase
 
     }
 
-    public function testPopularne()
+    public function testPopular()
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/popularne');
+        $crawler = $client->request('GET', '/popular');
 
         $response = $client->getResponse();
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertGreaterThan(0, $crawler->filter('a.active:contains("Popularne")')->count(),
-            'Podstrona "Popularne" nie działa.');
+            'Podstrona "Popular" nie działa.');
         $this->assertCount(Ksiazka::NUM_ITEMS, $crawler->filterXPath('//div[@class=\'top-right\']'),
             'Strona nie wyświetla odpowiednią ilość produktów.(div top-right czyli tam gdzie cena)');
     }
 
-    public function testNowosci()
+    public function testNews()
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/nowosci');
+        $crawler = $client->request('GET', '/news');
 
         $response = $client->getResponse();
         $this->assertEquals(200, $response->getStatusCode());

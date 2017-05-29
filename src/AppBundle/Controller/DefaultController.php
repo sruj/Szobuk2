@@ -24,6 +24,7 @@ class DefaultController extends Controller
         $orderingProcess = $session->get('orderingProcess');
         if ($orderingProcess) {
             $session->remove('orderingProcess');
+
             return $this->redirectToRoute('personal_data');
         };
 
@@ -36,6 +37,7 @@ class DefaultController extends Controller
             $renderData = [];
             if (!empty($ksiazki)) {
                 $i = 0;
+                /** @var Ksiazka $ksiazka */
                 foreach ($ksiazki as $ksiazka) {
                     $books[$i]['isbn'] = $ksiazka->getIsbn();
                     $books[$i]['autor'] = $ksiazka->getAutor();
@@ -55,7 +57,6 @@ class DefaultController extends Controller
 
             return new JsonResponse($renderData);
         }
-
         $ksiazki = $ksi_rep->findAllMy($request->query->getInt('page', 1), 6);
 
         return $this->render('AppBundle:Default:index.html.twig', [
@@ -63,33 +64,29 @@ class DefaultController extends Controller
         ]);
     }
 
-
     /**
-     * @Route("/popularne", name="popularne")
+     * @Route("/popular", name="popular")
      */
-    public function popularneAction(Request $request)
+    public function popularAction(Request $request)
     {
         $ksi_rep = $this->get('app.ksiazka_repository');
-        $ksiazki = $ksi_rep->findPopularne($request->query->getInt('page', 1));
+        $ksiazki = $ksi_rep->findPopular($request->query->getInt('page', 1));
 
-        return $this->render('AppBundle:Default:popularne.html.twig', [
+        return $this->render('AppBundle:Default:popular.html.twig', [
             'ksiazki' => $ksiazki
         ]);
-
     }
 
-
     /**
-     * @Route("/nowosci", name="nowosci")
+     * @Route("/news", name="news")
      */
-    public function nowosciAction(Request $request)
+    public function newsAction(Request $request)
     {
         $ksi_rep = $this->get('app.ksiazka_repository');
-        $ksiazki = $ksi_rep->findNowosci($request->query->getInt('page', 1));
+        $ksiazki = $ksi_rep->findNews($request->query->getInt('page', 1));
 
-        return $this->render('AppBundle:Default:nowosci.html.twig', [
+        return $this->render('AppBundle:Default:news.html.twig', [
             'ksiazki' => $ksiazki
         ]);
-
     }
 }

@@ -59,13 +59,12 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
     /**
      * @return Query
      */
-    public function queryPopularne()
+    public function queryPopular()
     {
         return $this->_em->createQuery('
             SELECT k
             FROM AppBundle:Ksiazka k
-            WHERE k.cena < :cena
-            WHERE k.ilosc>0
+            WHERE k.cena < :cena AND k.ilosc>0
             ORDER BY k.tytul ASC'
         )->setParameter('cena', '50');
     }
@@ -73,7 +72,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
     /**
      * @return Query
      */
-    public function queryNowosci()
+    public function queryNews()
     {
         return $this->_em->createQuery('
             SELECT k
@@ -134,10 +133,10 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
     /**
      * @param int $page
      */
-    public function findPopularne($page)
+    public function findPopular($page)
     {
         return $this->paginator->paginate(
-            $this->queryPopularne(),
+            $this->queryPopular(),
             $page/*page number*/,
             Ksiazka::NUM_ITEMS/*limit per page*/
         );
@@ -146,10 +145,10 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
     /**
      * @param int $page
      */
-    public function findNowosci($page)
+    public function findNews($page)
     {
         return $this->paginator->paginate(
-            $this->queryNowosci(),
+            $this->queryNews(),
             $page/*page number*/,
             Ksiazka::NUM_ITEMS/*limit per page*/
         );
