@@ -60,16 +60,16 @@
                     </thead>            
                     <tbody>
                         {% for entity in entities %}
-                        <td><a href="{{ path('ksiazka_show', { 'id': entity.isbn }) }}">{{ entity.tytul|lower|replace({(word): '<span style="font-weight: bold;">'~word~'</span>'})|raw }}</a></td>
-                            {#                        <td style="text-transform: capitalize;"><a href="{{ path('ksiazka_show', { 'id': entity.isbn }) }}">{{ entity.tytul|lower|replace({(word): '<span style="font-weight: bold;">'~word~'</span>'})|raw }}</a></td>#}
-                        <td><a href="{{ path('showBooksBy', { 'findby': 'autor','what': entity.autor }) }}">{{ entity.autor|lower|replace({(word): '<span style="font-weight: bold;">'~word~'</span>'})|raw }}</a></td>
+                        <td><a href="{{ path('book_show', { 'id': entity.isbn }) }}">{{ entity.tytul|lower|replace({(word): '<span style="font-weight: bold;">'~word~'</span>'})|raw }}</a></td>
+                            {#                        <td style="text-transform: capitalize;"><a href="{{ path('book_show', { 'id': entity.isbn }) }}">{{ entity.tytul|lower|replace({(word): '<span style="font-weight: bold;">'~word~'</span>'})|raw }}</a></td>#}
+                        <td><a href="{{ path('show_books_by', { 'findby': 'autor','what': entity.autor }) }}">{{ entity.autor|lower|replace({(word): '<span style="font-weight: bold;">'~word~'</span>'})|raw }}</a></td>
                         <td>{{ entity.cena }}</td>
-                        <td><a href="{{ path('showBooksBy', { 'findby': 'wydawnictwo','what': entity.wydawnictwo }) }}">{{ entity.wydawnictwo|lower|replace({(word): '<span style="font-weight: bold;">'~word~'</span>'})|raw }}</a></td>
-                        <td><a href="{{ path('showBooksBy', { 'findby': 'rokwydania','what': entity.rokwydania }) }}">{{ entity.rokwydania }}</a></td>
+                        <td><a href="{{ path('show_books_by', { 'findby': 'wydawnictwo','what': entity.wydawnictwo }) }}">{{ entity.wydawnictwo|lower|replace({(word): '<span style="font-weight: bold;">'~word~'</span>'})|raw }}</a></td>
+                        <td><a href="{{ path('show_books_by', { 'findby': 'rokwydania','what': entity.rokwydania }) }}">{{ entity.rokwydania }}</a></td>
                         <td><a href="{{ path('add_to_cart', {'isbn': entity.isbn }) }}">do koszyka</a></td>
-                        <td><a href="{{ path('ksiazka_show', { 'id': entity.isbn }) }}">więcej</a></td>
+                        <td><a href="{{ path('book_show', { 'id': entity.isbn }) }}">więcej</a></td>
                         {% if is_granted('ROLE_ADMIN') %}
-                            <td><a href="{{ path('ksiazka_edit', { 'id': entity.isbn }) }}">edytuj</a></td>
+                            <td><a href="{{ path('book_edit', { 'id': entity.isbn }) }}">edytuj</a></td>
                         {% endif %}
                         </tr>
                     {% endfor %}       

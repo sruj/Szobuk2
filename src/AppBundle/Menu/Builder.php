@@ -25,7 +25,7 @@ class Builder implements ContainerAwareInterface
 
 
         $menu->addChild('Accountant', array(
-            'route' => 'ksiazka_show',
+            'route' => 'book_show',
             'routeParameters' => array('id' => $book->getIsbn())
         ));
 

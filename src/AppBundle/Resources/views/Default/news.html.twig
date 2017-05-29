@@ -3,7 +3,7 @@
 {% block navbar_IsTabActive %}            
             <div class="NavTabs"> 
                 <a class="NavTab NavTab--home active" href="{{ path('index') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Home</span></a>
-                <a class="NavTab NavTab--katalog" href="{{ path('ksiazka') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Katalog</span></a> 
+                <a class="NavTab NavTab--katalog" href="{{ path(('book')) }}"><span class="NavTab-icon"></span><span class="NavTab-text">Katalog</span></a>
                 <a class="NavTab NavTab--kategorie" href="{{ path('category') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Kategorie</span></a>
                 {% if app.user and is_granted('ROLE_ADMIN') %}
                 <a class="NavTab NavTab--menu" href="{{ path('menuZarzadca') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Menu</span></a> 
@@ -32,7 +32,7 @@
     {% for entity in ksiazki %}
       <div class="ProductCard product is-imageLoaded" >
         <div class="ProductCard-imageContainer product-img-container" > 
-            <a href="{{ path('ksiazka_show', { 'id': entity.isbn }) }}" >
+            <a href="{{ path('book_show', { 'id': entity.isbn }) }}" >
                 <div class="ProductCard-image product-image" style="opacity: 1; background-image:url({{ asset("bundles/app/images/ilustracje/#{entity.obrazek}" ) }});" ></div>
           <div class="tlo"></div>
         </div>

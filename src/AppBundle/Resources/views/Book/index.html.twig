@@ -3,7 +3,7 @@
 {% block navbar_IsTabActive %}            
     <div class="NavTabs"> 
         <a class="NavTab NavTab--home" href="{{ path('index') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Home</span></a>
-        <a class="NavTab NavTab--katalog active" href="{{ path('ksiazka') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Katalog</span></a> 
+        <a class="NavTab NavTab--katalog active" href="{{ path(('book')) }}"><span class="NavTab-icon"></span><span class="NavTab-text">Katalog</span></a>
         <a class="NavTab NavTab--kategorie" href="{{ path('category') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Kategorie</span></a>
                 {% if app.user and is_granted('ROLE_ADMIN') %}
             <a class="NavTab NavTab--menu" href="{{ path('menuZarzadca') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Menu</span></a> 
@@ -29,7 +29,7 @@
 
     <div class="yield"><!--start yield-->
         {% if is_granted('ROLE_ADMIN') %}
-            <div class="ButtonCenter" id="margin_top_buttons"> <a class="OrangeButton" href="{{ path('ksiazka_new') }}"> Dodaj nową książkę </a></div>
+            <div class="ButtonCenter" id="margin_top_buttons"> <a class="OrangeButton" href="{{ path('book_new') }}"> Dodaj nową książkę </a></div>
         {% endif %}
         <div class="allBooks">
             <table class="Table-all">
@@ -57,31 +57,31 @@
                         {{ form_start(form) }} 
                         {% for entity in ksiazki %}
                             <tr>
-                                <td><a href="{{ path('ksiazka_show', { 'id': entity.isbn }) }}">{{ entity.tytul }}</a></td>
-                                <td><a href="{{ path('showBooksBy', { 'findby': 'autor','what': entity.autor }) }}">{{ entity.autor }}</a></td>
+                                <td><a href="{{ path('book_show', { 'id': entity.isbn }) }}">{{ entity.tytul }}</a></td>
+                                <td><a href="{{ path('show_books_by', { 'findby': 'autor','what': entity.autor }) }}">{{ entity.autor }}</a></td>
                                 <td>{{ entity.cena }}</td>
-                                <td><a href="{{ path('showBooksBy', { 'findby': 'wydawnictwo','what': entity.wydawnictwo }) }}">{{ entity.wydawnictwo }}</a></td>
-                                <td><a href="{{ path('showBooksBy', { 'findby': 'rokwydania','what': entity.rokwydania }) }}">{{ entity.rokwydania }}</a></td>
+                                <td><a href="{{ path('show_books_by', { 'findby': 'wydawnictwo','what': entity.wydawnictwo }) }}">{{ entity.wydawnictwo }}</a></td>
+                                <td><a href="{{ path('show_books_by', { 'findby': 'rokwydania','what': entity.rokwydania }) }}">{{ entity.rokwydania }}</a></td>
                                     {% for formul in form.ksiazki %}
                                         {% if entity.isbn == formul.vars.value.isbn %}
                                         <td>{{ form_row(formul.ilosc) }}</td>
                                     {% endif %}
                                 {% endfor %}                              
                                 <td><a href="{{ path('add_to_cart', {'isbn': entity.isbn }) }}">do koszyka</a></td>
-                                <td><a href="{{ path('ksiazka_show', { 'id': entity.isbn }) }}">więcej</a></td>
-                                <td><a href="{{ path('ksiazka_edit', { 'id': entity.isbn }) }}">edytuj</a></td>
+                                <td><a href="{{ path('book_show', { 'id': entity.isbn }) }}">więcej</a></td>
+                                <td><a href="{{ path('book_edit', { 'id': entity.isbn }) }}">edytuj</a></td>
                             </tr>
                         {% endfor %}                              
                     {% else %}
                         {% for entity in ksiazki %}
                             <tr>
-                                <td><a href="{{ path('ksiazka_show', { 'id': entity.isbn }) }}">{{ entity.tytul }}</a></td>
-                                <td><a href="{{ path('showBooksBy', { 'findby': 'autor','what': entity.autor }) }}">{{ entity.autor }}</a></td>
+                                <td><a href="{{ path('book_show', { 'id': entity.isbn }) }}">{{ entity.tytul }}</a></td>
+                                <td><a href="{{ path('show_books_by', { 'findby': 'autor','what': entity.autor }) }}">{{ entity.autor }}</a></td>
                                 <td>{{ entity.cena }}</td>
-                                <td><a href="{{ path('showBooksBy', { 'findby': 'wydawnictwo','what': entity.wydawnictwo }) }}">{{ entity.wydawnictwo }}</a></td>
-                                <td><a href="{{ path('showBooksBy', { 'findby': 'rokwydania','what': entity.rokwydania }) }}">{{ entity.rokwydania }}</a></td>
+                                <td><a href="{{ path('show_books_by', { 'findby': 'wydawnictwo','what': entity.wydawnictwo }) }}">{{ entity.wydawnictwo }}</a></td>
+                                <td><a href="{{ path('show_books_by', { 'findby': 'rokwydania','what': entity.rokwydania }) }}">{{ entity.rokwydania }}</a></td>
                                 <td><a href="{{ path('add_to_cart', {'isbn': entity.isbn }) }}">do koszyka</a></td>
-                                <td><a href="{{ path('ksiazka_show', { 'id': entity.isbn }) }}">więcej</a></td>
+                                <td><a href="{{ path('book_show', { 'id': entity.isbn }) }}">więcej</a></td>
                             </tr>
                         {% endfor %}       
                     {% endif %}

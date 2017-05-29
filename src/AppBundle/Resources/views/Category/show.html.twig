@@ -4,7 +4,7 @@
     <div class="NavTabs">
         <a class="NavTab NavTab--home" href="{{ path('index') }}"><span class="NavTab-icon"></span><span
                     class="NavTab-text">Home</span></a>
-        <a class="NavTab NavTab--katalog" href="{{ path('ksiazka') }}"><span class="NavTab-icon"></span><span
+        <a class="NavTab NavTab--katalog" href="{{ path(('book')) }}"><span class="NavTab-icon"></span><span
                     class="NavTab-text">Katalog</span></a>
         <a class="NavTab NavTab--kategorie active" href="{{ path('category') }}"><span class="NavTab-icon"></span><span
                     class="NavTab-text">Kategorie</span></a>
@@ -48,22 +48,22 @@
                 <tbody>
                 {% for book in books %}
                     <tr>
-                        <td><a href="{{ path('ksiazka_show', { 'id': book.isbn }) }}">{{ book.tytul }}</a>
+                        <td><a href="{{ path('book_show', { 'id': book.isbn }) }}">{{ book.tytul }}</a>
                         </td>
                         <td>
-                            <a href="{{ path('showBooksBy', { 'findby': 'autor','what': book.autor }) }}">{{ book.autor }}</a>
+                            <a href="{{ path('show_books_by', { 'findby': 'autor','what': book.autor }) }}">{{ book.autor }}</a>
                         </td>
                         <td>{{ book.cena }}</td>
                         <td>
-                            <a href="{{ path('showBooksBy', { 'findby': 'wydawnictwo','what': book.wydawnictwo }) }}">{{ book.wydawnictwo }}</a>
+                            <a href="{{ path('show_books_by', { 'findby': 'wydawnictwo','what': book.wydawnictwo }) }}">{{ book.wydawnictwo }}</a>
                         </td>
                         <td>
-                            <a href="{{ path('showBooksBy', { 'findby': 'rokwydania','what': book.rokwydania }) }}">{{ book.rokwydania }}</a>
+                            <a href="{{ path('show_books_by', { 'findby': 'rokwydania','what': book.rokwydania }) }}">{{ book.rokwydania }}</a>
                         </td>
                         <td><a href="{{ path('add_to_cart', {'isbn': book.isbn }) }}">do koszyka</a></td>
-                        <td><a href="{{ path('ksiazka_show', { 'id': book.isbn }) }}">więcej</a></td>
+                        <td><a href="{{ path('book_show', { 'id': book.isbn }) }}">więcej</a></td>
                         {% if is_granted('ROLE_ADMIN') %}
-                            <td><a href="{{ path('ksiazka_edit', { 'id': book.isbn }) }}">edytuj</a></td>
+                            <td><a href="{{ path('book_edit', { 'id': book.isbn }) }}">edytuj</a></td>
                         {% endif %}
                     </tr>
                 {% endfor %}

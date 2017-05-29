@@ -1,7 +1,7 @@
 {% for entity in books %}
     <div class="ProductCard product is-imageLoaded">
         <div class="ProductCard-imageContainer product-img-container">
-            <a href="{{ path('ksiazka_show', { 'id': entity.isbn }) }}">
+            <a href="{{ path('book_show', { 'id': entity.isbn }) }}">
                 <div class="ProductCard-image product-image"
                      style="opacity: 1; background-image:url({{ asset("bundles/app/images/ilustracje/#{entity.obrazek}" ) }});">
                 </div>

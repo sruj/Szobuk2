@@ -37,7 +37,7 @@
                 {% for ksiazka in ksiazki %}
                     <tr>
                         <td>
-                            <a href="{{ path('ksiazka_show',{'id':ksiazka.isbn}) }} ">
+                            <a href="{{ path('book_show',{'id':ksiazka.isbn}) }} ">
                                 {{ ksiazka.isbn}}</a>
                         </td>
                         <td>
