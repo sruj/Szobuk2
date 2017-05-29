@@ -8,10 +8,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppBundle\Exception\ClientHasNoShoppingHistory;
 
-class KlientController extends Controller {
+class ClientController extends Controller {
 
     /**
-     * @Route("/historiaPanel", name="historiaZamowien")
+     * @Route("/order-history", name="order_history")
      */
     public function historiaPanelAction(Request $request) 
     {
@@ -20,20 +20,21 @@ class KlientController extends Controller {
             throw $this->createAccessDeniedException();
         }
 
-        $klient= $this->getDoctrine()
+        $client= $this->getDoctrine()
             ->getRepository('AppBundle:Klient')
             ->findOneBy(['idlogowanie' => $this->getUser()->getId()]);
         
-        if(!$klient){
+        if(!$client){
             throw new ClientHasNoShoppingHistory('Nie masz zapisanej historii zakupów.');
         }
-        $idklient = $klient->getIdklient();
 
-        $zam_rep = $this->get('app.zamowienie_repository');
-        $zamowienia = $zam_rep->findAllMy($request->query->getInt('page', 1),$idklient);
+        $idClient = $client->getIdklient();
 
-        return $this->render('AppBundle:Klient:historiaPanel.html.twig',[
-            'zamowienia' => $zamowienia
+        $rep = $this->get('app.zamowienie_repository');
+        $orders = $rep->findAllMy($request->query->getInt('page', 1),$idClient);
+
+        return $this->render('AppBundle:Klient:order_history.html.twig',[
+            'zamowienia' => $orders
         ]);
     }
 }
