@@ -12,7 +12,7 @@
                     <larger><strong>(( order.idzamowienie }}</strong></larger>
                     ,<br/> złożone: (( order.datazlozenia|date('Y-m-d H:i:s') }} <br/>
                     przez klienta nr <a id="OrangeButton"
-                                        href="{{ path('panelSortFromDetails',{ 'findBy':'idklient', 'Identifier':zamowienie.idklient.idklient}) }}">(( order.idklient.idklient }}</a>
+                                        href="{{ path('panel_sort_from_details',{ 'findBy':'idklient', 'Identifier':zamowienie.idklient.idklient}) }}">(( order.idklient.idklient }}</a>
                 </h3>
             {% else %}
                 <h3> Zamówienie nr: <strong>(( order.idzamowienie }}</strong>,<br/>

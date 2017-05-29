@@ -22,26 +22,21 @@ use AppBundle\Form\Filter\NrKlientaType;
 use AppBundle\Utils\Manager\Sort;
 use AppBundle\Utils\Manager\FormsManagerExtended;
 
-
 /**
- * Category controller.
- *
- * @Route("/zarzadca")
+ * @Route("/manager")
  */
-class ZarzadcaController extends Controller
+class ManagerController extends Controller
 {
     /**
-     * @Route("/", name="menuZarzadca")
+     * @Route("/", name="manager_menu")
      */
     public function menuAction()
     {
-        return $this->render('AppBundle:Zarzadca:menu.html.twig',[]);
+        return $this->render('AppBundle:Manager:menu.html.twig', []);
     }
 
     /**
-     * refaktor: (zoostaf) nie bardzo wiadomo co tu się dzieje, nazwy zmiennych i metod nie są pomocne.
-     * 
-     * @Route("/panel/{filter}-{identifier}", name="panelSortFromDetails",
+     * @Route("/panel/{filter}-{identifier}", name="panel_sort_from_details",
      *      defaults={
      *     "filter": false,
      *     "identifier": false,
@@ -50,7 +45,7 @@ class ZarzadcaController extends Controller
      *     "query": false,
      *     "filterField": false,
      *     })
-     * @Route("/panel/{columnsSortOrder}/{columnSort}/{query}/{filterField}", name="panelSort",
+     * @Route("/panel/{columnsSortOrder}/{columnSort}/{query}/{filterField}", name="panel_sort",
      *      defaults={
      *     "filter": false,
      *     "identifier": false,
@@ -60,7 +55,7 @@ class ZarzadcaController extends Controller
      *     "filterField": false,
      *     })
      */
-    public function panelsortAction(Request $request, $columnsSortOrder, $columnSort, $query, $filterField, $filter, $identifier)
+    public function panelSortAction(Request $request, $columnsSortOrder, $columnSort, $query, $filterField, $filter, $identifier)
     {
         $tableDetails = new TableDetails();
         $tableDetails->setColumnsSortOrder($columnsSortOrder);
@@ -73,41 +68,39 @@ class ZarzadcaController extends Controller
         $sort = new Sort($tableDetails);
         $tableDetails->setColumnsSortOrder($sort->getColumnsSortOrder());
 
-        $StatusForm = $this->createForm(StatusType::class,null, array(
-            'action' => $this->generateUrl('panelSortFromDetails')));
-        $DataZamForm = $this->createForm(DataZamType::class,null, array(
-            'action' => $this->generateUrl('panelSortFromDetails')));
-        $NrKlientaForm = $this->createForm(NrKlientaType::class,null, array(
-            'action' => $this->generateUrl('panelSortFromDetails')));
+        $statusForm = $this->createForm(StatusType::class, null, array(
+            'action' => $this->generateUrl('panel_sort_from_details')));
+        $orderDataorm = $this->createForm(DataZamType::class, null, array(
+            'action' => $this->generateUrl('panel_sort_from_details')));
+        $clientaNumberForm = $this->createForm(NrKlientaType::class, null, array(
+            'action' => $this->generateUrl('panel_sort_from_details')));
 
-        $StatusForm->handleRequest($request);
-        $DataZamForm->handleRequest($request);
-        $NrKlientaForm->handleRequest($request);
+        $statusForm->handleRequest($request);
+        $orderDataorm->handleRequest($request);
+        $clientaNumberForm->handleRequest($request);
 
         $tmpForms = [
-            'StatusForm' => $StatusForm,
-            'DataZamForm' => $DataZamForm,
-            'NrKlientaForm' => $NrKlientaForm,
+            'StatusForm' => $statusForm,
+            'DataZamForm' => $orderDataorm,
+            'NrKlientaForm' => $clientaNumberForm,
         ];
-
 
         $forms = new FormsManagerExtended($tmpForms);
         $fltrqry = new FilterQuery();
         $fltr = new Filter();
-        $manager_order = $this->get('app.manager_order');
-        
+        $managerOrder = $this->get('app.manager_order');
+
         $tds = $fltr->prepareFilterAndQuery($tableDetails, $forms, $fltrqry);
-        $orders = $manager_order->prepareOrder($tds);
-        $tableDetails = $manager_order->getTableDetails();
+        $orders = $managerOrder->prepareOrder($tds);
+        $tableDetails = $managerOrder->getTableDetails();
 
-
-        $ordersProducts= $this->getDoctrine()
+        $ordersProducts = $this->getDoctrine()
             ->getRepository('AppBundle:ZamowienieProdukt')
             ->findAll();
 
         $ordersList = new ZamowienieList();
-        foreach ($orders as $zamowienie) {
-            $ordersList->getZamowienia()->add($zamowienie);
+        foreach ($orders as $order) {
+            $ordersList->getZamowienia()->add($order);
         }
 
         $form = $this->createForm(ZamowienieListType::class, $ordersList);
@@ -120,18 +113,16 @@ class ZarzadcaController extends Controller
             $em->flush();
         }
 
-        return $this->render('AppBundle:Zarzadca:panelsort.html.twig',[
-            'zamowieniaProdukty'=>$ordersProducts,
+        return $this->render('AppBundle:Manager:panel_sort.html.twig', [
+            'zamowieniaProdukty' => $ordersProducts,
             'filterField' => $tableDetails->getFilterField(),
             'query' => $tableDetails->getQuery(),
             'identifier' => $tableDetails->getIdentifier(),
             'columnsSortOrder' => $tableDetails->getColumnsSortOrder(),
             'form' => $form->createView(),
-            'StatusForm' => $StatusForm->createView(),
-            'DataZamForm' => $DataZamForm->createView(),
-            'NrKlientaForm' => $NrKlientaForm->createView(),
+            'StatusForm' => $statusForm->createView(),
+            'DataZamForm' => $orderDataorm->createView(),
+            'NrKlientaForm' => $clientaNumberForm->createView(),
         ]);
     }
-
-
 }

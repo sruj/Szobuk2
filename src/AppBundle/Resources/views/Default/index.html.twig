@@ -11,9 +11,9 @@
         <a class="NavTab NavTab--kategorie" href="{{ path('category') }}"><span class="NavTab-icon"></span><span
                     class="NavTab-text">Kategorie</span></a>
         {% if app.user and is_granted('ROLE_ADMIN') %}
-            <a class="NavTab NavTab--menu" href="{{ path('menuZarzadca') }}"><span class="NavTab-icon"></span><span
+            <a class="NavTab NavTab--menu" href="{{ path('manager_menu') }}"><span class="NavTab-icon"></span><span
                         class="NavTab-text">Menu</span></a>
-            <a class="NavTab NavTab--zamowienia" href="{{ path('panelSortFromDetails') }}"><span
+            <a class="NavTab NavTab--zamowienia" href="{{ path('panel_sort_from_details') }}"><span
                         class="NavTab-icon"></span><span class="NavTab-text">Zamówienia</span></a>
         {% endif %}
     </div>

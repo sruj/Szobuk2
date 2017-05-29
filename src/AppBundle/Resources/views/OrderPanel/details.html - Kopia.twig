@@ -9,7 +9,7 @@
         <div id="boxMyinside">
             {% if is_granted('ROLE_ADMIN') %}
                 <h3> Szczegóły Zamówienia nr: {{ zamowienie.idzamowienie }}, złożonego: {{ zamowienie.datazlozenia|date('Y-m-d H:i:s') }} 
-                    przez Klienta nr <a href="{{ path('panelSortFromDetails',{ 'findBy':'idklient', 'Identifier':zamowienie.idklient.idklient}) }}">{{ zamowienie.idklient.idklient }}</a>
+                    przez Klienta nr <a href="{{ path('panel_sort_from_details',{ 'findBy':'idklient', 'Identifier':zamowienie.idklient.idklient}) }}">{{ zamowienie.idklient.idklient }}</a>
                 </h3>
             {% else %}
                 <h3> Szczegóły Zamówienia nr: {{ zamowienie.idzamowienie }}, złożonego: {{ zamowienie.datazlozenia|date('Y-m-d H:i:s') }} 

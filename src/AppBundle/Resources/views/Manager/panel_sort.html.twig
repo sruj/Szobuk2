@@ -6,8 +6,8 @@
         <a class="NavTab NavTab--katalog" href="{{ path(('book')) }}"><span class="NavTab-icon"></span><span class="NavTab-text">Katalog</span></a>
         <a class="NavTab NavTab--kategorie" href="{{ path('category') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Kategorie</span></a>
         {% if app.user and is_granted('ROLE_ADMIN') %}
-            <a class="NavTab NavTab--menu" href="{{ path('menuZarzadca') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Menu</span></a>
-            <a class="NavTab NavTab--zamowienia active" href="{{ path('panelSortFromDetails') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Zamówienia</span></a>
+            <a class="NavTab NavTab--menu" href="{{ path('manager_menu') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Menu</span></a>
+            <a class="NavTab NavTab--zamowienia active" href="{{ path('panel_sort_from_details') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Zamówienia</span></a>
         {% endif %}
     </div>
 {% endblock navbar_IsTabActive %}
@@ -37,12 +37,12 @@
             <table class="Table-all">
                 <thead>
                 <tr>
-                    <th style="background-color: #3e3e3e" class="thLeftBorderRadius"><a href="{{ path('panelSort',{ 'columnsSortOrder':columnsSortOrder.Numer ,'query':query,'filterField':filterField,'columnSort':'idzamowienie'}) }}">nr z.<span class="{{ columnsSortOrder.Numer }}"></span></a></th>
-                    <th><a href="{{ path('panelSort',{ 'columnsSortOrder':columnsSortOrder.Data ,'query':query,'filterField':filterField,'columnSort':'datazlozenia'}) }}">Data złożenia<span class="{{ columnsSortOrder.Data }}"></span></a></th>
+                    <th style="background-color: #3e3e3e" class="thLeftBorderRadius"><a href="{{ path('panel_sort',{ 'columnsSortOrder':columnsSortOrder.Numer ,'query':query,'filterField':filterField,'columnSort':'idzamowienie'}) }}">nr z.<span class="{{ columnsSortOrder.Numer }}"></span></a></th>
+                    <th><a href="{{ path('panel_sort',{ 'columnsSortOrder':columnsSortOrder.Data ,'query':query,'filterField':filterField,'columnSort':'datazlozenia'}) }}">Data złożenia<span class="{{ columnsSortOrder.Data }}"></span></a></th>
                     <th>ilość prod.</th>
                     <th>kwota razem</th>
-                    <th><a href="{{ path('panelSort',{ 'columnsSortOrder':columnsSortOrder.Klient ,'query':query,'filterField':filterField, 'columnSort':'idklient'}) }}">nr klienta<span class="{{ columnsSortOrder.Klient }}"></span></a></th>
-                    <th><a href="{{ path('panelSort',{ 'columnsSortOrder':columnsSortOrder.Status ,'query':query, 'filterField':filterField,'columnSort':'idstatus'}) }}">status z.<span class="{{ columnsSortOrder.Status }}"></span></a></th>
+                    <th><a href="{{ path('panel_sort',{ 'columnsSortOrder':columnsSortOrder.Klient ,'query':query,'filterField':filterField, 'columnSort':'idklient'}) }}">nr klienta<span class="{{ columnsSortOrder.Klient }}"></span></a></th>
+                    <th><a href="{{ path('panel_sort',{ 'columnsSortOrder':columnsSortOrder.Status ,'query':query, 'filterField':filterField,'columnSort':'idstatus'}) }}">status z.<span class="{{ columnsSortOrder.Status }}"></span></a></th>
                     <th class="thRightBorderRadius">Szczególy</th>
                 </tr>
                 </thead>
