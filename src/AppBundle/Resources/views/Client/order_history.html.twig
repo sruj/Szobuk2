@@ -38,7 +38,7 @@
                         <td>{{ kwota|number_format(2) }}</td>
                         <td>{{ zamowienie.idstatus.status }}</td>
                         <td>
-                            <a href="{{ path('panelDetails',{ 'idzamowienie': zamowienie.idzamowienie, 'userid': app.user.id }) }}">więcej</a>
+                            <a href="{{ path('order_panel',{ 'idzamowienie': zamowienie.idzamowienie, 'userid': app.user.id }) }}">więcej</a>
                         </td>
                     </tr>
                 {% endfor %}
