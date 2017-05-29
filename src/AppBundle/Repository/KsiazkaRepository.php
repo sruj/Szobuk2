@@ -15,16 +15,14 @@ use Knp\Component\Pager\Paginator;
  */
 class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterface
 {
-    
-
     /**
      * @var Paginator
      */
     protected $paginator;
 
-
     /**
      * @param Paginator $paginator
+     * @return mixed|void
      */
     public function setPaginator(Paginator $paginator)
     {
@@ -68,7 +66,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
             ORDER BY k.tytul ASC'
         )->setParameter('cena', '50');
     }
-    
+
     /**
      * @return Query
      */
@@ -81,10 +79,11 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
             ORDER BY k.created DESC'
         );
     }
-    
+
     public function queryWyszukiwarka($word)
     {
         $repository = $this->_em->getRepository('AppBundle:Ksiazka');
+
         return $query = $repository->createQueryBuilder('a')
             ->where('a.tytul LIKE :word')
             ->orWhere('a.autor LIKE :word')
@@ -101,29 +100,31 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
         return $this->_em->createQuery(
             'SELECT a
             FROM AppBundle:Ksiazka a
-            WHERE a.'.$findby.' = :param'
+            WHERE a.' . $findby . ' = :param'
         )->setParameter('param', $what);
 
-    }    
-    
+    }
+
     /**
      * @param int $page
+     * @return \Knp\Component\Pager\Pagination\PaginationInterface
      */
     public function findAllMy($page, $limit = Ksiazka::NUM_ITEMS)
     {
-        return  $this->paginator->paginate(
+        return $this->paginator->paginate(
             $this->queryAll(),
             $page/*page number*/,
             $limit/*limit per page*/
         );
-    } 
-    
+    }
+
     /**
      * @param int $page
+     * @return \Knp\Component\Pager\Pagination\PaginationInterface
      */
     public function findAllAdmin($page, $limit = Ksiazka::NUM_ITEMS)
     {
-        return  $this->paginator->paginate(
+        return $this->paginator->paginate(
             $this->queryAllAdmin(),
             $page/*page number*/,
             $limit/*limit per page*/
@@ -132,6 +133,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
 
     /**
      * @param int $page
+     * @return \Knp\Component\Pager\Pagination\PaginationInterface
      */
     public function findPopular($page)
     {
@@ -141,9 +143,10 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
             Ksiazka::NUM_ITEMS/*limit per page*/
         );
     }
-    
+
     /**
      * @param int $page
+     * @return \Knp\Component\Pager\Pagination\PaginationInterface
      */
     public function findNews($page)
     {
@@ -153,7 +156,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
             Ksiazka::NUM_ITEMS/*limit per page*/
         );
     }
-    
+
     public function findWyszukiwarka($word, $page)
     {
         return $this->paginator->paginate(
@@ -161,8 +164,8 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
             $page/*page number*/,
             Ksiazka::NUM_ITEMS/*limit per page*/
         );
-    }   
-    
+    }
+
     public function findByWhat($findby, $what, $page)
     {
         return $this->paginator->paginate(
