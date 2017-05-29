@@ -71,9 +71,9 @@ class Cart
     /**
      * return 'fos_user_security_login'
      */
-    public function prepareRoute($autoryzacja)
+    public function prepareRoute($authorization)
     {
-        switch ($autoryzacja){
+        switch ($authorization){
             case 'zaloguj':
                 return 'fos_user_security_login';
                 break;

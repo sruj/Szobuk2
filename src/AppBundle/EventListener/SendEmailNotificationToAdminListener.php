@@ -35,7 +35,7 @@ class SendEmailNotificationToAdminListener
     private function renderTemplate($event)
     {
         return $this->twig->render(
-            'AppBundle:Cart:potwierdzenieMailZarzadca.html.twig',
+            'AppBundle:Cart:mail_confirmation_manager.html.twig',
             array(
                 'zamowienie'=>$event->getZamowienie(),
                 'produkty'=>$event->getZamowienie()->getZamowienieProdukty(),

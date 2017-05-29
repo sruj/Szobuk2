@@ -67,7 +67,7 @@
                                         <td>{{ form_row(formul.ilosc) }}</td>
                                     {% endif %}
                                 {% endfor %}                              
-                                <td><a href="{{ path('addtocart', {'isbn': entity.isbn }) }}">do koszyka</a></td>
+                                <td><a href="{{ path('add_to_cart', {'isbn': entity.isbn }) }}">do koszyka</a></td>
                                 <td><a href="{{ path('ksiazka_show', { 'id': entity.isbn }) }}">więcej</a></td>
                                 <td><a href="{{ path('ksiazka_edit', { 'id': entity.isbn }) }}">edytuj</a></td>
                             </tr>
@@ -80,7 +80,7 @@
                                 <td>{{ entity.cena }}</td>
                                 <td><a href="{{ path('showBooksBy', { 'findby': 'wydawnictwo','what': entity.wydawnictwo }) }}">{{ entity.wydawnictwo }}</a></td>
                                 <td><a href="{{ path('showBooksBy', { 'findby': 'rokwydania','what': entity.rokwydania }) }}">{{ entity.rokwydania }}</a></td>
-                                <td><a href="{{ path('addtocart', {'isbn': entity.isbn }) }}">do koszyka</a></td>
+                                <td><a href="{{ path('add_to_cart', {'isbn': entity.isbn }) }}">do koszyka</a></td>
                                 <td><a href="{{ path('ksiazka_show', { 'id': entity.isbn }) }}">więcej</a></td>
                             </tr>
                         {% endfor %}       

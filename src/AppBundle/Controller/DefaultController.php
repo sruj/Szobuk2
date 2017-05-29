@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Ksiazka;
@@ -20,20 +21,20 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $session = $request->getSession();                                                                               //jeśli w trakcie zakupów w wyborze autoryzacji wybrałem zaloguj lub zarejestruj to przenoszę się do *gdzieśtam*
-        $proces_zamowienia=$session->get('proces_zamowienia');
-        if($proces_zamowienia == 'tak'){
-            $session->remove('proces_zamowienia');
-            return $this->redirectToRoute('zamawiam');
+        $orderingProcess = $session->get('orderingProcess');
+        if ($orderingProcess) {
+            $session->remove('orderingProcess');
+            return $this->redirectToRoute('personal_data');
         };
-        
+
         $ksi_rep = $this->get('app.ksiazka_repository');
-        
+
         if ($request->isXmlHttpRequest()) {
-            $ksiazki = $ksi_rep->findAllMy($request->query->getInt('page'),12);
+            $ksiazki = $ksi_rep->findAllMy($request->query->getInt('page'), 12);
             $ksiazki = $ksiazki->getItems();
             $books = [];
             $renderData = [];
-            if (!empty($ksiazki) ) {
+            if (!empty($ksiazki)) {
                 $i = 0;
                 foreach ($ksiazki as $ksiazka) {
                     $books[$i]['isbn'] = $ksiazka->getIsbn();
@@ -48,19 +49,21 @@ class DefaultController extends Controller
                 ));
                 $renderData['last_page'] = false;
             }
-            if (sizeof($ksiazki)<12){$renderData['last_page'] = true;}
+            if (sizeof($ksiazki) < 12) {
+                $renderData['last_page'] = true;
+            }
 
             return new JsonResponse($renderData);
         }
-        
-        $ksiazki = $ksi_rep->findAllMy($request->query->getInt('page', 1),6);
 
-        return $this->render('AppBundle:Default:index.html.twig',[
+        $ksiazki = $ksi_rep->findAllMy($request->query->getInt('page', 1), 6);
+
+        return $this->render('AppBundle:Default:index.html.twig', [
             'ksiazki' => $ksiazki
         ]);
     }
 
-    
+
     /**
      * @Route("/popularne", name="popularne")
      */
@@ -69,13 +72,13 @@ class DefaultController extends Controller
         $ksi_rep = $this->get('app.ksiazka_repository');
         $ksiazki = $ksi_rep->findPopularne($request->query->getInt('page', 1));
 
-        return $this->render('AppBundle:Default:popularne.html.twig',[
+        return $this->render('AppBundle:Default:popularne.html.twig', [
             'ksiazki' => $ksiazki
-        ]);        
-        
+        ]);
+
     }
 
-    
+
     /**
      * @Route("/nowosci", name="nowosci")
      */
@@ -84,7 +87,7 @@ class DefaultController extends Controller
         $ksi_rep = $this->get('app.ksiazka_repository');
         $ksiazki = $ksi_rep->findNowosci($request->query->getInt('page', 1));
 
-        return $this->render('AppBundle:Default:nowosci.html.twig',[
+        return $this->render('AppBundle:Default:nowosci.html.twig', [
             'ksiazki' => $ksiazki
         ]);
 

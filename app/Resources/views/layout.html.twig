@@ -54,9 +54,9 @@
             </script>
             <div class="Nav-userSection">
                 <div class="Nav-kosz">
-                    <a href="{{ path('cartmenu') }}" id="lockup">
+                    <a href="{{ path('cart_menu') }}" id="lockup">
                         <div id="kosz">
-                            <div class="quantityKosz" id="quantityBasket">{% render (controller('AppBundle:Cart:cartcontent')) %}</div><!--ilość produktów w koszyku (nie JavaScript)--> 
+                            <div class="quantityKosz" id="quantityBasket">{% render (controller('AppBundle:Cart:cartContent')) %}</div><!--ilość produktów w koszyku (nie JavaScript)-->
                         </div>
                     </a>
                 </div>
@@ -86,8 +86,7 @@
                     <div class="Nav-userSection"> <a href="{{ path('fos_user_profile_show') }}" class="Nav-loginButton">Jesteś zalogowany jako: {{ app.user.username }}</a><a href="{{ path('fos_user_security_logout') }}" class="Nav-signupButton">Wyloguj</a></div>
                 {% endif %}
             {% else %}
-{#            <div class="Nav-userSection"> <a href="{{ path('fos_user_security_login',{ 'proces_zamowienia': '0' }) }}" class="Nav-loginButton">Zaloguj się</a><a href="{{ path('fos_user_registration_register',{ 'proces_zamowienia': '0' }) }}" class="Nav-signupButton">Załóż konto</a></div>#}
-            <div class="Nav-userSection"> <a href="{{ path('fos_user_security_login',{ 'proces_zamowienia': '0' }) }}" class="Nav-loginButton">Zaloguj się</a><a href="{{ path('fos_user_registration_register') }}" class="Nav-signupButton">Załóż konto</a></div>
+            <div class="Nav-userSection"> <a href="{{ path('fos_user_security_login',{ 'orderingProcess': '0' }) }}" class="Nav-loginButton">Zaloguj się</a><a href="{{ path('fos_user_registration_register') }}" class="Nav-signupButton">Załóż konto</a></div>
             {% endif %}
         </div>
     </div>

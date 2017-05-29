@@ -48,7 +48,7 @@
                             <td>{{ kategoria.cena }}</td>
                             <td><a href="{{ path('showBooksBy', { 'findby': 'wydawnictwo','what': kategoria.wydawnictwo }) }}">{{ kategoria.wydawnictwo }}</a></td>
                             <td><a href="{{ path('showBooksBy', { 'findby': 'rokwydania','what': kategoria.rokwydania }) }}">{{ kategoria.rokwydania }}</a></td>
-                            <td><a href="{{ path('addtocart', {'isbn': kategoria.isbn }) }}">do koszyka</a></td>
+                            <td><a href="{{ path('add_to_cart', {'isbn': kategoria.isbn }) }}">do koszyka</a></td>
                             <td><a href="{{ path('ksiazka_show', { 'id': kategoria.isbn }) }}">więcej</a></td>
                             {% if is_granted('ROLE_ADMIN') %}
                                 <td><a href="{{ path('ksiazka_edit', { 'id': kategoria.isbn }) }}">edytuj</a></td>

@@ -35,7 +35,7 @@ class SendEmailNotificationToClientListener
     private function renderTemplate($event)
     {
         return $this->twig->render(
-            'AppBundle:Cart:potwierdzenieMail.html.twig',
+            'AppBundle:Cart:mail_confirmation.html.twig',
             array(
                 'zamowienie'=>$event->getZamowienie(),
                 'produkty'=>$event->getZamowienie()->getZamowienieProdukty(),

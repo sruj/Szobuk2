@@ -136,16 +136,16 @@ class RegistrationController extends BaseController
      * Tell the user his account is now confirmed
      *
      * nadpisuję ten kontroler by ...6 pierwszych linijek
-     * jeśli w trakcie zakupów w wyborze autoryzacji wybrałem zarejestruj to przenoszę się do *zamawiam*.
+     * jeśli w trakcie zakupów w wyborze autoryzacji wybrałem zarejestruj to przenoszę się do *personal_data*.
      *
      */
     public function confirmedAction()
     {
         $session = $this->getRequest()->getSession();
-        $proces_zamowienia = $session->get('proces_zamowienia');
-        if ($proces_zamowienia == 'tak') {
-            $session->remove('proces_zamowienia');
-            return $this->redirectToRoute('zamawiam');
+        $orderingProcess = $session->get('orderingProcess');
+        if ($orderingProcess) {
+            $session->remove('orderingProcess');
+            return $this->redirectToRoute('personal_data');
         };
 
         $user = $this->getUser();

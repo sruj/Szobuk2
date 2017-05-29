@@ -82,11 +82,11 @@ class CartTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider getDataForPrepareRoute
      */
-    public function testPrepareRoute($autoryzacja,$expected)
+    public function testPrepareRoute($authorization,$expected)
     {
         $em = $this->getEntityManager();
         $obj = new Cart($em);
-        $res = $obj->prepareRoute($autoryzacja);
+        $res = $obj->prepareRoute($authorization);
         $this->assertEquals( $expected, $res );
     }
 

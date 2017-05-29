@@ -60,7 +60,7 @@
                             <td>{{ entity.cena }}</td>
                             <td><a href="{{ path('showBooksBy', { 'findby': 'wydawnictwo','what': entity.wydawnictwo }) }}">{{ entity.wydawnictwo }}</a></td>
                             <td><a href="{{ path('showBooksBy', { 'findby': 'rokwydania','what': entity.rokwydania }) }}">{{ entity.rokwydania }}</a></td>
-                            <td><a href="{{ path('addtocart', {'isbn': entity.isbn }) }}">do koszyka</a></td>
+                            <td><a href="{{ path('add_to_cart', {'isbn': entity.isbn }) }}">do koszyka</a></td>
                             <td><a href="{{ path('ksiazka_show', { 'id': entity.isbn }) }}">więcej</a></td>
                             {% if is_granted('ROLE_ADMIN') %}
                                 <td><a href="{{ path('ksiazka_edit', { 'id': entity.isbn }) }}">edytuj</a></td>
@@ -105,7 +105,7 @@
         <td>{{ ksiazka.wydawnictwo }}</td>
         <td>{{ ksiazka.rokWydania}}</td>
         <td><a href="{{ path('ksiazka_show',{'id':ksiazka.isbn}) }} ">więcej</a></td>
-        <td><a href="{{ path('addtocart', {'isbn': ksiazka.isbn }) }}">do koszyka</a></td>
+        <td><a href="{{ path('add_to_cart', {'isbn': ksiazka.isbn }) }}">do koszyka</a></td>
     </tr>
     {% endfor %}
   </tbody>

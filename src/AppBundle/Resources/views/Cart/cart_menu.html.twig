@@ -57,7 +57,7 @@
                             {{ (ksiazka.quantity*ksiazka.cena)|number_format(2)}}
                         </td>
                         <td>
-                            <a class="tableUsunButton" href="{{ path('cartmenu',{'deleteisbn':ksiazka.isbn}) }} ">
+                            <a class="tableUsunButton" href="{{ path('cart_menu',{'deleteisbn':ksiazka.isbn}) }} ">
                                 usuń</a>
                         </td>
                     </tr>
@@ -77,13 +77,13 @@
         </table>
     <div class="centeredButton cartmenu">
     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-        <a class="OrangeButton" href="{{ path('zamawiam') }}">zamawiam</a> 
+        <a class="OrangeButton" href="{{ path('personal_data') }}">zamawiam</a>
     {% else %}
-        <a class="OrangeButton" href="{{ path('autoryzacja') }} ">zamawiam</a>  
+        <a class="OrangeButton" href="{{ path('authorization') }} ">zamawiam</a>
     {% endif %}
     </div> 
     <div class="centeredButton cartmenu">
-        <a class="OrangeButton" href="{{ path('cartclear') }} ">wyczyść koszyk</a>
+        <a class="OrangeButton" href="{{ path('cart_clear') }} ">wyczyść koszyk</a>
     </div> 
 </div>
 </div>   
