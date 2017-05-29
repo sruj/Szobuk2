@@ -24,7 +24,7 @@ use AppBundle\Utils\Manager\FormsManagerExtended;
 
 
 /**
- * Kategoria controller.
+ * Category controller.
  *
  * @Route("/zarzadca")
  */

@@ -21,10 +21,10 @@ class KategoriaControllerTest extends WebTestCase
         //wybiera "zamawiam" i zostaję przekierowany do wyboru autoryzacji.
         $link = $crawler->filter('a:contains("Horror")')->link();
         $crawler = $client->click($link);
-        $this->assertTrue($crawler->filter('div:contains("Kategoria: Horror")')->count() > 0,
+        $this->assertTrue($crawler->filter('div:contains("Category: Horror")')->count() > 0,
             'Wybrana kategoria (Horror) nie zawiera książek');
         $this->assertGreaterThan(0, $crawler->filterXPath('//tbody/tr/td/a/text()')->count(),
-            'Kategoria (Horror) nie wyświetla żadnej książki w tabeli');
+            'Category (Horror) nie wyświetla żadnej książki w tabeli');
 
         //klikam w "więcej" informacji o książce i przenoszę się do podstrony o książce.
         $link = $crawler->filterXPath('//tbody/tr[1]/td[7]/a')->link();
@@ -62,7 +62,7 @@ class KategoriaControllerTest extends WebTestCase
         $crawler = $client->followRedirect();
 
         // Check data in the show view
-        $this->assertGreaterThan(0, $crawler->filter('div:contains("Kategoria: Test")')->count(), 'Missing element a:contains("Kategoria: Test")');
+        $this->assertGreaterThan(0, $crawler->filter('div:contains("Category: Test")')->count(), 'Missing element a:contains("Category: Test")');
 
         // Edit the entity
         $crawler = $client->click($crawler->selectLink('Edytuj Kategorię')->link());

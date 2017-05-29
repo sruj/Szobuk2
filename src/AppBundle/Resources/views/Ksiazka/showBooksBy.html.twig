@@ -1,7 +1,7 @@
 {% extends '::layout.html.twig' %}
 
 {#{% block navbar_IsTabActive %}            
-    <div class="NavTabs"> <a class="NavTab NavTab--home" href="{{ path('index') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Home</span></a> <a class="NavTab NavTab--katalog" href="{{ path('ksiazka') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Katalog</span></a> <a class="NavTab NavTab--kategorie" href="{{ path('kategoria') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Kategorie</span></a> </div> 
+    <div class="NavTabs"> <a class="NavTab NavTab--home" href="{{ path('index') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Home</span></a> <a class="NavTab NavTab--katalog" href="{{ path('ksiazka') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Katalog</span></a> <a class="NavTab NavTab--kategorie" href="{{ path('category') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Kategorie</span></a> </div>
 {% endblock navbar_IsTabActive %}  #}
 
 {% block contents %}
@@ -68,9 +68,9 @@
                         </tr>
                     {% endfor %}       
             </table>    
-            <div class="centeredButton kategoria"><a class="OrangeButton" href="{{ path('kategoria') }}">Wróć do Listy</a></div>
+            <div class="centeredButton kategoria"><a class="OrangeButton" href="{{ path('category') }}">Wróć do Listy</a></div>
             {% if is_granted('ROLE_ADMIN') %}
-                <div class="centeredButton kategoria"><a class="OrangeButton" href="{{ path('kategoria_edit', { 'id': entity.idkategoria }) }}">Edytuj Kategorię</a></div> 
+                <div class="centeredButton kategoria"><a class="OrangeButton" href="{{ path('category_edit', { 'id': entity.idkategoria }) }}">Edytuj Kategorię</a></div>
             {% endif %}
             <div class="wrapper">
                 <div class="navigation">

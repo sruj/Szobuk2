@@ -34,7 +34,7 @@ class KsiazkaType extends AbstractType {
                 ->add('ilosc', null, array('attr' => array
                         ('placeholder' => 'Ilość','min' => '1'),'label' => 'Ilość',))
                 ->add('idkategoria', null, array
-                    ('placeholder' => 'Kategoria', 'label' => 'Kategoria', 'attr' => array('required' => true)))//dzięki temu zadziała styl szaro czarny w KsiazkaNew
+                    ('placeholder' => 'Category', 'label' => 'Category', 'attr' => array('required' => true)))//dzięki temu zadziała styl szaro czarny w KsiazkaNew
 
         ;
     }

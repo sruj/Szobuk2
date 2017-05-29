@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * Kategoria
+ * Category
  *
  * @ORM\Table(name="kategoria")
  * @ORM\Entity
@@ -43,7 +43,7 @@ class Kategoria {
      * gdy używam CRUD:
      * 
      * A "__toString()" method was not found on the objects of type
-     *  "AppBundle\Entity\Kategoria" passed to the choice field. 
+     *  "AppBundle\Entity\Category" passed to the choice field.
      * To read a custom getter instead, set the option "property" 
      * to the desired property path.
      * 
