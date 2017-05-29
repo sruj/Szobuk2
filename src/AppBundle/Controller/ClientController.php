@@ -33,7 +33,7 @@ class ClientController extends Controller {
         $rep = $this->get('app.zamowienie_repository');
         $orders = $rep->findAllMy($request->query->getInt('page', 1),$idClient);
 
-        return $this->render('AppBundle:Klient:order_history.html.twig',[
+        return $this->render('AppBundle:Client:order_history.html.twig',[
             'zamowienia' => $orders
         ]);
     }
