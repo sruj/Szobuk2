@@ -10,9 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Knp\Component\Pager\Paginator;
 
-/**
- *
- */
 class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterface
 {
     /**
