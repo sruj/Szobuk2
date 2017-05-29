@@ -15,7 +15,6 @@ use AppBundle\Exception\BookNotFoundException;
 use AppBundle\Exception\CartNotInSessionException;
 use AppBundle\Exception\VariableNotExistInFlashBagException;
 
-
 class CartController extends Controller
 {
     /**
