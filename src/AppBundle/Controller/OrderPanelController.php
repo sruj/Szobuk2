@@ -16,7 +16,7 @@ class OrderPanelController extends Controller
 
     /**
      * @Route("/panel/order-details/{orderid}/{userid}/", name="order_panel")
-     * @Route("/panel/order-details/{orderid}/", name="manager_order_panel")
+     * @Route("/panel/order-details/{orderid}/", defaults={"orderid": false}, name="manager_order_panel")
      */
     public function detailsAction(Request $request, $orderid = false, $userid = false)
     {

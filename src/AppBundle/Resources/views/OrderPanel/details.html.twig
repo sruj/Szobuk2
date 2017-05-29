@@ -9,23 +9,23 @@
         <div id="boxMyinside">
             {% if is_granted('ROLE_ADMIN') %}
                 <h3> Zamówienie nr:
-                    <larger><strong>(( order.idzamowienie }}</strong></larger>
-                    ,<br/> złożone: (( order.datazlozenia|date('Y-m-d H:i:s') }} <br/>
+                    <larger><strong>{{ order.idzamowienie }}</strong></larger>
+                    ,<br/> złożone: {{ order.datazlozenia|date('Y-m-d H:i:s') }} <br/>
                     przez klienta nr <a id="OrangeButton"
-                                        href="{{ path('panel_sort_from_details',{ 'findBy':'idklient', 'Identifier':zamowienie.idklient.idklient}) }}">(( order.idklient.idklient }}</a>
+                                        href="{{ path('panel_sort_from_details',{ 'findBy':'idklient', 'Identifier':order.idklient.idklient}) }}">{{ order.idklient.idklient }}</a>
                 </h3>
             {% else %}
-                <h3> Zamówienie nr: <strong>(( order.idzamowienie }}</strong>,<br/>
-                    złożone: (( order.datazlozenia|date('Y-m-d H:i:s') }}
+                <h3> Zamówienie nr: <strong>{{ order.idzamowienie }}</strong>,<br/>
+                    złożone: {{ order.datazlozenia|date('Y-m-d H:i:s') }}
                     <br/>przez {{ app.user.username }}
                 </h3>
             {% endif %}
             <div class="boxDown">
                 <h4 class="greyHeader">Dane do wysyłki:</h4>
                 <ul>
-                    <li>(( order.idklient.imie }} (( order.idklient.nazwisko }}</li>
-                    <li>(( order.idklient.ulica }} (( order.idklient.nrDomu }} (( order.idklient.nrmieszkania }}</li>
-                    <li>(( order.idklient.kodpocztowy }}, (( order.idklient.miasto }} </li>
+                    <li>{{ order.idklient.imie }} {{ order.idklient.nazwisko }}</li>
+                    <li>{{ order.idklient.ulica }} {{ order.idklient.nrDomu }} {{ order.idklient.nrmieszkania }}</li>
+                    <li>{{ order.idklient.kodpocztowy }}, {{ order.idklient.miasto }} </li>
                 </ul>
 
                 <h4 class="greyHeader">Produkty:</h4>
@@ -56,8 +56,8 @@
                 {% if is_granted('ROLE_ADMIN') %}
                     {{ form(statusForm) }}
                 {% else %}
-                    <ul>(( order.idstatus.status }}</ul>
-                    {% if zamowienie.idstatus.idstatus == 1 %}
+                    <ul>{{ order.idstatus.status }}</ul>
+                    {% if order.idstatus.idstatus == 1 %}
                         <h4 class="greyHeader">Zapłać teraz</h4>
                         <fieldset class="potwierdzenie">
                             <a class="OrangeButtonSimple" href="#">PayU</a>
