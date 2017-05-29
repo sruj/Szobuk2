@@ -17,9 +17,6 @@ class DefaultControllerTest extends WebTestCase
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertGreaterThan(0, $crawler->filter('a.active:contains("Wszystkie")')->count(),
             'Podstrona "Wszystkie" nie działa.');
-        $this->assertCount(Ksiazka::NUM_ITEMS, $crawler->filterXPath('//div[@class=\'top-right\']'),
-            'Strona nie wyświetla odpowiednią ilość produktów.(div top-right czyli tam gdzie cena)');
-
     }
 
     public function testPopular()

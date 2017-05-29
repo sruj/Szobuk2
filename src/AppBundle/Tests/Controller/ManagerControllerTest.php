@@ -5,7 +5,7 @@ namespace AppBundle\Tests\Controller;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class ZarzadcaControllerTest extends WebTestCase
+class ManagerControllerTest extends WebTestCase
 {
 
     public function testRegularUsersCannotAccessToTheBackend()
@@ -15,7 +15,7 @@ class ZarzadcaControllerTest extends WebTestCase
             'PHP_AUTH_PW' => 'hinolp9',
         ]);
 
-        $client->request('GET', '/zarzadca/');
+        $client->request('GET', '/manager/');
         $this->assertEquals(Response::HTTP_FORBIDDEN, $client->getResponse()->getStatusCode());
     }
 
@@ -25,7 +25,7 @@ class ZarzadcaControllerTest extends WebTestCase
             'PHP_AUTH_USER' => 'wazny',
             'PHP_AUTH_PW' => 'wazny',
         ]);
-        $client->request('GET', '/zarzadca/');
+        $client->request('GET', '/manager/');
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
     }
 
@@ -36,8 +36,8 @@ class ZarzadcaControllerTest extends WebTestCase
             'PHP_AUTH_PW' => 'wazny',
         ]);
 
-        $crawler = $client->request('GET', '/zarzadca/panel');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+        $crawler = $client->request('GET', '/manager/panel');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/");
     }
 
     public function testFilterStatus1()
@@ -47,8 +47,8 @@ class ZarzadcaControllerTest extends WebTestCase
             'PHP_AUTH_PW' => 'wazny',
         ]);
 
-        $crawler = $client->request('GET', '/zarzadca/panel');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+        $crawler = $client->request('GET', '/manager/panel');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/");
 
         $form = $crawler->selectButton('status[filtruj]')->form();
         $form['status[status]']->select(3); //wysłane
@@ -68,7 +68,7 @@ class ZarzadcaControllerTest extends WebTestCase
             'PHP_AUTH_PW' => 'wazny',
         ]);
 
-        $crawler = $client->request('GET', '/zarzadca/panel');
+        $crawler = $client->request('GET', '/manager/panel');
     
         $form = $crawler->selectButton('status[filtruj]')->form();
         $form['status[status]']->select(1); //nie zaplacone
@@ -98,8 +98,8 @@ class ZarzadcaControllerTest extends WebTestCase
             'PHP_AUTH_PW' => 'wazny',
         ]);
 
-        $crawler = $client->request('GET', '/zarzadca/panel');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+        $crawler = $client->request('GET', '/manager/panel');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/");
 
         $form = $crawler->selectButton('data[filtruj]')->form();
         $form['data[do][year]']->select(2014);
@@ -116,8 +116,8 @@ class ZarzadcaControllerTest extends WebTestCase
             'PHP_AUTH_PW' => 'wazny',
         ]);
 
-        $crawler = $client->request('GET', '/zarzadca/panel');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+        $crawler = $client->request('GET', '/manager/panel');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/");
 
         $form = $crawler->selectButton('idklient[filtruj]')->form();
         $form['idklient[idklient]']->select(2); //wysłane
@@ -133,8 +133,8 @@ class ZarzadcaControllerTest extends WebTestCase
             'PHP_AUTH_USER' => 'wazny',
             'PHP_AUTH_PW' => 'wazny',
         ]);
-        $crawler = $client->request('GET', '/zarzadca/panel');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+        $crawler = $client->request('GET', '/manager/panel');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/");
     }
 
     public function testPanel_1()
@@ -143,8 +143,8 @@ class ZarzadcaControllerTest extends WebTestCase
             'PHP_AUTH_USER' => 'wazny',
             'PHP_AUTH_PW' => 'wazny',
         ]);
-        $crawler = $client->request('GET', '/zarzadca/panel/DESC/datazlozenia');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/DESC/datazlozenia");
+        $crawler = $client->request('GET', '/manager/panel/DESC/datazlozenia');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/DESC/datazlozenia");
     }
 
     public function testPanel_2()
@@ -154,8 +154,8 @@ class ZarzadcaControllerTest extends WebTestCase
             'PHP_AUTH_PW' => 'wazny',
         ]);
 
-        $crawler = $client->request('GET', '/zarzadca/panel/ASC/idstatus');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/ASC/idstatus");
+        $crawler = $client->request('GET', '/manager/panel/ASC/idstatus');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/ASC/idstatus");
     }
 
     public function testPanel_3()
@@ -165,8 +165,8 @@ class ZarzadcaControllerTest extends WebTestCase
             'PHP_AUTH_PW' => 'wazny',
         ]);
 
-        $crawler = $client->request('GET', '/zarzadca/panel/ASC/idklient');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/ASC/idklient");
+        $crawler = $client->request('GET', '/manager/panel/ASC/idklient');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/ASC/idklient");
     }
 
     public function testPanel_4()
@@ -176,8 +176,8 @@ class ZarzadcaControllerTest extends WebTestCase
             'PHP_AUTH_PW' => 'wazny',
         ]);
 
-        $crawler = $client->request('GET', '/zarzadca/panel/null/idstatus');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/null/idstatus");
+        $crawler = $client->request('GET', '/manager/panel/null/idstatus');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/null/idstatus");
     }
 
     public function testPanel_5()
@@ -187,8 +187,8 @@ class ZarzadcaControllerTest extends WebTestCase
             'PHP_AUTH_PW' => 'wazny',
         ]);
 
-        $crawler = $client->request('GET', '/zarzadca/panel/ASC/idklient');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/ASC/idklient");
+        $crawler = $client->request('GET', '/manager/panel/ASC/idklient');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/ASC/idklient");
     }
 
     public function testPanel_6()
@@ -198,8 +198,8 @@ class ZarzadcaControllerTest extends WebTestCase
             'PHP_AUTH_PW' => 'wazny',
         ]);
 
-        $crawler = $client->request('GET', '/zarzadca/panel/null/idklient');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/ASC/datazlozenia");
+        $crawler = $client->request('GET', '/manager/panel/null/idklient');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/ASC/datazlozenia");
     }
 
     public function testPanel_7()
@@ -208,8 +208,8 @@ class ZarzadcaControllerTest extends WebTestCase
             'PHP_AUTH_USER' => 'wazny',
             'PHP_AUTH_PW' => 'wazny',
         ]);
-        $crawler = $client->request('GET', '/zarzadca/panel/ASC/datazlozenia');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+        $crawler = $client->request('GET', '/manager/panel/ASC/datazlozenia');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/");
     }
 
 
@@ -220,62 +220,62 @@ class ZarzadcaControllerTest extends WebTestCase
             'PHP_AUTH_USER' => 'wazny',
             'PHP_AUTH_PW' => 'wazny',
         ]);
-        $crawler = $client->request('GET', '/zarzadca/');
+        $crawler = $client->request('GET', '/manager/');
         $this->assertGreaterThan(0, $crawler->filter('h3:contains("Menu")')->count(),
-            'Strona /zarzadca/ nie zawiera h3:contains("Menu")');
+            'Strona /manager/ nie zawiera h3:contains("Menu")');
 
         //czy działa link 'zamówienia'
         $link = $crawler->filterXPath('//*[text()[contains(.,\'zamówienia\')]]')->link();
         $crawler = $client->click($link);
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/");
         $this->assertGreaterThan(4, $crawler->filterXPath('//thead/tr/th')->count(), 'Missing elements //thead/tr/th - means there is no table head ' );
         $this->assertEquals(3, $crawler->filter('button:contains("Filtruj")')->count(),
             'Missing elements button:contains("Filtruj") - means there are no 3 filter buttons');
         $crawler = $client->back();
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/");
 
         //czy działa link 'kategorie - edycja'
         $link = $crawler->filterXPath('//*[text()[contains(.,\'kategorie - edycja\')]]')->link();
         $crawler = $client->click($link);
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/");
         $this->assertGreaterThan(20, $crawler->filterXPath('//li/a[text()[contains(.,\'edit\')]]')->count(), 'Missing elements //li/a[text()[contains(.,edit)]]- means there is no edit elements' );
         $this->assertEquals(1, $crawler->filter('a:contains("Dodaj Nową Kategorię")')->count(),
             'Missing elements a:contains("Dodaj Nową Kategorię") - means there are no button "Dodaj Nową Kategorię"');
         $crawler = $client->back();
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/");
 
         //czy działa link 'dodaj kategorię'
         $link = $crawler->filterXPath('//*[text()[contains(.,\'dodaj kategorię\')]]')->link();
         $crawler = $client->click($link);
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/");
         $this->assertGreaterThan(0, $crawler->filterXPath('//h3[text()[contains(.,\'dodaj kategorię\')]]')->count(), 'Missing elements //h3[text()[contains(.,\'dodaj kategorię\')]]' );
         $this->assertEquals(1, $crawler->filter('button:contains("Dodaj")')->count(),
             'Missing elements button:contains("Dodaj") ');
         $crawler = $client->back();
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/");
 
         //czy działa link 'książki - edycja'
         $link = $crawler->filterXPath('//*[text()[contains(.,\'książki - edycja\')]]')->link();
         $crawler = $client->click($link);
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/");
         $this->assertGreaterThan(4, $crawler->filterXPath('//thead/tr/th')->count(), 'Missing elements //thead/tr/th - means there is no table head ' );
         $this->assertEquals(1, $crawler->filter('a:contains("Dodaj nową książkę")')->count(),
             'Missing elements a:contains("Dodaj nową książkę") - means there are no button');
         $this->assertEquals(1, $crawler->filter('button:contains("Zapisz zmiany")')->count(),
             'Missing elements button:contains("Zapisz zmiany") - means there are no button');
         $crawler = $client->back();
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/");
 
         //czy działa link 'dodaj książkę'
         $link = $crawler->filterXPath('//*[text()[contains(.,\'dodaj książkę\')]]')->link();
         $crawler = $client->click($link);
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/");
         $this->assertEquals(1, $crawler->filter('button:contains("Dodaj")')->count(),
             'Missing elements button:contains("Dodaj") - means there are no button');
         $this->assertEquals(1, $crawler->filter('h3:contains("Dodaj Książkę")')->count(),
             'Missing elements h3:contains("Dodaj Książkę")');
         $crawler = $client->back();
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /zarzadca/panel/");
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/");
     }
 
 }

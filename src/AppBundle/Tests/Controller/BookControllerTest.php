@@ -7,26 +7,25 @@ use AppBundle\Entity\KsiazkaList;
 use Symfony\Component\DomCrawler\Crawler;
 use AppBundle\Tests\Utils\ColumnSortChecker;
 
-class KsiazkaControllerTest extends WebTestCase
+class BookControllerTest extends WebTestCase
 {
     private $columnSortChecker;
-
 
     /**
      * KsiazkaControllerTest constructor.
      */
     public function __construct()
     {
-        $this->columnSortChecker = new ColumnSortChecker();
+        $this->columnSortChecker = new \AppBundle\Tests\ColumnSortChecker();
     }
 
     public function testSortowanie()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/ksiazka/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(),"Unexpected HTTP status code for GET /ksiazka/");
+        $crawler = $client->request('GET', '/book/');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /book/");
         $isSort = $this->columnSortChecker->isAlphabetic('//tbody/tr[', ']/td[1]/a', $crawler);
-        $this->assertTrue($isSort,'Kolumna tytuł nieposortowana');
+        $this->assertTrue($isSort, 'Kolumna tytuł nieposortowana');
 
         //-Poniżej testuję sortowanie wg kolumny autor
         //-Mógłbym testować i wszystkie kolumny ale nie da rady przetestować sorotwania wg kolumn bo knp_pagination jakoś po swojemu manipuluje obiekt
@@ -35,7 +34,7 @@ class KsiazkaControllerTest extends WebTestCase
         //https://github.com/KnpLabs/KnpPaginatorBundle/issues/398
         //http://forum.php.pl/index.php?showtopic=252655
         //http://stackoverflow.com/questions/40261754/how-to-functional-test-sites-with-knp-pagination-sortable
-//        $link = $crawler->filterXPath('//th[2]/a[@class=\'sortable\']')->link(); //  to samo co: $crawler = $client->request('GET', '/ksiazka/?sort=a.autor&direction=asc&page=1');
+//        $link = $crawler->filterXPath('//th[2]/a[@class=\'sortable\']')->link(); //  to samo co: $crawler = $client->request('GET', '/book/?sort=a.autor&direction=asc&page=1');
 //        $crawler = $client->click($link);
 //        $isSort = $this->columnSortChecker->isAlphabetic('//tbody/tr[', ']/td[2]/a', $crawler);
 //        $this->assertGreaterThan(6, $crawler->filter('a:contains("Artur Rimbaud")')->count(), 'Kolumna autor nieposortowana');
@@ -46,9 +45,9 @@ class KsiazkaControllerTest extends WebTestCase
         $client = static::createClient();
 
         //testuję czy strona istnieje i czy wyświetla wiersze tabeli.
-        $crawler = $client->request('GET', '/ksiazka/');
+        $crawler = $client->request('GET', '/book/');
         $response = $client->getResponse();
-        $this->assertEquals(200, $response->getStatusCode(),"Unexpected HTTP status code for GET /ksiazka/");
+        $this->assertEquals(200, $response->getStatusCode(), "Unexpected HTTP status code for GET /book/");
         $this->assertEquals(KsiazkaList::NUM_ITEMS, $crawler->filterXPath('//tbody/tr')->count(),
             'Za mało wyświetlonych ksiazek lub wcale.');
 
@@ -69,22 +68,22 @@ class KsiazkaControllerTest extends WebTestCase
         ]);
 
         // Create a new entry in the database
-        $crawler = $client->request('GET', '/ksiazka/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /ksiazka/");
+        $crawler = $client->request('GET', '/book/');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /book/");
         $crawler = $client->click($crawler->selectLink('Dodaj nową książkę')->link());
 
         // Fill in the form and submit it
         $form = $crawler->selectButton('Dodaj')->form(array(
-            'appbundle_ksiazka[tytul]'  => 'TytułTF',
-            'appbundle_ksiazka[autor]'  => 'AutorTF',
-            'appbundle_ksiazka[opis]'  => 'opisTF',
-            'appbundle_ksiazka[isbn]'  => '978-1-56619-909-4',
-            'appbundle_ksiazka[cena]'  => '38.00',
-            'appbundle_ksiazka[obrazek]'  => 'book_nr_101.jpg',
-            'appbundle_ksiazka[wydawnictwo]'  => 'Brown',
-            'appbundle_ksiazka[rokwydania]'  => '1984',
-            'appbundle_ksiazka[idkategoria]'  => '3',
-            'appbundle_ksiazka[ilosc]'  => '10',
+            'appbundle_ksiazka[tytul]' => 'TytułTF',
+            'appbundle_ksiazka[autor]' => 'AutorTF',
+            'appbundle_ksiazka[opis]' => 'opisTF',
+            'appbundle_ksiazka[isbn]' => '978-1-56619-909-4',
+            'appbundle_ksiazka[cena]' => '38.00',
+            'appbundle_ksiazka[obrazek]' => 'book_nr_101.jpg',
+            'appbundle_ksiazka[wydawnictwo]' => 'Brown',
+            'appbundle_ksiazka[rokwydania]' => '1984',
+            'appbundle_ksiazka[idkategoria]' => '3',
+            'appbundle_ksiazka[ilosc]' => '10',
         ));
 
         $client->submit($form);
@@ -96,8 +95,8 @@ class KsiazkaControllerTest extends WebTestCase
         $crawler = $client->click($crawler->selectLink('Edycja')->link());
 
         $form = $crawler->selectButton('Zaktualizuj')->form(array(
-            'appbundle_ksiazka[tytul]'  => 'Foo',
-            'appbundle_ksiazka[autor]'  => 'Bar',
+            'appbundle_ksiazka[tytul]' => 'Foo',
+            'appbundle_ksiazka[autor]' => 'Bar',
         ));
 
         $client->submit($form);

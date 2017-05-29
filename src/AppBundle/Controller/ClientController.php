@@ -34,7 +34,7 @@ class ClientController extends Controller {
         $orders = $rep->findAllMy($request->query->getInt('page', 1),$idClient);
 
         return $this->render('AppBundle:Client:order_history.html.twig',[
-            'zamowienia' => $orders
+            'orders' => $orders
         ]);
     }
 }
