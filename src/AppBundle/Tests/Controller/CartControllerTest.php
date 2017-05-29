@@ -12,9 +12,9 @@ class CartControllerTest extends WebTestCase
         $client = static::createClient();
 
         //dodaję produkty, sprawdzam czy przekierował do cart_menu
-        $client->request('GET', '/addtocart/978-0010465284');
+        $client->request('GET', '/add-to-cart/978-0010465284');
         $this->assertTrue($client->getResponse()->isRedirect('/cart'));
-        $client->request('GET', '/addtocart/978-0040892976');
+        $client->request('GET', '/add-to-cart/978-0040892976');
         $crawler = $client->followRedirect();
 
         //testuję od razu CartController:cartcontentAction(), czyli liczba produktów w koszyku.
@@ -54,7 +54,7 @@ class CartControllerTest extends WebTestCase
         $this->assertTrue($crawler->filter('html:contains("zamówione produkty:")')->count() > 0);
 
         //Testuję od razu CartController:cartclearAction()
-        $crawler = $client->request('GET', '/cartclear');
+        $crawler = $client->request('GET', '/cart-clear');
         $this->assertTrue($crawler->filter('h3.szaryKlocek:contains("Koszyk pusty")')->count() > 0);
         $this->assertTrue($crawler->filter('div.quantityKosz:contains("0")')->count() > 0);
     }
@@ -63,7 +63,7 @@ class CartControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request('GET', '/addtocart/978-0010465284');
+        $client->request('GET', '/add-to-cart/978-0010465284');
         $crawler = $client->followRedirect();
 
         //wybiera "zamawiam" i zostaję przekierowany do wyboru autoryzacji.

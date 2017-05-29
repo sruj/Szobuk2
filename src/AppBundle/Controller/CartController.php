@@ -21,7 +21,7 @@ class CartController extends Controller
      * Dodaj książkę do koszyka.
      * (zmienna sesji 'cart' przechowuje tablicę produktów $isbn=>$ilość)
      *
-     * @Route("/addtocart/{isbn}", name="add_to_cart")
+     * @Route("/add-to-cart/{isbn}", name="add_to_cart")
      */
     public function addToCartAction(Request $request, $isbn)
     {
@@ -58,7 +58,7 @@ class CartController extends Controller
     /**
      * Czyszczenie koszyka.
      *
-     * @Route("/cartclear", name="cart_clear")
+     * @Route("/cart-clear", name="cart_clear")
      */
     public function cartClearAction(Request $request)
     {
@@ -153,7 +153,7 @@ class CartController extends Controller
      * - jeśli poprawnie wypełniono formularz, zamówienie i dane klienta zapisane w bazie.
      * - wystrzeliwany event a listenery robią robotę (wysyłają maile potwierdzające).
      *
-     * @Route("/personaldata", name="personal_data")
+     * @Route("/personal-data", name="personal_data")
      */
     public function personalDataAction(Request $request)
     {
