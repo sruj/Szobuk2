@@ -9,10 +9,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Validator\Constraints as AcmeAssert;
 
 /**
- * @ORM\Table(name="ksiazka", indexes={@ORM\Index(name="idKategoria_idx", columns={"idKategoria"})})
- * @ORM\Entity(repositoryClass="AppBundle\Repository\KsiazkaRepository")
+ * @ORM\Table(name="book", indexes={@ORM\Index(name="idCategory_idx", columns={"idCategory"})})
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\BookRepository")
  */
-class Ksiazka
+class Book
 {
     /**
      * liczba książek na stronie (głównej)
@@ -104,17 +104,17 @@ class Ksiazka
     private $ilosc;
 
     /**
-     * @var \AppBundle\Entity\Kategoria
+     * @var \AppBundle\Entity\Category
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Kategoria", inversedBy="ksiazki")
+     * @ORM\ManyToOne(targetEntity="Category.php", inversedBy="ksiazki")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idkategoria", referencedColumnName="idKategoria")
+     *   @ORM\JoinColumn(name="idkategoria", referencedColumnName="idCategory")
      * })
      */
     private $idkategoria;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ZamowienieProdukt", mappedBy="isbn")
+     * @ORM\OneToMany(targetEntity="OrderProduct.php", mappedBy="isbn")
      */
     protected $zamowienie_produkty;
 
@@ -132,7 +132,7 @@ class Ksiazka
      * Set isbn
      *
      * @param string $isbn
-     * @return Ksiazka
+     * @return Book
      */
     public function setIsbn($isbn)
     {
@@ -155,7 +155,7 @@ class Ksiazka
      * Set tytul
      *
      * @param string $tytul
-     * @return Ksiazka
+     * @return Book
      */
     public function setTytul($tytul)
     {
@@ -178,7 +178,7 @@ class Ksiazka
      * Set autor
      *
      * @param string $autor
-     * @return Ksiazka
+     * @return Book
      */
     public function setAutor($autor)
     {
@@ -201,7 +201,7 @@ class Ksiazka
      * Set opis
      *
      * @param string $opis
-     * @return Ksiazka
+     * @return Book
      */
     public function setOpis($opis)
     {
@@ -224,7 +224,7 @@ class Ksiazka
      * Set cena
      *
      * @param decimal $cena
-     * @return Ksiazka
+     * @return Book
      */
     public function setCena($cena)
     {
@@ -247,7 +247,7 @@ class Ksiazka
      * Set obrazek
      *
      * @param string $obrazek
-     * @return Ksiazka
+     * @return Book
      */
     public function setObrazek($obrazek)
     {
@@ -270,7 +270,7 @@ class Ksiazka
      * Set wydawnictwo
      *
      * @param string $wydawnictwo
-     * @return Ksiazka
+     * @return Book
      */
     public function setWydawnictwo($wydawnictwo)
     {
@@ -293,7 +293,7 @@ class Ksiazka
      * Set rokwydania
      *
      * @param string $rokwydania
-     * @return Ksiazka
+     * @return Book
      */
     public function setRokwydania($rokwydania)
     {
@@ -316,7 +316,7 @@ class Ksiazka
      * Set rokwydania
      *
      * @param int $ilosc
-     * @return Ksiazka
+     * @return Book
      */
     public function setIlosc($ilosc)
     {
@@ -338,10 +338,10 @@ class Ksiazka
     /**
      * Set idkategoria
      *
-     * @param \AppBundle\Entity\Kategoria $idkategoria
-     * @return Ksiazka
+     * @param \AppBundle\Entity\Category $idkategoria
+     * @return Book
      */
-    public function setIdkategoria(\AppBundle\Entity\Kategoria $idkategoria = null)
+    public function setIdkategoria(\AppBundle\Entity\Category $idkategoria = null)
     {
         $this->idkategoria = $idkategoria;
 
@@ -351,7 +351,7 @@ class Ksiazka
     /**
      * Get idkategoria
      *
-     * @return \AppBundle\Entity\Kategoria
+     * @return \AppBundle\Entity\Category
      */
     public function getIdkategoria()
     {
@@ -367,7 +367,7 @@ class Ksiazka
      * Set created
      *
      * @param \DateTime $created
-     * @return Ksiazka
+     * @return Book
      */
     public function setCreated($created)
     {
@@ -380,7 +380,7 @@ class Ksiazka
      * Set updated
      *
      * @param \DateTime $updated
-     * @return Ksiazka
+     * @return Book
      */
     public function setUpdated($updated)
     {
@@ -392,10 +392,10 @@ class Ksiazka
     /**
      * Add zamowienie_produkty
      *
-     * @param \AppBundle\Entity\ZamowienieProdukt $zamowienieProdukty
-     * @return Ksiazka
+     * @param \AppBundle\Entity\OrderProduct $zamowienieProdukty
+     * @return Book
      */
-    public function addZamowienieProdukty(\AppBundle\Entity\ZamowienieProdukt $zamowienieProdukty)
+    public function addZamowienieProdukty(\AppBundle\Entity\OrderProduct $zamowienieProdukty)
     {
         $this->zamowienie_produkty[] = $zamowienieProdukty;
 
@@ -405,9 +405,9 @@ class Ksiazka
     /**
      * Remove zamowienie_produkty
      *
-     * @param \AppBundle\Entity\ZamowienieProdukt $zamowienieProdukty
+     * @param \AppBundle\Entity\OrderProduct $zamowienieProdukty
      */
-    public function removeZamowienieProdukty(\AppBundle\Entity\ZamowienieProdukt $zamowienieProdukty)
+    public function removeZamowienieProdukty(\AppBundle\Entity\OrderProduct $zamowienieProdukty)
     {
         $this->zamowienie_produkty->removeElement($zamowienieProdukty);
     }

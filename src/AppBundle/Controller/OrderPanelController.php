@@ -28,7 +28,7 @@ class OrderPanelController extends Controller
 
         if ($adminLogged) {
             $orderRepo = $this->getDoctrine()
-                ->getRepository('AppBundle:Zamowienie')
+                ->getRepository('Order.php')
                 ->findoneBy(array('idzamowienie' => $orderid));
             if (!$orderRepo) {
                 throw new OrderNotFoundException('Nie ma w bazie danych szukanego zamówienia.');
@@ -37,7 +37,7 @@ class OrderPanelController extends Controller
 
         if (!$adminLogged) {
             $orderRepo = $this->getDoctrine()
-                ->getRepository('AppBundle:Zamowienie')
+                ->getRepository('Order.php')
                 ->findoneBy(array('idzamowienie' => $orderid, 'idklient' => $userid));
             if (!$orderRepo) {
                 throw $this->createAccessDeniedException();
@@ -45,7 +45,7 @@ class OrderPanelController extends Controller
         }
 
         $products = $this->getDoctrine()
-            ->getRepository('AppBundle:ZamowienieProdukt')
+            ->getRepository('OrderProduct.php')
             ->findBy(array('idzamowienie' => $orderid));
 
         $statusForm = $this->createForm(ZamowienieType::class, $orderRepo)->add('zmień status', 'submit');

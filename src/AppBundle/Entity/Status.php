@@ -75,10 +75,10 @@ class Status
     /**
      * Add zamowienia
      *
-     * @param \AppBundle\Entity\Zamowienie $zamowienia
+     * @param \AppBundle\Entity\Order $zamowienia
      * @return Status
      */
-    public function addZamowienium(\AppBundle\Entity\Zamowienie $zamowienia)
+    public function addZamowienium(\AppBundle\Entity\Order $zamowienia)
     {
         $this->zamowienia[] = $zamowienia;
 
@@ -88,9 +88,9 @@ class Status
     /**
      * Remove zamowienia
      *
-     * @param \AppBundle\Entity\Zamowienie $zamowienia
+     * @param \AppBundle\Entity\Order $zamowienia
      */
-    public function removeZamowienium(\AppBundle\Entity\Zamowienie $zamowienia)
+    public function removeZamowienium(\AppBundle\Entity\Order $zamowienia)
     {
         $this->zamowienia->removeElement($zamowienia);
     }

@@ -3,7 +3,7 @@
 namespace AppBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use AppBundle\Entity\KsiazkaList;
+use AppBundle\Entity\BookList;
 use Symfony\Component\DomCrawler\Crawler;
 use AppBundle\Tests\Utils\ColumnSortChecker;
 
@@ -48,7 +48,7 @@ class BookControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/book/');
         $response = $client->getResponse();
         $this->assertEquals(200, $response->getStatusCode(), "Unexpected HTTP status code for GET /book/");
-        $this->assertEquals(KsiazkaList::NUM_ITEMS, $crawler->filterXPath('//tbody/tr')->count(),
+        $this->assertEquals(BookList::NUM_ITEMS, $crawler->filterXPath('//tbody/tr')->count(),
             'Za mało wyświetlonych ksiazek lub wcale.');
 
         //testuję paginację

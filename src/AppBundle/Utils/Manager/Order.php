@@ -46,7 +46,7 @@ class Order
     private function prepareOrderRepositoryForFilterSelected(TableDetails $td)
     {
         $this->tableDetails = $td;
-        $repo = $this->em->getRepository('AppBundle:Zamowienie')
+        $repo = $this->em->getRepository('Order.php')
             ->findByXOrderedByY(
                 $td->getQuery(),
                 $td->getColumnsSortOrder(),
@@ -59,7 +59,7 @@ class Order
     private function prepareOrderRepositoryUnfiltered(TableDetails $td)
     {
         $this->tableDetails = $td;
-        $repo = $this->em->getRepository('AppBundle:Zamowienie')
+        $repo = $this->em->getRepository('Order.php')
             ->findAllOrderedByY(
                 $td->getColumnsSortOrder(),
                 $td->getColumnSort());

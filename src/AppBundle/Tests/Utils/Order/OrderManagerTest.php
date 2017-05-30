@@ -8,11 +8,11 @@
 
 namespace AppBundle\Tests\Utils\Order;
 
-use AppBundle\Entity\Zamowienie;
+use AppBundle\Entity\Order;
 use AppBundle\Utils\Order\OrderManager;
-use AppBundle\Entity\Klient;
+use AppBundle\Entity\Client;
 use AppBundle\Entity\Status;
-use AppBundle\Entity\Ksiazka;
+use AppBundle\Entity\Book;
 use Doctrine\Common\Collections\Collection;
 use UserBundle\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
@@ -62,7 +62,7 @@ class OrderManagerTest extends \PHPUnit_Framework_TestCase
 
     protected function getKlientMock()
     {
-        return $this->createMock(Klient::class); //stub (wszystko zwraca null)
+        return $this->createMock(Client::class); //stub (wszystko zwraca null)
     }
 
     protected function getUserMock()
@@ -133,9 +133,9 @@ class OrderManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function getEntityManagerMock($exception=false)
     {
-        $ksiazka = $this->createMock(Ksiazka::class); //stub (wszystko zwraca null)
+        $ksiazka = $this->createMock(Book::class); //stub (wszystko zwraca null)
         $status = $this->createMock(Status::class); //stub (wszystko zwraca null)
-        $zamowienie = $this->createMock(Zamowienie::class);
+        $zamowienie = $this->createMock(Order::class);
         if($exception){$zamowienie=null;};
 
         $ksiazkaRepository = $this
@@ -176,9 +176,9 @@ class OrderManagerTest extends \PHPUnit_Framework_TestCase
             ->method('getRepository')
             ->withConsecutive(
                 $this->equalTo('AppBundle:Status'),
-                $this->equalTo('AppBundle:Ksiazka'),
-                $this->equalTo('AppBundle:Ksiazka'),
-                $this->equalTo('AppBundle:Zamowienie')
+                $this->equalTo('AppBundle:Book'),
+                $this->equalTo('AppBundle:Book'),
+                $this->equalTo('AppBundle:Order')
             )
             ->willReturnOnConsecutiveCalls(
                 $statusRepository,

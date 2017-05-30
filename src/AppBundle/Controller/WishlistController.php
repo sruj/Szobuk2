@@ -7,9 +7,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\DostawaType;
-use AppBundle\Entity\Klient;
-use AppBundle\Entity\Zamowienie;
-use AppBundle\Entity\Ksiazka;
+use AppBundle\Entity\Client;
+use AppBundle\Entity\Order;
+use AppBundle\Entity\Book;
 use AppBundle\Exception\BookNotFoundException;
 use AppBundle\Exception\CartNotInSessionException;
 use AppBundle\Exception\VariableNotExistInFlashBagException;
@@ -36,7 +36,7 @@ class WishlistController extends Controller
     //wsl 4. zapisz w bazie danych w tabeli wishlist produkt z isbn z ajax
         // COŚ Z UŻYCIEM PONIŻSZEGO NIECO.
             //        $this->getDoctrine()
-            //            ->getRepository('AppBundle:Klient')
+            //            ->getRepository('AppBundle:Client')
             //            ->findOneBy(['idlogowanie' => $this->getUser() ? $this->getUser()->getId() : false]);
 
 

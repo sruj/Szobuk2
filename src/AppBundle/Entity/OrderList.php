@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 
-class ZamowienieList
+class OrderList
 {
 
     private $zamowienia;

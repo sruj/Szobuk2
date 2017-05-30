@@ -13,11 +13,11 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Doctrine\ORM\EntityManager;
-use AppBundle\Entity\Klient;
-use AppBundle\Entity\Zamowienie;
-use AppBundle\Entity\ZamowienieProdukt;
+use AppBundle\Entity\Client;
+use AppBundle\Entity\Order;
+use AppBundle\Entity\OrderProduct;
 use AppBundle\Entity\Status;
-use AppBundle\Entity\Ksiazka;
+use AppBundle\Entity\Book;
 use AppBundle\Event\OrderPlacedEvent;
 use AppBundle\Exception\OrderNotFoundException;
 
@@ -42,7 +42,7 @@ class OrderManager
     }
 
     /**
-     * @param Klient $klient
+     * @param Client $klient
      * @return bool
      * @throws
      */
@@ -56,15 +56,15 @@ class OrderManager
         $this->dispatchEventWithOrderToSendConfirmedEmails($zamowienie);
         $this->addFlashBagWithOrderIdVariable($zamowienie);
         
-        if (empty($this->em->getRepository('AppBundle:Zamowienie')->find($zamowienie))){
+        if (empty($this->em->getRepository('Order.php')->find($zamowienie))){
             throw new OrderNotFoundException('Nie udało się złożyć zamówienia.');
         }
         return true;
     }
 
     /**
-     * @param Klient $klient
-     * @return Zamowienie
+     * @param Client $klient
+     * @return Order
      */
     private function prepareOrderDetailsToPersistInDatabase($klient)
     {
@@ -72,7 +72,7 @@ class OrderManager
             $klient->setIdlogowanie($this->getUser());
         }
 
-        $zamowienie = new Zamowienie();
+        $zamowienie = new Order();
         $zamowienie->setIdklient($klient);
         $status = $this->em
             ->getRepository('AppBundle:Status')
@@ -84,16 +84,16 @@ class OrderManager
     }
 
     /**
-     * @param Zamowienie $zamowienie
+     * @param Order $zamowienie
      */
     private function createOrderProductsAndPersistInDatabase($zamowienie,$cart)
     {
         foreach ($cart as $isbn => $quantity)
         {
             $ksiazka = $this->em
-                ->getRepository('AppBundle:Ksiazka')
+                ->getRepository('Book.php')
                 ->find($isbn);
-            $zm = new ZamowienieProdukt();
+            $zm = new OrderProduct();
             $zm->setIdzamowienie($zamowienie);
             $zm->setIsbn($ksiazka);
             $zm->setTytul($ksiazka->getTytul());
@@ -111,7 +111,7 @@ class OrderManager
     }
     
     /**
-     * @param Zamowienie $zamowienie
+     * @param Order $zamowienie
      */
     private function addFlashBagWithOrderIdVariable($zamowienie){
         $idzamowienia = $zamowienie->getIdzamowienie();
@@ -121,7 +121,7 @@ class OrderManager
     }
 
     /**
-     * @param Zamowienie $zamowienie
+     * @param Order $zamowienie
      */
     private function dispatchEventWithOrderToSendConfirmedEmails($zamowienie)
     {

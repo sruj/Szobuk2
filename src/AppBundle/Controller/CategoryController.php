@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use AppBundle\Entity\Kategoria;
+use AppBundle\Entity\Category;
 use AppBundle\Form\KategoriaType;
 
 /**
@@ -24,7 +24,7 @@ class CategoryController extends Controller
      */
     public function indexAction()
     {
-        $entities = $this->getDoctrine()->getRepository('AppBundle:Kategoria')->findAll();
+        $entities = $this->getDoctrine()->getRepository('Category.php')->findAll();
 
         return $this->render('AppBundle:Category:index.html.twig', [
             'entities' => $entities
@@ -40,14 +40,14 @@ class CategoryController extends Controller
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $category = $em->getRepository(Kategoria::class)->find($id);
+        $category = $em->getRepository(Category::class)->find($id);
 
         if (!$category) {
             throw $this->createNotFoundException('Nie można znaleźć kategorii.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $books = $em->getRepository('AppBundle:Ksiazka')
+        $books = $em->getRepository('AppBundle:Book')
             ->findBy(array('idkategoria' => $id));
 
         return $this->render('AppBundle:Category:show.html.twig', [
@@ -65,7 +65,7 @@ class CategoryController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity = new Kategoria();
+        $entity = new Category();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -86,10 +86,10 @@ class CategoryController extends Controller
     /**
      * Creates a form to create a Category entity.
      *
-     * @param Kategoria $entity The entity
+     * @param Category $entity The entity
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Kategoria $entity)
+    private function createCreateForm(Category $entity)
     {
         $form = $this->createForm(KategoriaType::class, $entity, array(
             'action' => $this->generateUrl('category_create'),
@@ -108,7 +108,7 @@ class CategoryController extends Controller
      */
     public function newAction()
     {
-        $entity = new Kategoria();
+        $entity = new Category();
         $form = $this->createCreateForm($entity);
 
         return $this->render('AppBundle:Category:new.html.twig', [
@@ -125,7 +125,7 @@ class CategoryController extends Controller
      */
     public function editAction($id)
     {
-        $category = $this->getDoctrine()->getRepository('AppBundle:Kategoria')->find($id);
+        $category = $this->getDoctrine()->getRepository('Category.php')->find($id);
 
         if (!$category) {
             throw $this->createNotFoundException('Nie można znaleźć kategorii.');
@@ -159,7 +159,7 @@ class CategoryController extends Controller
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('AppBundle:Kategoria')->find($id);
+        $entity = $em->getRepository('Category.php')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Nie można znaleźć kategorii.');
@@ -195,7 +195,7 @@ class CategoryController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AppBundle:Kategoria')->find($id);
+            $entity = $em->getRepository('Category.php')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Nie można znaleźć kategorii.');
@@ -216,10 +216,10 @@ class CategoryController extends Controller
     /**
      * Creates a form to edit a Category entity.
      *
-     * @param Kategoria $entity The entity
+     * @param Category $entity The entity
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(Kategoria $entity)
+    private function createEditForm(Category $entity)
     {
         $form = $this->createForm(KategoriaType::class, $entity, array(
             'action' => $this->generateUrl('category_update', array('id' => $entity->getIdkategoria())),

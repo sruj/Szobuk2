@@ -26,7 +26,7 @@ class User extends BaseUser {
         return $this->klient;
     }
 
-    public function setKlient(\AppBundle\Entity\Klient $klient  = null)
+    public function setKlient(\AppBundle\Entity\Client $klient  = null)
     {
         $this->klient = $klient;
     }

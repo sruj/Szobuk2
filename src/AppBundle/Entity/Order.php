@@ -7,12 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use DateTime;
 
 /**
- * Zamowienie
+ * Order
  *
  * @ORM\Table(name="zamowienie", indexes={@ORM\Index(name="idKlient_idx", columns={"idKlient"}), @ORM\Index(name="idStatus_idx", columns={"idStatus"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ZamowienieRepository")
 */
-class Zamowienie
+class Order
 {
     /**
      * @var \DateTime
@@ -31,9 +31,9 @@ class Zamowienie
     private $idzamowienie;
 
     /**
-     * @var \AppBundle\Entity\Klient
+     * @var \AppBundle\Entity\Client
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Klient", inversedBy="zamowienia")
+     * @ORM\ManyToOne(targetEntity="Client.php", inversedBy="zamowienia")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idKlient", referencedColumnName="idKlient")
      * })
@@ -56,14 +56,14 @@ class Zamowienie
     
     
     /**
-    * @ORM\OneToMany(targetEntity="AppBundle\Entity\Faktura", mappedBy="idzamowienie")
+    * @ORM\OneToMany(targetEntity="Invoice.php", mappedBy="idzamowienie")
     */
     protected $faktury;
 
 
 
     /**
-    * @ORM\OneToMany(targetEntity="AppBundle\Entity\Przesylka", mappedBy="idzamowienie")
+    * @ORM\OneToMany(targetEntity="Shipment.php", mappedBy="idzamowienie")
     */
     protected $przesylki;
 
@@ -81,7 +81,7 @@ class Zamowienie
      * Ustawienie aktualnej daty-godziny.
      * wystarczy na rzecz instancji zamówienia odpalić te funkcję
      * i w bazie danych  dodana bedzie aktualna data zakupu
-     *  $zamowienie = new Zamowienie();
+     *  $zamowienie = new Order();
      *  $zamowienie->setDatazlozeniacurrent();
      * 
      */
@@ -98,7 +98,7 @@ class Zamowienie
      * Set datazlozenia
      *
      * @param \DateTime $datazlozenia
-     * @return Zamowienie
+     * @return Order
      */
     public function setDatazlozenia($datazlozenia)
     {
@@ -131,7 +131,7 @@ class Zamowienie
      * Set idstatus
      *
      * @param \AppBundle\Entity\Status $idstatus
-     * @return Zamowienie
+     * @return Order
      */
     public function setIdstatus(\AppBundle\Entity\Status $idstatus = null)
     {
@@ -153,10 +153,10 @@ class Zamowienie
     /**
      * Set idklient
      *
-     * @param \AppBundle\Entity\Klient $idklient
-     * @return Zamowienie
+     * @param \AppBundle\Entity\Client $idklient
+     * @return Order
      */
-    public function setIdklient(\AppBundle\Entity\Klient $idklient = null)
+    public function setIdklient(\AppBundle\Entity\Client $idklient = null)
     {
         $this->idklient = $idklient;
 
@@ -166,7 +166,7 @@ class Zamowienie
     /**
      * Get idklient
      *
-     * @return \AppBundle\Entity\Klient 
+     * @return \AppBundle\Entity\Client
      */
     public function getIdklient()
     {
@@ -181,10 +181,10 @@ class Zamowienie
     /**
      * Add faktury
      *
-     * @param \AppBundle\Entity\Faktura $faktury
-     * @return Zamowienie
+     * @param \AppBundle\Entity\Invoice $faktury
+     * @return Order
      */
-    public function addFaktury(\AppBundle\Entity\Faktura $faktury)
+    public function addFaktury(\AppBundle\Entity\Invoice $faktury)
     {
         $this->faktury[] = $faktury;
 
@@ -194,9 +194,9 @@ class Zamowienie
     /**
      * Remove faktury
      *
-     * @param \AppBundle\Entity\Faktura $faktury
+     * @param \AppBundle\Entity\Invoice $faktury
      */
-    public function removeFaktury(\AppBundle\Entity\Faktura $faktury)
+    public function removeFaktury(\AppBundle\Entity\Invoice $faktury)
     {
         $this->faktury->removeElement($faktury);
     }
@@ -214,10 +214,10 @@ class Zamowienie
     /**
      * Add przesylki
      *
-     * @param \AppBundle\Entity\Przesylka $przesylki
-     * @return Zamowienie
+     * @param \AppBundle\Entity\Shipment $przesylki
+     * @return Order
      */
-    public function addPrzesylki(\AppBundle\Entity\Przesylka $przesylki)
+    public function addPrzesylki(\AppBundle\Entity\Shipment $przesylki)
     {
         $this->przesylki[] = $przesylki;
 
@@ -227,9 +227,9 @@ class Zamowienie
     /**
      * Remove przesylki
      *
-     * @param \AppBundle\Entity\Przesylka $przesylki
+     * @param \AppBundle\Entity\Shipment $przesylki
      */
-    public function removePrzesylki(\AppBundle\Entity\Przesylka $przesylki)
+    public function removePrzesylki(\AppBundle\Entity\Shipment $przesylki)
     {
         $this->przesylki->removeElement($przesylki);
     }
@@ -247,10 +247,10 @@ class Zamowienie
     /**
      * Add zamowienie_produkty
      *
-     * @param \AppBundle\Entity\ZamowienieProdukt $zamowienieProdukty
-     * @return Zamowienie
+     * @param \AppBundle\Entity\OrderProduct $zamowienieProdukty
+     * @return Order
      */
-    public function addZamowienieProdukt(\AppBundle\Entity\ZamowienieProdukt $zamowienieProdukt)
+    public function addZamowienieProdukt(\AppBundle\Entity\OrderProduct $zamowienieProdukt)
     {
         if(!$this->zamowienie_produkty->contains($zamowienieProdukt)) {
             $this->zamowienie_produkty[] = $zamowienieProdukt;
@@ -262,9 +262,9 @@ class Zamowienie
     /**
      * Remove zamowienie_produkty
      *
-     * @param \AppBundle\Entity\ZamowienieProdukt $zamowienieProdukty
+     * @param \AppBundle\Entity\OrderProduct $zamowienieProdukty
      */
-    public function removeZamowienieProdukty(\AppBundle\Entity\ZamowienieProdukt $zamowienieProdukt)
+    public function removeZamowienieProdukty(\AppBundle\Entity\OrderProduct $zamowienieProdukt)
     {
         $this->zamowienie_produkty->removeElement($zamowienieProdukt);
     }

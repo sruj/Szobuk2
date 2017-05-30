@@ -3,33 +3,47 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+
 /**
- * DaneSprzedawcy
+ * Employee - nieużywane
  *
- * @ORM\Table(name="dane_sprzedawcy")
+ * @ORM\Table(name="pracownik", indexes={@ORM\Index(name="idLogowanie_idx", columns={"idLogowanie"})})
  * @ORM\Entity
  */
-class DaneSprzedawcy
+class Employee
 {
     /**
      * @var string
      *
-     * @ORM\Column(name="nazwa", type="string", length=45, nullable=true)
+     * @ORM\Column(name="imie", type="string", length=45, nullable=false)
      */
-    private $nazwa;
+    private $imie;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="ulica", type="string", length=45, nullable=true)
+     * @ORM\Column(name="nazwisko", type="string", length=45, nullable=false)
+     */
+    private $nazwisko;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=45, nullable=true)
+     */
+    private $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ulica", type="string", length=45, nullable=false)
      */
     private $ulica;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nrDomu", type="string", length=45, nullable=true)
+     * @ORM\Column(name="nrDomu", type="string", length=45, nullable=false)
      */
     private $nrdomu;
 
@@ -50,7 +64,7 @@ class DaneSprzedawcy
     /**
      * @var string
      *
-     * @ORM\Column(name="miasto", type="string", length=45, nullable=true)
+     * @ORM\Column(name="miasto", type="string", length=45, nullable=false)
      */
     private $miasto;
 
@@ -69,47 +83,107 @@ class DaneSprzedawcy
     private $nrtelefonu;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="stanowisko", type="string", length=45, nullable=false)
+     */
+    private $stanowisko;
+
+    /**
      * @var integer
      *
-     * @ORM\Column(name="idSprzedawca", type="integer")
+     * @ORM\Column(name="idPracownik", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idsprzedawca;
+    private $idpracownik;
 
     /**
-    * @ORM\OneToMany(targetEntity="Faktura", mappedBy="idsprzedawca")
-    */
-    protected $faktury;
-
-    /**
-     * Set nazwa
+     * @var \UserBundle\Entity\User
      *
-     * @param string $nazwa
-     * @return DaneSprzedawcy
+     * @ORM\OneToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idlogowanie", referencedColumnName="id")
+     * })
      */
-    public function setNazwa($nazwa)
+    private $idlogowanie;
+
+
+
+    /**
+     * Set imie
+     *
+     * @param string $imie
+     * @return Employee
+     */
+    public function setImie($imie)
     {
-        $this->nazwa = $nazwa;
+        $this->imie = $imie;
 
         return $this;
     }
 
     /**
-     * Get nazwa
+     * Get imie
      *
      * @return string 
      */
-    public function getNazwa()
+    public function getImie()
     {
-        return $this->nazwa;
+        return $this->imie;
+    }
+
+    /**
+     * Set nazwisko
+     *
+     * @param string $nazwisko
+     * @return Employee
+     */
+    public function setNazwisko($nazwisko)
+    {
+        $this->nazwisko = $nazwisko;
+
+        return $this;
+    }
+
+    /**
+     * Get nazwisko
+     *
+     * @return string 
+     */
+    public function getNazwisko()
+    {
+        return $this->nazwisko;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return Employee
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
     }
 
     /**
      * Set ulica
      *
      * @param string $ulica
-     * @return DaneSprzedawcy
+     * @return Employee
      */
     public function setUlica($ulica)
     {
@@ -132,7 +206,7 @@ class DaneSprzedawcy
      * Set nrdomu
      *
      * @param string $nrdomu
-     * @return DaneSprzedawcy
+     * @return Employee
      */
     public function setNrdomu($nrdomu)
     {
@@ -155,7 +229,7 @@ class DaneSprzedawcy
      * Set nrmieszkania
      *
      * @param string $nrmieszkania
-     * @return DaneSprzedawcy
+     * @return Employee
      */
     public function setNrmieszkania($nrmieszkania)
     {
@@ -178,7 +252,7 @@ class DaneSprzedawcy
      * Set kodpocztowy
      *
      * @param string $kodpocztowy
-     * @return DaneSprzedawcy
+     * @return Employee
      */
     public function setKodpocztowy($kodpocztowy)
     {
@@ -201,7 +275,7 @@ class DaneSprzedawcy
      * Set miasto
      *
      * @param string $miasto
-     * @return DaneSprzedawcy
+     * @return Employee
      */
     public function setMiasto($miasto)
     {
@@ -224,7 +298,7 @@ class DaneSprzedawcy
      * Set nip
      *
      * @param string $nip
-     * @return DaneSprzedawcy
+     * @return Employee
      */
     public function setNip($nip)
     {
@@ -247,7 +321,7 @@ class DaneSprzedawcy
      * Set nrtelefonu
      *
      * @param string $nrtelefonu
-     * @return DaneSprzedawcy
+     * @return Employee
      */
     public function setNrtelefonu($nrtelefonu)
     {
@@ -267,48 +341,63 @@ class DaneSprzedawcy
     }
 
     /**
-     * Get idsprzedawca
+     * Set stanowisko
      *
-     * @return int
+     * @param string $stanowisko
+     * @return Employee
      */
-    public function getIdsprzedawca()
+    public function setStanowisko($stanowisko)
     {
-        return $this->idsprzedawca;
-    }
-    
-    public function __construct() {
-        $this->faktury = new ArrayCollection();
-    }    
-    
-    /**
-     * Get faktury
-     *
-     * @return Doctrine\Common\Collections\Collection
-     */
-    public function getFaktury() {
-        return $this->faktury;
-    }
-
-    /**
-     * Add faktury
-     *
-     * @param \AppBundle\Entity\Faktura $faktury
-     * @return DaneSprzedawcy
-     */
-    public function addFaktury(\AppBundle\Entity\Faktura $faktury)
-    {
-        $this->faktury[] = $faktury;
+        $this->stanowisko = $stanowisko;
 
         return $this;
     }
 
     /**
-     * Remove faktury
+     * Get stanowisko
      *
-     * @param \AppBundle\Entity\Faktura $faktury
+     * @return string 
      */
-    public function removeFaktury(\AppBundle\Entity\Faktura $faktury)
+    public function getStanowisko()
     {
-        $this->faktury->removeElement($faktury);
+        return $this->stanowisko;
     }
+
+    /**
+     * Get idpracownik
+     *
+     * @return int
+     */
+    public function getIdpracownik()
+    {
+        return $this->idpracownik;
+    }
+
+    /**
+     * Set idlogowanie
+     *
+     * @param \UserBundle\Entity\User $id
+     * @return Client
+     */
+    public function setIdlogowanie(\UserBundle\Entity\User $id = null)
+    {
+        $this->idlogowanie = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get idlogowanie
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getIdlogowanie()
+    {
+        return $this->idlogowanie;
+    }
+    
+    public function __construct() {
+        $this->zamowienia = new ArrayCollection();
+    }  
+
 }

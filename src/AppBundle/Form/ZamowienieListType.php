@@ -30,7 +30,7 @@ class ZamowienieListType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\ZamowienieList'
+            'data_class' => 'AppBundle\Entity\OrderList'
         ));
     }
 

@@ -2,7 +2,7 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Ksiazka;
+use AppBundle\Entity\Book;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -36,7 +36,7 @@ class DefaultController extends Controller
             $renderData = [];
             if (!empty($ksiazki)) {
                 $i = 0;
-                /** @var Ksiazka $ksiazka */
+                /** @var Book $ksiazka */
                 foreach ($ksiazki as $ksiazka) {
                     $books[$i]['isbn'] = $ksiazka->getIsbn();
                     $books[$i]['autor'] = $ksiazka->getAutor();

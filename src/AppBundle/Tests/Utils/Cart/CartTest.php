@@ -10,7 +10,7 @@ namespace AppBundle\Tests\Utils\Cart;
 
 use AppBundle\Utils\Cart\Cart;
 use Doctrine\ORM\EntityManager;
-use AppBundle\Entity\Ksiazka;
+use AppBundle\Entity\Book;
 
 class CartTest extends \PHPUnit_Framework_TestCase
 {
@@ -125,7 +125,7 @@ class CartTest extends \PHPUnit_Framework_TestCase
             ['isbn'=>'222','tytul'=>'foo2','autor'=>'bar2','cena'=>'2222']
         ];
 
-        $ks = $this->getMockBuilder(Ksiazka::class)
+        $ks = $this->getMockBuilder(Book::class)
             ->setMethods(['getIsbn','getTytul','getAutor','getCena'])
             ->getMock();
         $ks->expects($this->any())
@@ -159,7 +159,7 @@ class CartTest extends \PHPUnit_Framework_TestCase
         $entityManager
             ->expects($this->any())
             ->method('getRepository')
-            ->with('AppBundle:Ksiazka')
+            ->with('AppBundle:Book')
             ->will($this->returnValue($repository));
 
         return $entityManager;

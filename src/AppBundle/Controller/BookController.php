@@ -8,10 +8,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use AppBundle\Entity\Ksiazka;
+use AppBundle\Entity\Book;
 use AppBundle\Form\KsiazkaType;
 use AppBundle\Form\KsiazkaListType;
-use AppBundle\Entity\KsiazkaList;
+use AppBundle\Entity\BookList;
 use AppBundle\Exception\BookNotFoundException;
 
 /**
@@ -20,7 +20,7 @@ use AppBundle\Exception\BookNotFoundException;
 class BookController extends Controller
 {
     /**
-     * Lists all Ksiazka entities.
+     * Lists all Book entities.
      *
      * @Route("/", name="book")
      */
@@ -33,13 +33,13 @@ class BookController extends Controller
             $books = $rep->findAllAdmin($request->query->getInt('page', 1), $lpr);
         }
         if (!$this->isGranted('ROLE_ADMIN')) {
-            $books = $rep->findAllMy($request->query->getInt('page', 1), KsiazkaList::NUM_ITEMS);
+            $books = $rep->findAllMy($request->query->getInt('page', 1), BookList::NUM_ITEMS);
         }
 
         //[-Formularz Główny-]Ładowanie $zamowieniaList - zmiennej potrzebnej do głównego formularza.
-        //To kluczowa zmienna. Obiekt ZamowienieList() to kolekcja formularzy
+        //To kluczowa zmienna. Obiekt OrderList() to kolekcja formularzy
         //pozwala na stworzenie wielu formularzy z jednym buttonem
-        $bookList = new KsiazkaList();
+        $bookList = new BookList();
         foreach ($books as $book) {
             $bookList->getKsiazki()->add($book);
         }
@@ -66,14 +66,14 @@ class BookController extends Controller
 
     /**
      * 1.[dodawanie nowej książki]
-     * Displays a form to create a new Ksiazka entity.
+     * Displays a form to create a new Book entity.
      *
      * @Route("/admin/new", name="book_new")
      * @Method("GET")
      */
     public function newAction()
     {
-        $entity = new Ksiazka();
+        $entity = new Book();
         $form = $this->createCreateForm($entity);
 
         return $this->render('AppBundle:Book:new.html.twig', [
@@ -85,12 +85,12 @@ class BookController extends Controller
 
     /**
      * 2.[dodawanie nowej książki]
-     * Creates a form to create a Ksiazka entity.
+     * Creates a form to create a Book entity.
      *
-     * @param Ksiazka $entity The entity
+     * @param Book $entity The entity
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Ksiazka $entity)
+    private function createCreateForm(Book $entity)
     {
         $form = $this->createForm(KsiazkaType::class, $entity, array(
             'action' => $this->generateUrl('book_create'),
@@ -104,14 +104,14 @@ class BookController extends Controller
 
     /**
      * 3.[dodawanie nowej książki] Tu przechodzę po kliknięciu w template submit button.
-     * Creates a new Ksiazka entity.
+     * Creates a new Book entity.
      *
      * @Route("/admin/create", name="book_create")
      * @Method("GET")
      */
     public function createAction(Request $request)
     {
-        $entity = new Ksiazka();
+        $entity = new Book();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -129,14 +129,14 @@ class BookController extends Controller
 
     /**
      * 4.[dodawanie nowej książki]
-     * Finds and displays a Ksiazka entity.
+     * Finds and displays a Book entity.
      *
      * @Route("/show/{id}", name="book_show")
      * @Method("GET")
      */
     public function showAction($id)
     {
-        $entity = $this->getDoctrine()->getRepository('AppBundle:Ksiazka')->find($id);
+        $entity = $this->getDoctrine()->getRepository('Book.php')->find($id);
         if (!$entity) {
             throw new BookNotFoundException('Nie można znaleźć książki');
         }
@@ -152,14 +152,14 @@ class BookController extends Controller
 
     /**
      * 1.[edycja ksiazki]
-     * Displays a form to edit an existing Ksiazka entity.
+     * Displays a form to edit an existing Book entity.
      *
      * @Route("/admin/edit/{id}", name="book_edit")
      * @Method("GET")
      */
     public function editAction($id)
     {
-        $entity = $this->getDoctrine()->getRepository('AppBundle:Ksiazka')->find($id);
+        $entity = $this->getDoctrine()->getRepository('Book.php')->find($id);
         if (!$entity) {
             throw new BookNotFoundException('Nie można znaleźć książki.');
         }
@@ -176,12 +176,12 @@ class BookController extends Controller
 
     /**
      * 2.[edycja ksiazki]
-     * Creates a form to edit a Ksiazka entity.
+     * Creates a form to edit a Book entity.
      *
-     * @param Ksiazka $entity The entity
+     * @param Book $entity The entity
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(Ksiazka $entity)
+    private function createEditForm(Book $entity)
     {
         $form = $this->createForm(KsiazkaType::class, $entity, array(
             'action' => $this->generateUrl('book_update', array('id' => $entity->getIsbn())),
@@ -196,7 +196,7 @@ class BookController extends Controller
 
     /**
      * 3.[edycja ksiazki], Tu wpadam po kliknięciu guzika Zaktualizuj
-     * Edits an existing Ksiazka entity.
+     * Edits an existing Book entity.
      *
      * @Route("/admin/{id}/update", name="book_update")
      * @Method("PUT")
@@ -204,7 +204,7 @@ class BookController extends Controller
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('AppBundle:Ksiazka')->find($id);
+        $entity = $em->getRepository('Book.php')->find($id);
         if (!$entity) {
             throw $this->createNotFoundException('Nie można znaleźć książki.');
         }
@@ -226,7 +226,7 @@ class BookController extends Controller
     }
 
     /**
-     * Deletes a Ksiazka entity.
+     * Deletes a Book entity.
      *
      * @Route("/admin/{id}/delete", name="book_delete")
      * @Method("DELETE")
@@ -238,7 +238,7 @@ class BookController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AppBundle:Ksiazka')->find($id);
+            $entity = $em->getRepository('Book.php')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Nie można znaleźć książki.');
@@ -252,7 +252,7 @@ class BookController extends Controller
     }
 
     /**
-     * Creates a form to delete a Ksiazka entity by id.
+     * Creates a form to delete a Book entity by id.
      *
      * @param mixed $id The entity id
      * @return \Symfony\Component\Form\Form The form

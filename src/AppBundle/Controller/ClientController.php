@@ -21,7 +21,7 @@ class ClientController extends Controller {
         }
 
         $client= $this->getDoctrine()
-            ->getRepository('AppBundle:Klient')
+            ->getRepository('Client.php')
             ->findOneBy(['idlogowanie' => $this->getUser()->getId()]);
         
         if(!$client){

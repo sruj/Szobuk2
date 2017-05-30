@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 /**
- * ZamowienieProdukt
+ * OrderProduct
  *
  * @ORM\Table(name="zamowienie_produkt", indexes={@ORM\Index(name="idZamowienie_idx", columns={"idZamowienie"}), @ORM\Index(name="isbn_idx", columns={"isbn"})})
  * @ORM\Entity
  */
-class ZamowienieProdukt
+class OrderProduct
 {
     /**
      * @var integer
@@ -58,9 +58,9 @@ class ZamowienieProdukt
 
 
     /**
-     * @var \AppBundle\Entity\Ksiazka
+     * @var \AppBundle\Entity\Book
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Ksiazka", inversedBy="zamowienie_produkty")
+     * @ORM\ManyToOne(targetEntity="Book.php", inversedBy="zamowienie_produkty")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="isbn", referencedColumnName="isbn")
      * })
@@ -71,9 +71,9 @@ class ZamowienieProdukt
 
 
     /**
-     * @var \AppBundle\Entity\Zamowienie
+     * @var \AppBundle\Entity\Order
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Zamowienie", inversedBy="zamowienie_produkty")
+     * @ORM\ManyToOne(targetEntity="Order.php", inversedBy="zamowienie_produkty")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idZamowienie", referencedColumnName="idZamowienie")
      * })
@@ -86,7 +86,7 @@ class ZamowienieProdukt
      * Set ilosc
      *
      * @param int $ilosc
-     * @return ZamowienieProdukt
+     * @return OrderProduct
      */
     public function setIlosc($ilosc)
     {
@@ -109,7 +109,7 @@ class ZamowienieProdukt
      * Set cenaproduktu
      *
      * @param string $cenaproduktu
-     * @return ZamowienieProdukt
+     * @return OrderProduct
      */
     public function setCenaproduktu($cenaproduktu)
     {
@@ -132,7 +132,7 @@ class ZamowienieProdukt
      * Set rokwydania
      *
      * @param string $rokwydania
-     * @return ZamowienieProdukt
+     * @return OrderProduct
      */
     public function setRokwydania($rokwydania)
     {
@@ -155,7 +155,7 @@ class ZamowienieProdukt
      * Set tytul
      *
      * @param string $tytul
-     * @return ZamowienieProdukt
+     * @return OrderProduct
      */
     public function setTytul($tytul)
     {
@@ -178,7 +178,7 @@ class ZamowienieProdukt
      * Set autor
      *
      * @param string $autor
-     * @return ZamowienieProdukt
+     * @return OrderProduct
      */
     public function setAutor($autor)
     {
@@ -210,10 +210,10 @@ class ZamowienieProdukt
     /**
      * Set isbn
      *
-     * @param \AppBundle\Entity\Ksiazka $isbn
-     * @return ZamowienieProdukt
+     * @param \AppBundle\Entity\Book $isbn
+     * @return OrderProduct
      */
-    public function setIsbn(\AppBundle\Entity\Ksiazka $isbn = null)
+    public function setIsbn(\AppBundle\Entity\Book $isbn = null)
     {
         $this->isbn = $isbn;
 
@@ -223,7 +223,7 @@ class ZamowienieProdukt
     /**
      * Get isbn
      *
-     * @return \AppBundle\Entity\Ksiazka 
+     * @return \AppBundle\Entity\Book
      */
     public function getIsbn()
     {
@@ -233,10 +233,10 @@ class ZamowienieProdukt
     /**
      * Set idzamowienie
      *
-     * @param \AppBundle\Entity\Zamowienie $idzamowienie
-     * @return ZamowienieProdukt
+     * @param \AppBundle\Entity\Order $idzamowienie
+     * @return OrderProduct
      */
-    public function setIdzamowienie(\AppBundle\Entity\Zamowienie $zamowienie = null)
+    public function setIdzamowienie(\AppBundle\Entity\Order $zamowienie = null)
     {
         $this->idzamowienie = $zamowienie;
         $zamowienie->addZamowienieProdukt($this);
@@ -247,7 +247,7 @@ class ZamowienieProdukt
     /**
      * Get idzamowienie
      *
-     * @return \AppBundle\Entity\Zamowienie 
+     * @return \AppBundle\Entity\Order
      */
     public function getIdzamowienie()
     {

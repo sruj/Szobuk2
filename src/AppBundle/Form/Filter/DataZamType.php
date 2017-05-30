@@ -27,7 +27,7 @@ class DataZamType extends AbstractType {
             ;
 //        $builder
 //                ->add('datazlozenia', 'entity', array(
-//                    'class' => 'AppBundle:Zamowienie',
+//                    'class' => 'AppBundle:Order',
 //                    'placeholder' => 'Od',
 //                    'label' => false,
 //                     'property' => 'datazlozenia',
@@ -41,7 +41,7 @@ class DataZamType extends AbstractType {
 //     */
 //    public function setDefaultOptions(OptionsResolverInterface $resolver) {
 //        $resolver->setDefaults(array(
-//            'data_class' => 'AppBundle\Entity\Zamowienie'
+//            'data_class' => 'AppBundle\Entity\Order'
 //        ));
 //    }
 

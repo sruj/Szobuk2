@@ -9,7 +9,7 @@
 namespace AppBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
-use AppBundle\Entity\Zamowienie;
+use AppBundle\Entity\Order;
 
 
 class OrderPlacedEvent extends Event
@@ -18,7 +18,7 @@ class OrderPlacedEvent extends Event
 
     protected $zamowienie;
 
-    public function __construct(Zamowienie $zamowienie)
+    public function __construct(Order $zamowienie)
     {
         $this->zamowienie = $zamowienie;
     }

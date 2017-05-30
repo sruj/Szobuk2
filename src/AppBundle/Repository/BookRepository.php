@@ -2,7 +2,7 @@
 
 namespace AppBundle\Repository;
 
-use AppBundle\Entity\Ksiazka;
+use AppBundle\Entity\Book;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\EntityManager;
@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
 use Knp\Component\Pager\Paginator;
 
-class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterface
+class BookRepository extends EntityRepository implements PaginatorAwareInterface
 {
     /**
      * @var Paginator
@@ -33,7 +33,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
     {
         return $this->_em->createQuery('
                 SELECT a 
-                FROM AppBundle:Ksiazka a
+                FROM AppBundle:Book a
                 WHERE a.ilosc>0
                 ORDER BY a.tytul ASC
             ');
@@ -46,7 +46,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
     {
         return $this->_em->createQuery('
                 SELECT a 
-                FROM AppBundle:Ksiazka a
+                FROM AppBundle:Book a
                 ORDER BY a.tytul ASC
             ');
     }
@@ -58,7 +58,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
     {
         return $this->_em->createQuery('
             SELECT k
-            FROM AppBundle:Ksiazka k
+            FROM AppBundle:Book k
             WHERE k.cena < :cena AND k.ilosc>0
             ORDER BY k.tytul ASC'
         )->setParameter('cena', '50');
@@ -71,7 +71,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
     {
         return $this->_em->createQuery('
             SELECT k
-            FROM AppBundle:Ksiazka k
+            FROM AppBundle:Book k
             WHERE k.ilosc>0
             ORDER BY k.created DESC'
         );
@@ -79,7 +79,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
 
     public function queryWyszukiwarka($word)
     {
-        $repository = $this->_em->getRepository('AppBundle:Ksiazka');
+        $repository = $this->_em->getRepository('Book.php');
 
         return $query = $repository->createQueryBuilder('a')
             ->where('a.tytul LIKE :word')
@@ -96,7 +96,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
     {
         return $this->_em->createQuery(
             'SELECT a
-            FROM AppBundle:Ksiazka a
+            FROM AppBundle:Book a
             WHERE a.' . $findby . ' = :param'
         )->setParameter('param', $what);
 
@@ -106,7 +106,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
      * @param int $page
      * @return \Knp\Component\Pager\Pagination\PaginationInterface
      */
-    public function findAllMy($page, $limit = Ksiazka::NUM_ITEMS)
+    public function findAllMy($page, $limit = Book::NUM_ITEMS)
     {
         return $this->paginator->paginate(
             $this->queryAll(),
@@ -119,7 +119,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
      * @param int $page
      * @return \Knp\Component\Pager\Pagination\PaginationInterface
      */
-    public function findAllAdmin($page, $limit = Ksiazka::NUM_ITEMS)
+    public function findAllAdmin($page, $limit = Book::NUM_ITEMS)
     {
         return $this->paginator->paginate(
             $this->queryAllAdmin(),
@@ -137,7 +137,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
         return $this->paginator->paginate(
             $this->queryPopular(),
             $page/*page number*/,
-            Ksiazka::NUM_ITEMS/*limit per page*/
+            Book::NUM_ITEMS/*limit per page*/
         );
     }
 
@@ -150,7 +150,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
         return $this->paginator->paginate(
             $this->queryNews(),
             $page/*page number*/,
-            Ksiazka::NUM_ITEMS/*limit per page*/
+            Book::NUM_ITEMS/*limit per page*/
         );
     }
 
@@ -159,7 +159,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
         return $this->paginator->paginate(
             $this->queryWyszukiwarka($word),
             $page/*page number*/,
-            Ksiazka::NUM_ITEMS/*limit per page*/
+            Book::NUM_ITEMS/*limit per page*/
         );
     }
 
@@ -168,7 +168,7 @@ class KsiazkaRepository extends EntityRepository implements PaginatorAwareInterf
         return $this->paginator->paginate(
             $this->queryByWhat($findby, $what),
             $page/*page number*/,
-            Ksiazka::NUM_ITEMS/*limit per page*/
+            Book::NUM_ITEMS/*limit per page*/
         );
     }
 

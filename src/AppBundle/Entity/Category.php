@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity
  * @UniqueEntity("nazwa")
  */
-class Kategoria {
+class Category {
 
     /**
      * @var string
@@ -25,14 +25,14 @@ class Kategoria {
     /**
      * @var integer
      *
-     * @ORM\Column(name="idKategoria", type="integer")
+     * @ORM\Column(name="idCategory", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idkategoria;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Ksiazka", mappedBy="idkategoria")
+     * @ORM\OneToMany(targetEntity="Book.php", mappedBy="idkategoria")
      */
     protected $ksiazki;
 
@@ -56,7 +56,7 @@ class Kategoria {
      * Set nazwa
      *
      * @param string $nazwa
-     * @return Kategoria
+     * @return Category
      */
     public function setNazwa($nazwa) {
         $this->nazwa = $nazwa;
@@ -99,10 +99,10 @@ class Kategoria {
     /**
      * Add ksiazki
      *
-     * @param \AppBundle\Entity\Ksiazka $ksiazki
-     * @return Kategoria
+     * @param \AppBundle\Entity\Book $ksiazki
+     * @return Category
      */
-    public function addKsiazki(\AppBundle\Entity\Ksiazka $ksiazki)
+    public function addKsiazki(\AppBundle\Entity\Book $ksiazki)
     {
         $this->ksiazki[] = $ksiazki;
 
@@ -112,9 +112,9 @@ class Kategoria {
     /**
      * Remove ksiazki
      *
-     * @param \AppBundle\Entity\Ksiazka $ksiazki
+     * @param \AppBundle\Entity\Book $ksiazki
      */
-    public function removeKsiazki(\AppBundle\Entity\Ksiazka $ksiazki)
+    public function removeKsiazki(\AppBundle\Entity\Book $ksiazki)
     {
         $this->ksiazki->removeElement($ksiazki);
     }

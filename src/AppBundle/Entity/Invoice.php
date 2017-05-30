@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 /**
- * Faktura - nieużywane
+ * Invoice - nieużywane
  *
  * @ORM\Table(name="faktura", indexes={@ORM\Index(name="idZamowienie_idx", columns={"idZamowienie"}), @ORM\Index(name="idSprzedawcy_idx", columns={"idSprzedawca"})})
  * @ORM\Entity
  */
-class Faktura
+class Invoice
 {
     /**
      * @var \DateTime
@@ -30,9 +30,9 @@ class Faktura
 
 
     /**
-     * @var \AppBundle\Entity\DaneSprzedawcy
+     * @var \AppBundle\Entity\Merchant
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\DaneSprzedawcy", inversedBy="faktury")
+     * @ORM\ManyToOne(targetEntity="Merchant.php", inversedBy="faktury")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idSprzedawca", referencedColumnName="idSprzedawca")
      * })
@@ -42,9 +42,9 @@ class Faktura
 
 
     /**
-     * @var \AppBundle\Entity\Zamowienie
+     * @var \AppBundle\Entity\Order
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Zamowienie", inversedBy="faktury")
+     * @ORM\ManyToOne(targetEntity="Order.php", inversedBy="faktury")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idZamowienie", referencedColumnName="idZamowienie")
      * })
@@ -60,7 +60,7 @@ class Faktura
      * Set datafaktury
      *
      * @param \DateTime $datafaktury
-     * @return Faktura
+     * @return Invoice
      */
     public function setDatafaktury($datafaktury)
     {
@@ -92,10 +92,10 @@ class Faktura
     /**
      * Set idsprzedawca
      *
-     * @param \AppBundle\Entity\DaneSprzedawcy $idsprzedawca
-     * @return Faktura
+     * @param \AppBundle\Entity\Merchant $idsprzedawca
+     * @return Invoice
      */
-    public function setIdsprzedawca(\AppBundle\Entity\DaneSprzedawcy $idsprzedawca = null)
+    public function setIdsprzedawca(\AppBundle\Entity\Merchant $idsprzedawca = null)
     {
         $this->idsprzedawca = $idsprzedawca;
 
@@ -105,7 +105,7 @@ class Faktura
     /**
      * Get idsprzedawca
      *
-     * @return \AppBundle\Entity\DaneSprzedawcy 
+     * @return \AppBundle\Entity\Merchant
      */
     public function getIdsprzedawca()
     {
@@ -115,10 +115,10 @@ class Faktura
     /**
      * Set idzamowienie
      *
-     * @param \AppBundle\Entity\Zamowienie $idzamowienie
-     * @return Faktura
+     * @param \AppBundle\Entity\Order $idzamowienie
+     * @return Invoice
      */
-    public function setIdzamowienie(\AppBundle\Entity\Zamowienie $idzamowienie = null)
+    public function setIdzamowienie(\AppBundle\Entity\Order $idzamowienie = null)
     {
         $this->idzamowienie = $idzamowienie;
 
@@ -128,7 +128,7 @@ class Faktura
     /**
      * Get idzamowienie
      *
-     * @return \AppBundle\Entity\Zamowienie 
+     * @return \AppBundle\Entity\Order
      */
     public function getIdzamowienie()
     {

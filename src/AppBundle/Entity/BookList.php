@@ -6,10 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 
-class KsiazkaList
+class BookList
 {
     /**
-     * liczba książek na stronie (katalog: /ksiazka/)
+     * liczba książek na stronie (katalog: /book/)
      */
     const NUM_ITEMS = 45;
 

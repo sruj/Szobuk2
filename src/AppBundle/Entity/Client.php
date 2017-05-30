@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints AS Assert;
 use AppBundle\Validator\Constraints as AcmeAssert;
 
 /**
- * Klient.
+ * Client.
  * 
  * Contraints rules messages NIE DZIAŁA. To jest zasady tu podane obowiązują,
  * ale komunikaty błędów walidacji są domyślne dla przeglądarki i HTML5. 
@@ -17,7 +17,7 @@ use AppBundle\Validator\Constraints as AcmeAssert;
  * @ORM\Table(name="klient", indexes={@ORM\Index(name="idLogowanie_idx", columns={"idLogowanie"})})
  * @ORM\Entity
  */
-class Klient
+class Client
 {
     /**
      * @var string
@@ -168,7 +168,7 @@ class Klient
 
         
     /**
-    * @ORM\OneToMany(targetEntity="AppBundle\Entity\Zamowienie", mappedBy="idklient")
+    * @ORM\OneToMany(targetEntity="Order.php", mappedBy="idklient")
     */
     protected $zamowienia;
 
@@ -177,7 +177,7 @@ class Klient
      * Set imie
      *
      * @param string $imie
-     * @return Klient
+     * @return Client
      */
     public function setImie($imie)
     {
@@ -200,7 +200,7 @@ class Klient
      * Set nazwisko
      *
      * @param string $nazwisko
-     * @return Klient
+     * @return Client
      */
     public function setNazwisko($nazwisko)
     {
@@ -223,7 +223,7 @@ class Klient
      * Set email
      *
      * @param string $email
-     * @return Klient
+     * @return Client
      */
     public function setEmail($email)
     {
@@ -246,7 +246,7 @@ class Klient
      * Set ulica
      *
      * @param string $ulica
-     * @return Klient
+     * @return Client
      */
     public function setUlica($ulica)
     {
@@ -269,7 +269,7 @@ class Klient
      * Set nrdomu
      *
      * @param string $nrdomu
-     * @return Klient
+     * @return Client
      */
     public function setNrdomu($nrdomu)
     {
@@ -292,7 +292,7 @@ class Klient
      * Set nrmieszkania
      *
      * @param string $nrmieszkania
-     * @return Klient
+     * @return Client
      */
     public function setNrmieszkania($nrmieszkania)
     {
@@ -315,7 +315,7 @@ class Klient
      * Set kodpocztowy
      *
      * @param string $kodpocztowy
-     * @return Klient
+     * @return Client
      */
     public function setKodpocztowy($kodpocztowy)
     {
@@ -338,7 +338,7 @@ class Klient
      * Set miasto
      *
      * @param string $miasto
-     * @return Klient
+     * @return Client
      */
     public function setMiasto($miasto)
     {
@@ -361,7 +361,7 @@ class Klient
      * Set nip
      *
      * @param string $nip
-     * @return Klient
+     * @return Client
      */
     public function setNip($nip)
     {
@@ -384,7 +384,7 @@ class Klient
      * Set nrtelefonu
      *
      * @param string $nrtelefonu
-     * @return Klient
+     * @return Client
      */
     public function setNrtelefonu($nrtelefonu)
     {
@@ -417,7 +417,7 @@ class Klient
      * Set idlogowanie
      *
      * @param \UserBundle\Entity\User $id
-     * @return Klient
+     * @return Client
      */
     public function setIdlogowanie(\UserBundle\Entity\User $id = null)
     {
@@ -443,10 +443,10 @@ class Klient
     /**
      * Add zamowienia
      *
-     * @param \AppBundle\Entity\Zamowienie $zamowienia
-     * @return Klient
+     * @param \AppBundle\Entity\Order $zamowienia
+     * @return Client
      */
-    public function addZamowienium(\AppBundle\Entity\Zamowienie $zamowienia)
+    public function addZamowienium(\AppBundle\Entity\Order $zamowienia)
     {
         $this->zamowienia[] = $zamowienia;
 
@@ -456,9 +456,9 @@ class Klient
     /**
      * Remove zamowienia
      *
-     * @param \AppBundle\Entity\Zamowienie $zamowienia
+     * @param \AppBundle\Entity\Order $zamowienia
      */
-    public function removeZamowienium(\AppBundle\Entity\Zamowienie $zamowienia)
+    public function removeZamowienium(\AppBundle\Entity\Order $zamowienia)
     {
         $this->zamowienia->removeElement($zamowienia);
     }

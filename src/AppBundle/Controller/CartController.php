@@ -8,9 +8,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\DostawaType;
-use AppBundle\Entity\Klient;
-use AppBundle\Entity\Zamowienie;
-use AppBundle\Entity\Ksiazka;
+use AppBundle\Entity\Client;
+use AppBundle\Entity\Order;
+use AppBundle\Entity\Book;
 use AppBundle\Exception\BookNotFoundException;
 use AppBundle\Exception\CartNotInSessionException;
 use AppBundle\Exception\VariableNotExistInFlashBagException;
@@ -25,7 +25,7 @@ class CartController extends Controller
      */
     public function addToCartAction(Request $request, $isbn)
     {
-        $entity = $this->getDoctrine()->getRepository('AppBundle:Ksiazka')->find($isbn);
+        $entity = $this->getDoctrine()->getRepository('Book.php')->find($isbn);
 
         if (!$entity) {
             throw new BookNotFoundException('Książka z numerem isbn: ' . $isbn . ' nie istnieje w bazie');
@@ -163,10 +163,10 @@ class CartController extends Controller
         }
 
         $klient = $this->getDoctrine()
-            ->getRepository('AppBundle:Klient')
+            ->getRepository('Client.php')
             ->findOneBy(['idlogowanie' => $this->getUser() ? $this->getUser()->getId() : false]);                                                // zalogowany wypełniał kiedyś formularz
         if (!$klient) {
-            $klient = new Klient();
+            $klient = new Client();
         }                                                                                                   // jeśli zalogowany nigdy nie wypełniał formularza dostawy lub jeśli niezalogowany
 
         $form = $this->createForm(DostawaType::class, $klient, [
@@ -195,7 +195,7 @@ class CartController extends Controller
         }
 
         $zamowienie = $this->getDoctrine()
-            ->getRepository('AppBundle:Zamowienie')
+            ->getRepository('Order.php')
             ->find($idzamowienie[0]);
         $produkty = $zamowienie->getZamowienieProdukty();
         $suma = $request->getSession()->get('sum');

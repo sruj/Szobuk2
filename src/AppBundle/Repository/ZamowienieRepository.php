@@ -2,7 +2,7 @@
 
 namespace AppBundle\Repository;
 
-use AppBundle\Entity\Zamowienie;
+use AppBundle\Entity\Order;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\EntityManager;
@@ -31,7 +31,7 @@ class ZamowienieRepository extends EntityRepository implements PaginatorAwareInt
 
 
     /**
-     * Łączę entity Zamowienie ze Status by móc w szablonie sortować wg Status.
+     * Łączę entity Order ze Status by móc w szablonie sortować wg Status.
      * (Muszę tak robić gdyż tradycyjny zapis z.idstatus.status wywala błąd przy próbie sortowania według tegoż).
      *
      * @return Query
@@ -40,7 +40,7 @@ class ZamowienieRepository extends EntityRepository implements PaginatorAwareInt
     {
         $query = $this->_em->createQuery('
                 SELECT z,s 
-                FROM AppBundle:Zamowienie z 
+                FROM AppBundle:Order z 
                 JOIN z.idstatus s 
                 WHERE z.idklient = :idklient 
                 ORDER BY z.idzamowienie ASC
@@ -79,7 +79,7 @@ class ZamowienieRepository extends EntityRepository implements PaginatorAwareInt
 
         return $this->_em
             ->createQuery(
-                'SELECT z FROM AppBundle:Zamowienie z ORDER BY z.'.$OrderBy.' '.$sort.''
+                'SELECT z FROM AppBundle:Order z ORDER BY z.'.$OrderBy.' '.$sort.''
             )
             ->getResult();
     }
@@ -104,7 +104,7 @@ class ZamowienieRepository extends EntityRepository implements PaginatorAwareInt
         return $this->_em
             ->createQuery(
                 'SELECT z 
-                FROM AppBundle:Zamowienie z 
+                FROM AppBundle:Order z 
                 WHERE z.'.$query .' 
                 ORDER BY z.'.$OrderBy.' '.$sort.''
             )

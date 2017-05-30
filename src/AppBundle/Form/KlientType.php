@@ -35,7 +35,7 @@ class KlientType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Klient'
+            'data_class' => 'AppBundle\Entity\Client'
         ));
     }
 

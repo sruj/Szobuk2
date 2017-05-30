@@ -103,7 +103,7 @@ class Cart
 
         foreach ($cart as $isbn => $quantity)
         {
-            $ksiazka = $this->em->getRepository('AppBundle:Ksiazka')->find($isbn);
+            $ksiazka = $this->em->getRepository('Book.php')->find($isbn);
             $ksiazki[$i]['isbn'] = $ksiazka->getIsbn();
             $ksiazki[$i]['tytul'] = $ksiazka->getTytul();
             $ksiazki[$i]['autor'] = $ksiazka->getAutor();
@@ -122,7 +122,7 @@ class Cart
 
         foreach ($cart as $isbn => $quantity)
         {
-            $ksiazka = $this->em->getRepository('AppBundle:Ksiazka')->find($isbn);
+            $ksiazka = $this->em->getRepository('Book.php')->find($isbn);
             $cena = (int)$ksiazka->getCena();
             $razem = $cena*$quantity;
             $sum += $razem;

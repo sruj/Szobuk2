@@ -4,7 +4,6 @@ namespace AppBundle\Controller;
 
 use AppBundle\Utils\Manager\Filter;
 use AppBundle\Utils\Manager\FilterQuery;
-use AppBundle\Utils\Manager\Order;
 use AppBundle\Utils\Manager\TableDetails;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -13,8 +12,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\ZamowienieType;
 use AppBundle\Form\ZamowienieListType;
-use AppBundle\Entity\Zamowienie;
-use AppBundle\Entity\ZamowienieList;
+use AppBundle\Entity\Order;
+use AppBundle\Entity\OrderList;
 use AppBundle\Entity\Status;
 use AppBundle\Form\Filter\StatusType;
 use AppBundle\Form\Filter\DataZamType;
@@ -95,10 +94,10 @@ class ManagerController extends Controller
         $tableDetails = $managerOrder->getTableDetails();
 
         $ordersProducts = $this->getDoctrine()
-            ->getRepository('AppBundle:ZamowienieProdukt')
+            ->getRepository('OrderProduct.php')
             ->findAll();
 
-        $ordersList = new ZamowienieList();
+        $ordersList = new OrderList();
         foreach ($orders as $order) {
             $ordersList->getZamowienia()->add($order);
         }

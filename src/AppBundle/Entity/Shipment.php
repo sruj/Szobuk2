@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 /**
- * Przesylka
+ * Shipment
  *
  * @ORM\Table(name="przesylka", indexes={@ORM\Index(name="idZamowienie_idx", columns={"idZamowienie"})})
  * @ORM\Entity
  */
-class Przesylka
+class Shipment
 {
     /**
      * @var string
@@ -58,9 +58,9 @@ class Przesylka
 
 
     /**
-     * @var \AppBundle\Entity\Zamowienie
+     * @var \AppBundle\Entity\Order
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Zamowienie", inversedBy="przesylki")
+     * @ORM\ManyToOne(targetEntity="Order.php", inversedBy="przesylki")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idZamowienie", referencedColumnName="idZamowienie")
      * })
@@ -72,7 +72,7 @@ class Przesylka
      * Set koszt
      *
      * @param string $koszt
-     * @return Przesylka
+     * @return Shipment
      */
     public function setKoszt($koszt)
     {
@@ -95,7 +95,7 @@ class Przesylka
      * Set nrprzesylki
      *
      * @param string $nrprzesylki
-     * @return Przesylka
+     * @return Shipment
      */
     public function setNrprzesylki($nrprzesylki)
     {
@@ -118,7 +118,7 @@ class Przesylka
      * Set nrfaktury
      *
      * @param string $nrfaktury
-     * @return Przesylka
+     * @return Shipment
      */
     public function setNrfaktury($nrfaktury)
     {
@@ -141,7 +141,7 @@ class Przesylka
      * Set datawyslania
      *
      * @param \DateTime $datawyslania
-     * @return Przesylka
+     * @return Shipment
      */
     public function setDatawyslania($datawyslania)
     {
@@ -164,7 +164,7 @@ class Przesylka
      * Set telefondostawcy
      *
      * @param string $telefondostawcy
-     * @return Przesylka
+     * @return Shipment
      */
     public function setTelefondostawcy($telefondostawcy)
     {
@@ -196,10 +196,10 @@ class Przesylka
     /**
      * Set idzamowienie
      *
-     * @param \AppBundle\Entity\Zamowienie $idzamowienie
-     * @return Przesylka
+     * @param \AppBundle\Entity\Order $idzamowienie
+     * @return Shipment
      */
-    public function setIdzamowienie(\AppBundle\Entity\Zamowienie $idzamowienie = null)
+    public function setIdzamowienie(\AppBundle\Entity\Order $idzamowienie = null)
     {
         $this->idzamowienie = $idzamowienie;
 
@@ -209,7 +209,7 @@ class Przesylka
     /**
      * Get idzamowienie
      *
-     * @return \AppBundle\Entity\Zamowienie 
+     * @return \AppBundle\Entity\Order
      */
     public function getIdzamowienie()
     {
