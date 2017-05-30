@@ -9,8 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppBundle\Entity\Book;
-use AppBundle\Form\KsiazkaType;
-use AppBundle\Form\KsiazkaListType;
+use AppBundle\Form\BookType;
+use AppBundle\Form\BookListType;
 use AppBundle\Entity\BookList;
 use AppBundle\Exception\BookNotFoundException;
 
@@ -44,9 +44,9 @@ class BookController extends Controller
             $bookList->getKsiazki()->add($book);
         }
 
-        //[-Formularz Główny-]Główny formularz $form. Struktura to kolekcja formularzy KsiazkaListType()
+        //[-Formularz Główny-]Główny formularz $form. Struktura to kolekcja formularzy BookListType()
         //a zawartość to $KsiazkiList
-        $form = $this->createForm(KsiazkaListType::class, $bookList);
+        $form = $this->createForm(BookListType::class, $bookList);
 
         //[-Formularz Główny-]Jeśli w panelu zmienionio ilos i kliknięto zapisz to odbieram
         //zawartość formularza i aktualizuję bazę danych
@@ -92,7 +92,7 @@ class BookController extends Controller
      */
     private function createCreateForm(Book $entity)
     {
-        $form = $this->createForm(KsiazkaType::class, $entity, array(
+        $form = $this->createForm(BookType::class, $entity, array(
             'action' => $this->generateUrl('book_create'),
             'method' => 'GET', 'attr' => array('class' => 'form_new_book')
         ));
@@ -183,7 +183,7 @@ class BookController extends Controller
      */
     private function createEditForm(Book $entity)
     {
-        $form = $this->createForm(KsiazkaType::class, $entity, array(
+        $form = $this->createForm(BookType::class, $entity, array(
             'action' => $this->generateUrl('book_update', array('id' => $entity->getIsbn())),
             'method' => 'PUT',
         ));

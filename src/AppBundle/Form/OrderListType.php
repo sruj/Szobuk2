@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class KsiazkaIloscType extends AbstractType
+class OrderListType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,18 +15,22 @@ class KsiazkaIloscType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('ilosc', null, array('label' => false,'attr' => array('min' => '0',
-                        'max' => '99',)))
-            ;
+            ->add(
+                'zamowienia',
+                'collection',
+                array(
+                    'type' => new \AppBundle\Form\OrderType(),
+                ))
+            ->add('zapisz', 'submit', array('label' => 'Zapisz zmiany'));
     }
-   
+    
     /**
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Ksiazka'
+            'data_class' => 'AppBundle\Entity\OrderList'
         ));
     }
 
@@ -35,6 +39,6 @@ class KsiazkaIloscType extends AbstractType
      */
     public function getName()
     {
-        return 'appbundle_ksiazka';
+        return 'appbundle_zamowienialist';
     }
 }

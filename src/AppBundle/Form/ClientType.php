@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ZamowienieType extends AbstractType
+class ClientType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -14,11 +14,20 @@ class ZamowienieType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        //wykorzystywane w panelsortAction w tabeli do zmiany statusu zamówienia
         $builder
-                ->add('idstatus', null, array('label' => false));
-//                ->add('idzamowienie','hidden');
+            ->add('imie')
+            ->add('nazwisko')
+            ->add('email')
+            ->add('ulica')
+            ->add('nrdomu')
+            ->add('nrmieszkania')
+            ->add('kodpocztowy')
+            ->add('miasto')
+            ->add('nip')
+            ->add('nrtelefonu')
+        ;
     }
+    
     
     /**
      * @param OptionsResolverInterface $resolver
@@ -26,7 +35,7 @@ class ZamowienieType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Order'
+            'data_class' => 'AppBundle\Entity\Client'
         ));
     }
 
@@ -35,6 +44,6 @@ class ZamowienieType extends AbstractType
      */
     public function getName()
     {
-        return 'zamowienie';
+        return 'appbundle_klient';
     }
 }

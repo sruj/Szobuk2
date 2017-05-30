@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class KsiazkaType extends AbstractType {
+class BookType extends AbstractType {
 
     /**
      * @param FormBuilderInterface $builder

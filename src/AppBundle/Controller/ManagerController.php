@@ -10,8 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Form\ZamowienieType;
-use AppBundle\Form\ZamowienieListType;
+use AppBundle\Form\OrderType;
+use AppBundle\Form\OrderListType;
 use AppBundle\Entity\Order;
 use AppBundle\Entity\OrderList;
 use AppBundle\Entity\Status;
@@ -102,7 +102,7 @@ class ManagerController extends Controller
             $ordersList->getZamowienia()->add($order);
         }
 
-        $form = $this->createForm(ZamowienieListType::class, $ordersList);
+        $form = $this->createForm(OrderListType::class, $ordersList);
         $form->handleRequest($request);
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();

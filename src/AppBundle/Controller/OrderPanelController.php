@@ -7,7 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\Filter\StatusType;
-use AppBundle\Form\ZamowienieType;
+use AppBundle\Form\OrderType;
 use AppBundle\Entity\Status;
 use AppBundle\Exception\OrderNotFoundException;
 
@@ -48,7 +48,7 @@ class OrderPanelController extends Controller
             ->getRepository('OrderProduct.php')
             ->findBy(array('idzamowienie' => $orderid));
 
-        $statusForm = $this->createForm(ZamowienieType::class, $orderRepo)->add('zmień status', 'submit');
+        $statusForm = $this->createForm(OrderType::class, $orderRepo)->add('zmień status', 'submit');
         $statusForm->handleRequest($request);
         if ($statusForm->isValid()) {
             $em = $this->getDoctrine()->getManager();

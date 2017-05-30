@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ZamowienieListType extends AbstractType
+class BookListType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -16,10 +16,10 @@ class ZamowienieListType extends AbstractType
     {
         $builder
             ->add(
-                'zamowienia',
+                'ksiazki',
                 'collection',
                 array(
-                    'type' => new \AppBundle\Form\ZamowienieType(),
+                    'type' => new \AppBundle\Form\BookQuantityType(),
                 ))
             ->add('zapisz', 'submit', array('label' => 'Zapisz zmiany'));
     }
@@ -30,7 +30,7 @@ class ZamowienieListType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\OrderList'
+            'data_class' => 'AppBundle\Entity\BookList'
         ));
     }
 
@@ -39,6 +39,6 @@ class ZamowienieListType extends AbstractType
      */
     public function getName()
     {
-        return 'appbundle_zamowienialist';
+        return 'appbundle_ksiazkilist';
     }
 }

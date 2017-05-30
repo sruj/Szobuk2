@@ -7,7 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Form\DostawaType;
+use AppBundle\Form\DeliveryType;
 use AppBundle\Entity\Client;
 use AppBundle\Entity\Order;
 use AppBundle\Entity\Book;
@@ -169,7 +169,7 @@ class CartController extends Controller
             $klient = new Client();
         }                                                                                                   // jeśli zalogowany nigdy nie wypełniał formularza dostawy lub jeśli niezalogowany
 
-        $form = $this->createForm(DostawaType::class, $klient, [
+        $form = $this->createForm(DeliveryType::class, $klient, [
             'attr' => ['class' => 'form_dostawa']]);
 
         $app_form_handler_order = $this->get('app.form_handler.order');

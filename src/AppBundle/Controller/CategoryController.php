@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppBundle\Entity\Category;
-use AppBundle\Form\KategoriaType;
+use AppBundle\Form\CategoryType;
 
 /**
  * @Route("/category")
@@ -91,7 +91,7 @@ class CategoryController extends Controller
      */
     private function createCreateForm(Category $entity)
     {
-        $form = $this->createForm(KategoriaType::class, $entity, array(
+        $form = $this->createForm(CategoryType::class, $entity, array(
             'action' => $this->generateUrl('category_create'),
             'method' => 'POST',
         ));
@@ -221,7 +221,7 @@ class CategoryController extends Controller
      */
     private function createEditForm(Category $entity)
     {
-        $form = $this->createForm(KategoriaType::class, $entity, array(
+        $form = $this->createForm(CategoryType::class, $entity, array(
             'action' => $this->generateUrl('category_update', array('id' => $entity->getIdkategoria())),
             'method' => 'PUT',
         ));
