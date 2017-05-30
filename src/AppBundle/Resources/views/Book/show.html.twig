@@ -16,7 +16,7 @@
             <div class="product-detail-page">
                 <div class="product-header">
                     <div class="details-image-container">
-                        <div class="product-image" style="background-image:url({{ asset("bundles/app/images/ilustracje/#{entity.obrazek}" ) }});"></div>
+                        <div class="product-image" style="background-image:url({{ asset("bundles/app/images/ilustracje/#{entity.picture}" ) }});"></div>
                     </div>
                     <div class="product-info">
                         <table class="grey">
@@ -27,11 +27,11 @@
                                 </tr>
                                 <tr>
                                     <th>Autor</th>
-                                    <td><a href="{{ path('show_books_by', {'findby': 'autor','what': entity.autor }) }}">{{ entity.autor }}</a></td>
+                                    <td><a href="{{ path('show_books_by', {'findby': 'author','what': entity.author }) }}">{{ entity.author }}</a></td>
                                 </tr>
                                 <tr>
                                     <th>Opis</th>
-                                    <td>{{ entity.opis }}</td>
+                                    <td>{{ entity.description }}</td>
                                 </tr>
                                 <tr>
                                     <th>Cena</th>
@@ -39,11 +39,11 @@
                                 </tr>
                                 <tr>
                                     <th>Wydawnictwo</th>
-                                    <td><a href="{{ path('show_books_by', {'findby': 'wydawnictwo','what': entity.wydawnictwo }) }}">{{ entity.wydawnictwo }}</a></td>
+                                    <td><a href="{{ path('show_books_by', {'findby': 'print','what': entity.print }) }}">{{ entity.print }}</a></td>
                                 </tr>
                                 <tr>
                                     <th>Rok wydania</th>
-                                    <td><a href="{{ path('show_books_by', {'findby': 'rokwydania','what': entity.rokwydania }) }}">{{ entity.rokwydania }}</a></td>
+                                    <td><a href="{{ path('show_books_by', {'findby': 'publishyear','what': entity.publishyear }) }}">{{ entity.publishyear }}</a></td>
                                 </tr>
                                 {% if is_granted('ROLE_ADMIN') %} 
                                 <tr>
@@ -53,7 +53,7 @@
                                 {% endif %}
                                 <tr>
                                     <th>Kategoria</th>
-                                    <td><a href="{{ path('category_show', {'id': entity.idkategoria.idkategoria }) }}">{{ entity.idkategoria }}</a></td>
+                                    <td><a href="{{ path('category_show', {'id': entity.idcategory.idcategory }) }}">{{ entity.idcategory }}</a></td>
                                 </tr>                                                                       
                             </tbody>
                         </table>

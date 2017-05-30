@@ -20,7 +20,7 @@
             <div class="nav-level-layout wrapper">
                 <div class="PageTabs">  </div>
                 <div class="navigation">
-                    {{ knp_pagination_render(ksiazki) }}
+                    {{ knp_pagination_render(books) }}
                 </div>
             </div>
         {% endif %}
@@ -35,14 +35,14 @@
             <table class="Table-all">
                 <thead>
                     <tr>
-                        <th class="thLeftBorderRadius">{{ knp_pagination_sortable(ksiazki, 'Tytuł', 'a.title') }}</th>
-                        <th>{{ knp_pagination_sortable(ksiazki, 'Autor', 'a.autor') }}</th>
-                        <th>{{ knp_pagination_sortable(ksiazki, 'Cena', 'a.cena') }}</th>
-                        <th>{{ knp_pagination_sortable(ksiazki, 'Wydawnictwo', 'a.wydawnictwo') }}</th>
-                        <th>{{ knp_pagination_sortable(ksiazki, 'Rok Wydania', 'a.rokwydania') }}</th>
+                        <th class="thLeftBorderRadius">{{ knp_pagination_sortable(books, 'Tytuł', 'a.title') }}</th>
+                        <th>{{ knp_pagination_sortable(books, 'Autor', 'a.author') }}</th>
+                        <th>{{ knp_pagination_sortable(books, 'Cena', 'a.cena') }}</th>
+                        <th>{{ knp_pagination_sortable(books, 'Wydawnictwo', 'a.print') }}</th>
+                        <th>{{ knp_pagination_sortable(books, 'Rok Wydania', 'a.publishyear') }}</th>
                             {#                        {% endif %}#}
                             {% if is_granted('ROLE_ADMIN') %}
-                            <th>{{ knp_pagination_sortable(ksiazki, 'Ilosc', 'a.ilosc') }}</th>
+                            <th>{{ knp_pagination_sortable(books, 'Quantity', 'a.quantity') }}</th>
                             <th>Do Koszyka</th>
                             <th>Szczególy</th>
                             <th class="thRightBorderRadius">Edytuj</th>
@@ -55,16 +55,16 @@
                 <tbody>
                     {% if is_granted('ROLE_ADMIN') %}
                         {{ form_start(form) }} 
-                        {% for entity in ksiazki %}
+                        {% for entity in books %}
                             <tr>
                                 <td><a href="{{ path('book_show', { 'id': entity.isbn }) }}">{{ entity.title }}</a></td>
-                                <td><a href="{{ path('show_books_by', { 'findby': 'autor','what': entity.autor }) }}">{{ entity.autor }}</a></td>
+                                <td><a href="{{ path('show_books_by', { 'findby': 'author','what': entity.author }) }}">{{ entity.author }}</a></td>
                                 <td>{{ entity.cena }}</td>
-                                <td><a href="{{ path('show_books_by', { 'findby': 'wydawnictwo','what': entity.wydawnictwo }) }}">{{ entity.wydawnictwo }}</a></td>
-                                <td><a href="{{ path('show_books_by', { 'findby': 'rokwydania','what': entity.rokwydania }) }}">{{ entity.rokwydania }}</a></td>
-                                    {% for formul in form.ksiazki %}
+                                <td><a href="{{ path('show_books_by', { 'findby': 'print','what': entity.print }) }}">{{ entity.print }}</a></td>
+                                <td><a href="{{ path('show_books_by', { 'findby': 'publishyear','what': entity.publishyear }) }}">{{ entity.publishyear }}</a></td>
+                                    {% for formul in form.books %}
                                         {% if entity.isbn == formul.vars.value.isbn %}
-                                        <td>{{ form_row(formul.ilosc) }}</td>
+                                        <td>{{ form_row(formul.quantity) }}</td>
                                     {% endif %}
                                 {% endfor %}                              
                                 <td><a href="{{ path('add_to_cart', {'isbn': entity.isbn }) }}">do koszyka</a></td>
@@ -73,13 +73,13 @@
                             </tr>
                         {% endfor %}                              
                     {% else %}
-                        {% for entity in ksiazki %}
+                        {% for entity in books %}
                             <tr>
                                 <td><a href="{{ path('book_show', { 'id': entity.isbn }) }}">{{ entity.title }}</a></td>
-                                <td><a href="{{ path('show_books_by', { 'findby': 'autor','what': entity.autor }) }}">{{ entity.autor }}</a></td>
+                                <td><a href="{{ path('show_books_by', { 'findby': 'author','what': entity.author }) }}">{{ entity.author }}</a></td>
                                 <td>{{ entity.cena }}</td>
-                                <td><a href="{{ path('show_books_by', { 'findby': 'wydawnictwo','what': entity.wydawnictwo }) }}">{{ entity.wydawnictwo }}</a></td>
-                                <td><a href="{{ path('show_books_by', { 'findby': 'rokwydania','what': entity.rokwydania }) }}">{{ entity.rokwydania }}</a></td>
+                                <td><a href="{{ path('show_books_by', { 'findby': 'print','what': entity.print }) }}">{{ entity.print }}</a></td>
+                                <td><a href="{{ path('show_books_by', { 'findby': 'publishyear','what': entity.publishyear }) }}">{{ entity.publishyear }}</a></td>
                                 <td><a href="{{ path('add_to_cart', {'isbn': entity.isbn }) }}">do koszyka</a></td>
                                 <td><a href="{{ path('book_show', { 'id': entity.isbn }) }}">więcej</a></td>
                             </tr>
@@ -88,7 +88,7 @@
             </table>
             <div class="wrapper">
                 <div class="navigation">
-                    {{ knp_pagination_render(ksiazki) }}
+                    {{ knp_pagination_render(books) }}
                 </div>
             </div>
             {% if is_granted('ROLE_ADMIN') %}

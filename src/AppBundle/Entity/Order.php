@@ -72,7 +72,7 @@ class Order
     /**
     * @ORM\OneToMany(targetEntity="ZamowienieProdukt", mappedBy="idorder")
     */
-    protected $zamowienie_produkty;
+    protected $orderProducts;
 
 
 
@@ -175,7 +175,7 @@ class Order
 
     public function __construct() {
         $this->faktury = new ArrayCollection();
-        $this->zamowienie_produkty = new ArrayCollection();
+        $this->orderProducts = new ArrayCollection();
     }
 
     /**
@@ -245,37 +245,37 @@ class Order
     }
 
     /**
-     * Add zamowienie_produkty
+     * Add orderProducts
      *
-     * @param \AppBundle\Entity\OrderProduct $zamowienieProdukty
+     * @param \AppBundle\Entity\OrderProduct $orderProducts
      * @return Order
      */
     public function addZamowienieProdukt(\AppBundle\Entity\OrderProduct $zamowienieProdukt)
     {
-        if(!$this->zamowienie_produkty->contains($zamowienieProdukt)) {
-            $this->zamowienie_produkty[] = $zamowienieProdukt;
+        if(!$this->orderProducts->contains($zamowienieProdukt)) {
+            $this->orderProducts[] = $zamowienieProdukt;
         }
 
         return $this;
     }
 
     /**
-     * Remove zamowienie_produkty
+     * Remove orderProducts
      *
-     * @param \AppBundle\Entity\OrderProduct $zamowienieProdukty
+     * @param \AppBundle\Entity\OrderProduct $orderProducts
      */
-    public function removeZamowienieProdukty(\AppBundle\Entity\OrderProduct $zamowienieProdukt)
+    public function removeOrderProducts(\AppBundle\Entity\OrderProduct $zamowienieProdukt)
     {
-        $this->zamowienie_produkty->removeElement($zamowienieProdukt);
+        $this->orderProducts->removeElement($zamowienieProdukt);
     }
 
     /**
-     * Get zamowienie_produkty
+     * Get orderProducts
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getZamowienieProdukty()
+    public function getOrderProducts()
     {
-        return $this->zamowienie_produkty;
+        return $this->orderProducts;
     }
 }

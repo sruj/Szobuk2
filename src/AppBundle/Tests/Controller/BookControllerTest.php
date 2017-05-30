@@ -27,17 +27,17 @@ class BookControllerTest extends WebTestCase
         $isSort = $this->columnSortChecker->isAlphabetic('//tbody/tr[', ']/td[1]/a', $crawler);
         $this->assertTrue($isSort, 'Kolumna tytuł nieposortowana');
 
-        //-Poniżej testuję sortowanie wg kolumny autor
+        //-Poniżej testuję sortowanie wg kolumny author
         //-Mógłbym testować i wszystkie kolumny ale nie da rady przetestować sorotwania wg kolumn bo knp_pagination jakoś po swojemu manipuluje obiekt
         // Request z parametrami url, i testy Symfony tego nie widzą.
         //-Zatem poniższy kod mimo że dobry to nie nadaje się - więc zakomentowany
         //https://github.com/KnpLabs/KnpPaginatorBundle/issues/398
         //http://forum.php.pl/index.php?showtopic=252655
         //http://stackoverflow.com/questions/40261754/how-to-functional-test-sites-with-knp-pagination-sortable
-//        $link = $crawler->filterXPath('//th[2]/a[@class=\'sortable\']')->link(); //  to samo co: $crawler = $client->request('GET', '/book/?sort=a.autor&direction=asc&page=1');
+//        $link = $crawler->filterXPath('//th[2]/a[@class=\'sortable\']')->link(); //  to samo co: $crawler = $client->request('GET', '/book/?sort=a.author&direction=asc&page=1');
 //        $crawler = $client->click($link);
 //        $isSort = $this->columnSortChecker->isAlphabetic('//tbody/tr[', ']/td[2]/a', $crawler);
-//        $this->assertGreaterThan(6, $crawler->filter('a:contains("Artur Rimbaud")')->count(), 'Kolumna autor nieposortowana');
+//        $this->assertGreaterThan(6, $crawler->filter('a:contains("Artur Rimbaud")')->count(), 'Kolumna author nieposortowana');
     }
 
     public function testIndex()
@@ -75,15 +75,15 @@ class BookControllerTest extends WebTestCase
         // Fill in the form and submit it
         $form = $crawler->selectButton('Dodaj')->form(array(
             'appbundle_ksiazka[title]' => 'TytułTF',
-            'appbundle_ksiazka[autor]' => 'AutorTF',
-            'appbundle_ksiazka[opis]' => 'opisTF',
+            'appbundle_ksiazka[author]' => 'AutorTF',
+            'appbundle_ksiazka[description]' => 'opisTF',
             'appbundle_ksiazka[isbn]' => '978-1-56619-909-4',
             'appbundle_ksiazka[cena]' => '38.00',
-            'appbundle_ksiazka[obrazek]' => 'book_nr_101.jpg',
-            'appbundle_ksiazka[wydawnictwo]' => 'Brown',
-            'appbundle_ksiazka[rokwydania]' => '1984',
-            'appbundle_ksiazka[idkategoria]' => '3',
-            'appbundle_ksiazka[ilosc]' => '10',
+            'appbundle_ksiazka[picture]' => 'book_nr_101.jpg',
+            'appbundle_ksiazka[print]' => 'Brown',
+            'appbundle_ksiazka[publishyear]' => '1984',
+            'appbundle_ksiazka[idcategory]' => '3',
+            'appbundle_ksiazka[quantity]' => '10',
         ));
 
         $client->submit($form);
@@ -96,7 +96,7 @@ class BookControllerTest extends WebTestCase
 
         $form = $crawler->selectButton('Zaktualizuj')->form(array(
             'appbundle_ksiazka[title]' => 'Foo',
-            'appbundle_ksiazka[autor]' => 'Bar',
+            'appbundle_ksiazka[author]' => 'Bar',
         ));
 
         $client->submit($form);

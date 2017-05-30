@@ -38,7 +38,7 @@ class SendEmailNotificationToClientListener
             'AppBundle:Cart:mail_confirmation.html.twig',
             array(
                 'zamowienie'=>$event->getZamowienie(),
-                'produkty'=>$event->getZamowienie()->getZamowienieProdukty(),
+                'produkty'=>$event->getZamowienie()->getOrderProducts(),
                 'suma'=>$this->session->get('sum')
             )
         );

@@ -1771,8 +1771,8 @@ margin-bottom:20px
 
 
 
-#content .boxMy.szerokie #boxMyinside fieldset form  #appbundle_ksiazka_idkategoria option[value=""], 
-#content .boxMy.bszerokie #boxMyinside fieldset form  #appbundle_ksiazka_idkategoria option[value=""]{
+#content .boxMy.szerokie #boxMyinside fieldset form  #appbundle_ksiazka_idcategory option[value=""],
+#content .boxMy.bszerokie #boxMyinside fieldset form  #appbundle_ksiazka_idcategory option[value=""]{
 	display:none;
 } 
 #content .boxMy.szerokie #boxMyinside fieldset form  select:required:invalid,
@@ -1781,8 +1781,8 @@ margin-bottom:20px
 	  	font-weight: 500;
 	font-size: 14px;
 } 
-#content .boxMy.szerokie #boxMyinside fieldset form  #appbundle_ksiazka_idkategoria option,
-#content .boxMy.bszerokie #boxMyinside fieldset form  #appbundle_ksiazka_idkategoria option {
+#content .boxMy.szerokie #boxMyinside fieldset form  #appbundle_ksiazka_idcategory option,
+#content .boxMy.bszerokie #boxMyinside fieldset form  #appbundle_ksiazka_idcategory option {
   color: #212121;
   	font-weight: 500;
 	font-size: 13px;

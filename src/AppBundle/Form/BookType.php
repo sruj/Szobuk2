@@ -18,22 +18,22 @@ class BookType extends AbstractType {
                         ('placeholder' => 'ISBN',), 'label' => 'ISBN',))
                 ->add('title', null, array('attr' => array
                         ('placeholder' => 'Tytuł',), 'label' => 'Tytuł',))
-                ->add('autor', null, array('attr' => array
+                ->add('author', null, array('attr' => array
                         ('placeholder' => 'Autor',), 'label' => 'Autor',))
-                ->add('opis', null, array('attr' => array
+                ->add('description', null, array('attr' => array
                         ('placeholder' => 'Opis',), 'label' => 'Opis',))
                 ->add('cena', null, array('attr' => array
                         ('placeholder' => 'Cena',), 'label' => 'Cena',))
-                ->add('obrazek', null, array('attr' => array
+                ->add('picture', null, array('attr' => array
                         ('placeholder' => 'Obrazek',), 'label' => 'Obrazek',))
-                ->add('rokwydania', null, array('attr' => array
+                ->add('publishyear', null, array('attr' => array
                         ('placeholder' => 'Rok Wydania','min' => '1700',
                         'max' => '2200',), 'label' => 'Rok Wydania', ))
-                ->add('wydawnictwo', null, array('attr' => array
+                ->add('print', null, array('attr' => array
                         ('placeholder' => 'Wydawnictwo',), 'label' => 'Wydawnictwo',))
-                ->add('ilosc', null, array('attr' => array
+                ->add('quantity', null, array('attr' => array
                         ('placeholder' => 'Ilość','min' => '1'),'label' => 'Ilość',))
-                ->add('idkategoria', null, array
+                ->add('idcategory', null, array
                     ('placeholder' => 'Category', 'label' => 'Category', 'attr' => array('required' => true)))//dzięki temu zadziała styl szaro czarny w KsiazkaNew
 
         ;

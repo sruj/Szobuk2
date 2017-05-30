@@ -29,12 +29,12 @@ class Category {
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idkategoria;
+    private $idcategory;
 
     /**
-     * @ORM\OneToMany(targetEntity="Book.php", mappedBy="idkategoria")
+     * @ORM\OneToMany(targetEntity="Book.php", mappedBy="idcategory")
      */
-    protected $ksiazki;
+    protected $books;
 
 
 
@@ -74,48 +74,48 @@ class Category {
     }
 
     /**
-     * Get idkategoria
+     * Get idcategory
      *
      * @return int
      */
-    public function getIdkategoria() {
-        return $this->idkategoria;
+    public function getIdcategory() {
+        return $this->idcategory;
     }
 
     public function __construct() {
-        $this->ksiazki = new ArrayCollection();
+        $this->books = new ArrayCollection();
     }
 
     /**
-     * Get ksiazki
+     * Get books
      *
      * @return Doctrine\Common\Collections\Collection
      */
     public function getKsiazki() {
-        return $this->ksiazki;
+        return $this->books;
     }
 
 
     /**
-     * Add ksiazki
+     * Add books
      *
-     * @param \AppBundle\Entity\Book $ksiazki
+     * @param \AppBundle\Entity\Book $books
      * @return Category
      */
-    public function addKsiazki(\AppBundle\Entity\Book $ksiazki)
+    public function addKsiazki(\AppBundle\Entity\Book $books)
     {
-        $this->ksiazki[] = $ksiazki;
+        $this->books[] = $books;
 
         return $this;
     }
 
     /**
-     * Remove ksiazki
+     * Remove books
      *
-     * @param \AppBundle\Entity\Book $ksiazki
+     * @param \AppBundle\Entity\Book $books
      */
-    public function removeKsiazki(\AppBundle\Entity\Book $ksiazki)
+    public function removeKsiazki(\AppBundle\Entity\Book $books)
     {
-        $this->ksiazki->removeElement($ksiazki);
+        $this->books->removeElement($books);
     }
 }

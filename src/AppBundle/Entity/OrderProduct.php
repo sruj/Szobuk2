@@ -15,9 +15,9 @@ class OrderProduct
     /**
      * @var integer
      *
-     * @ORM\Column(name="ilosc", type="integer", nullable=true)
+     * @ORM\Column(name="quantity", type="integer", nullable=true)
      */
-    private $ilosc;
+    private $quantity;
 
     /**
      * @var string
@@ -29,9 +29,9 @@ class OrderProduct
     /**
      * @var string
      *
-     * @ORM\Column(name="rokWydania", type="string", length=45, nullable=true)
+     * @ORM\Column(name="publishYear", type="string", length=45, nullable=true)
      */
-    private $rokwydania;
+    private $publishyear;
 
     /**
      * @var string
@@ -43,9 +43,9 @@ class OrderProduct
     /**
      * @var string
      *
-     * @ORM\Column(name="autor", type="string", length=45, nullable=true)
+     * @ORM\Column(name="author", type="string", length=45, nullable=true)
      */
-    private $autor;
+    private $author;
 
     /**
      * @var integer
@@ -60,7 +60,7 @@ class OrderProduct
     /**
      * @var \AppBundle\Entity\Book
      *
-     * @ORM\ManyToOne(targetEntity="Book.php", inversedBy="zamowienie_produkty")
+     * @ORM\ManyToOne(targetEntity="Book.php", inversedBy="orderProducts")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="isbn", referencedColumnName="isbn")
      * })
@@ -73,7 +73,7 @@ class OrderProduct
     /**
      * @var \AppBundle\Entity\Order
      *
-     * @ORM\ManyToOne(targetEntity="Order.php", inversedBy="zamowienie_produkty")
+     * @ORM\ManyToOne(targetEntity="Order.php", inversedBy="orderProducts")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idZamowienie", referencedColumnName="idZamowienie")
      * })
@@ -83,26 +83,26 @@ class OrderProduct
 
 
     /**
-     * Set ilosc
+     * Set quantity
      *
-     * @param int $ilosc
+     * @param int $quantity
      * @return OrderProduct
      */
-    public function setIlosc($ilosc)
+    public function setQuantity($quantity)
     {
-        $this->ilosc = $ilosc;
+        $this->quantity = $quantity;
 
         return $this;
     }
 
     /**
-     * Get ilosc
+     * Get quantity
      *
      * @return int
      */
-    public function getIlosc()
+    public function getQuantity()
     {
-        return $this->ilosc;
+        return $this->quantity;
     }
 
     /**
@@ -129,26 +129,26 @@ class OrderProduct
     }
 
     /**
-     * Set rokwydania
+     * Set publishyear
      *
-     * @param string $rokwydania
+     * @param string $publishyear
      * @return OrderProduct
      */
-    public function setRokwydania($rokwydania)
+    public function setPublishYear($publishyear)
     {
-        $this->rokwydania = $rokwydania;
+        $this->publishyear = $publishyear;
 
         return $this;
     }
 
     /**
-     * Get rokwydania
+     * Get publishyear
      *
      * @return string 
      */
-    public function getRokwydania()
+    public function getPublishYear()
     {
-        return $this->rokwydania;
+        return $this->publishyear;
     }
 
     /**
@@ -175,26 +175,26 @@ class OrderProduct
     }
 
     /**
-     * Set autor
+     * Set author
      *
-     * @param string $autor
+     * @param string $author
      * @return OrderProduct
      */
-    public function setAutor($autor)
+    public function setAuthor($author)
     {
-        $this->autor = $autor;
+        $this->author = $author;
 
         return $this;
     }
 
     /**
-     * Get autor
+     * Get author
      *
      * @return string 
      */
-    public function getAutor()
+    public function getAuthor()
     {
-        return $this->autor;
+        return $this->author;
     }
 
     /**

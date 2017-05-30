@@ -99,7 +99,7 @@ class Cart
             $book = $this->em->getRepository('AppBundle:Book')->find($isbn);
             $books[$i]['isbn'] = $book->getIsbn();
             $books[$i]['tytul'] = $book->getTitle();
-            $books[$i]['autor'] = $book->getAutor();
+            $books[$i]['author'] = $book->getAuthor();
             $books[$i]['cena'] = $book->getPrice();
             $books[$i]['quantity'] = $quantity;
             $i++;

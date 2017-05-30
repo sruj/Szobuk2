@@ -51,14 +51,14 @@
                         <td><a href="{{ path('book_show', { 'id': book.isbn }) }}">{{ book.title }}</a>
                         </td>
                         <td>
-                            <a href="{{ path('show_books_by', { 'findby': 'autor','what': book.autor }) }}">{{ book.autor }}</a>
+                            <a href="{{ path('show_books_by', { 'findby': 'author','what': book.author }) }}">{{ book.author }}</a>
                         </td>
                         <td>{{ book.cena }}</td>
                         <td>
-                            <a href="{{ path('show_books_by', { 'findby': 'wydawnictwo','what': book.wydawnictwo }) }}">{{ book.wydawnictwo }}</a>
+                            <a href="{{ path('show_books_by', { 'findby': 'print','what': book.print }) }}">{{ book.print }}</a>
                         </td>
                         <td>
-                            <a href="{{ path('show_books_by', { 'findby': 'rokwydania','what': book.rokwydania }) }}">{{ book.rokwydania }}</a>
+                            <a href="{{ path('show_books_by', { 'findby': 'publishyear','what': book.publishyear }) }}">{{ book.publishyear }}</a>
                         </td>
                         <td><a href="{{ path('add_to_cart', {'isbn': book.isbn }) }}">do koszyka</a></td>
                         <td><a href="{{ path('book_show', { 'id': book.isbn }) }}">więcej</a></td>
@@ -73,7 +73,7 @@
                         Listy</a></div>
                 {% if is_granted('ROLE_ADMIN') %}
                     <div class="centeredButton kategoria"><a class="OrangeButton"
-                                                             href="{{ path('category_edit', { 'id': category.idkategoria }) }}">Edytuj
+                                                             href="{{ path('category_edit', { 'id': category.idcategory }) }}">Edytuj
                             Kategorię</a></div>
                 {% endif %}
             </div>

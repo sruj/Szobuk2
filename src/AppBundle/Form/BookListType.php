@@ -16,7 +16,7 @@ class BookListType extends AbstractType
     {
         $builder
             ->add(
-                'ksiazki',
+                'books',
                 'collection',
                 array(
                     'type' => new \AppBundle\Form\BookQuantityType(),
@@ -39,6 +39,6 @@ class BookListType extends AbstractType
      */
     public function getName()
     {
-        return 'appbundle_ksiazkilist';
+        return 'appbundle_bookslist';
     }
 }

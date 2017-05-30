@@ -34,7 +34,7 @@ class BookRepository extends EntityRepository implements PaginatorAwareInterface
         return $this->_em->createQuery('
                 SELECT a 
                 FROM AppBundle:Book a
-                WHERE a.ilosc>0
+                WHERE a.quantity>0
                 ORDER BY a.title ASC
             ');
     }
@@ -59,7 +59,7 @@ class BookRepository extends EntityRepository implements PaginatorAwareInterface
         return $this->_em->createQuery('
             SELECT k
             FROM AppBundle:Book k
-            WHERE k.cena < :cena AND k.ilosc>0
+            WHERE k.cena < :cena AND k.quantity>0
             ORDER BY k.title ASC'
         )->setParameter('cena', '50');
     }
@@ -72,7 +72,7 @@ class BookRepository extends EntityRepository implements PaginatorAwareInterface
         return $this->_em->createQuery('
             SELECT k
             FROM AppBundle:Book k
-            WHERE k.ilosc>0
+            WHERE k.quantity>0
             ORDER BY k.created DESC'
         );
     }
@@ -83,8 +83,8 @@ class BookRepository extends EntityRepository implements PaginatorAwareInterface
 
         return $query = $repository->createQueryBuilder('a')
             ->where('a.title LIKE :word')
-            ->orWhere('a.autor LIKE :word')
-            ->orWhere('a.wydawnictwo LIKE :word')
+            ->orWhere('a.author LIKE :word')
+            ->orWhere('a.print LIKE :word')
             ->setParameter('word', '%' . $word . '%')
             ->getQuery();
     }

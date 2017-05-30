@@ -60,7 +60,7 @@ class BookController extends Controller
         }
 
         return $this->render('AppBundle:Book:index.html.twig', [
-            'ksiazki' => $books, 'form' => $form->createView(),
+            'books' => $books, 'form' => $form->createView(),
         ]);
     }
 
@@ -151,7 +151,7 @@ class BookController extends Controller
     }
 
     /**
-     * 1.[edycja ksiazki]
+     * 1.[edycja books]
      * Displays a form to edit an existing Book entity.
      *
      * @Route("/admin/edit/{id}", name="book_edit")
@@ -175,7 +175,7 @@ class BookController extends Controller
     }
 
     /**
-     * 2.[edycja ksiazki]
+     * 2.[edycja books]
      * Creates a form to edit a Book entity.
      *
      * @param Book $entity The entity
@@ -195,7 +195,7 @@ class BookController extends Controller
     }
 
     /**
-     * 3.[edycja ksiazki], Tu wpadam po kliknięciu guzika Zaktualizuj
+     * 3.[edycja books], Tu wpadam po kliknięciu guzika Zaktualizuj
      * Edits an existing Book entity.
      *
      * @Route("/admin/{id}/update", name="book_update")
@@ -321,14 +321,14 @@ class BookController extends Controller
     public function searchResultsAction(Request $request, $word = false)
     {
         $ksi_rep = $this->get('app.book_repository');
-        $ksiazki = $ksi_rep->findWyszukiwarka($word, $request->query->getInt('page', 1));
+        $books = $ksi_rep->findWyszukiwarka($word, $request->query->getInt('page', 1));
 
         return $this->render('AppBundle:Book:searchResults.html.twig',
-            ['entities' => $ksiazki, 'word' => strtolower($word)]);
+            ['entities' => $books, 'word' => strtolower($word)]);
     }
 
     /**
-     * ksiazki wg wybranego parametru. (np /ksiazka/rokwydania-1956/show_books_by)
+     * books wg wybranego parametru. (np /ksiazka/publishyear-1956/show_books_by)
      *
      * @Route("/{findby}-{what}/show-books-by", name="show_books_by")
      * @Method("GET")
@@ -336,12 +336,12 @@ class BookController extends Controller
     public function showBooksByAction(Request $request, $findby = false, $what = false)
     {
         $ksi_rep = $this->get('app.book_repository');
-        $ksiazki = $ksi_rep->findByWhat($findby, $what, $request->query->getInt('page', 1));
+        $books = $ksi_rep->findByWhat($findby, $what, $request->query->getInt('page', 1));
 
         return $this->render('AppBundle:Book:show_books_by.html.twig', [
             'findby' => $findby,
             'what' => $what,
-            'pagination' => $ksiazki,
+            'pagination' => $books,
         ]);
     }
 }

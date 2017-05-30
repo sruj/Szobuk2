@@ -48,7 +48,7 @@ class CategoryController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
         $books = $em->getRepository('AppBundle:Book')
-            ->findBy(array('idkategoria' => $id));
+            ->findBy(array('idcategory' => $id));
 
         return $this->render('AppBundle:Category:show.html.twig', [
             'category' => $category,
@@ -74,7 +74,7 @@ class CategoryController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('category_show', array('id' => $entity->getIdkategoria())));
+            return $this->redirect($this->generateUrl('category_show', array('id' => $entity->getIdcategory())));
         }
 
         return $this->render('AppBundle:Category:new.html.twig', [
@@ -222,7 +222,7 @@ class CategoryController extends Controller
     private function createEditForm(Category $entity)
     {
         $form = $this->createForm(CategoryType::class, $entity, array(
-            'action' => $this->generateUrl('category_update', array('id' => $entity->getIdkategoria())),
+            'action' => $this->generateUrl('category_update', array('id' => $entity->getIdcategory())),
             'method' => 'PUT',
         ));
         $form->add('submit', 'submit', array('label' => 'Zaktualizuj'));

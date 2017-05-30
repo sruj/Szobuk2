@@ -3,12 +3,12 @@
         <div class="ProductCard-imageContainer product-img-container">
             <a href="{{ path('book_show', { 'id': entity.isbn }) }}">
                 <div class="ProductCard-image product-image"
-                     style="opacity: 1; background-image:url({{ asset("bundles/app/images/ilustracje/#{entity.obrazek}" ) }});">
+                     style="opacity: 1; background-image:url({{ asset("bundles/app/images/ilustracje/#{entity.picture}" ) }});">
                 </div>
                 <div class="tlo"></div>
         </div>
         <div class="dolny">
-            <div class="card-autor">{{ entity.autor }}</div>
+            <div class="card-autor">{{ entity.author }}</div>
             <div class="card-tytul">{{ entity.title }}</div>
         </div>
         <div class="top-right">{{ entity.cena }}<span> ZŁ</span></div>

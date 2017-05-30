@@ -34,7 +34,7 @@
         </thead>
         <tbody class="cartmenuTable">
 
-                {% for ksiazka in ksiazki %}
+                {% for ksiazka in books %}
                     <tr>
                         <td>
                             <a href="{{ path('book_show',{'id':ksiazka.isbn}) }} ">
@@ -44,7 +44,7 @@
                             {{ ksiazka.title }}
                         </td>
                         <td>
-                            {{ ksiazka.autor }}
+                            {{ ksiazka.author }}
                         </td>
                         <td class="cena">
                             {{ ksiazka.cena }}

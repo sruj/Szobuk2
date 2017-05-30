@@ -18,7 +18,7 @@
         <div class="nav-level-layout wrapper">
             <div class="PageTabs"> <a class="page-section-tab" href="{{ path('popular') }}">Popularne</a> <a class="page-section-tab active" href="{{ path('news') }}">Nowości</a> <a class="page-section-tab  " href="{{ path('index') }}">Wszystkie</a> </div>
             <div class="navigation">
-                {{ knp_pagination_render(ksiazki) }}
+                {{ knp_pagination_render(books) }}
             </div>
         </div>
     </div>
@@ -29,15 +29,15 @@
   <div class="wrapper"><!--start wrapper-->
     <div class="cards-container ready"><!--start cards-container ready-->
       
-    {% for entity in ksiazki %}
+    {% for entity in books %}
       <div class="ProductCard product is-imageLoaded" >
         <div class="ProductCard-imageContainer product-img-container" > 
             <a href="{{ path('book_show', { 'id': entity.isbn }) }}" >
-                <div class="ProductCard-image product-image" style="opacity: 1; background-image:url({{ asset("bundles/app/images/ilustracje/#{entity.obrazek}" ) }});" ></div>
+                <div class="ProductCard-image product-image" style="opacity: 1; background-image:url({{ asset("bundles/app/images/ilustracje/#{entity.picture}" ) }});" ></div>
           <div class="tlo"></div>
         </div>
         <div class="dolny">
-          <div class="card-autor">{{ entity.autor }}</div>
+          <div class="card-autor">{{ entity.author }}</div>
           <div class="card-tytul">{{ entity.title }}</div>
         </div>
         <div class="top-right">{{ entity.cena }}<span> ZŁ<span></div>
@@ -50,7 +50,7 @@
       </div> 
     {% endfor %} 
                 <div class="navigation">
-                    {{ knp_pagination_render(ksiazki) }}
+                    {{ knp_pagination_render(books) }}
                 </div>
             </div>
         </div>

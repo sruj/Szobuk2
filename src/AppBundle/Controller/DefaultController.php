@@ -30,19 +30,19 @@ class DefaultController extends Controller
         $ksi_rep = $this->get('app.book_repository');
 
         if ($request->isXmlHttpRequest()) {
-            $ksiazki = $ksi_rep->findAllMy($request->query->getInt('page'), 12);
-            $ksiazki = $ksiazki->getItems();
+            $books = $ksi_rep->findAllMy($request->query->getInt('page'), 12);
+            $books = $books->getItems();
             $books = [];
             $renderData = [];
-            if (!empty($ksiazki)) {
+            if (!empty($books)) {
                 $i = 0;
                 /** @var Book $ksiazka */
-                foreach ($ksiazki as $ksiazka) {
+                foreach ($books as $ksiazka) {
                     $books[$i]['isbn'] = $ksiazka->getIsbn();
-                    $books[$i]['autor'] = $ksiazka->getAutor();
+                    $books[$i]['author'] = $ksiazka->getAuthor();
                     $books[$i]['title'] = $ksiazka->getTitle();
                     $books[$i]['cena'] = $ksiazka->getPrice();
-                    $books[$i]['obrazek'] = $ksiazka->getObrazek();
+                    $books[$i]['picture'] = $ksiazka->getPicture();
                     $i++;
                 }
                 $renderData['template'] = $this->renderView('AppBundle:Default:index2.html.twig', array(
@@ -50,16 +50,16 @@ class DefaultController extends Controller
                 ));
                 $renderData['last_page'] = false;
             }
-            if (sizeof($ksiazki) < 12) {
+            if (sizeof($books) < 12) {
                 $renderData['last_page'] = true;
             }
 
             return new JsonResponse($renderData);
         }
-        $ksiazki = $ksi_rep->findAllMy($request->query->getInt('page', 1), 6);
+        $books = $ksi_rep->findAllMy($request->query->getInt('page', 1), 6);
 
         return $this->render('AppBundle:Default:index.html.twig', [
-            'ksiazki' => $ksiazki
+            'books' => $books
         ]);
     }
 
@@ -69,10 +69,10 @@ class DefaultController extends Controller
     public function popularAction(Request $request)
     {
         $ksi_rep = $this->get('app.book_repository');
-        $ksiazki = $ksi_rep->findPopular($request->query->getInt('page', 1));
+        $books = $ksi_rep->findPopular($request->query->getInt('page', 1));
 
         return $this->render('AppBundle:Default:popular.html.twig', [
-            'ksiazki' => $ksiazki
+            'books' => $books
         ]);
     }
 
@@ -82,10 +82,10 @@ class DefaultController extends Controller
     public function newsAction(Request $request)
     {
         $ksi_rep = $this->get('app.book_repository');
-        $ksiazki = $ksi_rep->findNews($request->query->getInt('page', 1));
+        $books = $ksi_rep->findNews($request->query->getInt('page', 1));
 
         return $this->render('AppBundle:Default:news.html.twig', [
-            'ksiazki' => $ksiazki
+            'books' => $books
         ]);
     }
 }

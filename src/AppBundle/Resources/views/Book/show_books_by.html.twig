@@ -8,7 +8,7 @@
     <!--start nav-level-->
     <div class="nav-level">
         <div class="nav-level-layout wrapper">
-            {% if findby == 'rokwydania' %}
+            {% if findby == 'publishyear' %}
                 {% set findby='Rok Wydania' %}
             {% endif %}
             <div class="PageTabs page-section-tab active">{{ findby|ucwords }} : {{ what|ucwords }}</div>
@@ -17,32 +17,33 @@
             </div>
         </div>
     </div>
-    <!--end nav-level--> 
-    
-{% if pagination is empty %}
-    <div class="boxMy szerokie">
-        <div id="boxMyinside">
-            <h3 class="szaryKlocek">Nie ma książek z tytułem, autorem lub nazwą wydawnictwa powiązanych z hasłem.</h3>
-        </div> 
-    </div>
-{% else %}
-    <div class="yield "><!--start yield-->
-        <!--<div class="wrapper">--><!--start wrapper-->
-        <div class="allBooks"> 
-            <table class="Table-all">
-                <thead>
+    <!--end nav-level-->
+
+    {% if pagination is empty %}
+        <div class="boxMy szerokie">
+            <div id="boxMyinside">
+                <h3 class="szaryKlocek">Nie ma książek z tytułem, autorem lub nazwą wydawnictwa powiązanych z
+                    hasłem.</h3>
+            </div>
+        </div>
+    {% else %}
+        <div class="yield "><!--start yield-->
+            <!--<div class="wrapper">--><!--start wrapper-->
+            <div class="allBooks">
+                <table class="Table-all">
+                    <thead>
                     <tr>
-                     {#   {% if is_granted('ROLE_ADMIN') %}
-                        {% else %}#}  
-                            <th class="thLeftBorderRadius">{{ knp_pagination_sortable(pagination, 'Tytuł', 'a.title') }}</th>
-                            <th>{{ knp_pagination_sortable(pagination, 'Autor', 'a.autor') }}</th>
-                            <th>{{ knp_pagination_sortable(pagination, 'Cena', 'a.cena') }}</th>
-                            <th>{{ knp_pagination_sortable(pagination, 'Wydawnictwo', 'a.wydawnictwo') }}</th>
-                            <th>{{ knp_pagination_sortable(pagination, 'Rok Wydania', 'a.rokwydania') }}</th>
-{#                        {% endif %}#}
+                        {#   {% if is_granted('ROLE_ADMIN') %}
+                           {% else %}#}
+                        <th class="thLeftBorderRadius">{{ knp_pagination_sortable(pagination, 'Tytuł', 'a.title') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Autor', 'a.author') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Cena', 'a.cena') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Wydawnictwo', 'a.print') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Rok Wydania', 'a.publishyear') }}</th>
+                        {#                        {% endif %}#}
                         {% if is_granted('ROLE_ADMIN') %}
-                            <th>{{ knp_pagination_sortable(pagination, 'Ilosc', 'a.ilosc') }}</th>
-{#                            <th>Ilosc</th>#}
+                            <th>{{ knp_pagination_sortable(pagination, 'Quantity', 'a.quantity') }}</th>
+                            {#                            <th>Quantity</th>#}
                             <th>Do Koszyka</th>
                             <th>Szczególy</th>
                             <th class="thRightBorderRadius">Edytuj</th>
@@ -51,62 +52,43 @@
                             <th class="thRightBorderRadius">Szczególy</th>
                         {% endif %}
                     </tr>
-                </thead>            
-                <tbody>
+                    </thead>
+                    <tbody>
                     {% for entity in pagination %}
                         <tr>
                             <td><a href="{{ path('book_show', { 'id': entity.isbn }) }}">{{ entity.title }}</a></td>
-                            <td><a href="{{ path('show_books_by', { 'findby': 'autor','what': entity.autor }) }}">{{ entity.autor }}</a></td>
+                            <td>
+                                <a href="{{ path('show_books_by', { 'findby': 'author','what': entity.author }) }}">{{ entity.author }}</a>
+                            </td>
                             <td>{{ entity.cena }}</td>
-                            <td><a href="{{ path('show_books_by', { 'findby': 'wydawnictwo','what': entity.wydawnictwo }) }}">{{ entity.wydawnictwo }}</a></td>
-                            <td><a href="{{ path('show_books_by', { 'findby': 'rokwydania','what': entity.rokwydania }) }}">{{ entity.rokwydania }}</a></td>
+                            <td>
+                                <a href="{{ path('show_books_by', { 'findby': 'print','what': entity.print }) }}">{{ entity.print }}</a>
+                            </td>
+                            <td>
+                                <a href="{{ path('show_books_by', { 'findby': 'publishyear','what': entity.publishyear }) }}">{{ entity.publishyear }}</a>
+                            </td>
                             <td><a href="{{ path('add_to_cart', {'isbn': entity.isbn }) }}">do koszyka</a></td>
                             <td><a href="{{ path('book_show', { 'id': entity.isbn }) }}">więcej</a></td>
                             {% if is_granted('ROLE_ADMIN') %}
                                 <td><a href="{{ path('book_edit', { 'id': entity.isbn }) }}">edytuj</a></td>
                             {% endif %}
                         </tr>
-                    {% endfor %}       
-            </table>    
-            <div class="centeredButton kategoria"><a class="OrangeButton" href="{{ path('category') }}">Wróć do Listy</a></div>
-            {% if is_granted('ROLE_ADMIN') %}
-                <div class="centeredButton kategoria"><a class="OrangeButton" href="{{ path('category_edit', { 'id': entity.idkategoria }) }}">Edytuj Kategorię</a></div>
-            {% endif %}
-            <div class="wrapper">
-                <div class="navigation">
-                    {{ knp_pagination_render(pagination) }}
+                    {% endfor %}
+                </table>
+                <div class="centeredButton kategoria"><a class="OrangeButton" href="{{ path('category') }}">Wróć do
+                        Listy</a></div>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class="centeredButton kategoria"><a class="OrangeButton"
+                                                             href="{{ path('category_edit', { 'id': entity.idcategory }) }}">Edytuj
+                            Kategorię</a></div>
+                {% endif %}
+                <div class="wrapper">
+                    <div class="navigation">
+                        {{ knp_pagination_render(pagination) }}
+                    </div>
                 </div>
             </div>
-        </div>  
-    </div>
-{% endif %}
-    
+        </div>
+    {% endif %}
+
 {% endblock %}
-{#<table class="Table-all">
-  <thead>
-    <tr>
-        <th class="thLeftBorderRadius">ISBN</th>
-        <th>Tytuł</th>
-        <th>Autor</th>
-        <th>Cena</th>
-        <th>Wydawnictwo</th>
-        <th>Rok Wydania</th>
-        <th>Szczegóły</th>
-        <th class="thRightBorderRadius">Dodaj do Koszyka</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for ksiazka in ksiazki %}
-    <tr>
-        <td><a href="{{ path('book_show',{'id':ksiazka.isbn}) }} ">{{ ksiazka.isbn}}</a></td>
-        <td><a href="">{{ ksiazka.title }}</a></td>
-        <td>{{ ksiazka.autor }}</td>
-        <td>{{ ksiazka.cena }}</td>
-        <td>{{ ksiazka.wydawnictwo }}</td>
-        <td>{{ ksiazka.rokWydania}}</td>
-        <td><a href="{{ path('book_show',{'id':ksiazka.isbn}) }} ">więcej</a></td>
-        <td><a href="{{ path('add_to_cart', {'isbn': ksiazka.isbn }) }}">do koszyka</a></td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table> #}

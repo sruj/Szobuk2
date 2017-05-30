@@ -10,7 +10,7 @@
 * The association AppBundle\Entity\Klient#zamowienia refers to the owning side field AppBundle\Entity\Zamowienie#klient which does not exist.
 
 [Mapping]  FAIL - The entity-class 'AppBundle\Entity\Ksiazka' mapping is invalid:
-* The referenced column name 'idkategoria' has to be a primary key column on the target entity class 'AppBundle\Entity\Kategoria'.
+* The referenced column name 'idcategory' has to be a primary key column on the target entity class 'AppBundle\Entity\Kategoria'.
 * The association AppBundle\Entity\Ksiazka#zamowienie_produkty refers to the owning side field AppBundle\Entity\ZamowienieProdukt#ksiazka which does not exist.
 
 [Mapping]  FAIL - The entity-class 'AppBundle\Entity\Przesylka' mapping is invalid:
@@ -42,7 +42,7 @@ Done.
 * The association AppBundle\Entity\Klient#zamowienia refers to the owning side field AppBundle\Entity\Zamowienie#klient which does not exist.
 
 [Mapping]  FAIL - The entity-class 'AppBundle\Entity\Ksiazka' mapping is invalid:
-* The referenced column name 'idkategoria' has to be a primary key column on the target entity class 'AppBundle\Entity\Kategoria'.
+* The referenced column name 'idcategory' has to be a primary key column on the target entity class 'AppBundle\Entity\Kategoria'.
 * The association AppBundle\Entity\Ksiazka#zamowienie_produkty refers to the owning side field AppBundle\Entity\ZamowienieProdukt#ksiazka which does not exist.
 
 [Mapping]  FAIL - The entity-class 'AppBundle\Entity\Przesylka' mapping is invalid:
@@ -71,7 +71,7 @@ Done.
 * The association AppBundle\Entity\Klient#zamowienia refers to the owning side field AppBundle\Entity\Zamowienie#klient which does not exist.
 
 [Mapping]  FAIL - The entity-class 'AppBundle\Entity\Ksiazka' mapping is invalid:
-* The referenced column name 'idkategoria' has to be a primary key column on the target entity class 'AppBundle\Entity\Kategoria'.
+* The referenced column name 'idcategory' has to be a primary key column on the target entity class 'AppBundle\Entity\Kategoria'.
 * The association AppBundle\Entity\Ksiazka#zamowienie_produkty refers to the owning side field AppBundle\Entity\ZamowienieProdukt#ksiazka which does not exist.
 
 [Mapping]  FAIL - The entity-class 'AppBundle\Entity\Przesylka' mapping is invalid:
@@ -96,7 +96,7 @@ Done.
 
 "C:\wamp\bin\php\php5.5.12\php.exe" "C:\wamp\www\Szobuk2\app\console" "--ansi" "doctrine:schema:validate"
 [Mapping]  FAIL - The entity-class 'AppBundle\Entity\Ksiazka' mapping is invalid:
-* The referenced column name 'idkategoria' has to be a primary key column on the target entity class 'AppBundle\Entity\Kategoria'.
+* The referenced column name 'idcategory' has to be a primary key column on the target entity class 'AppBundle\Entity\Kategoria'.
 * The association AppBundle\Entity\Ksiazka#zamowienie_produkty refers to the owning side field AppBundle\Entity\ZamowienieProdukt#ksiazka which does not exist.
 
 [Mapping]  FAIL - The entity-class 'AppBundle\Entity\Przesylka' mapping is invalid:

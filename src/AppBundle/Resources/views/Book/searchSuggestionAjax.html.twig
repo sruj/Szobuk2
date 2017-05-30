@@ -4,8 +4,8 @@
     <li>
         <a href="{{ path('book_show', { 'id': entity.isbn }) }}">
             [TYTUŁ] {{ entity.title|lower|replace({(word): '<span style="font-weight: bold;">'~word~'</span>'})|raw }} -
-            [AUTOR] {{ entity.autor|lower|replace({(word): '<span style="font-weight: bold;">'~word~'</span>'})|raw }} -
-            [WYDAWNICTWO] {{ entity.wydawnictwo|lower|replace({(word): '<span style="font-weight: bold;">'~word~'</span>'})|raw }}
+            [AUTOR] {{ entity.author|lower|replace({(word): '<span style="font-weight: bold;">'~word~'</span>'})|raw }} -
+            [WYDAWNICTWO] {{ entity.print|lower|replace({(word): '<span style="font-weight: bold;">'~word~'</span>'})|raw }}
         </a>
     </li>
 {% endfor %}

@@ -14,6 +14,11 @@ use AppBundle\Validator\Constraints as AcmeAssert;
  */
 class Book
 {
+    public function __construct()
+    {
+        $this->orderProducts = new ArrayCollection();
+    }
+
     /**
      * liczba książek na stronie (głównej)
      */
@@ -54,16 +59,16 @@ class Book
     /**
      * @var string
      *
-     * @ORM\Column(name="autor", type="string", length=45, nullable=true)
+     * @ORM\Column(name="author", type="string", length=45, nullable=true)
      */
-    private $autor;
+    private $author;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="opis", type="text", length=65535, nullable=true)
+     * @ORM\Column(name="description", type="text", length=65535, nullable=true)
      */
-    private $opis;
+    private $description;
 
     /**
      * @var string
@@ -75,16 +80,16 @@ class Book
     /**
      * @var string
      *
-     * @ORM\Column(name="obrazek", type="string", length=45, nullable=true)
+     * @ORM\Column(name="picture", type="string", length=45, nullable=true)
      */
-    private $obrazek;
+    private $picture;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="wydawnictwo", type="string", length=45, nullable=true)
+     * @ORM\Column(name="print", type="string", length=45, nullable=true)
      */
-    private $wydawnictwo;
+    private $print;
 
     /**
      * @var string
@@ -92,31 +97,31 @@ class Book
      *      min = 1700,
      *      max = 2200,
      * )
-     * @ORM\Column(name="rokWydania", type="integer", nullable=true)
+     * @ORM\Column(name="publishYear", type="integer", nullable=true)
      */
-    private $rokwydania;
+    private $publishyear;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="ilosc", type="integer",  nullable=false)
+     * @ORM\Column(name="quantity", type="integer",  nullable=false)
      */
-    private $ilosc;
+    private $quantity;
 
     /**
      * @var \AppBundle\Entity\Category
      *
-     * @ORM\ManyToOne(targetEntity="Category.php", inversedBy="ksiazki")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Category", inversedBy="books")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idkategoria", referencedColumnName="idCategory")
+     *   @ORM\JoinColumn(name="idcategory", referencedColumnName="idCategory")
      * })
      */
-    private $idkategoria;
+    private $idcategory;
 
     /**
-     * @ORM\OneToMany(targetEntity="OrderProduct.php", mappedBy="isbn")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\OrderProduct", mappedBy="isbn")
      */
-    protected $zamowienie_produkty;
+    protected $orderProducts;
 
     public function getCreated()
     {
@@ -175,49 +180,49 @@ class Book
     }
 
     /**
-     * Set autor
+     * Set author
      *
-     * @param string $autor
+     * @param string $author
      * @return Book
      */
-    public function setAutor($autor)
+    public function setAuthor($author)
     {
-        $this->autor = $autor;
+        $this->author = $author;
 
         return $this;
     }
 
     /**
-     * Get autor
+     * Get author
      *
      * @return string
      */
-    public function getAutor()
+    public function getAuthor()
     {
-        return $this->autor;
+        return $this->author;
     }
 
     /**
-     * Set opis
+     * Set description
      *
-     * @param string $opis
+     * @param string $description
      * @return Book
      */
-    public function setOpis($opis)
+    public function setDescription($description)
     {
-        $this->opis = $opis;
+        $this->description = $description;
 
         return $this;
     }
 
     /**
-     * Get opis
+     * Get description
      *
      * @return string
      */
-    public function getOpis()
+    public function getDescription()
     {
-        return $this->opis;
+        return $this->description;
     }
 
     /**
@@ -244,123 +249,114 @@ class Book
     }
 
     /**
-     * Set obrazek
+     * Set picture
      *
-     * @param string $obrazek
+     * @param string $picture
      * @return Book
      */
-    public function setObrazek($obrazek)
+    public function setPicture($picture)
     {
-        $this->obrazek = $obrazek;
+        $this->picture = $picture;
 
         return $this;
     }
 
     /**
-     * Get obrazek
+     * Get picture
      *
      * @return string
      */
-    public function getObrazek()
+    public function getPicture()
     {
-        return $this->obrazek;
+        return $this->picture;
     }
 
     /**
-     * Set wydawnictwo
+     * Set print
      *
-     * @param string $wydawnictwo
+     * @param string $print
      * @return Book
      */
-    public function setWydawnictwo($wydawnictwo)
+    public function setPrint($print)
     {
-        $this->wydawnictwo = $wydawnictwo;
+        $this->print = $print;
 
         return $this;
     }
 
     /**
-     * Get wydawnictwo
+     * Get print
      *
      * @return string
      */
-    public function getWydawnictwo()
+    public function getPrint()
     {
-        return $this->wydawnictwo;
+        return $this->print;
     }
 
     /**
-     * Set rokwydania
+     * Set publishyear
      *
-     * @param string $rokwydania
+     * @param string $publishyear
      * @return Book
      */
-    public function setRokwydania($rokwydania)
+    public function setPublishYear($publishyear)
     {
-        $this->rokwydania = $rokwydania;
+        $this->publishyear = $publishyear;
 
         return $this;
     }
 
     /**
-     * Get rokwydania
+     * Get publishyear
      *
      * @return string
      */
-    public function getRokwydania()
+    public function getPublishYear()
     {
-        return $this->rokwydania;
+        return $this->publishyear;
     }
 
     /**
-     * Set rokwydania
-     *
-     * @param int $ilosc
+     * @param int $quantity
      * @return Book
      */
-    public function setIlosc($ilosc)
+    public function setQuantity($quantity)
     {
-        $this->ilosc = $ilosc;
+        $this->quantity = $quantity;
 
         return $this;
     }
 
     /**
-     * Get rokwydania
-     *
      * @return int
      */
-    public function getilosc()
+    public function getGuantity()
     {
-        return $this->ilosc;
+        return $this->quantity;
     }
 
     /**
-     * Set idkategoria
+     * Set idcategory
      *
-     * @param \AppBundle\Entity\Category $idkategoria
+     * @param \AppBundle\Entity\Category $idcategory
      * @return Book
      */
-    public function setIdkategoria(\AppBundle\Entity\Category $idkategoria = null)
+    public function setIdcategory(\AppBundle\Entity\Category $idcategory = null)
     {
-        $this->idkategoria = $idkategoria;
+        $this->idcategory = $idcategory;
 
         return $this;
     }
 
     /**
-     * Get idkategoria
+     * Get idcategory
      *
      * @return \AppBundle\Entity\Category
      */
-    public function getIdkategoria()
+    public function getIdcategory()
     {
-        return $this->idkategoria;
-    }
-
-    public function __construct()
-    {
-        $this->zamowienie_produkty = new ArrayCollection();
+        return $this->idcategory;
     }
 
     /**
@@ -390,36 +386,36 @@ class Book
     }
 
     /**
-     * Add zamowienie_produkty
+     * Add orderProducts
      *
-     * @param \AppBundle\Entity\OrderProduct $zamowienieProdukty
+     * @param \AppBundle\Entity\OrderProduct $orderProducts
      * @return Book
      */
-    public function addZamowienieProdukty(\AppBundle\Entity\OrderProduct $zamowienieProdukty)
+    public function addOrderProducts(\AppBundle\Entity\OrderProduct $orderProducts)
     {
-        $this->zamowienie_produkty[] = $zamowienieProdukty;
+        $this->orderProducts[] = $orderProducts;
 
         return $this;
     }
 
     /**
-     * Remove zamowienie_produkty
+     * Remove orderProducts
      *
-     * @param \AppBundle\Entity\OrderProduct $zamowienieProdukty
+     * @param \AppBundle\Entity\OrderProduct $orderProducts
      */
-    public function removeZamowienieProdukty(\AppBundle\Entity\OrderProduct $zamowienieProdukty)
+    public function removeOrderProducts(\AppBundle\Entity\OrderProduct $orderProducts)
     {
-        $this->zamowienie_produkty->removeElement($zamowienieProdukty);
+        $this->orderProducts->removeElement($orderProducts);
     }
 
     /**
-     * Get zamowienie_produkty
+     * Get orderProducts
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getZamowienieProdukty()
+    public function getOrderProducts()
     {
-        return $this->zamowienie_produkty;
+        return $this->orderProducts;
     }
 }
 

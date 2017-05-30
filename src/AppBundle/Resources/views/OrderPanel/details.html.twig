@@ -29,7 +29,7 @@
                 </ul>
 
                 <h4 class="greyHeader">Produkty:</h4>
-                {% set ilosc = 0 %}
+                {% set quantity = 0 %}
                 {% set kwota = 0 %}
                 {% for product in products %}
                     <ul>
@@ -38,20 +38,20 @@
                         <li><span class="greyLeft">tytuł: </span><span
                                     class="potwierdzenieRight">{{ product.title }}</span></li>
                         <li><span class="greyLeft">autor: </span><span
-                                    class="potwierdzenieRight">{{ product.autor }}</span></li>
+                                    class="potwierdzenieRight">{{ product.author }}</span></li>
                         <li><span class="greyLeft">cena: </span><span
                                     class="potwierdzenieRight">{{ product.cenaProduktu }}</span></li>
                         <li><span class="greyLeft">ilość: </span><span
-                                    class="potwierdzenieRight">{{ product.ilosc }}</span></li>
+                                    class="potwierdzenieRight">{{ product.quantity }}</span></li>
                     </ul>
-                    {% set ilosc = ilosc + product.ilosc %}
-                    {% set kwota = kwota + product.ilosc * product.cenaproduktu %}
+                    {% set quantity = quantity + product.quantity %}
+                    {% set kwota = kwota + product.quantity * product.cenaproduktu %}
 
                 {% endfor %}
                 <h4 class="greyHeader">Kwota</h4>
                 <ul> {{ kwota|number_format(2) }}</ul>
                 <h4 class="greyHeader"> Razem Produktów</h4>
-                <ul>{{ ilosc }}</ul>
+                <ul>{{ quantity }}</ul>
                 <h4 class="greyHeader">Status zamówienia</h4>
                 {% if is_granted('ROLE_ADMIN') %}
                     {{ form(statusForm) }}

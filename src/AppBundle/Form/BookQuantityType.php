@@ -15,7 +15,7 @@ class BookQuantityType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('ilosc', null, array('label' => false,'attr' => array('min' => '0',
+            ->add('quantity', null, array('label' => false,'attr' => array('min' => '0',
                         'max' => '99',)))
             ;
     }

@@ -123,7 +123,7 @@ class CartController extends Controller
         $session->set('sum', $sum);
 
         return $this->render('AppBundle:Cart:cart_menu.html.twig', [
-            'ksiazki' => $booksInCartDetails,
+            'books' => $booksInCartDetails,
             'suma' => $sum
         ]);
     }
@@ -197,7 +197,7 @@ class CartController extends Controller
         $zamowienie = $this->getDoctrine()
             ->getRepository('Order.php')
             ->find($idorder[0]);
-        $produkty = $zamowienie->getZamowienieProdukty();
+        $produkty = $zamowienie->getOrderProducts();
         $suma = $request->getSession()->get('sum');
 
         return $this->render('AppBundle:Cart:confirm.html.twig', [

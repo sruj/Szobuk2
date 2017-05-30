@@ -13,16 +13,16 @@ class BookList
      */
     const NUM_ITEMS = 45;
 
-    private $ksiazki;
+    private $books;
 
     public function __construct()
     {
-        $this->ksiazki = new ArrayCollection();
+        $this->books = new ArrayCollection();
     }
 
     public function getKsiazki()
     {
-        return $this->ksiazki;
+        return $this->books;
     }
 
 

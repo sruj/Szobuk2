@@ -52,15 +52,15 @@
                     <tr>
                         <td>{{ formul.vars.value.idorder }}</td>
                         <td>{{ formul.vars.value.orderdate|date('Y-m-d H:i:s') }}</td>
-                        {% set ilosc = 0 %}
+                        {% set quantity = 0 %}
                         {% set kwota = 0 %}
                         {% for zamowienieProdukt in zamowieniaProdukty %}
                             {% if zamowienieProdukt.idorder.idorder ==  formul.vars.value.idorder %}
-                                {% set ilosc = ilosc + zamowienieProdukt.ilosc %}
-                                {% set kwota = kwota + zamowienieProdukt.ilosc * zamowienieProdukt.cenaproduktu %}
+                                {% set quantity = quantity + zamowienieProdukt.quantity %}
+                                {% set kwota = kwota + zamowienieProdukt.quantity * zamowienieProdukt.cenaproduktu %}
                             {% endif %}
                         {% endfor %}
-                        <td>{{ ilosc }}</td>
+                        <td>{{ quantity }}</td>
                         <td>{{ kwota|number_format(2) }}</td>
                         <td>{{ formul.vars.value.idklient.idklient }}</td>
                         <td>
