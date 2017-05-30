@@ -12,7 +12,7 @@ class LoadData implements FixtureInterface {
         $data = file('data/kategorie.txt');
         foreach ($data as $i) {
             $Name = new Category();
-            $Name->setNazwa(trim($i));
+            $Name->setName(trim($i));
             $manager->persist($Name);
         }
         $manager->flush();

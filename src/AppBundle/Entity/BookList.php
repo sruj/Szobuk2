@@ -20,7 +20,7 @@ class BookList
         $this->books = new ArrayCollection();
     }
 
-    public function getKsiazki()
+    public function getBooks()
     {
         return $this->books;
     }

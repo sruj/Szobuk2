@@ -15,9 +15,9 @@ class Merchant
     /**
      * @var string
      *
-     * @ORM\Column(name="nazwa", type="string", length=45, nullable=true)
+     * @ORM\Column(name="name", type="string", length=45, nullable=true)
      */
-    private $nazwa;
+    private $name;
 
     /**
      * @var string
@@ -83,26 +83,26 @@ class Merchant
     protected $faktury;
 
     /**
-     * Set nazwa
+     * Set name
      *
-     * @param string $nazwa
+     * @param string $name
      * @return Merchant
      */
-    public function setNazwa($nazwa)
+    public function setName($name)
     {
-        $this->nazwa = $nazwa;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get nazwa
+     * Get name
      *
      * @return string 
      */
-    public function getNazwa()
+    public function getname()
     {
-        return $this->nazwa;
+        return $this->name;
     }
 
     /**

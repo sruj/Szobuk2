@@ -9,18 +9,19 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * Category
  *
- * @ORM\Table(name="kategoria")
+ * @ORM\Table(name="category")
  * @ORM\Entity
- * @UniqueEntity("nazwa")
+ * @UniqueEntity("name")
  */
-class Category {
+class Category
+{
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nazwa", type="string", length=45, nullable=true, unique=true)
+     * @ORM\Column(name="name", type="string", length=45, nullable=true, unique=true)
      */
-    private $nazwa;
+    private $name;
 
     /**
      * @var integer
@@ -32,45 +33,46 @@ class Category {
     private $idcategory;
 
     /**
-     * @ORM\OneToMany(targetEntity="Book.php", mappedBy="idcategory")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Book", mappedBy="idcategory")
      */
     protected $books;
 
-
-
     /**
-     * Dodałem tę metodę bo wyświetla poniższy komunikat 
+     * Dodałem tę metodę bo wyświetla poniższy komunikat
      * gdy używam CRUD:
-     * 
+     *
      * A "__toString()" method was not found on the objects of type
      *  "AppBundle\Entity\Category" passed to the choice field.
-     * To read a custom getter instead, set the option "property" 
+     * To read a custom getter instead, set the option "property"
      * to the desired property path.
-     * 
+     *
      */
-    public function __toString() {
-        return $this->getNazwa();
+    public function __toString()
+    {
+        return $this->getName();
     }
 
     /**
-     * Set nazwa
+     * Set name
      *
-     * @param string $nazwa
+     * @param string $name
      * @return Category
      */
-    public function setNazwa($nazwa) {
-        $this->nazwa = $nazwa;
+    public function setName($name)
+    {
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get nazwa
+     * Get name
      *
-     * @return string 
+     * @return string
      */
-    public function getNazwa() {
-        return $this->nazwa;
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**
@@ -78,11 +80,13 @@ class Category {
      *
      * @return int
      */
-    public function getIdcategory() {
+    public function getIdcategory()
+    {
         return $this->idcategory;
     }
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->books = new ArrayCollection();
     }
 
@@ -91,10 +95,10 @@ class Category {
      *
      * @return Doctrine\Common\Collections\Collection
      */
-    public function getKsiazki() {
+    public function getBooks()
+    {
         return $this->books;
     }
-
 
     /**
      * Add books
@@ -102,7 +106,7 @@ class Category {
      * @param \AppBundle\Entity\Book $books
      * @return Category
      */
-    public function addKsiazki(\AppBundle\Entity\Book $books)
+    public function addBooks(\AppBundle\Entity\Book $books)
     {
         $this->books[] = $books;
 
@@ -114,7 +118,7 @@ class Category {
      *
      * @param \AppBundle\Entity\Book $books
      */
-    public function removeKsiazki(\AppBundle\Entity\Book $books)
+    public function removeBooks(\AppBundle\Entity\Book $books)
     {
         $this->books->removeElement($books);
     }

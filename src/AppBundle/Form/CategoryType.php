@@ -14,8 +14,8 @@ class CategoryType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-//         było        ->add('nazwa')
-                ->add('nazwa', 'text', array(
+//         było        ->add('name')
+                ->add('name', 'text', array(
                     'attr' => array(
                         'placeholder' => 'Nazwa kategorii',
                     ),
@@ -37,7 +37,7 @@ class CategoryType extends AbstractType {
      * @return string
      */
     public function getName() {
-        return 'appbundle_kategoria';
+        return 'appbundle_category';
     }
 
 }

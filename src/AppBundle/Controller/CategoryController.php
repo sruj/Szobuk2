@@ -141,13 +141,13 @@ class CategoryController extends Controller
     }
 
     /**
-     * Cwaniackie zabezpieczenie by adresy /admin/xxxxxxx wyświetlały mój nadpisany error, a nie brzydki komunikat "No route found for "GET /kategoria/admin/xxxxxx""
+     * Cwaniackie zabezpieczenie by adresy /admin/xxxxxxx wyświetlały mój nadpisany error, a nie brzydki komunikat "No route found for "GET /category/admin/xxxxxx""
      *
      * @Route("/admin/{szatan}")
      */
     public function pageNotFoundAction($szatan)
     {
-        throw $this->createNotFoundException('Strona .../kategoria/admin/' . $szatan . ' nie istnieje');
+        throw $this->createNotFoundException('Strona .../category/admin/' . $szatan . ' nie istnieje');
     }
 
     /**

@@ -41,11 +41,11 @@ class BookController extends Controller
         //pozwala na stworzenie wielu formularzy z jednym buttonem
         $bookList = new BookList();
         foreach ($books as $book) {
-            $bookList->getKsiazki()->add($book);
+            $bookList->getBooks()->add($book);
         }
 
         //[-Formularz Główny-]Główny formularz $form. Struktura to kolekcja formularzy BookListType()
-        //a zawartość to $KsiazkiList
+        //a zawartość to $BooksList
         $form = $this->createForm(BookListType::class, $bookList);
 
         //[-Formularz Główny-]Jeśli w panelu zmienionio ilos i kliknięto zapisz to odbieram

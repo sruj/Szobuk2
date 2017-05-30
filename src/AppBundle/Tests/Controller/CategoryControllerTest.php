@@ -54,8 +54,8 @@ class CategoryControllerTest extends WebTestCase
             'Brak strony /category/admin/new');
 
         // Fill in the form and submit it
-        $form = $crawler->selectButton('appbundle_kategoria[submit]')->form(array(
-            'appbundle_kategoria[nazwa]'  => 'Test',
+        $form = $crawler->selectButton('appbundle_category[submit]')->form(array(
+            'appbundle_category[name]'  => 'Test',
         ));
 
         $client->submit($form);
@@ -68,7 +68,7 @@ class CategoryControllerTest extends WebTestCase
         $crawler = $client->click($crawler->selectLink('Edytuj Kategorię')->link());
 
         $form = $crawler->selectButton('Zaktualizuj')->form(array(
-            'appbundle_kategoria[nazwa]'  => 'TestFunkcjonalny',
+            'appbundle_category[name]'  => 'TestFunkcjonalny',
         ));
 
         $client->submit($form);

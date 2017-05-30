@@ -28,7 +28,7 @@
                             {% if is_granted('ROLE_ADMIN') %}
                                 <a href="{{ path('category_edit', { 'id': entity.idcategory }) }}">edit</a>
                             {% endif %}
-                            <a href="{{ path('category_show', { 'id': entity.idcategory }) }}">{{ entity.nazwa }}</a></td>
+                            <a href="{{ path('category_show', { 'id': entity.idcategory }) }}">{{ entity.name }}</a></td>
                         </li>
                     {% endfor %}
                 </ul>
