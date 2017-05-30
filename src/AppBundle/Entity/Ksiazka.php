@@ -9,19 +9,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Validator\Constraints as AcmeAssert;
 
 /**
- * Ksiazka
- *
  * @ORM\Table(name="ksiazka", indexes={@ORM\Index(name="idKategoria_idx", columns={"idKategoria"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\KsiazkaRepository")
  */
 class Ksiazka
 {
-
     /**
      * liczba książek na stronie (głównej)
      */
     const NUM_ITEMS = 12;
-    
+
     /**
      * @var \DateTime $created
      *
@@ -38,23 +35,22 @@ class Ksiazka
      */
     private $updated;
 
-  
     /**
      * @var string
-     * 
+     *
      * //Assert\Isbn -wyłączam bo książki od początku mają przypisane isbn w złym formacie i próba edycji książki zawsze wywala błąd walidacji isbn
      * @ORM\Column(name="isbn", type="string", length=45)
      * @ORM\Id
      */
     private $isbn;
-    
+
     /**
      * @var string
      *
      * @ORM\Column(name="tytul", type="string", length=45, nullable=true)
      */
     private $tytul;
-    
+
     /**
      * @var string
      *
@@ -107,8 +103,6 @@ class Ksiazka
      */
     private $ilosc;
 
-
-
     /**
      * @var \AppBundle\Entity\Kategoria
      *
@@ -118,16 +112,12 @@ class Ksiazka
      * })
      */
     private $idkategoria;
-    
+
     /**
-    * @ORM\OneToMany(targetEntity="AppBundle\Entity\ZamowienieProdukt", mappedBy="isbn")
-    */
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ZamowienieProdukt", mappedBy="isbn")
+     */
     protected $zamowienie_produkty;
 
-
-    
-    
-    
     public function getCreated()
     {
         return $this->created;
@@ -137,7 +127,7 @@ class Ksiazka
     {
         return $this->updated;
     }
-    
+
     /**
      * Set isbn
      *
@@ -149,18 +139,17 @@ class Ksiazka
         $this->isbn = $isbn;
 
         return $this;
-    } 
-    
+    }
+
     /**
      * Get isbn
      *
-     * @return string 
+     * @return string
      */
     public function getIsbn()
     {
         return $this->isbn;
     }
-
 
     /**
      * Set tytul
@@ -178,16 +167,13 @@ class Ksiazka
     /**
      * Get tytul
      *
-     * @return string 
+     * @return string
      */
     public function getTytul()
     {
         return $this->tytul;
     }
-    
-    
-    
-    
+
     /**
      * Set autor
      *
@@ -204,7 +190,7 @@ class Ksiazka
     /**
      * Get autor
      *
-     * @return string 
+     * @return string
      */
     public function getAutor()
     {
@@ -227,7 +213,7 @@ class Ksiazka
     /**
      * Get opis
      *
-     * @return string 
+     * @return string
      */
     public function getOpis()
     {
@@ -250,7 +236,7 @@ class Ksiazka
     /**
      * Get cena
      *
-     * @return string 
+     * @return string
      */
     public function getCena()
     {
@@ -273,7 +259,7 @@ class Ksiazka
     /**
      * Get obrazek
      *
-     * @return string 
+     * @return string
      */
     public function getObrazek()
     {
@@ -296,7 +282,7 @@ class Ksiazka
     /**
      * Get wydawnictwo
      *
-     * @return string 
+     * @return string
      */
     public function getWydawnictwo()
     {
@@ -319,7 +305,7 @@ class Ksiazka
     /**
      * Get rokwydania
      *
-     * @return string 
+     * @return string
      */
     public function getRokwydania()
     {
@@ -349,8 +335,6 @@ class Ksiazka
         return $this->ilosc;
     }
 
-
-
     /**
      * Set idkategoria
      *
@@ -367,16 +351,17 @@ class Ksiazka
     /**
      * Get idkategoria
      *
-     * @return \AppBundle\Entity\Kategoria 
+     * @return \AppBundle\Entity\Kategoria
      */
     public function getIdkategoria()
     {
         return $this->idkategoria;
     }
-    
-    public function __construct() {
+
+    public function __construct()
+    {
         $this->zamowienie_produkty = new ArrayCollection();
-    }     
+    }
 
     /**
      * Set created
@@ -430,7 +415,7 @@ class Ksiazka
     /**
      * Get zamowienie_produkty
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getZamowienieProdukty()
     {
