@@ -13,7 +13,7 @@ use Knp\Component\Pager\Paginator;
 /**
  *
  */
-class ZamowienieRepository extends EntityRepository implements PaginatorAwareInterface
+class OrderRepository extends EntityRepository implements PaginatorAwareInterface
 {
     /**
      * @var
