@@ -27,7 +27,7 @@ class DefaultController extends Controller
             return $this->redirectToRoute('personal_data');
         };
 
-        $ksi_rep = $this->get('app.ksiazka_repository');
+        $ksi_rep = $this->get('app.book_repository');
 
         if ($request->isXmlHttpRequest()) {
             $ksiazki = $ksi_rep->findAllMy($request->query->getInt('page'), 12);
@@ -68,7 +68,7 @@ class DefaultController extends Controller
      */
     public function popularAction(Request $request)
     {
-        $ksi_rep = $this->get('app.ksiazka_repository');
+        $ksi_rep = $this->get('app.book_repository');
         $ksiazki = $ksi_rep->findPopular($request->query->getInt('page', 1));
 
         return $this->render('AppBundle:Default:popular.html.twig', [
@@ -81,7 +81,7 @@ class DefaultController extends Controller
      */
     public function newsAction(Request $request)
     {
-        $ksi_rep = $this->get('app.ksiazka_repository');
+        $ksi_rep = $this->get('app.book_repository');
         $ksiazki = $ksi_rep->findNews($request->query->getInt('page', 1));
 
         return $this->render('AppBundle:Default:news.html.twig', [

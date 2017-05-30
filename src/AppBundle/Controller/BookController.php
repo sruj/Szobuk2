@@ -26,7 +26,7 @@ class BookController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $rep = $this->get('app.ksiazka_repository');
+        $rep = $this->get('app.book_repository');
         $books = [];
         if ($this->isGranted('ROLE_ADMIN')) {
             $lpr = 9999;
@@ -278,7 +278,7 @@ class BookController extends Controller
         if ($request->isXmlHttpRequest()) {
             $word = $request->query->keys();
             $word = $word[0];
-            $rep = $this->get('app.ksiazka_repository');
+            $rep = $this->get('app.book_repository');
             $query = $rep->queryWyszukiwarka($word);
             $books = $query->getResult();
 
@@ -320,7 +320,7 @@ class BookController extends Controller
      */
     public function searchResultsAction(Request $request, $word = false)
     {
-        $ksi_rep = $this->get('app.ksiazka_repository');
+        $ksi_rep = $this->get('app.book_repository');
         $ksiazki = $ksi_rep->findWyszukiwarka($word, $request->query->getInt('page', 1));
 
         return $this->render('AppBundle:Book:searchResults.html.twig',
@@ -335,7 +335,7 @@ class BookController extends Controller
      */
     public function showBooksByAction(Request $request, $findby = false, $what = false)
     {
-        $ksi_rep = $this->get('app.ksiazka_repository');
+        $ksi_rep = $this->get('app.book_repository');
         $ksiazki = $ksi_rep->findByWhat($findby, $what, $request->query->getInt('page', 1));
 
         return $this->render('AppBundle:Book:show_books_by.html.twig', [
