@@ -53,27 +53,27 @@ class SortTest extends \PHPUnit_Framework_TestCase
      */
     public function getTableConfigDetails()
     {
-        yield [ 'null','idzamowienie' ,
+        yield [ 'null','idorder' ,
             ['Status'=>'null','Klient'=>'null','Data'=>'null','Numer'=>'ASC']];
-        yield ['null','datazlozenia' ,
+        yield ['null','orderdate' ,
             ['Status'=>'null','Klient'=>'null','Data'=>'ASC','Numer'=>'null']];
         yield ['null','idstatus' ,
             ['Status'=>'ASC','Klient'=>'null','Data'=>'null','Numer'=>'null']];
         yield ['null','idklient' ,
             ['Status'=>'null','Klient'=>'ASC','Data'=>'null','Numer'=>'null']];
 
-        yield [ 'ASC','idzamowienie' ,
+        yield [ 'ASC','idorder' ,
             ['Status'=>'null','Klient'=>'null','Data'=>'null','Numer'=>'DESC']];
-        yield [ 'ASC','datazlozenia' ,
+        yield [ 'ASC','orderdate' ,
             ['Status'=>'null','Klient'=>'null','Data'=>'DESC','Numer'=>'null']];
         yield [ 'ASC','idstatus' ,
             ['Status'=>'DESC','Klient'=>'null','Data'=>'null','Numer'=>'null']];
         yield [ 'ASC','idklient' ,
             ['Status'=>'null','Klient'=>'DESC','Data'=>'null','Numer'=>'null']];
 
-        yield [ 'DESC','idzamowienie' ,
+        yield [ 'DESC','idorder' ,
             ['Status'=>'null','Klient'=>'null','Data'=>'null','Numer'=>'ASC']];
-        yield [ 'DESC','datazlozenia' ,
+        yield [ 'DESC','orderdate' ,
             ['Status'=>'null','Klient'=>'null','Data'=>'ASC','Numer'=>'null']];
         yield [ 'DESC','idstatus' ,
             ['Status'=>'ASC','Klient'=>'null','Data'=>'null','Numer'=>'null']];

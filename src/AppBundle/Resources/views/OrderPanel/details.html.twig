@@ -9,14 +9,14 @@
         <div id="boxMyinside">
             {% if is_granted('ROLE_ADMIN') %}
                 <h3> Zamówienie nr:
-                    <larger><strong>{{ order.idzamowienie }}</strong></larger>
-                    ,<br/> złożone: {{ order.datazlozenia|date('Y-m-d H:i:s') }} <br/>
+                    <larger><strong>{{ order.idorder }}</strong></larger>
+                    ,<br/> złożone: {{ order.orderdate|date('Y-m-d H:i:s') }} <br/>
                     przez klienta nr <a id="OrangeButton"
                                         href="{{ path('panel_sort_from_details',{ 'findBy':'idklient', 'Identifier':order.idklient.idklient}) }}">{{ order.idklient.idklient }}</a>
                 </h3>
             {% else %}
-                <h3> Zamówienie nr: <strong>{{ order.idzamowienie }}</strong>,<br/>
-                    złożone: {{ order.datazlozenia|date('Y-m-d H:i:s') }}
+                <h3> Zamówienie nr: <strong>{{ order.idorder }}</strong>,<br/>
+                    złożone: {{ order.orderdate|date('Y-m-d H:i:s') }}
                     <br/>przez {{ app.user.username }}
                 </h3>
             {% endif %}
@@ -36,7 +36,7 @@
                         <li><span class="greyLeft">ISBN: </span><span
                                     class="potwierdzenieRight">{{ product.isbn.isbn }}</span></li>
                         <li><span class="greyLeft">tytuł: </span><span
-                                    class="potwierdzenieRight">{{ product.tytul }}</span></li>
+                                    class="potwierdzenieRight">{{ product.title }}</span></li>
                         <li><span class="greyLeft">autor: </span><span
                                     class="potwierdzenieRight">{{ product.autor }}</span></li>
                         <li><span class="greyLeft">cena: </span><span

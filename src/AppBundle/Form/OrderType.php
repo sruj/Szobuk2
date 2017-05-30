@@ -17,7 +17,7 @@ class OrderType extends AbstractType
         //wykorzystywane w panelsortAction w tabeli do zmiany statusu zamówienia
         $builder
                 ->add('idstatus', null, array('label' => false));
-//                ->add('idzamowienie','hidden');
+//                ->add('idorder','hidden');
     }
     
     /**

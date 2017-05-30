@@ -40,8 +40,8 @@ class DefaultController extends Controller
                 foreach ($ksiazki as $ksiazka) {
                     $books[$i]['isbn'] = $ksiazka->getIsbn();
                     $books[$i]['autor'] = $ksiazka->getAutor();
-                    $books[$i]['tytul'] = $ksiazka->getTytul();
-                    $books[$i]['cena'] = $ksiazka->getCena();
+                    $books[$i]['title'] = $ksiazka->getTitle();
+                    $books[$i]['cena'] = $ksiazka->getPrice();
                     $books[$i]['obrazek'] = $ksiazka->getObrazek();
                     $i++;
                 }

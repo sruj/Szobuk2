@@ -34,7 +34,7 @@
                     <tr>
                      {#   {% if is_granted('ROLE_ADMIN') %}
                         {% else %}#}  
-                            <th class="thLeftBorderRadius">{{ knp_pagination_sortable(pagination, 'Tytuł', 'a.tytul') }}</th>
+                            <th class="thLeftBorderRadius">{{ knp_pagination_sortable(pagination, 'Tytuł', 'a.title') }}</th>
                             <th>{{ knp_pagination_sortable(pagination, 'Autor', 'a.autor') }}</th>
                             <th>{{ knp_pagination_sortable(pagination, 'Cena', 'a.cena') }}</th>
                             <th>{{ knp_pagination_sortable(pagination, 'Wydawnictwo', 'a.wydawnictwo') }}</th>
@@ -55,7 +55,7 @@
                 <tbody>
                     {% for entity in pagination %}
                         <tr>
-                            <td><a href="{{ path('book_show', { 'id': entity.isbn }) }}">{{ entity.tytul }}</a></td>
+                            <td><a href="{{ path('book_show', { 'id': entity.isbn }) }}">{{ entity.title }}</a></td>
                             <td><a href="{{ path('show_books_by', { 'findby': 'autor','what': entity.autor }) }}">{{ entity.autor }}</a></td>
                             <td>{{ entity.cena }}</td>
                             <td><a href="{{ path('show_books_by', { 'findby': 'wydawnictwo','what': entity.wydawnictwo }) }}">{{ entity.wydawnictwo }}</a></td>
@@ -99,7 +99,7 @@
     {% for ksiazka in ksiazki %}
     <tr>
         <td><a href="{{ path('book_show',{'id':ksiazka.isbn}) }} ">{{ ksiazka.isbn}}</a></td>
-        <td><a href="">{{ ksiazka.tytul }}</a></td>
+        <td><a href="">{{ ksiazka.title }}</a></td>
         <td>{{ ksiazka.autor }}</td>
         <td>{{ ksiazka.cena }}</td>
         <td>{{ ksiazka.wydawnictwo }}</td>

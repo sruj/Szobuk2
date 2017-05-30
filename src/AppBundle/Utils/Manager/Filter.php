@@ -26,11 +26,11 @@ class Filter
      */
     public function prepareFilterAndQuery(TableDetails $td, FormsManagerExtended $forms, IFilterQuery $fq)
     {
-        $td = $this->prepareDetails($td,$forms);
-        $tds = $this->makeFilterAndQuery($td,$forms,$fq);
+        $td = $this->prepareDetails($td, $forms);
+        $tds = $this->makeFilterAndQuery($td, $forms, $fq);
 
-        if(!$tds instanceof TableDetails){
-            throw new UnexpectedInstanceOfException('Must be instance of TableDetails'); 
+        if (!$tds instanceof TableDetails) {
+            throw new UnexpectedInstanceOfException('Must be instance of TableDetails');
         }
 
         return $tds;
@@ -56,13 +56,12 @@ class Filter
      */
     private function setFalse(TableDetails $tb, FormsManagerExtended $fms)
     {
-        if ($this->isAnyFormValid($fms)){
+        if ($this->isAnyFormValid($fms)) {
             $tb->setFilterField(false);
             $tb->setQuery(false);
         }
 
-        if(!($tb->getFilterField()))
-        {
+        if (!($tb->getFilterField())) {
             $tb->setQuery(false);
         }
 
@@ -87,55 +86,57 @@ class Filter
     {
         $filter = $td->getFilter();
 
-        if(!($this->isTableAlreadyFiltered($filter)))
-        {
-            $td = $this->prepareFilterValue($forms,$td);
+        if (!($this->isTableAlreadyFiltered($filter))) {
+            $td = $this->prepareFilterValue($forms, $td);
         }
 
         return $td;
     }
 
-
     private function isTableAlreadyFiltered($filter)
     {
-        if($filter) {
+        if ($filter) {
             return true;
         }
+
         return false;
     }
-
 
     /**
      * @param FormsManagerExtended $fms
      * @param TableDetails $td
      * @return TableDetails
      */
-    private function prepareFilterValue(FormsManagerExtended $fms, TableDetails $td){
-//tu wchodzę gdy tablica nie była teraz filtrowana, ale wcześniej i teraz nowy sort
-        if($td->getFilterField()){
+    private function prepareFilterValue(FormsManagerExtended $fms, TableDetails $td)
+    {
+        //tu wchodzę gdy tablica nie była teraz filtrowana, ale wcześniej i teraz nowy sort
+        if ($td->getFilterField()) {
             $td->setFilter($td->getFilterField());
+
             return $td;
         }
-        if($fms->isStatusFormValid()){
+        if ($fms->isStatusFormValid()) {
             $td->setFilter('idstatus');
             $td->setFilterField('idstatus');
+
             return $td;
         }
-        if($fms->isDataZamFormValid()) {
+        if ($fms->isOrderDateFormValid()) {
             $td->setFilter('data');
             $td->setFilterField('data');
-            return $td;
-        }
-        if($fms->isNrKlientaFormValid()){
-            $td->setFilter('idklient');
-            $td->setFilterField('idklient');
-            return $td;
-        }
 
+            return $td;
+        }
+        if ($fms->isClientNumberFormValid()) {
+            $td->setFilter('idclient');
+            $td->setFilterField('idclient');
+
+            return $td;
+        }
         $td->setFilter('all');
+
         return $td;
     }
-
 
     /**
      * @param TableDetails $td
@@ -145,22 +146,25 @@ class Filter
      */
     private function makeFilterAndQuery(TableDetails $td, FormsManagerExtended $forms, IFilterQuery $fq)
     {
-        if($td->getFilter() == 'all'){
+        if ($td->getFilter() == 'all') {
             return $td;
         }
 
-        if($td->getFilter() == 'idstatus'){
+        if ($td->getFilter() == 'idstatus') {
             $tds = $fq->prepareStatusFilterQuery($td, $forms);
+
             return $tds;
         }
 
-        if($td->getFilter() == 'data') {
+        if ($td->getFilter() == 'data') {
             $tds = $fq->prepareDataFilterQuery($td, $forms);
+
             return $tds;
         }
 
-        if($td->getFilter() == 'idklient'){
-            $tds = $fq->prepareKlientFilterQuery($td, $forms);
+        if ($td->getFilter() == 'idclient') {
+            $tds = $fq->prepareClientFilterQuery($td, $forms);
+
             return $tds;
         }
     }

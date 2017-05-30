@@ -146,8 +146,8 @@ class FilterTest extends \PHPUnit_Framework_TestCase
     protected function getFormsManagerExtended(
         $isAnyValid = true,
         $isStatusFormValid = false,
-        $isDataZamFormValid = false,
-        $isNrKlientaFormValid = false
+        $isOrderDateFormValid = false,
+        $isClientNumberFormValid = false
     )
     {
         $FormsManagerExtended = $this->getMockBuilder(FormsManagerExtended::class)
@@ -160,11 +160,11 @@ class FilterTest extends \PHPUnit_Framework_TestCase
             ->method('isStatusFormValid')
             ->will($this->returnValue($isStatusFormValid));
         $FormsManagerExtended->expects($this->any())
-            ->method('isDataZamFormValid')
-            ->will($this->returnValue($isDataZamFormValid));
+            ->method('isOrderDateFormValid')
+            ->will($this->returnValue($isOrderDateFormValid));
         $FormsManagerExtended->expects($this->any())
-            ->method('isNrKlientaFormValid')
-            ->will($this->returnValue($isNrKlientaFormValid));
+            ->method('isClientNumberFormValid')
+            ->will($this->returnValue($isClientNumberFormValid));
 
         return $FormsManagerExtended;
     }
@@ -183,7 +183,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
             ->method('prepareDataFilterQuery')
             ->will($this->returnValue($returnValue));
         $FilterQuery->expects($this->any())
-            ->method('prepareKlientFilterQuery')
+            ->method('prepareClientFilterQuery')
             ->will($this->returnValue($returnValue))
             ->with($this->isInstanceOf(TableDetails::class))
         ;

@@ -40,7 +40,7 @@ class ManagerController extends Controller
      *     "filter": false,
      *     "identifier": false,
      *     "columnsSortOrder": false,
-     *     "columnSort": "idzamowienie",
+     *     "columnSort": "idorder",
      *     "query": false,
      *     "filterField": false,
      *     })
@@ -49,7 +49,7 @@ class ManagerController extends Controller
      *     "filter": false,
      *     "identifier": false,
      *     "columnsSortOrder": false,
-     *     "columnSort": "idzamowienie",
+     *     "columnSort": "idorder",
      *     "query": false,
      *     "filterField": false,
      *     })
@@ -80,8 +80,8 @@ class ManagerController extends Controller
 
         $tmpForms = [
             'StatusForm' => $statusForm,
-            'DataZamForm' => $orderDataorm,
-            'NrKlientaForm' => $clientaNumberForm,
+            'OrderDateForm' => $orderDataorm,
+            'ClientNumberForm' => $clientaNumberForm,
         ];
 
         $forms = new FormsManagerExtended($tmpForms);
@@ -120,8 +120,8 @@ class ManagerController extends Controller
             'columnsSortOrder' => $tableDetails->getColumnsSortOrder(),
             'form' => $form->createView(),
             'StatusForm' => $statusForm->createView(),
-            'DataZamForm' => $orderDataorm->createView(),
-            'NrKlientaForm' => $clientaNumberForm->createView(),
+            'OrderDateForm' => $orderDataorm->createView(),
+            'ClientNumberForm' => $clientaNumberForm->createView(),
         ]);
     }
 }

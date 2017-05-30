@@ -189,14 +189,14 @@ class CartController extends Controller
      */
     public function confirmAction(Request $request)
     {
-        $idzamowienie = $request->getSession()->getFlashBag()->get('idzamowienie');
-        if (!$idzamowienie) {
+        $idorder = $request->getSession()->getFlashBag()->get('idorder');
+        if (!$idorder) {
             throw new VariableNotExistInFlashBagException('To jest strona potwierdzająca zamówienie. Aby złożyć zamówienie dodaj produkt do koszyka i tak dalej...');
         }
 
         $zamowienie = $this->getDoctrine()
             ->getRepository('Order.php')
-            ->find($idzamowienie[0]);
+            ->find($idorder[0]);
         $produkty = $zamowienie->getZamowienieProdukty();
         $suma = $request->getSession()->get('sum');
 

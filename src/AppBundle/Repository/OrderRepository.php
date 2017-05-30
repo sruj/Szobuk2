@@ -43,7 +43,7 @@ class OrderRepository extends EntityRepository implements PaginatorAwareInterfac
                 FROM AppBundle:Order z 
                 JOIN z.idstatus s 
                 WHERE z.idklient = :idklient 
-                ORDER BY z.idzamowienie ASC
+                ORDER BY z.idorder ASC
             ');
 
         $query = $query->setParameter('idklient', $idklient);
@@ -64,7 +64,7 @@ class OrderRepository extends EntityRepository implements PaginatorAwareInterfac
     public function findAllOrderedByY($sortArr,$OrderBy)
     {
         switch ($OrderBy) {
-            case 'datazlozenia':
+            case 'orderdate':
                 $sort=$sortArr['Data'];
                 break;
             case 'idklient':
@@ -85,10 +85,10 @@ class OrderRepository extends EntityRepository implements PaginatorAwareInterfac
     }
 
 
-    public function findByXOrderedByY($query,$sortArr,$OrderBy='idzamowienie')
+    public function findByXOrderedByY($query,$sortArr,$OrderBy='idorder')
     {
         switch ($OrderBy) {
-            case 'datazlozenia':
+            case 'orderdate':
                 $sort=$sortArr['Data'];
                 break;
             case 'idklient':

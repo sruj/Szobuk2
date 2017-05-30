@@ -143,8 +143,8 @@ class ManagerControllerTest extends WebTestCase
             'PHP_AUTH_USER' => 'wazny',
             'PHP_AUTH_PW' => 'wazny',
         ]);
-        $crawler = $client->request('GET', '/manager/panel/DESC/datazlozenia');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/DESC/datazlozenia");
+        $crawler = $client->request('GET', '/manager/panel/DESC/orderdate');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/DESC/orderdate");
     }
 
     public function testPanel_2()
@@ -199,7 +199,7 @@ class ManagerControllerTest extends WebTestCase
         ]);
 
         $crawler = $client->request('GET', '/manager/panel/null/idklient');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/ASC/datazlozenia");
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/ASC/orderdate");
     }
 
     public function testPanel_7()
@@ -208,7 +208,7 @@ class ManagerControllerTest extends WebTestCase
             'PHP_AUTH_USER' => 'wazny',
             'PHP_AUTH_PW' => 'wazny',
         ]);
-        $crawler = $client->request('GET', '/manager/panel/ASC/datazlozenia');
+        $crawler = $client->request('GET', '/manager/panel/ASC/orderdate');
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/");
     }
 

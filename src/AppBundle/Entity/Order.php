@@ -19,7 +19,7 @@ class Order
      *
      * @ORM\Column(name="dataZlozenia", type="datetime", nullable=true)
      */
-    private $datazlozenia;
+    private $orderdate;
 
     /**
      * @var integer
@@ -28,7 +28,7 @@ class Order
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idzamowienie;
+    private $idorder;
 
     /**
      * @var \AppBundle\Entity\Client
@@ -56,28 +56,28 @@ class Order
     
     
     /**
-    * @ORM\OneToMany(targetEntity="Invoice.php", mappedBy="idzamowienie")
+    * @ORM\OneToMany(targetEntity="Invoice.php", mappedBy="idorder")
     */
     protected $faktury;
 
 
 
     /**
-    * @ORM\OneToMany(targetEntity="Shipment.php", mappedBy="idzamowienie")
+    * @ORM\OneToMany(targetEntity="Shipment.php", mappedBy="idorder")
     */
     protected $przesylki;
 
 
 
     /**
-    * @ORM\OneToMany(targetEntity="ZamowienieProdukt", mappedBy="idzamowienie")
+    * @ORM\OneToMany(targetEntity="ZamowienieProdukt", mappedBy="idorder")
     */
     protected $zamowienie_produkty;
 
 
 
     /**
-     * Set datazlozeniacurrent
+     * Set orderdatecurrent
      * Ustawienie aktualnej daty-godziny.
      * wystarczy na rzecz instancji zamówienia odpalić te funkcję
      * i w bazie danych  dodana bedzie aktualna data zakupu
@@ -88,43 +88,43 @@ class Order
     public function setDatazlozeniacurrent()
     {
 
-        $this->datazlozenia = new DateTime();
+        $this->orderdate = new DateTime();
 
         return $this;
     }
     
     
     /**
-     * Set datazlozenia
+     * Set orderdate
      *
-     * @param \DateTime $datazlozenia
+     * @param \DateTime $orderdate
      * @return Order
      */
-    public function setDatazlozenia($datazlozenia)
+    public function setDatazlozenia($orderdate)
     {
-        $this->datazlozenia = $datazlozenia;
+        $this->orderdate = $orderdate;
 
         return $this;
     }
 
     /**
-     * Get datazlozenia
+     * Get orderdate
      *
      * @return \DateTime 
      */
     public function getDatazlozenia()
     {
-        return $this->datazlozenia;
+        return $this->orderdate;
     }
 
     /**
-     * Get idzamowienie
+     * Get idorder
      *
      * @return int
      */
     public function getIdzamowienie()
     {
-        return $this->idzamowienie;
+        return $this->idorder;
     }
 
     /**

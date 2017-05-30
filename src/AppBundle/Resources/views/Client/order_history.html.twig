@@ -15,8 +15,8 @@
             <table class="Table-all">
                 <thead>
                 <tr>
-                    <th class="thLeftBorderRadius">{{ knp_pagination_sortable(orders, 'nr. Zam', 'z.idzamowienie') }}</th>
-                    <th>{{ knp_pagination_sortable(orders, 'Data złożenia', 'z.datazlozenia') }}</th>
+                    <th class="thLeftBorderRadius">{{ knp_pagination_sortable(orders, 'nr. Zam', 'z.idorder') }}</th>
+                    <th>{{ knp_pagination_sortable(orders, 'Data złożenia', 'z.orderdate') }}</th>
                     <th>ilość prod.</th>
                     <th>kwota razem</th>
                     <th>{{ knp_pagination_sortable(orders, 'status z.', 's.status') }}</th>
@@ -26,8 +26,8 @@
                 <tbody>
                 {% for zamowienie in orders %}
                     <tr>
-                        <td>{{ zamowienie.idzamowienie }}</td>
-                        <td>{{ zamowienie.datazlozenia|date('Y-m-d H:i:s') }}</td>
+                        <td>{{ zamowienie.idorder }}</td>
+                        <td>{{ zamowienie.orderdate|date('Y-m-d H:i:s') }}</td>
                         {% set ilosc = 0 %}
                         {% set kwota = 0 %}
                         {% for zamowienieProdukt in zamowienie.ZamowienieProdukty %}
@@ -38,7 +38,7 @@
                         <td>{{ kwota|number_format(2) }}</td>
                         <td>{{ zamowienie.idstatus.status }}</td>
                         <td>
-                            <a href="{{ path('order_panel',{ 'orderid': zamowienie.idzamowienie, 'userid': app.user.id }) }}">więcej</a>
+                            <a href="{{ path('order_panel',{ 'orderid': zamowienie.idorder, 'userid': app.user.id }) }}">więcej</a>
                         </td>
                     </tr>
                 {% endfor %}

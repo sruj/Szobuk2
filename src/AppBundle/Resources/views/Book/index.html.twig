@@ -35,7 +35,7 @@
             <table class="Table-all">
                 <thead>
                     <tr>
-                        <th class="thLeftBorderRadius">{{ knp_pagination_sortable(ksiazki, 'Tytuł', 'a.tytul') }}</th>
+                        <th class="thLeftBorderRadius">{{ knp_pagination_sortable(ksiazki, 'Tytuł', 'a.title') }}</th>
                         <th>{{ knp_pagination_sortable(ksiazki, 'Autor', 'a.autor') }}</th>
                         <th>{{ knp_pagination_sortable(ksiazki, 'Cena', 'a.cena') }}</th>
                         <th>{{ knp_pagination_sortable(ksiazki, 'Wydawnictwo', 'a.wydawnictwo') }}</th>
@@ -57,7 +57,7 @@
                         {{ form_start(form) }} 
                         {% for entity in ksiazki %}
                             <tr>
-                                <td><a href="{{ path('book_show', { 'id': entity.isbn }) }}">{{ entity.tytul }}</a></td>
+                                <td><a href="{{ path('book_show', { 'id': entity.isbn }) }}">{{ entity.title }}</a></td>
                                 <td><a href="{{ path('show_books_by', { 'findby': 'autor','what': entity.autor }) }}">{{ entity.autor }}</a></td>
                                 <td>{{ entity.cena }}</td>
                                 <td><a href="{{ path('show_books_by', { 'findby': 'wydawnictwo','what': entity.wydawnictwo }) }}">{{ entity.wydawnictwo }}</a></td>
@@ -75,7 +75,7 @@
                     {% else %}
                         {% for entity in ksiazki %}
                             <tr>
-                                <td><a href="{{ path('book_show', { 'id': entity.isbn }) }}">{{ entity.tytul }}</a></td>
+                                <td><a href="{{ path('book_show', { 'id': entity.isbn }) }}">{{ entity.title }}</a></td>
                                 <td><a href="{{ path('show_books_by', { 'findby': 'autor','what': entity.autor }) }}">{{ entity.autor }}</a></td>
                                 <td>{{ entity.cena }}</td>
                                 <td><a href="{{ path('show_books_by', { 'findby': 'wydawnictwo','what': entity.wydawnictwo }) }}">{{ entity.wydawnictwo }}</a></td>

@@ -48,7 +48,7 @@
                 <tbody>
                 {% for book in books %}
                     <tr>
-                        <td><a href="{{ path('book_show', { 'id': book.isbn }) }}">{{ book.tytul }}</a>
+                        <td><a href="{{ path('book_show', { 'id': book.isbn }) }}">{{ book.title }}</a>
                         </td>
                         <td>
                             <a href="{{ path('show_books_by', { 'findby': 'autor','what': book.autor }) }}">{{ book.autor }}</a>

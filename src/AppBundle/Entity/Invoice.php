@@ -49,7 +49,7 @@ class Invoice
      *   @ORM\JoinColumn(name="idZamowienie", referencedColumnName="idZamowienie")
      * })
      */
-    private $idzamowienie;
+    private $idorder;
 
     
 
@@ -113,25 +113,25 @@ class Invoice
     }
 
     /**
-     * Set idzamowienie
+     * Set idorder
      *
-     * @param \AppBundle\Entity\Order $idzamowienie
+     * @param \AppBundle\Entity\Order $idorder
      * @return Invoice
      */
-    public function setIdzamowienie(\AppBundle\Entity\Order $idzamowienie = null)
+    public function setIdzamowienie(\AppBundle\Entity\Order $idorder = null)
     {
-        $this->idzamowienie = $idzamowienie;
+        $this->idorder = $idorder;
 
         return $this;
     }
 
     /**
-     * Get idzamowienie
+     * Get idorder
      *
      * @return \AppBundle\Entity\Order
      */
     public function getIdzamowienie()
     {
-        return $this->idzamowienie;
+        return $this->idorder;
     }
 }

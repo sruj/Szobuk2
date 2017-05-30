@@ -36,9 +36,9 @@ class OrderProduct
     /**
      * @var string
      *
-     * @ORM\Column(name="tytul", type="string", length=45, nullable=true)
+     * @ORM\Column(name="title", type="string", length=45, nullable=true)
      */
-    private $tytul;
+    private $title;
 
     /**
      * @var string
@@ -78,7 +78,7 @@ class OrderProduct
      *   @ORM\JoinColumn(name="idZamowienie", referencedColumnName="idZamowienie")
      * })
      */
-    private $idzamowienie;    
+    private $idorder;
 
 
 
@@ -152,26 +152,26 @@ class OrderProduct
     }
 
     /**
-     * Set tytul
+     * Set title
      *
-     * @param string $tytul
+     * @param string $title
      * @return OrderProduct
      */
-    public function setTytul($tytul)
+    public function setTytul($title)
     {
-        $this->tytul = $tytul;
+        $this->title = $title;
 
         return $this;
     }
 
     /**
-     * Get tytul
+     * Get title
      *
      * @return string 
      */
     public function getTytul()
     {
-        return $this->tytul;
+        return $this->title;
     }
 
     /**
@@ -231,26 +231,26 @@ class OrderProduct
     }
 
     /**
-     * Set idzamowienie
+     * Set idorder
      *
-     * @param \AppBundle\Entity\Order $idzamowienie
+     * @param \AppBundle\Entity\Order $idorder
      * @return OrderProduct
      */
     public function setIdzamowienie(\AppBundle\Entity\Order $zamowienie = null)
     {
-        $this->idzamowienie = $zamowienie;
+        $this->idorder = $zamowienie;
         $zamowienie->addZamowienieProdukt($this);
 
         return $this;
     }
 
     /**
-     * Get idzamowienie
+     * Get idorder
      *
      * @return \AppBundle\Entity\Order
      */
     public function getIdzamowienie()
     {
-        return $this->idzamowienie;
+        return $this->idorder;
     }
 }

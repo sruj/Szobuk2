@@ -8,7 +8,6 @@
 
 namespace AppBundle\Utils\Manager;
 
-
 class TableDetails
 {
     private $columnsSortOrder;
@@ -17,10 +16,7 @@ class TableDetails
     private $query;
     private $filter;
     private $identifier;
-    
-    
-    
-    
+
     /**
      * @return mixed
      */

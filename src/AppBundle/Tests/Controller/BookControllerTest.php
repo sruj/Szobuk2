@@ -74,7 +74,7 @@ class BookControllerTest extends WebTestCase
 
         // Fill in the form and submit it
         $form = $crawler->selectButton('Dodaj')->form(array(
-            'appbundle_ksiazka[tytul]' => 'TytułTF',
+            'appbundle_ksiazka[title]' => 'TytułTF',
             'appbundle_ksiazka[autor]' => 'AutorTF',
             'appbundle_ksiazka[opis]' => 'opisTF',
             'appbundle_ksiazka[isbn]' => '978-1-56619-909-4',
@@ -95,7 +95,7 @@ class BookControllerTest extends WebTestCase
         $crawler = $client->click($crawler->selectLink('Edycja')->link());
 
         $form = $crawler->selectButton('Zaktualizuj')->form(array(
-            'appbundle_ksiazka[tytul]' => 'Foo',
+            'appbundle_ksiazka[title]' => 'Foo',
             'appbundle_ksiazka[autor]' => 'Bar',
         ));
 

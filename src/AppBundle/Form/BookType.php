@@ -16,7 +16,7 @@ class BookType extends AbstractType {
         $builder
                 ->add('isbn', null, array('attr' => array
                         ('placeholder' => 'ISBN',), 'label' => 'ISBN',))
-                ->add('tytul', null, array('attr' => array
+                ->add('title', null, array('attr' => array
                         ('placeholder' => 'Tytuł',), 'label' => 'Tytuł',))
                 ->add('autor', null, array('attr' => array
                         ('placeholder' => 'Autor',), 'label' => 'Autor',))

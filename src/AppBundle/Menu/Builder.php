@@ -21,7 +21,7 @@ class Builder implements ContainerAwareInterface
 
 
         /** @var Book $book */
-        $book = $em->getRepository('Book.php')->findOneBy(['tytul'=>'Accountant']);
+        $book = $em->getRepository('Book.php')->findOneBy(['title'=>'Accountant']);
 
 
         $menu->addChild('Accountant', array(

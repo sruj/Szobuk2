@@ -116,7 +116,7 @@ class OrderManager
     private function addFlashBagWithOrderIdVariable($zamowienie){
         $idzamowienia = $zamowienie->getIdzamowienie();
         $this->session->getFlashBag()->add(
-            'idzamowienie',
+            'idorder',
             $idzamowienia);
     }
 

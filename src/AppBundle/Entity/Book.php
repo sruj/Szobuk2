@@ -47,9 +47,9 @@ class Book
     /**
      * @var string
      *
-     * @ORM\Column(name="tytul", type="string", length=45, nullable=true)
+     * @ORM\Column(name="title", type="string", length=45, nullable=true)
      */
-    private $tytul;
+    private $title;
 
     /**
      * @var string
@@ -70,7 +70,7 @@ class Book
      *
      * @ORM\Column(name="cena", type="decimal", precision=10, scale=2, nullable=true)
      */
-    private $cena;
+    private $price;
 
     /**
      * @var string
@@ -152,26 +152,26 @@ class Book
     }
 
     /**
-     * Set tytul
+     * Set title
      *
-     * @param string $tytul
+     * @param string $title
      * @return Book
      */
-    public function setTytul($tytul)
+    public function setTitle($title)
     {
-        $this->tytul = $tytul;
+        $this->title = $title;
 
         return $this;
     }
 
     /**
-     * Get tytul
+     * Get title
      *
      * @return string
      */
-    public function getTytul()
+    public function getTitle()
     {
-        return $this->tytul;
+        return $this->title;
     }
 
     /**
@@ -223,12 +223,12 @@ class Book
     /**
      * Set cena
      *
-     * @param decimal $cena
+     * @param decimal $price
      * @return Book
      */
-    public function setCena($cena)
+    public function setPrice($price)
     {
-        $this->cena = $cena;
+        $this->price = $price;
 
         return $this;
     }
@@ -238,9 +238,9 @@ class Book
      *
      * @return string
      */
-    public function getCena()
+    public function getPrice()
     {
-        return $this->cena;
+        return $this->price;
     }
 
     /**

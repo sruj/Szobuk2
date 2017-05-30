@@ -19,13 +19,13 @@
                     {{ form(StatusForm) }}
                 </div>
                 <div class="d">
-                    {{ form(DataZamForm) }}
+                    {{ form(OrderDateForm) }}
                 </div>
                 <div class="k">
-                    {{ form(NrKlientaForm) }}
+                    {{ form(ClientNumberForm) }}
                 </div>
             </div>
-            {% if filterField == 'idklient' and identifier is not empty %}
+            {% if filterField == 'idclient' and identifier is not empty %}
                 <div class="nav-level">
                     <div class="nav-level-layout wrapper">
                         Wszystkie zamówienia klienta nr {{ identifier}}
@@ -37,11 +37,11 @@
             <table class="Table-all">
                 <thead>
                 <tr>
-                    <th style="background-color: #3e3e3e" class="thLeftBorderRadius"><a href="{{ path('panel_sort',{ 'columnsSortOrder':columnsSortOrder.Numer ,'query':query,'filterField':filterField,'columnSort':'idzamowienie'}) }}">nr z.<span class="{{ columnsSortOrder.Numer }}"></span></a></th>
-                    <th><a href="{{ path('panel_sort',{ 'columnsSortOrder':columnsSortOrder.Data ,'query':query,'filterField':filterField,'columnSort':'datazlozenia'}) }}">Data złożenia<span class="{{ columnsSortOrder.Data }}"></span></a></th>
+                    <th style="background-color: #3e3e3e" class="thLeftBorderRadius"><a href="{{ path('panel_sort',{ 'columnsSortOrder':columnsSortOrder.Numer ,'query':query,'filterField':filterField,'columnSort':'idorder'}) }}">nr z.<span class="{{ columnsSortOrder.Numer }}"></span></a></th>
+                    <th><a href="{{ path('panel_sort',{ 'columnsSortOrder':columnsSortOrder.Data ,'query':query,'filterField':filterField,'columnSort':'orderdate'}) }}">Data złożenia<span class="{{ columnsSortOrder.Data }}"></span></a></th>
                     <th>ilość prod.</th>
                     <th>kwota razem</th>
-                    <th><a href="{{ path('panel_sort',{ 'columnsSortOrder':columnsSortOrder.Klient ,'query':query,'filterField':filterField, 'columnSort':'idklient'}) }}">nr klienta<span class="{{ columnsSortOrder.Klient }}"></span></a></th>
+                    <th><a href="{{ path('panel_sort',{ 'columnsSortOrder':columnsSortOrder.Klient ,'query':query,'filterField':filterField, 'columnSort':'idclient'}) }}">nr klienta<span class="{{ columnsSortOrder.Klient }}"></span></a></th>
                     <th><a href="{{ path('panel_sort',{ 'columnsSortOrder':columnsSortOrder.Status ,'query':query, 'filterField':filterField,'columnSort':'idstatus'}) }}">status z.<span class="{{ columnsSortOrder.Status }}"></span></a></th>
                     <th class="thRightBorderRadius">Szczególy</th>
                 </tr>
@@ -50,12 +50,12 @@
                 {{ form_start(form) }}
                 {% for formul in form.zamowienia %}
                     <tr>
-                        <td>{{ formul.vars.value.idzamowienie }}</td>
-                        <td>{{ formul.vars.value.datazlozenia|date('Y-m-d H:i:s') }}</td>
+                        <td>{{ formul.vars.value.idorder }}</td>
+                        <td>{{ formul.vars.value.orderdate|date('Y-m-d H:i:s') }}</td>
                         {% set ilosc = 0 %}
                         {% set kwota = 0 %}
                         {% for zamowienieProdukt in zamowieniaProdukty %}
-                            {% if zamowienieProdukt.idzamowienie.idzamowienie ==  formul.vars.value.idzamowienie %}
+                            {% if zamowienieProdukt.idorder.idorder ==  formul.vars.value.idorder %}
                                 {% set ilosc = ilosc + zamowienieProdukt.ilosc %}
                                 {% set kwota = kwota + zamowienieProdukt.ilosc * zamowienieProdukt.cenaproduktu %}
                             {% endif %}
@@ -66,7 +66,7 @@
                         <td>
                             {{ form_row(formul.idstatus) }}
                         </td>
-                        <td><a href="{{ path('manager_order_panel',{ 'orderid':formul.vars.value.idzamowienie }) }}">więcej</a></td>
+                        <td><a href="{{ path('manager_order_panel',{ 'orderid':formul.vars.value.idorder }) }}">więcej</a></td>
                     </tr>
                 {% endfor %}
             </table>

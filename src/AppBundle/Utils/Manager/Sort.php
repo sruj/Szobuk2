@@ -8,7 +8,6 @@
 
 namespace AppBundle\Utils\Manager;
 
-//todo: (zoostaf) niech metody zwracają dane a nie przypisują do pól klasy.
 class Sort
 {
     private $columnsSortOrder;
@@ -32,52 +31,61 @@ class Sort
         }
     }
 
-    //[-Sortowanie-]Jeśli pierwszy raz otwieram stronę to tworzę tablicę $sortArr
-    //i każdy element ustawiam na DESC
-    private function setAllNullNumerASC(){
+    /**
+     * [-Sortowanie-]Jeśli pierwszy raz otwieram stronę to tworzę tablicę $sortArr
+     * i każdy element ustawiam na DESC
+     */
+    private function setAllNullNumerASC()
+    {
         $this->columnsSortOrder = [
-            'Status'=>'null',
-            'Klient'=>'null',
-            'Numer'=>'ASC',
-            'Data'=>'null',
+            'Status' => 'null',
+            'Klient' => 'null',
+            'Numer' => 'ASC',
+            'Data' => 'null',
         ];
     }
 
-    //[-Sortowanie-]zmiana każdej sortownicy na przeciwną (w kolejnej funkcji zależnie od wartości
-    //klikniętej zmiennej click te zmienne się zmienią.
-    private function setSortVar(){
-        if ($this->columnsSortOrder == 'ASC'){
+    /**
+     * [-Sortowanie-]zmiana każdej sortownicy na przeciwną (w kolejnej funkcji zależnie od wartości
+     * klikniętej zmiennej click te zmienne się zmienią.
+     */
+    private function setSortVar()
+    {
+        if ($this->columnsSortOrder == 'ASC') {
             $temp = 'DESC';
-        }else{
-            $temp ='ASC';
+        } else {
+            $temp = 'ASC';
         }
         $this->columnsSortOrder = $temp;
     }
 
-    //[-Sortowanie-]W zależności od wartości zmiennej $OrderBy ustawia elementy tablicy
-    //$sortArr na 'null' poza elementem tablicy tożsamym z $OrderBy.
-    //Czyli jeśli $OrderBy=='datazlozenia' to ustawi $sortArr['Data']
-    private function AscDescChanger(){
+    /**
+     * [-Sortowanie-]W zależności od wartości zmiennej $OrderBy ustawia elementy tablicy
+     * $sortArr na 'null' poza elementem tablicy tożsamym z $OrderBy.
+     * Czyli jeśli $OrderBy=='orderdate' to ustawi $sortArr['Data']
+     */
+    private function AscDescChanger()
+    {
         switch ($this->column) {
-            case "datazlozenia":
-                $this->columnsSortOrder = ['Status'=>'null','Klient'=>'null','Numer'=>'null',
-                    'Data'=>$this->columnsSortOrder];
+            case "orderdate":
+                $this->columnsSortOrder = ['Status' => 'null', 'Klient' => 'null', 'Numer' => 'null',
+                    'Data' => $this->columnsSortOrder];
                 break;
-            case "idklient":
-                $this->columnsSortOrder = ['Status'=>'null','Data'=>'null','Numer'=>'null',
-                    'Klient'=>$this->columnsSortOrder];
+            case "idclient":
+                $this->columnsSortOrder = ['Status' => 'null', 'Data' => 'null', 'Numer' => 'null',
+                    'Klient' => $this->columnsSortOrder];
                 break;
             case "idstatus":
-                $this->columnsSortOrder = ['Data'=>'null','Klient'=>'null','Numer'=>'null',
-                    'Status'=>$this->columnsSortOrder];
+                $this->columnsSortOrder = ['Data' => 'null', 'Klient' => 'null', 'Numer' => 'null',
+                    'Status' => $this->columnsSortOrder];
                 break;
-            case "idzamowienie":
-                $this->columnsSortOrder = ['Status'=>'null','Klient'=>'null','Data'=>'null',
-                    'Numer'=>$this->columnsSortOrder];
+            case "idorder":
+                $this->columnsSortOrder = ['Status' => 'null', 'Klient' => 'null', 'Data' => 'null',
+                    'Numer' => $this->columnsSortOrder];
                 break;
             default:
-                $this->columnsSortOrder = ['Status'=>'null','Klient'=>'null','Data'=>'null',
-                    'Numer'=>'ASC'];
+                $this->columnsSortOrder = ['Status' => 'null', 'Klient' => 'null', 'Data' => 'null',
+                    'Numer' => 'ASC'];
         }
     }
 
