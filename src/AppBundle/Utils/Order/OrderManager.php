@@ -42,15 +42,15 @@ class OrderManager
     }
 
     /**
-     * @param Client $klient
+     * @param Client $client
      * @return bool
      * @throws
      */
-    public function placeOrder($klient, $cart)
+    public function placeOrder($client, $cart)
     {
-        $zamowienie = $this->prepareOrderDetailsToPersistInDatabase($klient);
+        $zamowienie = $this->prepareOrderDetailsToPersistInDatabase($client);
         $this->createOrderProductsAndPersistInDatabase($zamowienie,$cart);
-        $this->em->persist($klient);
+        $this->em->persist($client);
         $this->em->persist($zamowienie);
         $this->em->flush();
         $this->dispatchEventWithOrderToSendConfirmedEmails($zamowienie);
@@ -63,17 +63,17 @@ class OrderManager
     }
 
     /**
-     * @param Client $klient
+     * @param Client $client
      * @return Order
      */
-    private function prepareOrderDetailsToPersistInDatabase($klient)
+    private function prepareOrderDetailsToPersistInDatabase($client)
     {
         if ($this->checker->isGranted('IS_AUTHENTICATED_FULLY')) {
-            $klient->setIdlogowanie($this->getUser());
+            $client->setIdlogowanie($this->getUser());
         }
 
         $zamowienie = new Order();
-        $zamowienie->setIdklient($klient);
+        $zamowienie->setIdclient($client);
         $status = $this->em
             ->getRepository('AppBundle:Status')
             ->find('1');

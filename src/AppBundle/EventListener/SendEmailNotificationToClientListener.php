@@ -27,7 +27,7 @@ class SendEmailNotificationToClientListener
     public function onOrderPlaced(OrderPlacedEvent $event)
     {
         $body = $this->renderTemplate($event);
-        $mailTo = $event->getZamowienie()->getIdklient()->getEmail();
+        $mailTo = $event->getZamowienie()->getIdclient()->getEmail();
         $messageToKlient = $this->setMessage($mailTo, $body);
         $this->mailer->send($messageToKlient);
     }

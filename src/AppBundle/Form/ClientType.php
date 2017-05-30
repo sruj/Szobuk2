@@ -44,6 +44,6 @@ class ClientType extends AbstractType
      */
     public function getName()
     {
-        return 'appbundle_klient';
+        return 'appbundle_client';
     }
 }

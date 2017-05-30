@@ -36,25 +36,25 @@ class OrderRepository extends EntityRepository implements PaginatorAwareInterfac
      *
      * @return Query
      */
-    public function queryAll($idklient)
+    public function queryAll($idclient)
     {
         $query = $this->_em->createQuery('
                 SELECT z,s 
                 FROM AppBundle:Order z 
                 JOIN z.idstatus s 
-                WHERE z.idklient = :idklient 
+                WHERE z.idclient = :idclient 
                 ORDER BY z.idorder ASC
             ');
 
-        $query = $query->setParameter('idklient', $idklient);
+        $query = $query->setParameter('idclient', $idclient);
 
         return $query;
     }
 
-    public function findAllMy($page, $idklient)
+    public function findAllMy($page, $idclient)
     {
         return $this->paginator->paginate(
-            $this->queryAll($idklient),
+            $this->queryAll($idclient),
             $page/*page number*/,
             91/*limit per page*/
         );
@@ -67,7 +67,7 @@ class OrderRepository extends EntityRepository implements PaginatorAwareInterfac
             case 'orderdate':
                 $sort=$sortArr['Data'];
                 break;
-            case 'idklient':
+            case 'idclient':
                 $sort=$sortArr['Klient'];
                 break;
             case 'idstatus':
@@ -91,7 +91,7 @@ class OrderRepository extends EntityRepository implements PaginatorAwareInterfac
             case 'orderdate':
                 $sort=$sortArr['Data'];
                 break;
-            case 'idklient':
+            case 'idclient':
                 $sort=$sortArr['Klient'];
                 break;
             case 'idstatus':

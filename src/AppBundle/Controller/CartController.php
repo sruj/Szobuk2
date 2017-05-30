@@ -162,14 +162,14 @@ class CartController extends Controller
             throw new CartNotInSessionException('Koszyk pusty.');
         }
 
-        $klient = $this->getDoctrine()
+        $client = $this->getDoctrine()
             ->getRepository('Client.php')
             ->findOneBy(['idlogowanie' => $this->getUser() ? $this->getUser()->getId() : false]);                                                // zalogowany wypełniał kiedyś formularz
-        if (!$klient) {
-            $klient = new Client();
+        if (!$client) {
+            $client = new Client();
         }                                                                                                   // jeśli zalogowany nigdy nie wypełniał formularza dostawy lub jeśli niezalogowany
 
-        $form = $this->createForm(DeliveryType::class, $klient, [
+        $form = $this->createForm(DeliveryType::class, $client, [
             'attr' => ['class' => 'form_dostawa']]);
 
         $app_form_handler_order = $this->get('app.form_handler.order');

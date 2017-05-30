@@ -61,7 +61,7 @@ class FormsManagerExtendedTest extends \PHPUnit_Framework_TestCase
 
         $ClientNumberForm = $this->getMockBuilder(\Symfony\Component\Form\Form::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('get', 'getData', 'getIdklient','isValid'))
+            ->setMethods(array('get', 'getData', 'getIdclient','isValid'))
             ->getMock();
         $ClientNumberForm->expects($this->any())
             ->method('get')
@@ -70,7 +70,7 @@ class FormsManagerExtendedTest extends \PHPUnit_Framework_TestCase
             ->method('getData')
             ->will($this->returnSelf());
         $ClientNumberForm->expects($this->any())
-            ->method('getIdklient')
+            ->method('getIdclient')
             ->will($this->returnValue('2'));
         $ClientNumberForm->expects($this->any())
             ->method('isValid')

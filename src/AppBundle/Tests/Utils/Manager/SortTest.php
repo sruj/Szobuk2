@@ -59,7 +59,7 @@ class SortTest extends \PHPUnit_Framework_TestCase
             ['Status'=>'null','Klient'=>'null','Data'=>'ASC','Numer'=>'null']];
         yield ['null','idstatus' ,
             ['Status'=>'ASC','Klient'=>'null','Data'=>'null','Numer'=>'null']];
-        yield ['null','idklient' ,
+        yield ['null','idclient' ,
             ['Status'=>'null','Klient'=>'ASC','Data'=>'null','Numer'=>'null']];
 
         yield [ 'ASC','idorder' ,
@@ -68,7 +68,7 @@ class SortTest extends \PHPUnit_Framework_TestCase
             ['Status'=>'null','Klient'=>'null','Data'=>'DESC','Numer'=>'null']];
         yield [ 'ASC','idstatus' ,
             ['Status'=>'DESC','Klient'=>'null','Data'=>'null','Numer'=>'null']];
-        yield [ 'ASC','idklient' ,
+        yield [ 'ASC','idclient' ,
             ['Status'=>'null','Klient'=>'DESC','Data'=>'null','Numer'=>'null']];
 
         yield [ 'DESC','idorder' ,
@@ -77,15 +77,15 @@ class SortTest extends \PHPUnit_Framework_TestCase
             ['Status'=>'null','Klient'=>'null','Data'=>'ASC','Numer'=>'null']];
         yield [ 'DESC','idstatus' ,
             ['Status'=>'ASC','Klient'=>'null','Data'=>'null','Numer'=>'null']];
-        yield [ 'DESC','idklient' ,
+        yield [ 'DESC','idclient' ,
             ['Status'=>'null','Klient'=>'ASC','Data'=>'null','Numer'=>'null']];
 
-        yield [ 'BAD-IDEA','idklient' ,
+        yield [ 'BAD-IDEA','idclient' ,
             ['Status'=>'null','Klient'=>'ASC','Data'=>'null','Numer'=>'null']];
         yield [ 'BAD-IDEA','BAD-IDEA' ,
             ['Status'=>'null','Klient'=>'null','Data'=>'null','Numer'=>'ASC']];
 
-        yield [ false,'idklient' ,
+        yield [ false,'idclient' ,
             ['Status'=>'null','Klient'=>'null','Data'=>'null','Numer'=>'ASC']];
     }
 

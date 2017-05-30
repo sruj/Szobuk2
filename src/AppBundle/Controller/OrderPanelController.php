@@ -38,7 +38,7 @@ class OrderPanelController extends Controller
         if (!$adminLogged) {
             $orderRepo = $this->getDoctrine()
                 ->getRepository('Order.php')
-                ->findoneBy(array('idorder' => $orderid, 'idklient' => $userid));
+                ->findoneBy(array('idorder' => $orderid, 'idclient' => $userid));
             if (!$orderRepo) {
                 throw $this->createAccessDeniedException();
             }

@@ -60,7 +60,7 @@ class FormsManagerExtended extends FormsManager
 
     public function getIdClientFromClientNumberForm()
     {
-        $idclient = $this->forms['ClientNumberForm']->get('idclient')->getData()->getIdklient();
+        $idclient = $this->forms['ClientNumberForm']->get('idclient')->getData()->getIdclient();
         if (isset($idclient)) {
             return $idclient;
         }

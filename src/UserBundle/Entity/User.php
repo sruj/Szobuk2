@@ -19,16 +19,16 @@ class User extends BaseUser {
      */
     protected $id;
 
-    protected $klient;
+    protected $client;
     
     public function getKlient()
     {
-        return $this->klient;
+        return $this->client;
     }
 
-    public function setKlient(\AppBundle\Entity\Client $klient  = null)
+    public function setKlient(\AppBundle\Entity\Client $client  = null)
     {
-        $this->klient = $klient;
+        $this->client = $client;
     }
     
     

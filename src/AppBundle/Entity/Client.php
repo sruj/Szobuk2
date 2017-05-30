@@ -14,7 +14,7 @@ use AppBundle\Validator\Constraints as AcmeAssert;
  * ale komunikaty błędów walidacji są domyślne dla przeglądarki i HTML5. 
  * Mimo, że robione wg dokumentacji SYmfony2
  *
- * @ORM\Table(name="klient", indexes={@ORM\Index(name="idLogowanie_idx", columns={"idLogowanie"})})
+ * @ORM\Table(name="client", indexes={@ORM\Index(name="idLogowanie_idx", columns={"idLogowanie"})})
  * @ORM\Entity
  */
 class Client
@@ -154,7 +154,7 @@ class Client
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idklient;
+    private $idclient;
 
     /**
      * @var \UserBundle\Entity\User
@@ -168,7 +168,7 @@ class Client
 
         
     /**
-    * @ORM\OneToMany(targetEntity="Order.php", mappedBy="idklient")
+    * @ORM\OneToMany(targetEntity="Order.php", mappedBy="idclient")
     */
     protected $zamowienia;
 
@@ -404,13 +404,13 @@ class Client
     }
 
     /**
-     * Get idklient
+     * Get idclient
      *
      * @return int
      */
-    public function getIdklient()
+    public function getIdclient()
     {
-        return $this->idklient;
+        return $this->idclient;
     }
 
     /**

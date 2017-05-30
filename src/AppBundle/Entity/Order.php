@@ -38,7 +38,7 @@ class Order
      *   @ORM\JoinColumn(name="idKlient", referencedColumnName="idKlient")
      * })
      */
-    private $idklient;
+    private $idclient;
 
 
 
@@ -151,26 +151,26 @@ class Order
     }
 
     /**
-     * Set idklient
+     * Set idclient
      *
-     * @param \AppBundle\Entity\Client $idklient
+     * @param \AppBundle\Entity\Client $idclient
      * @return Order
      */
-    public function setIdklient(\AppBundle\Entity\Client $idklient = null)
+    public function setIdclient(\AppBundle\Entity\Client $idclient = null)
     {
-        $this->idklient = $idklient;
+        $this->idclient = $idclient;
 
         return $this;
     }
 
     /**
-     * Get idklient
+     * Get idclient
      *
      * @return \AppBundle\Entity\Client
      */
-    public function getIdklient()
+    public function getIdclient()
     {
-        return $this->idklient;
+        return $this->idclient;
     }
 
     public function __construct() {

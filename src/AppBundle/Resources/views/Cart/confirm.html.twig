@@ -6,11 +6,11 @@
             <h3>Dane do wysyłki:</h3>
             <div class="boxDown">
                 <ul>
-                    <li>{{ zamowienie.idklient.imie }} {{ zamowienie.idklient.nazwisko }}</li>
-                    <li>{{ zamowienie.idklient.ulica }} {{ zamowienie.idklient.nrDomu }} {{ zamowienie.idklient.nrmieszkania }}</li>
-                    <li>{{ zamowienie.idklient.kodpocztowy }}, {{ zamowienie.idklient.miasto }} </li>
-                    <li>{{ zamowienie.idklient.email }} </li>
-                    <li>Tel.: {{ zamowienie.idklient.nrtelefonu }} </li>
+                    <li>{{ zamowienie.idclient.imie }} {{ zamowienie.idclient.nazwisko }}</li>
+                    <li>{{ zamowienie.idclient.ulica }} {{ zamowienie.idclient.nrDomu }} {{ zamowienie.idclient.nrmieszkania }}</li>
+                    <li>{{ zamowienie.idclient.kodpocztowy }}, {{ zamowienie.idclient.miasto }} </li>
+                    <li>{{ zamowienie.idclient.email }} </li>
+                    <li>Tel.: {{ zamowienie.idclient.nrtelefonu }} </li>
                 </ul>
             </div>
         </div>
@@ -47,7 +47,7 @@
         </div>
         <div id="boxMyinside">
             <div class="boxDown">
-                <p>Na adres mailowy {{ zamowienie.idklient.email }} przesłano wiadomość ze szczegółami zamówienia.
+                <p>Na adres mailowy {{ zamowienie.idclient.email }} przesłano wiadomość ze szczegółami zamówienia.
                 </p>
             </div>
         </div>

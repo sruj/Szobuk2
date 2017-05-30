@@ -55,7 +55,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         $object = new Filter();
         $td = new TableDetails();
         $res = $object->prepareFilterAndQuery(
-            $this->getTableDetails('idklient'),
+            $this->getTableDetails('idclient'),
             $this->getFormsManagerExtended(true,false,false,true),
             $this->getFilterQueryMock($td));
         $this->assertInstanceOf(TableDetails::class,$res);
@@ -66,7 +66,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         $object = new Filter();
         $td = new TableDetails();
         $res = $object->prepareFilterAndQuery(
-            $this->getTableDetails('idklient'),
+            $this->getTableDetails('idclient'),
             $this->getFormsManagerExtended(),
             $this->getFilterQueryMock($td));
         $this->assertInstanceOf(TableDetails::class,$res);
@@ -77,7 +77,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         $object = new Filter();
         $td = new TableDetails();
         $res = $object->prepareFilterAndQuery(
-            $this->getTableDetails('idklient','idklient',false,false,'idklient'),
+            $this->getTableDetails('idclient','idclient',false,false,'idclient'),
             $this->getFormsManagerExtended(),
             $this->getFilterQueryMock($td));
         $this->assertInstanceOf(TableDetails::class,$res);
@@ -88,7 +88,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         $object = new Filter();
         $td = new TableDetails();
         $res = $object->prepareFilterAndQuery(
-            $this->getTableDetails('idklient',false,false,false,'idklient'),
+            $this->getTableDetails('idclient',false,false,false,'idclient'),
             $this->getFormsManagerExtended(false),
             $this->getFilterQueryMock($td));
         $this->assertInstanceOf(TableDetails::class,$res);

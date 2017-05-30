@@ -14,11 +14,11 @@ class NrKlientaType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('idklient', 'entity', array(
+                ->add('idclient', 'entity', array(
                     'class' => 'Client.php',
                     'placeholder' => 'Nr klienta',
                     'label' => false,
-                    'property' => 'idklient',
+                    'property' => 'idclient',
                 ))
                 ->add('filtruj', 'submit');
             ;
@@ -46,7 +46,7 @@ class NrKlientaType extends AbstractType {
      * @return string
      */
     public function getName() {
-        return 'idklient';
+        return 'idclient';
     }
 
 }

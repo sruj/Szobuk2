@@ -28,7 +28,7 @@ class ClientController extends Controller {
             throw new ClientHasNoShoppingHistory('Nie masz zapisanej historii zakupów.');
         }
 
-        $idClient = $client->getIdklient();
+        $idClient = $client->getIdclient();
 
         $rep = $this->get('app.order_repository');
         $orders = $rep->findAllMy($request->query->getInt('page', 1),$idClient);

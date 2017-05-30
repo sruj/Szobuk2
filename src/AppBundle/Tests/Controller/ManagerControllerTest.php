@@ -119,8 +119,8 @@ class ManagerControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/manager/panel');
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/");
 
-        $form = $crawler->selectButton('idklient[filtruj]')->form();
-        $form['idklient[idklient]']->select(2); //wysłane
+        $form = $crawler->selectButton('idclient[filtruj]')->form();
+        $form['idclient[idclient]']->select(2); //wysłane
         $crawler = $client->submit($form);
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), "");
 
@@ -165,8 +165,8 @@ class ManagerControllerTest extends WebTestCase
             'PHP_AUTH_PW' => 'wazny',
         ]);
 
-        $crawler = $client->request('GET', '/manager/panel/ASC/idklient');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/ASC/idklient");
+        $crawler = $client->request('GET', '/manager/panel/ASC/idclient');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/ASC/idclient");
     }
 
     public function testPanel_4()
@@ -187,8 +187,8 @@ class ManagerControllerTest extends WebTestCase
             'PHP_AUTH_PW' => 'wazny',
         ]);
 
-        $crawler = $client->request('GET', '/manager/panel/ASC/idklient');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/ASC/idklient");
+        $crawler = $client->request('GET', '/manager/panel/ASC/idclient');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/ASC/idclient");
     }
 
     public function testPanel_6()
@@ -198,7 +198,7 @@ class ManagerControllerTest extends WebTestCase
             'PHP_AUTH_PW' => 'wazny',
         ]);
 
-        $crawler = $client->request('GET', '/manager/panel/null/idklient');
+        $crawler = $client->request('GET', '/manager/panel/null/idclient');
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /manager/panel/ASC/orderdate");
     }
 

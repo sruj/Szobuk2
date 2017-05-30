@@ -12,7 +12,7 @@
                     <larger><strong>{{ order.idorder }}</strong></larger>
                     ,<br/> złożone: {{ order.orderdate|date('Y-m-d H:i:s') }} <br/>
                     przez klienta nr <a id="OrangeButton"
-                                        href="{{ path('panel_sort_from_details',{ 'findBy':'idklient', 'Identifier':order.idklient.idklient}) }}">{{ order.idklient.idklient }}</a>
+                                        href="{{ path('panel_sort_from_details',{ 'findBy':'idclient', 'Identifier':order.idclient.idclient}) }}">{{ order.idclient.idclient }}</a>
                 </h3>
             {% else %}
                 <h3> Zamówienie nr: <strong>{{ order.idorder }}</strong>,<br/>
@@ -23,9 +23,9 @@
             <div class="boxDown">
                 <h4 class="greyHeader">Dane do wysyłki:</h4>
                 <ul>
-                    <li>{{ order.idklient.imie }} {{ order.idklient.nazwisko }}</li>
-                    <li>{{ order.idklient.ulica }} {{ order.idklient.nrDomu }} {{ order.idklient.nrmieszkania }}</li>
-                    <li>{{ order.idklient.kodpocztowy }}, {{ order.idklient.miasto }} </li>
+                    <li>{{ order.idclient.imie }} {{ order.idclient.nazwisko }}</li>
+                    <li>{{ order.idclient.ulica }} {{ order.idclient.nrDomu }} {{ order.idclient.nrmieszkania }}</li>
+                    <li>{{ order.idclient.kodpocztowy }}, {{ order.idclient.miasto }} </li>
                 </ul>
 
                 <h4 class="greyHeader">Produkty:</h4>
