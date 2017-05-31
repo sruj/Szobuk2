@@ -16,7 +16,7 @@ class OrderListType extends AbstractType
     {
         $builder
             ->add(
-                'zamowienia',
+                'orders',
                 'collection',
                 array(
                     'type' => new \AppBundle\Form\OrderType(),

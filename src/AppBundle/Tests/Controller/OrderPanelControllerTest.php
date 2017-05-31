@@ -24,7 +24,7 @@ class OrderPanelControllerTest extends WebTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /historiaPanel/");
 
         $this->assertGreaterThan(0, $crawler->filter('html:contains("Dane do wysyłki:")')->count(),
-            'strona /panel/szczegoly-zamowienia/1/2/ nie ma tekstu "Dane do wysyłki:" ');
+            'strona /panel/order-details/1/2/ nie ma tekstu "Dane do wysyłki:" ');
     }
 
     public function testHistoriapanelAdmin()

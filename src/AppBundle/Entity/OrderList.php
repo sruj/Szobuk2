@@ -9,16 +9,16 @@ use Doctrine\Common\Collections\ArrayCollection;
 class OrderList
 {
 
-    private $zamowienia;
+    private $orders;
 
     public function __construct()
     {
-        $this->zamowienia = new ArrayCollection();
+        $this->orders = new ArrayCollection();
     }
 
-    public function getZamowienia()
+    public function getOrders()
     {
-        return $this->zamowienia;
+        return $this->orders;
     }
 
 

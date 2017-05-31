@@ -9,44 +9,44 @@
 {{ form_start(form) }}
     {{ form_errors(form) }}
 <div>
-    {{ form_errors(form.imie) }}
-    {{ form_widget(form.imie, {'attr': {'placeholder': 'Imię'} }) }}
+    {{ form_errors(form.name) }}
+    {{ form_widget(form.name, {'attr': {'placeholder': 'Imię'} }) }}
 </div>
 <div>
-    {{ form_errors(form.nazwisko) }}
-    {{ form_widget(form.nazwisko, {'attr': {'placeholder': 'Nazwisko','class': 'border-top-none'} }) }}
+    {{ form_errors(form.surname) }}
+    {{ form_widget(form.surname, {'attr': {'placeholder': 'Nazwisko','class': 'border-top-none'} }) }}
 </div>
 <div>
     {{ form_errors(form.email) }}
     {{ form_widget(form.email, {'attr': {'placeholder': 'E-mail','class': 'border-top-none'} }) }}
 </div>
 <div>
-    {{ form_errors(form.ulica) }}
-    {{ form_widget(form.ulica, {'attr': {'placeholder': 'Ulica','class': 'border-top-none'} }) }}
+    {{ form_errors(form.street) }}
+    {{ form_widget(form.street, {'attr': {'placeholder': 'Ulica','class': 'border-top-none'} }) }}
 </div>
 <div>
-    {{ form_errors(form.nrDomu) }}
-    {{ form_widget(form.nrDomu, {'attr': {'placeholder': 'Nr Domu','class': 'border-top-none'} }) }}
+    {{ form_errors(form.houseNumber) }}
+    {{ form_widget(form.houseNumber, {'attr': {'placeholder': 'Nr Domu','class': 'border-top-none'} }) }}
 </div>
 <div>
-    {{ form_errors(form.nrMieszkania) }}
-    {{ form_widget(form.nrMieszkania, {'attr': {'placeholder': 'Nr Mieszkania','class': 'border-top-none'} }) }}
+    {{ form_errors(form.apartmentNumber) }}
+    {{ form_widget(form.apartmentNumber, {'attr': {'placeholder': 'Nr Mieszkania','class': 'border-top-none'} }) }}
 </div>
 <div>
-    {{ form_errors(form.kodPocztowy) }}
-    {{ form_widget(form.kodPocztowy, {'attr': {'placeholder': 'Kod Pocztowy','class': 'border-top-none'} }) }}
+    {{ form_errors(form.postalCode) }}
+    {{ form_widget(form.postalCode, {'attr': {'placeholder': 'Kod Pocztowy','class': 'border-top-none'} }) }}
 </div>
 <div>
-    {{ form_errors(form.miasto) }}
-    {{ form_widget(form.miasto, {'attr': {'placeholder': 'Miasto','class': 'border-top-none'} }) }}
+    {{ form_errors(form.city) }}
+    {{ form_widget(form.city, {'attr': {'placeholder': 'Miasto','class': 'border-top-none'} }) }}
 </div>
 <div>
     {{ form_errors(form.nip) }}
     {{ form_widget(form.nip, {'attr': {'placeholder': 'NIP','class': 'border-top-none'} }) }}
 </div>
 <div>
-    {{ form_errors(form.nrTelefonu) }}
-    {{ form_widget(form.nrTelefonu, {'attr': {'placeholder': 'Nr Telefonu','class': 'border-top-none'} }) }}
+    {{ form_errors(form.phoneNumber) }}
+    {{ form_widget(form.phoneNumber, {'attr': {'placeholder': 'Nr Telefonu','class': 'border-top-none'} }) }}
 </div>
 {{ form_end(form) }}    
  </fieldset>

@@ -79,16 +79,16 @@ class CartControllerTest extends WebTestCase
         //wypełniam dane, zatwierdzam i dostaję przekierowany do podsumowania zamówienia.
         $form = $crawler->selectButton('dostawa[zapisz]')->form();
         $client->submit($form,[
-            'dostawa[imie]'=>'paweł',
-            'dostawa[nazwisko]'=>'chryplewicz',
+            'dostawa[name]'=>'paweł',
+            'dostawa[surname]'=>'chryplewicz',
             'dostawa[email]'=>'chryplewiczpawel@wp.pl',
-            'dostawa[ulica]'=>'ddd',
-            'dostawa[nrDomu]'=>'22',
-            'dostawa[nrMieszkania]'=>'2',
-            'dostawa[kodPocztowy]'=>'59-300',
-            'dostawa[miasto]'=>'Lubin',
+            'dostawa[street]'=>'ddd',
+            'dostawa[houseNumber]'=>'22',
+            'dostawa[apartmentNumber]'=>'2',
+            'dostawa[postalCode]'=>'59-300',
+            'dostawa[city]'=>'Lubin',
             'dostawa[nip]'=>'1234567890',
-            'dostawa[nrTelefonu]'=>'78687677',
+            'dostawa[phoneNumber]'=>'78687677',
         ]);
         $crawler = $client->followRedirect();
         $this->assertTrue($crawler->filter('html:contains("zamówione produkty:")')->count() > 0);

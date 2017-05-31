@@ -7,10 +7,10 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
-    app.form.type.zamowienia_list:
+    app.form.type.orders_list:
         class: AppBundle\Form\ZamowienieListType
         tags:
-            - { name: form.type, alias: app_zamowienia_list }
+            - { name: form.type, alias: app_orders_list }
     app.twig_extension:
         class: AppBundle\Twig\AppExtension
         public: false

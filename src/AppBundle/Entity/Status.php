@@ -31,7 +31,7 @@ class Status
     /**
     * @ORM\OneToMany(targetEntity="Zamowienie", mappedBy="idstatus")
     */
-    protected $zamowienia;
+    protected $orders;
 
 
     /**
@@ -69,40 +69,40 @@ class Status
     }
 
     public function __construct() {
-        $this->zamowienia = new ArrayCollection();
+        $this->orders = new ArrayCollection();
     } 
 
     /**
-     * Add zamowienia
+     * Add orders
      *
-     * @param \AppBundle\Entity\Order $zamowienia
+     * @param \AppBundle\Entity\Order $orders
      * @return Status
      */
-    public function addZamowienium(\AppBundle\Entity\Order $zamowienia)
+    public function addOrders(\AppBundle\Entity\Order $orders)
     {
-        $this->zamowienia[] = $zamowienia;
+        $this->orders[] = $orders;
 
         return $this;
     }
 
     /**
-     * Remove zamowienia
+     * Remove orders
      *
-     * @param \AppBundle\Entity\Order $zamowienia
+     * @param \AppBundle\Entity\Order $orders
      */
-    public function removeZamowienium(\AppBundle\Entity\Order $zamowienia)
+    public function removeOrders(\AppBundle\Entity\Order $orders)
     {
-        $this->zamowienia->removeElement($zamowienia);
+        $this->orders->removeElement($orders);
     }
 
     /**
-     * Get zamowienia
+     * Get orders
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getZamowienia()
+    public function getOrders()
     {
-        return $this->zamowienia;
+        return $this->orders;
     }
     
     public function __toString()

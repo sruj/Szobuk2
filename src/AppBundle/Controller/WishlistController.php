@@ -37,7 +37,7 @@ class WishlistController extends Controller
         // COŚ Z UŻYCIEM PONIŻSZEGO NIECO.
             //        $this->getDoctrine()
             //            ->getRepository('AppBundle:Client')
-            //            ->findOneBy(['idlogowanie' => $this->getUser() ? $this->getUser()->getId() : false]);
+            //            ->findOneBy(['idlogin' => $this->getUser() ? $this->getUser()->getId() : false]);
 
 
         return [];

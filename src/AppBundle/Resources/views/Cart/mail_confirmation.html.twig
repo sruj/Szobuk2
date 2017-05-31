@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <body>
-        <p>Witaj {{ zamowienie.idclient.imie|capitalize }}, oto szczegóły zamówienia</p>
+        <p>Witaj {{ zamowienie.idclient.name|capitalize }}, oto szczegóły zamówienia</p>
         <div style="width: 400px;">
             <h3 style="	background-color:#525252 ;
                 border-radius: 5px 5px 0 0;
@@ -19,9 +19,9 @@
                  border: none;
                  margin: 0;">
                 <ul style="list-style-type: none; ">
-                    <li>{{ zamowienie.idclient.imie }} {{ zamowienie.idclient.nazwisko }}</li>
-                    <li>{{ zamowienie.idclient.ulica }} {{ zamowienie.idclient.nrDomu }} {{ zamowienie.idclient.nrmieszkania }}</li>
-                    <li>{{ zamowienie.idclient.kodpocztowy }}, {{ zamowienie.idclient.miasto }} </li>
+                    <li>{{ zamowienie.idclient.name }} {{ zamowienie.idclient.surname }}</li>
+                    <li>{{ zamowienie.idclient.street }} {{ zamowienie.idclient.houseNumber }} {{ zamowienie.idclient.apartmentnumber }}</li>
+                    <li>{{ zamowienie.idclient.postalcode }}, {{ zamowienie.idclient.city }} </li>
                 </ul>
             </div>
         </div>

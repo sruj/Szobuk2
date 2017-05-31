@@ -48,7 +48,7 @@
                 </thead>
                 <tbody>
                 {{ form_start(form) }}
-                {% for formul in form.zamowienia %}
+                {% for formul in form.orders %}
                     <tr>
                         <td>{{ formul.vars.value.idorder }}</td>
                         <td>{{ formul.vars.value.orderdate|date('Y-m-d H:i:s') }}</td>

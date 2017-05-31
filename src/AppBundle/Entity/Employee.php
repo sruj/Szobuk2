@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Employee - nieużywane
  *
- * @ORM\Table(name="pracownik", indexes={@ORM\Index(name="idLogowanie_idx", columns={"idLogowanie"})})
+ * @ORM\Table(name="pracownik", indexes={@ORM\Index(name="idLogin_idx", columns={"idLogin"})})
  * @ORM\Entity
  */
 class Employee
@@ -15,16 +15,16 @@ class Employee
     /**
      * @var string
      *
-     * @ORM\Column(name="imie", type="string", length=45, nullable=false)
+     * @ORM\Column(name="name", type="string", length=45, nullable=false)
      */
-    private $imie;
+    private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nazwisko", type="string", length=45, nullable=false)
+     * @ORM\Column(name="surname", type="string", length=45, nullable=false)
      */
-    private $nazwisko;
+    private $surname;
 
     /**
      * @var string
@@ -36,37 +36,37 @@ class Employee
     /**
      * @var string
      *
-     * @ORM\Column(name="ulica", type="string", length=45, nullable=false)
+     * @ORM\Column(name="street", type="string", length=45, nullable=false)
      */
-    private $ulica;
+    private $street;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nrDomu", type="string", length=45, nullable=false)
+     * @ORM\Column(name="houseNumber", type="string", length=45, nullable=false)
      */
-    private $nrdomu;
+    private $housenumber;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nrMieszkania", type="string", length=45, nullable=true)
+     * @ORM\Column(name="apartmentNumber", type="string", length=45, nullable=true)
      */
-    private $nrmieszkania;
+    private $apartmentnumber;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="kodPocztowy", type="string", length=45, nullable=true)
+     * @ORM\Column(name="postalCode", type="string", length=45, nullable=true)
      */
-    private $kodpocztowy;
+    private $postalcode;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="miasto", type="string", length=45, nullable=false)
+     * @ORM\Column(name="city", type="string", length=45, nullable=false)
      */
-    private $miasto;
+    private $city;
 
     /**
      * @var string
@@ -78,9 +78,9 @@ class Employee
     /**
      * @var string
      *
-     * @ORM\Column(name="nrTelefonu", type="string", length=45, nullable=true)
+     * @ORM\Column(name="phoneNumber", type="string", length=45, nullable=true)
      */
-    private $nrtelefonu;
+    private $phonenumber;
 
     /**
      * @var string
@@ -103,57 +103,57 @@ class Employee
      *
      * @ORM\OneToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idlogowanie", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="idlogin", referencedColumnName="id")
      * })
      */
-    private $idlogowanie;
+    private $idlogin;
 
 
 
     /**
-     * Set imie
+     * Set name
      *
-     * @param string $imie
+     * @param string $name
      * @return Employee
      */
-    public function setImie($imie)
+    public function setName($name)
     {
-        $this->imie = $imie;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get imie
+     * Get name
      *
      * @return string 
      */
-    public function getImie()
+    public function getName()
     {
-        return $this->imie;
+        return $this->name;
     }
 
     /**
-     * Set nazwisko
+     * Set surname
      *
-     * @param string $nazwisko
+     * @param string $surname
      * @return Employee
      */
-    public function setNazwisko($nazwisko)
+    public function setSurname($surname)
     {
-        $this->nazwisko = $nazwisko;
+        $this->surname = $surname;
 
         return $this;
     }
 
     /**
-     * Get nazwisko
+     * Get surname
      *
      * @return string 
      */
-    public function getNazwisko()
+    public function getSurname()
     {
-        return $this->nazwisko;
+        return $this->surname;
     }
 
     /**
@@ -180,118 +180,118 @@ class Employee
     }
 
     /**
-     * Set ulica
+     * Set street
      *
-     * @param string $ulica
+     * @param string $street
      * @return Employee
      */
-    public function setUlica($ulica)
+    public function setStreet($street)
     {
-        $this->ulica = $ulica;
+        $this->street = $street;
 
         return $this;
     }
 
     /**
-     * Get ulica
+     * Get street
      *
      * @return string 
      */
-    public function getUlica()
+    public function getStreet()
     {
-        return $this->ulica;
+        return $this->street;
     }
 
     /**
-     * Set nrdomu
+     * Set housenumber
      *
-     * @param string $nrdomu
+     * @param string $housenumber
      * @return Employee
      */
-    public function setNrdomu($nrdomu)
+    public function setHousenumber($housenumber)
     {
-        $this->nrdomu = $nrdomu;
+        $this->housenumber = $housenumber;
 
         return $this;
     }
 
     /**
-     * Get nrdomu
+     * Get housenumber
      *
      * @return string 
      */
-    public function getNrdomu()
+    public function getHousenumber()
     {
-        return $this->nrdomu;
+        return $this->housenumber;
     }
 
     /**
-     * Set nrmieszkania
+     * Set apartmentnumber
      *
-     * @param string $nrmieszkania
+     * @param string $apartmentnumber
      * @return Employee
      */
-    public function setNrmieszkania($nrmieszkania)
+    public function setApartmentNumber($apartmentnumber)
     {
-        $this->nrmieszkania = $nrmieszkania;
+        $this->apartmentnumber = $apartmentnumber;
 
         return $this;
     }
 
     /**
-     * Get nrmieszkania
+     * Get apartmentnumber
      *
      * @return string 
      */
-    public function getNrmieszkania()
+    public function getApartmentNumber()
     {
-        return $this->nrmieszkania;
+        return $this->apartmentnumber;
     }
 
     /**
-     * Set kodpocztowy
+     * Set postalcode
      *
-     * @param string $kodpocztowy
+     * @param string $postalcode
      * @return Employee
      */
-    public function setKodpocztowy($kodpocztowy)
+    public function setPostalcode($postalcode)
     {
-        $this->kodpocztowy = $kodpocztowy;
+        $this->postalcode = $postalcode;
 
         return $this;
     }
 
     /**
-     * Get kodpocztowy
+     * Get postalcode
      *
      * @return string 
      */
-    public function getKodpocztowy()
+    public function getPostalcode()
     {
-        return $this->kodpocztowy;
+        return $this->postalcode;
     }
 
     /**
-     * Set miasto
+     * Set city
      *
-     * @param string $miasto
+     * @param string $city
      * @return Employee
      */
-    public function setMiasto($miasto)
+    public function setCity($city)
     {
-        $this->miasto = $miasto;
+        $this->city = $city;
 
         return $this;
     }
 
     /**
-     * Get miasto
+     * Get city
      *
      * @return string 
      */
-    public function getMiasto()
+    public function getCity()
     {
-        return $this->miasto;
+        return $this->city;
     }
 
     /**
@@ -318,26 +318,26 @@ class Employee
     }
 
     /**
-     * Set nrtelefonu
+     * Set phonenumber
      *
-     * @param string $nrtelefonu
+     * @param string $phonenumber
      * @return Employee
      */
-    public function setNrtelefonu($nrtelefonu)
+    public function setPhonenumber($phonenumber)
     {
-        $this->nrtelefonu = $nrtelefonu;
+        $this->phonenumber = $phonenumber;
 
         return $this;
     }
 
     /**
-     * Get nrtelefonu
+     * Get phonenumber
      *
      * @return string 
      */
-    public function getNrtelefonu()
+    public function getPhonenumber()
     {
-        return $this->nrtelefonu;
+        return $this->phonenumber;
     }
 
     /**
@@ -374,30 +374,30 @@ class Employee
     }
 
     /**
-     * Set idlogowanie
+     * Set idlogin
      *
      * @param \UserBundle\Entity\User $id
      * @return Client
      */
     public function setIdlogowanie(\UserBundle\Entity\User $id = null)
     {
-        $this->idlogowanie = $id;
+        $this->idlogin = $id;
 
         return $this;
     }
 
     /**
-     * Get idlogowanie
+     * Get idlogin
      *
      * @return \UserBundle\Entity\User
      */
     public function getIdlogowanie()
     {
-        return $this->idlogowanie;
+        return $this->idlogin;
     }
     
     public function __construct() {
-        $this->zamowienia = new ArrayCollection();
+        $this->orders = new ArrayCollection();
     }  
 
 }

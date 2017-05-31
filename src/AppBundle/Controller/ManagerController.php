@@ -99,7 +99,7 @@ class ManagerController extends Controller
 
         $ordersList = new OrderList();
         foreach ($orders as $order) {
-            $ordersList->getZamowienia()->add($order);
+            $ordersList->getOrders()->add($order);
         }
 
         $form = $this->createForm(OrderListType::class, $ordersList);

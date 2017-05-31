@@ -164,7 +164,7 @@ class CartController extends Controller
 
         $client = $this->getDoctrine()
             ->getRepository('Client.php')
-            ->findOneBy(['idlogowanie' => $this->getUser() ? $this->getUser()->getId() : false]);                                                // zalogowany wypełniał kiedyś formularz
+            ->findOneBy(['idlogin' => $this->getUser() ? $this->getUser()->getId() : false]);                                                // zalogowany wypełniał kiedyś formularz
         if (!$client) {
             $client = new Client();
         }                                                                                                   // jeśli zalogowany nigdy nie wypełniał formularza dostawy lub jeśli niezalogowany

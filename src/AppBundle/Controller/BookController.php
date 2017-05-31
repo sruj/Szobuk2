@@ -36,7 +36,7 @@ class BookController extends Controller
             $books = $rep->findAllMy($request->query->getInt('page', 1), BookList::NUM_ITEMS);
         }
 
-        //[-Formularz Główny-]Ładowanie $zamowieniaList - zmiennej potrzebnej do głównego formularza.
+        //[-Formularz Główny-]Ładowanie $ordersList - zmiennej potrzebnej do głównego formularza.
         //To kluczowa zmienna. Obiekt OrderList() to kolekcja formularzy
         //pozwala na stworzenie wielu formularzy z jednym buttonem
         $bookList = new BookList();

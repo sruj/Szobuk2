@@ -22,37 +22,37 @@ class Merchant
     /**
      * @var string
      *
-     * @ORM\Column(name="ulica", type="string", length=45, nullable=true)
+     * @ORM\Column(name="street", type="string", length=45, nullable=true)
      */
-    private $ulica;
+    private $street;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nrDomu", type="string", length=45, nullable=true)
+     * @ORM\Column(name="houseNumber", type="string", length=45, nullable=true)
      */
-    private $nrdomu;
+    private $housenumber;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nrMieszkania", type="string", length=45, nullable=true)
+     * @ORM\Column(name="apartmentNumber", type="string", length=45, nullable=true)
      */
-    private $nrmieszkania;
+    private $apartmentnumber;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="kodPocztowy", type="string", length=45, nullable=true)
+     * @ORM\Column(name="postalCode", type="string", length=45, nullable=true)
      */
-    private $kodpocztowy;
+    private $postalcode;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="miasto", type="string", length=45, nullable=true)
+     * @ORM\Column(name="city", type="string", length=45, nullable=true)
      */
-    private $miasto;
+    private $city;
 
     /**
      * @var string
@@ -64,9 +64,9 @@ class Merchant
     /**
      * @var string
      *
-     * @ORM\Column(name="nrTelefonu", type="string", length=45, nullable=true)
+     * @ORM\Column(name="phoneNumber", type="string", length=45, nullable=true)
      */
-    private $nrtelefonu;
+    private $phonenumber;
 
     /**
      * @var integer
@@ -106,118 +106,118 @@ class Merchant
     }
 
     /**
-     * Set ulica
+     * Set street
      *
-     * @param string $ulica
+     * @param string $street
      * @return Merchant
      */
-    public function setUlica($ulica)
+    public function setStreet($street)
     {
-        $this->ulica = $ulica;
+        $this->street = $street;
 
         return $this;
     }
 
     /**
-     * Get ulica
+     * Get street
      *
      * @return string 
      */
-    public function getUlica()
+    public function getStreet()
     {
-        return $this->ulica;
+        return $this->street;
     }
 
     /**
-     * Set nrdomu
+     * Set housenumber
      *
-     * @param string $nrdomu
+     * @param string $housenumber
      * @return Merchant
      */
-    public function setNrdomu($nrdomu)
+    public function setHousenumber($housenumber)
     {
-        $this->nrdomu = $nrdomu;
+        $this->housenumber = $housenumber;
 
         return $this;
     }
 
     /**
-     * Get nrdomu
+     * Get housenumber
      *
      * @return string 
      */
-    public function getNrdomu()
+    public function getHousenumber()
     {
-        return $this->nrdomu;
+        return $this->housenumber;
     }
 
     /**
-     * Set nrmieszkania
+     * Set apartmentnumber
      *
-     * @param string $nrmieszkania
+     * @param string $apartmentnumber
      * @return Merchant
      */
-    public function setNrmieszkania($nrmieszkania)
+    public function setApartmentNumber($apartmentnumber)
     {
-        $this->nrmieszkania = $nrmieszkania;
+        $this->apartmentnumber = $apartmentnumber;
 
         return $this;
     }
 
     /**
-     * Get nrmieszkania
+     * Get apartmentnumber
      *
      * @return string 
      */
-    public function getNrmieszkania()
+    public function getApartmentNumber()
     {
-        return $this->nrmieszkania;
+        return $this->apartmentnumber;
     }
 
     /**
-     * Set kodpocztowy
+     * Set postalcode
      *
-     * @param string $kodpocztowy
+     * @param string $postalcode
      * @return Merchant
      */
-    public function setKodpocztowy($kodpocztowy)
+    public function setPostalcode($postalcode)
     {
-        $this->kodpocztowy = $kodpocztowy;
+        $this->postalcode = $postalcode;
 
         return $this;
     }
 
     /**
-     * Get kodpocztowy
+     * Get postalcode
      *
      * @return string 
      */
-    public function getKodpocztowy()
+    public function getPostalcode()
     {
-        return $this->kodpocztowy;
+        return $this->postalcode;
     }
 
     /**
-     * Set miasto
+     * Set city
      *
-     * @param string $miasto
+     * @param string $city
      * @return Merchant
      */
-    public function setMiasto($miasto)
+    public function setCity($city)
     {
-        $this->miasto = $miasto;
+        $this->city = $city;
 
         return $this;
     }
 
     /**
-     * Get miasto
+     * Get city
      *
      * @return string 
      */
-    public function getMiasto()
+    public function getCity()
     {
-        return $this->miasto;
+        return $this->city;
     }
 
     /**
@@ -244,26 +244,26 @@ class Merchant
     }
 
     /**
-     * Set nrtelefonu
+     * Set phonenumber
      *
-     * @param string $nrtelefonu
+     * @param string $phonenumber
      * @return Merchant
      */
-    public function setNrtelefonu($nrtelefonu)
+    public function setPhonenumber($phonenumber)
     {
-        $this->nrtelefonu = $nrtelefonu;
+        $this->phonenumber = $phonenumber;
 
         return $this;
     }
 
     /**
-     * Get nrtelefonu
+     * Get phonenumber
      *
      * @return string 
      */
-    public function getNrtelefonu()
+    public function getPhonenumber()
     {
-        return $this->nrtelefonu;
+        return $this->phonenumber;
     }
 
     /**

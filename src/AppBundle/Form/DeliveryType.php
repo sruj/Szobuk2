@@ -10,16 +10,16 @@ class DeliveryType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('imie')
-                ->add('nazwisko')
+                ->add('name')
+                ->add('surname')
                 ->add('email')
-                ->add('ulica')
-                ->add('nrDomu')
-                ->add('nrMieszkania')
-                ->add('kodPocztowy')
-                ->add('miasto')
+                ->add('street')
+                ->add('houseNumber')
+                ->add('apartmentNumber')
+                ->add('postalCode')
+                ->add('city')
                 ->add('nip')
-                ->add('nrTelefonu')
+                ->add('phoneNumber')
                 ->add('zapisz', 'submit');
     }
 

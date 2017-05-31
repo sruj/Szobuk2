@@ -9,7 +9,7 @@ use DateTime;
 /**
  * Order
  *
- * @ORM\Table(name="zamowienie", indexes={@ORM\Index(name="idKlient_idx", columns={"idKlient"}), @ORM\Index(name="idStatus_idx", columns={"idStatus"})})
+ * @ORM\Table(name="zamowienie", indexes={@ORM\Index(name="idClient_idx", columns={"idClient"}), @ORM\Index(name="idStatus_idx", columns={"idStatus"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\OrderRepository")
 */
 class Order
@@ -33,9 +33,9 @@ class Order
     /**
      * @var \AppBundle\Entity\Client
      *
-     * @ORM\ManyToOne(targetEntity="Client.php", inversedBy="zamowienia")
+     * @ORM\ManyToOne(targetEntity="Client.php", inversedBy="orders")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idKlient", referencedColumnName="idKlient")
+     *   @ORM\JoinColumn(name="idClient", referencedColumnName="idClient")
      * })
      */
     private $idclient;
@@ -45,7 +45,7 @@ class Order
     /**
      * @var \AppBundle\Entity\Status
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Status", inversedBy="zamowienia")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Status", inversedBy="orders")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idStatus", referencedColumnName="idStatus")
      * })

@@ -9,12 +9,12 @@ use AppBundle\Validator\Constraints as AcmeAssert;
 
 /**
  * Client.
- * 
+ *
  * Contraints rules messages NIE DZIAŁA. To jest zasady tu podane obowiązują,
- * ale komunikaty błędów walidacji są domyślne dla przeglądarki i HTML5. 
+ * ale komunikaty błędów walidacji są domyślne dla przeglądarki i HTML5.
  * Mimo, że robione wg dokumentacji SYmfony2
  *
- * @ORM\Table(name="client", indexes={@ORM\Index(name="idLogowanie_idx", columns={"idLogowanie"})})
+ * @ORM\Table(name="client", indexes={@ORM\Index(name="idLogin_idx", columns={"idLogin"})})
  * @ORM\Entity
  */
 class Client
@@ -28,9 +28,9 @@ class Client
      *      minMessage = "Imię powinno zawierać co najmniej {{ limit }} znaków",
      *      maxMessage = "Imię powinno zawierać nie więcej niż {{ limit }} znaków"
      * )
-     * @ORM\Column(name="imie", type="string", length=45, nullable=false)
+     * @ORM\Column(name="name", type="string", length=45, nullable=false)
      */
-    private $imie;
+    private $name;
 
     /**
      * @var string
@@ -41,13 +41,13 @@ class Client
      *      minMessage = "Nazwisko powinno zawierać co najmniej {{ limit }} znaków",
      *      maxMessage = "Nazwisko powinno zawierać nie więcej niż {{ limit }} znaków"
      * )
-     * @ORM\Column(name="nazwisko", type="string", length=45, nullable=false)
+     * @ORM\Column(name="surname", type="string", length=45, nullable=false)
      */
-    private $nazwisko;
+    private $surname;
 
     /**
      * @var string
-     * 
+     *
      * @Assert\Email
      * @ORM\Column(name="email", type="string", length=45, nullable=true)
      */
@@ -55,17 +55,17 @@ class Client
 
     /**
      * @var string
-     * 
+     *
      * @Assert\Length(
      *      min = 2,
      *      max = 45,
      *      minMessage = "Nazwa ulicy powinna zawierać co najmniej {{ limit }} znaków",
      *      maxMessage = "Nazwa ulicy powinna zawierać nie więcej niż {{ limit }} znaków"
      * )
-     * 
-     * @ORM\Column(name="ulica", type="string", length=45, nullable=false)
+     *
+     * @ORM\Column(name="street", type="string", length=45, nullable=false)
      */
-    private $ulica;
+    private $street;
 
     /**
      * @var string
@@ -76,10 +76,10 @@ class Client
      *      minMessage = "Numer domu powinien zawierać co najmniej {{ limit }} znaków",
      *      maxMessage = "Numer domu powinien zawierać nie więcej niż {{ limit }} znaków"
      * )
-     * 
-     * @ORM\Column(name="nrDomu", type="string", length=10, nullable=false)
+     *
+     * @ORM\Column(name="houseNumber", type="string", length=10, nullable=false)
      */
-    private $nrdomu;
+    private $housenumber;
 
     /**
      * @var string
@@ -90,10 +90,10 @@ class Client
      *      minMessage = "Numer mieszkania powinien zawierać co najmniej {{ limit }} znaków",
      *      maxMessage = "Numer mieszkania powinien zawierać nie więcej niż {{ limit }} znaków"
      * )
-     * 
-     * @ORM\Column(name="nrMieszkania", type="string", length=10, nullable=true)
+     *
+     * @ORM\Column(name="apartmentNumber", type="string", length=10, nullable=true)
      */
-    private $nrmieszkania;
+    private $apartmentnumber;
 
     /**
      * @var string
@@ -103,10 +103,10 @@ class Client
      *      max = 6,
      *      exactMessage = "Kod pocztowy powinien składać się z {{ limit }} znaków w formacie CC-CCC",
      * )
-     * 
-     * @ORM\Column(name="kodPocztowy", type="string", length=6, nullable=true)
+     *
+     * @ORM\Column(name="postalCode", type="string", length=6, nullable=true)
      */
-    private $kodpocztowy;
+    private $postalcode;
 
     /**
      * @var string
@@ -117,10 +117,10 @@ class Client
      *      minMessage = "Nazwa miasta powinna zawierać co najmniej {{ limit }} znaków",
      *      maxMessage = "Nazwa miasta powinna zawierać nie więcej niż {{ limit }} znaków"
      * )
-     * 
-     * @ORM\Column(name="miasto", type="string", length=45, nullable=false)
+     *
+     * @ORM\Column(name="city", type="string", length=45, nullable=false)
      */
-    private $miasto;
+    private $city;
 
     /**
      * @var string
@@ -130,7 +130,7 @@ class Client
      *      max = 10,
      *      exactMessage = "NIP powinien składać się z {{ limit }} cyfr",
      * )
-     * 
+     *
      * @ORM\Column(name="nip", type="string", length=10, nullable=true)
      */
     private $nip;
@@ -142,15 +142,15 @@ class Client
      *      max = 45,
      *      minMessage = "Numer telefonu powinien składać się z cyfr i nie zawierać mniej niż {{ limit }} znaków",
      *      maxMessage = "Numer telefonu powinien składać się z cyfr i nie zawierać więcej niż {{ limit }} znaków"
-     * )    
-     * @ORM\Column(name="nrTelefonu", type="string", length=45, nullable=true)
+     * )
+     * @ORM\Column(name="phoneNumber", type="string", length=45, nullable=true)
      */
-    private $nrtelefonu;
+    private $phonenumber;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="idKlient", type="integer")
+     * @ORM\Column(name="idClient", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -161,62 +161,62 @@ class Client
      *
      * @ORM\OneToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idlogowanie", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="idlogin", referencedColumnName="id")
      * })
      */
-    private $idlogowanie;
-
-        
-    /**
-    * @ORM\OneToMany(targetEntity="Order.php", mappedBy="idclient")
-    */
-    protected $zamowienia;
+    private $idlogin;
 
 
     /**
-     * Set imie
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Order", mappedBy="idclient")
+     */
+    protected $orders;
+
+
+    /**
+     * Set name
      *
-     * @param string $imie
+     * @param string $name
      * @return Client
      */
-    public function setImie($imie)
+    public function setName($name)
     {
-        $this->imie = $imie;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get imie
+     * Get name
      *
-     * @return string 
+     * @return string
      */
-    public function getImie()
+    public function getName()
     {
-        return $this->imie;
+        return $this->name;
     }
 
     /**
-     * Set nazwisko
+     * Set surname
      *
-     * @param string $nazwisko
+     * @param string $surname
      * @return Client
      */
-    public function setNazwisko($nazwisko)
+    public function setSurname($surname)
     {
-        $this->nazwisko = $nazwisko;
+        $this->surname = $surname;
 
         return $this;
     }
 
     /**
-     * Get nazwisko
+     * Get surname
      *
-     * @return string 
+     * @return string
      */
-    public function getNazwisko()
+    public function getSurname()
     {
-        return $this->nazwisko;
+        return $this->surname;
     }
 
     /**
@@ -235,7 +235,7 @@ class Client
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -243,118 +243,118 @@ class Client
     }
 
     /**
-     * Set ulica
+     * Set street
      *
-     * @param string $ulica
+     * @param string $street
      * @return Client
      */
-    public function setUlica($ulica)
+    public function setStreet($street)
     {
-        $this->ulica = $ulica;
+        $this->street = $street;
 
         return $this;
     }
 
     /**
-     * Get ulica
+     * Get street
      *
-     * @return string 
+     * @return string
      */
-    public function getUlica()
+    public function getStreet()
     {
-        return $this->ulica;
+        return $this->street;
     }
 
     /**
-     * Set nrdomu
+     * Set housenumber
      *
-     * @param string $nrdomu
+     * @param string $housenumber
      * @return Client
      */
-    public function setNrdomu($nrdomu)
+    public function setHousenumber($housenumber)
     {
-        $this->nrdomu = $nrdomu;
+        $this->housenumber = $housenumber;
 
         return $this;
     }
 
     /**
-     * Get nrdomu
+     * Get housenumber
      *
-     * @return string 
+     * @return string
      */
-    public function getNrdomu()
+    public function getHousenumber()
     {
-        return $this->nrdomu;
+        return $this->housenumber;
     }
 
     /**
-     * Set nrmieszkania
+     * Set apartmentnumber
      *
-     * @param string $nrmieszkania
+     * @param string $apartmentnumber
      * @return Client
      */
-    public function setNrmieszkania($nrmieszkania)
+    public function setApartmentNumber($apartmentnumber)
     {
-        $this->nrmieszkania = $nrmieszkania;
+        $this->apartmentnumber = $apartmentnumber;
 
         return $this;
     }
 
     /**
-     * Get nrmieszkania
+     * Get apartmentnumber
      *
-     * @return string 
+     * @return string
      */
-    public function getNrmieszkania()
+    public function getApartmentNumber()
     {
-        return $this->nrmieszkania;
+        return $this->apartmentnumber;
     }
 
     /**
-     * Set kodpocztowy
+     * Set postalcode
      *
-     * @param string $kodpocztowy
+     * @param string $postalcode
      * @return Client
      */
-    public function setKodpocztowy($kodpocztowy)
+    public function setPostalcode($postalcode)
     {
-        $this->kodpocztowy = $kodpocztowy;
+        $this->postalcode = $postalcode;
 
         return $this;
     }
 
     /**
-     * Get kodpocztowy
+     * Get postalcode
      *
-     * @return string 
+     * @return string
      */
-    public function getKodpocztowy()
+    public function getPostalcode()
     {
-        return $this->kodpocztowy;
+        return $this->postalcode;
     }
 
     /**
-     * Set miasto
+     * Set city
      *
-     * @param string $miasto
+     * @param string $city
      * @return Client
      */
-    public function setMiasto($miasto)
+    public function setCity($city)
     {
-        $this->miasto = $miasto;
+        $this->city = $city;
 
         return $this;
     }
 
     /**
-     * Get miasto
+     * Get city
      *
-     * @return string 
+     * @return string
      */
-    public function getMiasto()
+    public function getCity()
     {
-        return $this->miasto;
+        return $this->city;
     }
 
     /**
@@ -373,7 +373,7 @@ class Client
     /**
      * Get nip
      *
-     * @return string 
+     * @return string
      */
     public function getNip()
     {
@@ -381,26 +381,26 @@ class Client
     }
 
     /**
-     * Set nrtelefonu
+     * Set phonenumber
      *
-     * @param string $nrtelefonu
+     * @param string $phonenumber
      * @return Client
      */
-    public function setNrtelefonu($nrtelefonu)
+    public function setPhonenumber($phonenumber)
     {
-        $this->nrtelefonu = $nrtelefonu;
+        $this->phonenumber = $phonenumber;
 
         return $this;
     }
 
     /**
-     * Get nrtelefonu
+     * Get phonenumber
      *
-     * @return string 
+     * @return string
      */
-    public function getNrtelefonu()
+    public function getPhonenumber()
     {
-        return $this->nrtelefonu;
+        return $this->phonenumber;
     }
 
     /**
@@ -414,63 +414,64 @@ class Client
     }
 
     /**
-     * Set idlogowanie
+     * Set idlogin
      *
      * @param \UserBundle\Entity\User $id
      * @return Client
      */
     public function setIdlogowanie(\UserBundle\Entity\User $id = null)
     {
-        $this->idlogowanie = $id;
+        $this->idlogin = $id;
 
         return $this;
     }
 
     /**
-     * Get idlogowanie
+     * Get idlogin
      *
      * @return \UserBundle\Entity\User
      */
     public function getIdlogowanie()
     {
-        return $this->idlogowanie;
+        return $this->idlogin;
     }
-    
-    public function __construct() {
-        $this->zamowienia = new ArrayCollection();
-    }  
+
+    public function __construct()
+    {
+        $this->orders = new ArrayCollection();
+    }
 
     /**
-     * Add zamowienia
+     * Add orders
      *
-     * @param \AppBundle\Entity\Order $zamowienia
+     * @param \AppBundle\Entity\Order $orders
      * @return Client
      */
-    public function addZamowienium(\AppBundle\Entity\Order $zamowienia)
+    public function addOrders(\AppBundle\Entity\Order $orders)
     {
-        $this->zamowienia[] = $zamowienia;
+        $this->orders[] = $orders;
 
         return $this;
     }
 
     /**
-     * Remove zamowienia
+     * Remove orders
      *
-     * @param \AppBundle\Entity\Order $zamowienia
+     * @param \AppBundle\Entity\Order $orders
      */
-    public function removeZamowienium(\AppBundle\Entity\Order $zamowienia)
+    public function removeOrders(\AppBundle\Entity\Order $orders)
     {
-        $this->zamowienia->removeElement($zamowienia);
+        $this->orders->removeElement($orders);
     }
 
     /**
-     * Get zamowienia
+     * Get orders
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function getZamowienia()
+    public function getOrders()
     {
-        return $this->zamowienia;
+        return $this->orders;
     }
 
 }

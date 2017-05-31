@@ -22,7 +22,7 @@ class ClientController extends Controller {
 
         $client= $this->getDoctrine()
             ->getRepository('Client.php')
-            ->findOneBy(['idlogowanie' => $this->getUser()->getId()]);
+            ->findOneBy(['idlogin' => $this->getUser()->getId()]);
         
         if(!$client){
             throw new ClientHasNoShoppingHistory('Nie masz zapisanej historii zakupów.');
