@@ -4,10 +4,11 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Invoice - nieużywane
  *
- * @ORM\Table(name="faktura", indexes={@ORM\Index(name="idZamowienie_idx", columns={"idZamowienie"}), @ORM\Index(name="idSprzedawcy_idx", columns={"idSprzedawca"})})
+ * @ORM\Table(name="invoice", indexes={@ORM\Index(name="idOrder_idx", columns={"idOrder"}), @ORM\Index(name="idMerchant_idx", columns={"idMerchant"})})
  * @ORM\Entity
  */
 class Invoice
@@ -15,101 +16,93 @@ class Invoice
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dataFaktury", type="date", nullable=true)
+     * @ORM\Column(name="invoiceDate", type="date", nullable=true)
      */
-    private $datafaktury;
+    private $invoicedate;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nrFaktury", type="string", length=45)
+     * @ORM\Column(name="invoiceNumber", type="string", length=45)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $nrfaktury;
-
+    private $invoicenumber;
 
     /**
      * @var \AppBundle\Entity\Merchant
      *
-     * @ORM\ManyToOne(targetEntity="Merchant.php", inversedBy="faktury")
+     * @ORM\ManyToOne(targetEntity="Merchant.php", inversedBy="invoices")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idSprzedawca", referencedColumnName="idSprzedawca")
+     *   @ORM\JoinColumn(name="idMerchant", referencedColumnName="idMerchant")
      * })
      */
-    private $idsprzedawca;
-
-
+    private $idmerchant;
 
     /**
      * @var \AppBundle\Entity\Order
      *
-     * @ORM\ManyToOne(targetEntity="Order.php", inversedBy="faktury")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Order", inversedBy="invoices")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idZamowienie", referencedColumnName="idZamowienie")
+     *   @ORM\JoinColumn(name="idOrder", referencedColumnName="idOrder")
      * })
      */
     private $idorder;
 
-    
-
-
-
-
     /**
-     * Set datafaktury
+     * Set invoicedate
      *
-     * @param \DateTime $datafaktury
+     * @param \DateTime $invoicedate
      * @return Invoice
      */
-    public function setDatafaktury($datafaktury)
+    public function setInvoicedate($invoicedate)
     {
-        $this->datafaktury = $datafaktury;
+        $this->invoicedate = $invoicedate;
 
         return $this;
     }
 
     /**
-     * Get datafaktury
+     * Get invoicedate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getDatafaktury()
+    public function getInvoicedate()
     {
-        return $this->datafaktury;
+        return $this->invoicedate;
     }
 
     /**
-     * Get nrfaktury
+     * Get invoicenumber
      *
-     * @return string 
+     * @return string
      */
-    public function getNrfaktury()
+    public function getInvoicenumber()
     {
-        return $this->nrfaktury;
+        return $this->invoicenumber;
     }
 
     /**
-     * Set idsprzedawca
+     * Set idmerchant
      *
-     * @param \AppBundle\Entity\Merchant $idsprzedawca
+     * @param \AppBundle\Entity\Merchant $idmerchant
      * @return Invoice
      */
-    public function setIdsprzedawca(\AppBundle\Entity\Merchant $idsprzedawca = null)
+    public function setidMerchant(\AppBundle\Entity\Merchant $idmerchant = null)
     {
-        $this->idsprzedawca = $idsprzedawca;
+        $this->idmerchant = $idmerchant;
 
         return $this;
     }
 
     /**
-     * Get idsprzedawca
+     * Get idmerchant
      *
      * @return \AppBundle\Entity\Merchant
      */
-    public function getIdsprzedawca()
+    public function getidMerchant()
     {
-        return $this->idsprzedawca;
+        return $this->idmerchant;
     }
 
     /**
@@ -118,7 +111,7 @@ class Invoice
      * @param \AppBundle\Entity\Order $idorder
      * @return Invoice
      */
-    public function setIdzamowienie(\AppBundle\Entity\Order $idorder = null)
+    public function setIdorder(\AppBundle\Entity\Order $idorder = null)
     {
         $this->idorder = $idorder;
 
@@ -130,7 +123,7 @@ class Invoice
      *
      * @return \AppBundle\Entity\Order
      */
-    public function getIdzamowienie()
+    public function getIdorder()
     {
         return $this->idorder;
     }

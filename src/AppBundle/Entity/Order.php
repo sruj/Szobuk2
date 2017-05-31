@@ -24,7 +24,7 @@ class Order
     /**
      * @var integer
      *
-     * @ORM\Column(name="idZamowienie", type="integer")
+     * @ORM\Column(name="idOrder", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -58,7 +58,7 @@ class Order
     /**
     * @ORM\OneToMany(targetEntity="Invoice.php", mappedBy="idorder")
     */
-    protected $faktury;
+    protected $invoices;
 
 
 
@@ -122,7 +122,7 @@ class Order
      *
      * @return int
      */
-    public function getIdzamowienie()
+    public function getIdorder()
     {
         return $this->idorder;
     }
@@ -174,41 +174,41 @@ class Order
     }
 
     public function __construct() {
-        $this->faktury = new ArrayCollection();
+        $this->invoices = new ArrayCollection();
         $this->orderProducts = new ArrayCollection();
     }
 
     /**
-     * Add faktury
+     * Add invoices
      *
-     * @param \AppBundle\Entity\Invoice $faktury
+     * @param \AppBundle\Entity\Invoice $invoices
      * @return Order
      */
-    public function addFaktury(\AppBundle\Entity\Invoice $faktury)
+    public function addFaktury(\AppBundle\Entity\Invoice $invoices)
     {
-        $this->faktury[] = $faktury;
+        $this->invoices[] = $invoices;
 
         return $this;
     }
 
     /**
-     * Remove faktury
+     * Remove invoices
      *
-     * @param \AppBundle\Entity\Invoice $faktury
+     * @param \AppBundle\Entity\Invoice $invoices
      */
-    public function removeFaktury(\AppBundle\Entity\Invoice $faktury)
+    public function removeFaktury(\AppBundle\Entity\Invoice $invoices)
     {
-        $this->faktury->removeElement($faktury);
+        $this->invoices->removeElement($invoices);
     }
 
     /**
-     * Get faktury
+     * Get invoices
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
     public function getFaktury()
     {
-        return $this->faktury;
+        return $this->invoices;
     }
 
     /**

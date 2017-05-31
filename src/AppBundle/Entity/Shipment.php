@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Shipment
  *
- * @ORM\Table(name="przesylka", indexes={@ORM\Index(name="idZamowienie_idx", columns={"idZamowienie"})})
+ * @ORM\Table(name="przesylka", indexes={@ORM\Index(name="idOrder_idx", columns={"idOrder"})})
  * @ORM\Entity
  */
 class Shipment
@@ -29,9 +29,9 @@ class Shipment
     /**
      * @var string
      *
-     * @ORM\Column(name="nrFaktury", type="string", length=45, nullable=true)
+     * @ORM\Column(name="invoiceNumber", type="string", length=45, nullable=true)
      */
-    private $nrfaktury;
+    private $invoicenumber;
 
     /**
      * @var \DateTime
@@ -62,7 +62,7 @@ class Shipment
      *
      * @ORM\ManyToOne(targetEntity="Order.php", inversedBy="przesylki")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idZamowienie", referencedColumnName="idZamowienie")
+     *   @ORM\JoinColumn(name="idOrder", referencedColumnName="idOrder")
      * })
      */
     private $idorder;
@@ -115,26 +115,26 @@ class Shipment
     }
 
     /**
-     * Set nrfaktury
+     * Set invoicenumber
      *
-     * @param string $nrfaktury
+     * @param string $invoicenumber
      * @return Shipment
      */
-    public function setNrfaktury($nrfaktury)
+    public function setInvoicenumber($invoicenumber)
     {
-        $this->nrfaktury = $nrfaktury;
+        $this->invoicenumber = $invoicenumber;
 
         return $this;
     }
 
     /**
-     * Get nrfaktury
+     * Get invoicenumber
      *
      * @return string 
      */
-    public function getNrfaktury()
+    public function getInvoicenumber()
     {
-        return $this->nrfaktury;
+        return $this->invoicenumber;
     }
 
     /**
@@ -199,7 +199,7 @@ class Shipment
      * @param \AppBundle\Entity\Order $idorder
      * @return Shipment
      */
-    public function setIdzamowienie(\AppBundle\Entity\Order $idorder = null)
+    public function setIdorder(\AppBundle\Entity\Order $idorder = null)
     {
         $this->idorder = $idorder;
 
@@ -211,7 +211,7 @@ class Shipment
      *
      * @return \AppBundle\Entity\Order
      */
-    public function getIdzamowienie()
+    public function getIdorder()
     {
         return $this->idorder;
     }

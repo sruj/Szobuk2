@@ -95,7 +95,7 @@ class OrderManager
                 ->getRepository('AppBundle:Book')
                 ->find($isbn);
             $zm = new OrderProduct();
-            $zm->setIdzamowienie($zamowienie);
+            $zm->setIdorder($zamowienie);
             $zm->setIsbn($ksiazka);
             $zm->setTytul($ksiazka->getTitle());
             $zm->setAuthor($ksiazka->getAuthor());
@@ -115,7 +115,7 @@ class OrderManager
      * @param Order $zamowienie
      */
     private function addFlashBagWithOrderIdVariable($zamowienie){
-        $idzamowienia = $zamowienie->getIdzamowienie();
+        $idzamowienia = $zamowienie->getIdorder();
         $this->session->getFlashBag()->add(
             'idorder',
             $idzamowienia);

@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * OrderProduct
  *
- * @ORM\Table(name="zamowienie_produkt", indexes={@ORM\Index(name="idZamowienie_idx", columns={"idZamowienie"}), @ORM\Index(name="isbn_idx", columns={"isbn"})})
+ * @ORM\Table(name="zamowienie_produkt", indexes={@ORM\Index(name="idOrder_idx", columns={"idOrder"}), @ORM\Index(name="isbn_idx", columns={"isbn"})})
  * @ORM\Entity
  */
 class OrderProduct
@@ -50,7 +50,7 @@ class OrderProduct
     /**
      * @var integer
      *
-     * @ORM\Column(name="idZamowienieProdukt", type="integer")
+     * @ORM\Column(name="idOrderProdukt", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -75,7 +75,7 @@ class OrderProduct
      *
      * @ORM\ManyToOne(targetEntity="Order.php", inversedBy="orderProducts")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idZamowienie", referencedColumnName="idZamowienie")
+     *   @ORM\JoinColumn(name="idOrder", referencedColumnName="idOrder")
      * })
      */
     private $idorder;
@@ -202,7 +202,7 @@ class OrderProduct
      *
      * @return int
      */
-    public function getIdzamowienieprodukt()
+    public function getIdorderprodukt()
     {
         return $this->idzamowienieprodukt;
     }
@@ -236,7 +236,7 @@ class OrderProduct
      * @param \AppBundle\Entity\Order $idorder
      * @return OrderProduct
      */
-    public function setIdzamowienie(\AppBundle\Entity\Order $zamowienie = null)
+    public function setIdorder(\AppBundle\Entity\Order $zamowienie = null)
     {
         $this->idorder = $zamowienie;
         $zamowienie->addZamowienieProdukt($this);
@@ -249,7 +249,7 @@ class OrderProduct
      *
      * @return \AppBundle\Entity\Order
      */
-    public function getIdzamowienie()
+    public function getIdorder()
     {
         return $this->idorder;
     }

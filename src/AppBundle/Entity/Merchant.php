@@ -71,16 +71,16 @@ class Merchant
     /**
      * @var integer
      *
-     * @ORM\Column(name="idSprzedawca", type="integer")
+     * @ORM\Column(name="idMerchant", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idsprzedawca;
+    private $idmerchant;
 
     /**
-    * @ORM\OneToMany(targetEntity="Faktura", mappedBy="idsprzedawca")
+    * @ORM\OneToMany(targetEntity="Faktura", mappedBy="idmerchant")
     */
-    protected $faktury;
+    protected $invoices;
 
     /**
      * Set name
@@ -267,48 +267,48 @@ class Merchant
     }
 
     /**
-     * Get idsprzedawca
+     * Get idmerchant
      *
      * @return int
      */
-    public function getIdsprzedawca()
+    public function getidMerchant()
     {
-        return $this->idsprzedawca;
+        return $this->idmerchant;
     }
     
     public function __construct() {
-        $this->faktury = new ArrayCollection();
+        $this->invoices = new ArrayCollection();
     }    
     
     /**
-     * Get faktury
+     * Get invoices
      *
      * @return Doctrine\Common\Collections\Collection
      */
     public function getFaktury() {
-        return $this->faktury;
+        return $this->invoices;
     }
 
     /**
-     * Add faktury
+     * Add invoices
      *
-     * @param \AppBundle\Entity\Invoice $faktury
+     * @param \AppBundle\Entity\Invoice $invoices
      * @return Merchant
      */
-    public function addFaktury(\AppBundle\Entity\Invoice $faktury)
+    public function addFaktury(\AppBundle\Entity\Invoice $invoices)
     {
-        $this->faktury[] = $faktury;
+        $this->invoices[] = $invoices;
 
         return $this;
     }
 
     /**
-     * Remove faktury
+     * Remove invoices
      *
-     * @param \AppBundle\Entity\Invoice $faktury
+     * @param \AppBundle\Entity\Invoice $invoices
      */
-    public function removeFaktury(\AppBundle\Entity\Invoice $faktury)
+    public function removeFaktury(\AppBundle\Entity\Invoice $invoices)
     {
-        $this->faktury->removeElement($faktury);
+        $this->invoices->removeElement($invoices);
     }
 }
