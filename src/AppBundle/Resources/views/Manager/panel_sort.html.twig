@@ -54,10 +54,10 @@
                         <td>{{ formul.vars.value.orderdate|date('Y-m-d H:i:s') }}</td>
                         {% set quantity = 0 %}
                         {% set kwota = 0 %}
-                        {% for zamowienieProdukt in zamowieniaProdukty %}
-                            {% if zamowienieProdukt.idorder.idorder ==  formul.vars.value.idorder %}
-                                {% set quantity = quantity + zamowienieProdukt.quantity %}
-                                {% set kwota = kwota + zamowienieProdukt.quantity * zamowienieProdukt.cenaproduktu %}
+                        {% for orderProduct in zamowieniaProdukty %}
+                            {% if orderProduct.idorder.idorder ==  formul.vars.value.idorder %}
+                                {% set quantity = quantity + orderProduct.quantity %}
+                                {% set kwota = kwota + orderProduct.quantity * orderProduct.cenaproduktu %}
                             {% endif %}
                         {% endfor %}
                         <td>{{ quantity }}</td>

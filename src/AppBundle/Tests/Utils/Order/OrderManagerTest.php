@@ -135,8 +135,8 @@ class OrderManagerTest extends \PHPUnit_Framework_TestCase
     {
         $ksiazka = $this->createMock(Book::class); //stub (wszystko zwraca null)
         $status = $this->createMock(Status::class); //stub (wszystko zwraca null)
-        $zamowienie = $this->createMock(Order::class);
-        if($exception){$zamowienie=null;};
+        $order = $this->createMock(Order::class);
+        if($exception){$order=null;};
 
         $ksiazkaRepository = $this
             ->getMockBuilder('Doctrine\ORM\EntityRepository')
@@ -156,15 +156,15 @@ class OrderManagerTest extends \PHPUnit_Framework_TestCase
             ->expects($this->any())
             ->method('find')
             ->will($this->returnValue($status));
-        $zamowienieRepository = $this
+        $orderRepository = $this
             ->getMockBuilder('Doctrine\ORM\EntityRepository')
             ->disableOriginalConstructor()
             ->setMethods(['find'])
             ->getMock();
-        $zamowienieRepository
+        $orderRepository
             ->expects($this->any())
             ->method('find')
-            ->will($this->returnValue($zamowienie));
+            ->will($this->returnValue($order));
 
         $entityManager = $this
             ->getMockBuilder(EntityManager::class)
@@ -184,7 +184,7 @@ class OrderManagerTest extends \PHPUnit_Framework_TestCase
                 $statusRepository,
                 $ksiazkaRepository,
                 $ksiazkaRepository,
-                $zamowienieRepository
+                $orderRepository
             );
         $entityManager->expects($this->any())
             ->method('persist')

@@ -48,15 +48,15 @@ class OrderManager
      */
     public function placeOrder($client, $cart)
     {
-        $zamowienie = $this->prepareOrderDetailsToPersistInDatabase($client);
-        $this->createOrderProductsAndPersistInDatabase($zamowienie,$cart);
+        $order = $this->prepareOrderDetailsToPersistInDatabase($client);
+        $this->createOrderProductsAndPersistInDatabase($order,$cart);
         $this->em->persist($client);
-        $this->em->persist($zamowienie);
+        $this->em->persist($order);
         $this->em->flush();
-        $this->dispatchEventWithOrderToSendConfirmedEmails($zamowienie);
-        $this->addFlashBagWithOrderIdVariable($zamowienie);
+        $this->dispatchEventWithOrderToSendConfirmedEmails($order);
+        $this->addFlashBagWithOrderIdVariable($order);
         
-        if (empty($this->em->getRepository('Order.php')->find($zamowienie))){
+        if (empty($this->em->getRepository('Order.php')->find($order))){
             throw new OrderNotFoundException('Nie udało się złożyć zamówienia.');
         }
         return true;
@@ -72,21 +72,21 @@ class OrderManager
             $client->setIdlogin($this->getUser());
         }
 
-        $zamowienie = new Order();
-        $zamowienie->setIdclient($client);
+        $order = new Order();
+        $order->setIdclient($client);
         $status = $this->em
             ->getRepository('AppBundle:Status')
             ->find('1');
-        $zamowienie->setIdstatus($status);
-        $zamowienie->setDatazlozeniacurrent();
+        $order->setIdstatus($status);
+        $order->setOrderdatecurrent();
         
-        return $zamowienie;
+        return $order;
     }
 
     /**
-     * @param Order $zamowienie
+     * @param Order $order
      */
-    private function createOrderProductsAndPersistInDatabase($zamowienie,$cart)
+    private function createOrderProductsAndPersistInDatabase($order,$cart)
     {
         foreach ($cart as $isbn => $quantity)
         {
@@ -95,7 +95,7 @@ class OrderManager
                 ->getRepository('AppBundle:Book')
                 ->find($isbn);
             $zm = new OrderProduct();
-            $zm->setIdorder($zamowienie);
+            $zm->setIdorder($order);
             $zm->setIsbn($ksiazka);
             $zm->setTytul($ksiazka->getTitle());
             $zm->setAuthor($ksiazka->getAuthor());
@@ -112,21 +112,21 @@ class OrderManager
     }
     
     /**
-     * @param Order $zamowienie
+     * @param Order $order
      */
-    private function addFlashBagWithOrderIdVariable($zamowienie){
-        $idzamowienia = $zamowienie->getIdorder();
+    private function addFlashBagWithOrderIdVariable($order){
+        $idzamowienia = $order->getIdorder();
         $this->session->getFlashBag()->add(
             'idorder',
             $idzamowienia);
     }
 
     /**
-     * @param Order $zamowienie
+     * @param Order $order
      */
-    private function dispatchEventWithOrderToSendConfirmedEmails($zamowienie)
+    private function dispatchEventWithOrderToSendConfirmedEmails($order)
     {
-        $this->dispatcher->dispatch(OrderPlacedEvent::NAME, new OrderPlacedEvent($zamowienie));
+        $this->dispatcher->dispatch(OrderPlacedEvent::NAME, new OrderPlacedEvent($order));
     }
 
 

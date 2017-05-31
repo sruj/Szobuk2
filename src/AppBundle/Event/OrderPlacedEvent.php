@@ -16,16 +16,16 @@ class OrderPlacedEvent extends Event
 {
     const NAME = 'order.placed';
 
-    protected $zamowienie;
+    protected $order;
 
-    public function __construct(Order $zamowienie)
+    public function __construct(Order $order)
     {
-        $this->zamowienie = $zamowienie;
+        $this->order = $order;
     }
 
     public function getZamowienie()
     {
-        return $this->zamowienie;
+        return $this->order;
     }
 
 }

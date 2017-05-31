@@ -22,9 +22,9 @@ class Shipment
     /**
      * @var string
      *
-     * @ORM\Column(name="nrPrzesylki", type="string", length=45, nullable=true)
+     * @ORM\Column(name="nrShipments", type="string", length=45, nullable=true)
      */
-    private $nrprzesylki;
+    private $shipmentnumber;
 
     /**
      * @var string
@@ -60,7 +60,7 @@ class Shipment
     /**
      * @var \AppBundle\Entity\Order
      *
-     * @ORM\ManyToOne(targetEntity="Order.php", inversedBy="przesylki")
+     * @ORM\ManyToOne(targetEntity="Order.php", inversedBy="shipments")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idOrder", referencedColumnName="idOrder")
      * })
@@ -92,26 +92,26 @@ class Shipment
     }
 
     /**
-     * Set nrprzesylki
+     * Set shipmentnumber
      *
-     * @param string $nrprzesylki
+     * @param string $shipmentnumber
      * @return Shipment
      */
-    public function setNrprzesylki($nrprzesylki)
+    public function setShipmentnumber($shipmentnumber)
     {
-        $this->nrprzesylki = $nrprzesylki;
+        $this->shipmentnumber = $shipmentnumber;
 
         return $this;
     }
 
     /**
-     * Get nrprzesylki
+     * Get shipmentnumber
      *
      * @return string 
      */
-    public function getNrprzesylki()
+    public function getShipmentnumber()
     {
-        return $this->nrprzesylki;
+        return $this->shipmentnumber;
     }
 
     /**

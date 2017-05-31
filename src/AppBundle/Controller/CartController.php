@@ -194,14 +194,14 @@ class CartController extends Controller
             throw new VariableNotExistInFlashBagException('To jest strona potwierdzająca zamówienie. Aby złożyć zamówienie dodaj produkt do koszyka i tak dalej...');
         }
 
-        $zamowienie = $this->getDoctrine()
+        $order = $this->getDoctrine()
             ->getRepository('Order.php')
             ->find($idorder[0]);
-        $produkty = $zamowienie->getOrderProducts();
+        $produkty = $order->getOrderProducts();
         $suma = $request->getSession()->get('sum');
 
         return $this->render('AppBundle:Cart:confirm.html.twig', [
-            'zamowienie' => $zamowienie, 'produkty' => $produkty,
+            'order' => $order, 'produkty' => $produkty,
             'suma' => $suma
         ]);
     }

@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * OrderProduct
  *
- * @ORM\Table(name="zamowienie_produkt", indexes={@ORM\Index(name="idOrder_idx", columns={"idOrder"}), @ORM\Index(name="isbn_idx", columns={"isbn"})})
+ * @ORM\Table(name="order_product", indexes={@ORM\Index(name="idOrder_idx", columns={"idOrder"}), @ORM\Index(name="isbn_idx", columns={"isbn"})})
  * @ORM\Entity
  */
 class OrderProduct
@@ -54,7 +54,7 @@ class OrderProduct
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idzamowienieprodukt;
+    private $idorderprodukt;
 
 
     /**
@@ -198,13 +198,13 @@ class OrderProduct
     }
 
     /**
-     * Get idzamowienieprodukt
+     * Get idorderprodukt
      *
      * @return int
      */
     public function getIdorderprodukt()
     {
-        return $this->idzamowienieprodukt;
+        return $this->idorderprodukt;
     }
 
     /**
@@ -236,10 +236,10 @@ class OrderProduct
      * @param \AppBundle\Entity\Order $idorder
      * @return OrderProduct
      */
-    public function setIdorder(\AppBundle\Entity\Order $zamowienie = null)
+    public function setIdorder(\AppBundle\Entity\Order $order = null)
     {
-        $this->idorder = $zamowienie;
-        $zamowienie->addZamowienieProdukt($this);
+        $this->idorder = $order;
+        $order->addOrderProduct($this);
 
         return $this;
     }

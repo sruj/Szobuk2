@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
     <body>
-        <p>Złożono nowe zamówienie o godzinie: {{ zamowienie.orderdate|date('Y-m-d H:i:s') }} <br>
+        <p>Złożono nowe zamówienie o godzinie: {{ order.orderdate|date('Y-m-d H:i:s') }} <br>
         na kwotę: {{ suma|number_format(2) }} zł <br>
-        przez {{ zamowienie.idclient.name }} {{ zamowienie.idclient.surname }}. <br>
-        Id zamówienia to: {{ zamowienie.idorder }} . <br>
+        przez {{ order.idclient.name }} {{ order.idclient.surname }}. <br>
+        Id zamówienia to: {{ order.idorder }} . <br>
         Idź do <a href="{{ path('panel_sort') }}">panelu zamówień</a></p>
     </body>
 </html>

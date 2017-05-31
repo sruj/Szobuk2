@@ -35,6 +35,6 @@ class OrderType extends AbstractType
      */
     public function getName()
     {
-        return 'zamowienie';
+        return 'order';
     }
 }

@@ -9,15 +9,15 @@ use DateTime;
 /**
  * Order
  *
- * @ORM\Table(name="zamowienie", indexes={@ORM\Index(name="idClient_idx", columns={"idClient"}), @ORM\Index(name="idStatus_idx", columns={"idStatus"})})
+ * @ORM\Table(name="order", indexes={@ORM\Index(name="idClient_idx", columns={"idClient"}), @ORM\Index(name="idStatus_idx", columns={"idStatus"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\OrderRepository")
-*/
+ */
 class Order
 {
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dataZlozenia", type="datetime", nullable=true)
+     * @ORM\Column(name="orderDate", type="datetime", nullable=true)
      */
     private $orderdate;
 
@@ -33,14 +33,12 @@ class Order
     /**
      * @var \AppBundle\Entity\Client
      *
-     * @ORM\ManyToOne(targetEntity="Client.php", inversedBy="orders")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Client", inversedBy="orders")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idClient", referencedColumnName="idClient")
      * })
      */
     private $idclient;
-
-
 
     /**
      * @var \AppBundle\Entity\Status
@@ -52,55 +50,43 @@ class Order
      */
     private $idstatus;
 
-    
-    
-    
     /**
-    * @ORM\OneToMany(targetEntity="Invoice.php", mappedBy="idorder")
-    */
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Invoice", mappedBy="idorder")
+     */
     protected $invoices;
 
-
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Shipment", mappedBy="idorder")
+     */
+    protected $shipments;
 
     /**
-    * @ORM\OneToMany(targetEntity="Shipment.php", mappedBy="idorder")
-    */
-    protected $przesylki;
-
-
-
-    /**
-    * @ORM\OneToMany(targetEntity="ZamowienieProdukt", mappedBy="idorder")
-    */
+     * @ORM\OneToMany(targetEntity="OrderProduct", mappedBy="idorder")
+     */
     protected $orderProducts;
-
-
 
     /**
      * Set orderdatecurrent
      * Ustawienie aktualnej daty-godziny.
      * wystarczy na rzecz instancji zamówienia odpalić te funkcję
      * i w bazie danych  dodana bedzie aktualna data zakupu
-     *  $zamowienie = new Order();
-     *  $zamowienie->setDatazlozeniacurrent();
-     * 
+     *  $order = new Order();
+     *  $order->setOrderdatecurrent();
      */
-    public function setDatazlozeniacurrent()
+    public function setOrderdatecurrent()
     {
-
         $this->orderdate = new DateTime();
 
         return $this;
     }
-    
-    
+
     /**
      * Set orderdate
      *
      * @param \DateTime $orderdate
      * @return Order
      */
-    public function setDatazlozenia($orderdate)
+    public function setOrderdate($orderdate)
     {
         $this->orderdate = $orderdate;
 
@@ -110,9 +96,9 @@ class Order
     /**
      * Get orderdate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getDatazlozenia()
+    public function getOrderdate()
     {
         return $this->orderdate;
     }
@@ -143,7 +129,7 @@ class Order
     /**
      * Get idstatus
      *
-     * @return \AppBundle\Entity\Status 
+     * @return \AppBundle\Entity\Status
      */
     public function getIdstatus()
     {
@@ -173,7 +159,8 @@ class Order
         return $this->idclient;
     }
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->invoices = new ArrayCollection();
         $this->orderProducts = new ArrayCollection();
     }
@@ -204,7 +191,7 @@ class Order
     /**
      * Get invoices
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getInvoices()
     {
@@ -212,36 +199,36 @@ class Order
     }
 
     /**
-     * Add przesylki
+     * Add shipments
      *
-     * @param \AppBundle\Entity\Shipment $przesylki
+     * @param \AppBundle\Entity\Shipment $shipments
      * @return Order
      */
-    public function addPrzesylki(\AppBundle\Entity\Shipment $przesylki)
+    public function addShipments(\AppBundle\Entity\Shipment $shipments)
     {
-        $this->przesylki[] = $przesylki;
+        $this->shipments[] = $shipments;
 
         return $this;
     }
 
     /**
-     * Remove przesylki
+     * Remove shipments
      *
-     * @param \AppBundle\Entity\Shipment $przesylki
+     * @param \AppBundle\Entity\Shipment $shipments
      */
-    public function removePrzesylki(\AppBundle\Entity\Shipment $przesylki)
+    public function removeShipments(\AppBundle\Entity\Shipment $shipments)
     {
-        $this->przesylki->removeElement($przesylki);
+        $this->shipments->removeElement($shipments);
     }
 
     /**
-     * Get przesylki
+     * Get shipments
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPrzesylki()
+    public function getShipments()
     {
-        return $this->przesylki;
+        return $this->shipments;
     }
 
     /**
@@ -250,10 +237,10 @@ class Order
      * @param \AppBundle\Entity\OrderProduct $orderProducts
      * @return Order
      */
-    public function addZamowienieProdukt(\AppBundle\Entity\OrderProduct $zamowienieProdukt)
+    public function addOrderProduct(\AppBundle\Entity\OrderProduct $orderProduct)
     {
-        if(!$this->orderProducts->contains($zamowienieProdukt)) {
-            $this->orderProducts[] = $zamowienieProdukt;
+        if (!$this->orderProducts->contains($orderProduct)) {
+            $this->orderProducts[] = $orderProduct;
         }
 
         return $this;
@@ -264,15 +251,15 @@ class Order
      *
      * @param \AppBundle\Entity\OrderProduct $orderProducts
      */
-    public function removeOrderProducts(\AppBundle\Entity\OrderProduct $zamowienieProdukt)
+    public function removeOrderProducts(\AppBundle\Entity\OrderProduct $orderProduct)
     {
-        $this->orderProducts->removeElement($zamowienieProdukt);
+        $this->orderProducts->removeElement($orderProduct);
     }
 
     /**
      * Get orderProducts
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getOrderProducts()
     {

@@ -24,21 +24,21 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for zamowienie in orders %}
+                {% for order in orders %}
                     <tr>
-                        <td>{{ zamowienie.idorder }}</td>
-                        <td>{{ zamowienie.orderdate|date('Y-m-d H:i:s') }}</td>
+                        <td>{{ order.idorder }}</td>
+                        <td>{{ order.orderdate|date('Y-m-d H:i:s') }}</td>
                         {% set quantity = 0 %}
                         {% set kwota = 0 %}
-                        {% for zamowienieProdukt in zamowienie.OrderProducts %}
-                            {% set quantity = quantity + zamowienieProdukt.quantity %}
-                            {% set kwota = kwota + zamowienieProdukt.quantity * zamowienieProdukt.cenaproduktu %}
+                        {% for orderProduct in order.OrderProducts %}
+                            {% set quantity = quantity + orderProduct.quantity %}
+                            {% set kwota = kwota + orderProduct.quantity * orderProduct.cenaproduktu %}
                         {% endfor %}
                         <td>{{ quantity }}</td>
                         <td>{{ kwota|number_format(2) }}</td>
-                        <td>{{ zamowienie.idstatus.status }}</td>
+                        <td>{{ order.idstatus.status }}</td>
                         <td>
-                            <a href="{{ path('order_panel',{ 'orderid': zamowienie.idorder, 'userid': app.user.id }) }}">więcej</a>
+                            <a href="{{ path('order_panel',{ 'orderid': order.idorder, 'userid': app.user.id }) }}">więcej</a>
                         </td>
                     </tr>
                 {% endfor %}
