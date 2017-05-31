@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Merchant
  *
@@ -12,6 +13,11 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Merchant
 {
+    public function __construct()
+    {
+        $this->invoices = new ArrayCollection();
+    }
+
     /**
      * @var string
      *
@@ -78,8 +84,8 @@ class Merchant
     private $idmerchant;
 
     /**
-    * @ORM\OneToMany(targetEntity="Faktura", mappedBy="idmerchant")
-    */
+     * @ORM\OneToMany(targetEntity="Invoice", mappedBy="idmerchant")
+     */
     protected $invoices;
 
     /**
@@ -98,7 +104,7 @@ class Merchant
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getname()
     {
@@ -121,7 +127,7 @@ class Merchant
     /**
      * Get street
      *
-     * @return string 
+     * @return string
      */
     public function getStreet()
     {
@@ -144,7 +150,7 @@ class Merchant
     /**
      * Get housenumber
      *
-     * @return string 
+     * @return string
      */
     public function getHousenumber()
     {
@@ -167,7 +173,7 @@ class Merchant
     /**
      * Get apartmentnumber
      *
-     * @return string 
+     * @return string
      */
     public function getApartmentNumber()
     {
@@ -190,7 +196,7 @@ class Merchant
     /**
      * Get postalcode
      *
-     * @return string 
+     * @return string
      */
     public function getPostalcode()
     {
@@ -213,7 +219,7 @@ class Merchant
     /**
      * Get city
      *
-     * @return string 
+     * @return string
      */
     public function getCity()
     {
@@ -236,7 +242,7 @@ class Merchant
     /**
      * Get nip
      *
-     * @return string 
+     * @return string
      */
     public function getNip()
     {
@@ -259,7 +265,7 @@ class Merchant
     /**
      * Get phonenumber
      *
-     * @return string 
+     * @return string
      */
     public function getPhonenumber()
     {
@@ -275,17 +281,14 @@ class Merchant
     {
         return $this->idmerchant;
     }
-    
-    public function __construct() {
-        $this->invoices = new ArrayCollection();
-    }    
-    
+
     /**
      * Get invoices
      *
      * @return Doctrine\Common\Collections\Collection
      */
-    public function getFaktury() {
+    public function getInvoices()
+    {
         return $this->invoices;
     }
 
@@ -295,7 +298,7 @@ class Merchant
      * @param \AppBundle\Entity\Invoice $invoices
      * @return Merchant
      */
-    public function addFaktury(\AppBundle\Entity\Invoice $invoices)
+    public function addInvoices(\AppBundle\Entity\Invoice $invoices)
     {
         $this->invoices[] = $invoices;
 
@@ -307,7 +310,7 @@ class Merchant
      *
      * @param \AppBundle\Entity\Invoice $invoices
      */
-    public function removeFaktury(\AppBundle\Entity\Invoice $invoices)
+    public function removeInvoices(\AppBundle\Entity\Invoice $invoices)
     {
         $this->invoices->removeElement($invoices);
     }

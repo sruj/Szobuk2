@@ -184,7 +184,7 @@ class Order
      * @param \AppBundle\Entity\Invoice $invoices
      * @return Order
      */
-    public function addFaktury(\AppBundle\Entity\Invoice $invoices)
+    public function addInvoices(\AppBundle\Entity\Invoice $invoices)
     {
         $this->invoices[] = $invoices;
 
@@ -196,7 +196,7 @@ class Order
      *
      * @param \AppBundle\Entity\Invoice $invoices
      */
-    public function removeFaktury(\AppBundle\Entity\Invoice $invoices)
+    public function removeInvoices(\AppBundle\Entity\Invoice $invoices)
     {
         $this->invoices->removeElement($invoices);
     }
@@ -206,7 +206,7 @@ class Order
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getFaktury()
+    public function getInvoices()
     {
         return $this->invoices;
     }
