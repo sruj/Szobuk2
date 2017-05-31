@@ -4,10 +4,11 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Shipment
  *
- * @ORM\Table(name="przesylka", indexes={@ORM\Index(name="idOrder_idx", columns={"idOrder"})})
+ * @ORM\Table(name="shipment", indexes={@ORM\Index(name="idOrder_idx", columns={"idOrder"})})
  * @ORM\Entity
  */
 class Shipment
@@ -15,9 +16,9 @@ class Shipment
     /**
      * @var string
      *
-     * @ORM\Column(name="koszt", type="decimal", precision=10, scale=2, nullable=true)
+     * @ORM\Column(name="cost", type="decimal", precision=10, scale=2, nullable=true)
      */
-    private $koszt;
+    private $cost;
 
     /**
      * @var string
@@ -36,59 +37,58 @@ class Shipment
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dataWyslania", type="date", nullable=true)
+     * @ORM\Column(name="shipmentDate", type="date", nullable=true)
      */
-    private $datawyslania;
+    private $shipmentdate;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="telefonDostawcy", type="string", length=45, nullable=true)
+     * @ORM\Column(name="delivererPhone", type="string", length=45, nullable=true)
      */
-    private $telefondostawcy;
+    private $delivererphone;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="idPrzesylka", type="integer")
+     * @ORM\Column(name="idShipment", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idprzesylka;
+    private $idshipment;
 
 
     /**
      * @var \AppBundle\Entity\Order
      *
-     * @ORM\ManyToOne(targetEntity="Order.php", inversedBy="shipments")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Order", inversedBy="shipments")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idOrder", referencedColumnName="idOrder")
      * })
      */
     private $idorder;
 
-
     /**
-     * Set koszt
+     * Set cost
      *
-     * @param string $koszt
+     * @param string $cost
      * @return Shipment
      */
-    public function setKoszt($koszt)
+    public function setCost($cost)
     {
-        $this->koszt = $koszt;
+        $this->cost = $cost;
 
         return $this;
     }
 
     /**
-     * Get koszt
+     * Get cost
      *
-     * @return string 
+     * @return string
      */
-    public function getKoszt()
+    public function getCost()
     {
-        return $this->koszt;
+        return $this->cost;
     }
 
     /**
@@ -107,7 +107,7 @@ class Shipment
     /**
      * Get shipmentnumber
      *
-     * @return string 
+     * @return string
      */
     public function getShipmentnumber()
     {
@@ -130,7 +130,7 @@ class Shipment
     /**
      * Get invoicenumber
      *
-     * @return string 
+     * @return string
      */
     public function getInvoicenumber()
     {
@@ -138,59 +138,59 @@ class Shipment
     }
 
     /**
-     * Set datawyslania
+     * Set shipmentdate
      *
-     * @param \DateTime $datawyslania
+     * @param \DateTime $shipmentdate
      * @return Shipment
      */
-    public function setDatawyslania($datawyslania)
+    public function setShipmentdate($shipmentdate)
     {
-        $this->datawyslania = $datawyslania;
+        $this->shipmentdate = $shipmentdate;
 
         return $this;
     }
 
     /**
-     * Get datawyslania
+     * Get shipmentdate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getDatawyslania()
+    public function getShipmentdate()
     {
-        return $this->datawyslania;
+        return $this->shipmentdate;
     }
 
     /**
-     * Set telefondostawcy
+     * Set delivererphone
      *
-     * @param string $telefondostawcy
+     * @param string $delivererphone
      * @return Shipment
      */
-    public function setTelefondostawcy($telefondostawcy)
+    public function setDelivererphone($delivererphone)
     {
-        $this->telefondostawcy = $telefondostawcy;
+        $this->delivererphone = $delivererphone;
 
         return $this;
     }
 
     /**
-     * Get telefondostawcy
+     * Get delivererphone
      *
-     * @return string 
+     * @return string
      */
-    public function getTelefondostawcy()
+    public function getDelivererphone()
     {
-        return $this->telefondostawcy;
+        return $this->delivererphone;
     }
 
     /**
-     * Get idprzesylka
+     * Get idshipment
      *
      * @return int
      */
-    public function getIdprzesylka()
+    public function getIdshipment()
     {
-        return $this->idprzesylka;
+        return $this->idshipment;
     }
 
     /**
