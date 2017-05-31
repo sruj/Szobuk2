@@ -17,7 +17,7 @@ class CreateOrderFormHandler
     private $orderManager;
 
     /**
-     * CreateZamowienieFormHandler constructor.
+     * CreateOrderFormHandler constructor.
      */
     public function __construct(OrderManager $orderManager)
     {

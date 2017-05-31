@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Status
  *
@@ -29,10 +30,9 @@ class Status
     private $idstatus;
 
     /**
-    * @ORM\OneToMany(targetEntity="Zamowienie", mappedBy="idstatus")
+    * @ORM\OneToMany(targetEntity="Order", mappedBy="idstatus")
     */
     protected $orders;
-
 
     /**
      * Set status
@@ -56,7 +56,6 @@ class Status
     {
         return $this->status;
     }
-
 
     /**
      * Get idstatus

@@ -30,7 +30,7 @@ class OrderManager
     private $dispatcher;
 
     /**
-     * ZamowienieManager constructor.
+     * OrderManager constructor.
      */
     public function __construct(EntityManager $em,TokenStorage $storage,AuthorizationCheckerInterface $checker,Session $session,EventDispatcherInterface $dispatcher)
     {

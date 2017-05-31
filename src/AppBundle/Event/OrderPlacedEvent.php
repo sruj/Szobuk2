@@ -23,7 +23,7 @@ class OrderPlacedEvent extends Event
         $this->order = $order;
     }
 
-    public function getZamowienie()
+    public function getOrder()
     {
         return $this->order;
     }
