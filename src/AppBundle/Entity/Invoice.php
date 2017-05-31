@@ -32,7 +32,7 @@ class Invoice
     /**
      * @var \AppBundle\Entity\Merchant
      *
-     * @ORM\ManyToOne(targetEntity="Merchant.php", inversedBy="invoices")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Merchant", inversedBy="invoices")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idMerchant", referencedColumnName="idMerchant")
      * })

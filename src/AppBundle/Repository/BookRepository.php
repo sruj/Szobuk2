@@ -59,9 +59,9 @@ class BookRepository extends EntityRepository implements PaginatorAwareInterface
         return $this->_em->createQuery('
             SELECT k
             FROM AppBundle:Book k
-            WHERE k.cena < :cena AND k.quantity>0
+            WHERE k.price < :price AND k.quantity>0
             ORDER BY k.title ASC'
-        )->setParameter('cena', '50');
+        )->setParameter('price', '50');
     }
 
     /**

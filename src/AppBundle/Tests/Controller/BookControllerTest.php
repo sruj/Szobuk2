@@ -78,7 +78,7 @@ class BookControllerTest extends WebTestCase
             'appbundle_ksiazka[author]' => 'AutorTF',
             'appbundle_ksiazka[description]' => 'opisTF',
             'appbundle_ksiazka[isbn]' => '978-1-56619-909-4',
-            'appbundle_ksiazka[cena]' => '38.00',
+            'appbundle_ksiazka[price]' => '38.00',
             'appbundle_ksiazka[picture]' => 'book_nr_101.jpg',
             'appbundle_ksiazka[print]' => 'Brown',
             'appbundle_ksiazka[publishyear]' => '1984',

@@ -47,14 +47,14 @@
                             {{ ksiazka.author }}
                         </td>
                         <td class="cena">
-                            {{ ksiazka.cena }}
+                            {{ ksiazka.price }}
                         </td>
                         <td>
                             <input type="number" class="inputISBN inputQuantity" min="1" max="10" size="2" name="{{ ksiazka.isbn }}" 
                                    value="{{ ksiazka.quantity }}" onchange="aktualizacjaKoszyka()"><br>
                         </td>
                         <td class="razem" align="right">
-                            {{ (ksiazka.quantity*ksiazka.cena)|number_format(2)}}
+                            {{ (ksiazka.quantity*ksiazka.price)|number_format(2)}}
                         </td>
                         <td>
                             <a class="tableUsunButton" href="{{ path('cart_menu',{'deleteisbn':ksiazka.isbn}) }} ">

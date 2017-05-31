@@ -100,7 +100,7 @@ class Cart
             $books[$i]['isbn'] = $book->getIsbn();
             $books[$i]['tytul'] = $book->getTitle();
             $books[$i]['author'] = $book->getAuthor();
-            $books[$i]['cena'] = $book->getPrice();
+            $books[$i]['price'] = $book->getPrice();
             $books[$i]['quantity'] = $quantity;
             $i++;
         }

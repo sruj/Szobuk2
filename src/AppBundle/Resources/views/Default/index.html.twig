@@ -51,7 +51,7 @@
                                 <div class="card-autor">{{ entity.author }}</div>
                                 <div class="card-tytul">{{ entity.title }}</div>
                             </div>
-                            <div class="top-right">{{ entity.cena }}<span> ZŁ</span></div>
+                            <div class="top-right">{{ entity.price }}<span> ZŁ</span></div>
                             <div class="top-left">
                                 <div class="card-AddToBasket">
                                     <a href="{{ path('add_to_cart', {'isbn': entity.isbn }) }}"

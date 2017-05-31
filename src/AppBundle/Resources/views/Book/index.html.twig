@@ -37,7 +37,7 @@
                     <tr>
                         <th class="thLeftBorderRadius">{{ knp_pagination_sortable(books, 'Tytuł', 'a.title') }}</th>
                         <th>{{ knp_pagination_sortable(books, 'Autor', 'a.author') }}</th>
-                        <th>{{ knp_pagination_sortable(books, 'Cena', 'a.cena') }}</th>
+                        <th>{{ knp_pagination_sortable(books, 'Cena', 'a.price') }}</th>
                         <th>{{ knp_pagination_sortable(books, 'Wydawnictwo', 'a.print') }}</th>
                         <th>{{ knp_pagination_sortable(books, 'Rok Wydania', 'a.publishyear') }}</th>
                             {#                        {% endif %}#}
@@ -59,7 +59,7 @@
                             <tr>
                                 <td><a href="{{ path('book_show', { 'id': entity.isbn }) }}">{{ entity.title }}</a></td>
                                 <td><a href="{{ path('show_books_by', { 'findby': 'author','what': entity.author }) }}">{{ entity.author }}</a></td>
-                                <td>{{ entity.cena }}</td>
+                                <td>{{ entity.price }}</td>
                                 <td><a href="{{ path('show_books_by', { 'findby': 'print','what': entity.print }) }}">{{ entity.print }}</a></td>
                                 <td><a href="{{ path('show_books_by', { 'findby': 'publishyear','what': entity.publishyear }) }}">{{ entity.publishyear }}</a></td>
                                     {% for formul in form.books %}
@@ -77,7 +77,7 @@
                             <tr>
                                 <td><a href="{{ path('book_show', { 'id': entity.isbn }) }}">{{ entity.title }}</a></td>
                                 <td><a href="{{ path('show_books_by', { 'findby': 'author','what': entity.author }) }}">{{ entity.author }}</a></td>
-                                <td>{{ entity.cena }}</td>
+                                <td>{{ entity.price }}</td>
                                 <td><a href="{{ path('show_books_by', { 'findby': 'print','what': entity.print }) }}">{{ entity.print }}</a></td>
                                 <td><a href="{{ path('show_books_by', { 'findby': 'publishyear','what': entity.publishyear }) }}">{{ entity.publishyear }}</a></td>
                                 <td><a href="{{ path('add_to_cart', {'isbn': entity.isbn }) }}">do koszyka</a></td>

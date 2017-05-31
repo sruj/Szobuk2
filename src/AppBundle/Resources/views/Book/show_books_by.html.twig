@@ -37,7 +37,7 @@
                            {% else %}#}
                         <th class="thLeftBorderRadius">{{ knp_pagination_sortable(pagination, 'Tytuł', 'a.title') }}</th>
                         <th>{{ knp_pagination_sortable(pagination, 'Autor', 'a.author') }}</th>
-                        <th>{{ knp_pagination_sortable(pagination, 'Cena', 'a.cena') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Cena', 'a.price') }}</th>
                         <th>{{ knp_pagination_sortable(pagination, 'Wydawnictwo', 'a.print') }}</th>
                         <th>{{ knp_pagination_sortable(pagination, 'Rok Wydania', 'a.publishyear') }}</th>
                         {#                        {% endif %}#}
@@ -60,7 +60,7 @@
                             <td>
                                 <a href="{{ path('show_books_by', { 'findby': 'author','what': entity.author }) }}">{{ entity.author }}</a>
                             </td>
-                            <td>{{ entity.cena }}</td>
+                            <td>{{ entity.price }}</td>
                             <td>
                                 <a href="{{ path('show_books_by', { 'findby': 'print','what': entity.print }) }}">{{ entity.print }}</a>
                             </td>

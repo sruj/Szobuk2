@@ -22,7 +22,7 @@ class BookType extends AbstractType {
                         ('placeholder' => 'Autor',), 'label' => 'Autor',))
                 ->add('description', null, array('attr' => array
                         ('placeholder' => 'Opis',), 'label' => 'Opis',))
-                ->add('cena', null, array('attr' => array
+                ->add('price', null, array('attr' => array
                         ('placeholder' => 'Cena',), 'label' => 'Cena',))
                 ->add('picture', null, array('attr' => array
                         ('placeholder' => 'Obrazek',), 'label' => 'Obrazek',))

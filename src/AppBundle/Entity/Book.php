@@ -73,7 +73,7 @@ class Book
     /**
      * @var string
      *
-     * @ORM\Column(name="cena", type="decimal", precision=10, scale=2, nullable=true)
+     * @ORM\Column(name="price", type="decimal", precision=10, scale=2, nullable=true)
      */
     private $price;
 
@@ -226,7 +226,7 @@ class Book
     }
 
     /**
-     * Set cena
+     * Set price
      *
      * @param decimal $price
      * @return Book
@@ -239,7 +239,7 @@ class Book
     }
 
     /**
-     * Get cena
+     * Get price
      *
      * @return string
      */

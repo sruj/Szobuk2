@@ -41,7 +41,7 @@ class DefaultController extends Controller
                     $books[$i]['isbn'] = $ksiazka->getIsbn();
                     $books[$i]['author'] = $ksiazka->getAuthor();
                     $books[$i]['title'] = $ksiazka->getTitle();
-                    $books[$i]['cena'] = $ksiazka->getPrice();
+                    $books[$i]['price'] = $ksiazka->getPrice();
                     $books[$i]['picture'] = $ksiazka->getPicture();
                     $i++;
                 }

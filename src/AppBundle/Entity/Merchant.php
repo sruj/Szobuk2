@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Merchant
  *
- * @ORM\Table(name="dane_sprzedawcy")
+ * @ORM\Table(name="merchant")
  * @ORM\Entity
  */
 class Merchant
