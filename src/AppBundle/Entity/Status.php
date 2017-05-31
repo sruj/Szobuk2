@@ -16,7 +16,7 @@ class Status
     /**
      * @var string
      *
-     * @ORM\Column(name="Status", type="string", length=45, nullable=true)
+     * @ORM\Column(name="status", type="string", length=45, nullable=true)
      */
     private $status;
 
