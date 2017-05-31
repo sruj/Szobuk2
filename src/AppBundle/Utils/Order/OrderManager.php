@@ -69,7 +69,7 @@ class OrderManager
     private function prepareOrderDetailsToPersistInDatabase($client)
     {
         if ($this->checker->isGranted('IS_AUTHENTICATED_FULLY')) {
-            $client->setIdlogowanie($this->getUser());
+            $client->setIdlogin($this->getUser());
         }
 
         $zamowienie = new Order();

@@ -419,7 +419,7 @@ class Client
      * @param \UserBundle\Entity\User $id
      * @return Client
      */
-    public function setIdlogowanie(\UserBundle\Entity\User $id = null)
+    public function setIdlogin(\UserBundle\Entity\User $id = null)
     {
         $this->idlogin = $id;
 
@@ -431,7 +431,7 @@ class Client
      *
      * @return \UserBundle\Entity\User
      */
-    public function getIdlogowanie()
+    public function getIdlogin()
     {
         return $this->idlogin;
     }

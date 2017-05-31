@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Employee - nieużywane
  *
  * @ORM\Table(name="pracownik", indexes={@ORM\Index(name="idLogin_idx", columns={"idLogin"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="EmployeeRepository")
  */
 class Employee
 {
@@ -85,18 +85,18 @@ class Employee
     /**
      * @var string
      *
-     * @ORM\Column(name="stanowisko", type="string", length=45, nullable=false)
+     * @ORM\Column(name="position", type="string", length=45, nullable=false)
      */
-    private $stanowisko;
+    private $position;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="idPracownik", type="integer")
+     * @ORM\Column(name="idEmployee", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idpracownik;
+    private $idemployee;
 
     /**
      * @var \UserBundle\Entity\User
@@ -107,7 +107,6 @@ class Employee
      * })
      */
     private $idlogin;
-
 
 
     /**
@@ -126,7 +125,7 @@ class Employee
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -149,7 +148,7 @@ class Employee
     /**
      * Get surname
      *
-     * @return string 
+     * @return string
      */
     public function getSurname()
     {
@@ -172,7 +171,7 @@ class Employee
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -195,7 +194,7 @@ class Employee
     /**
      * Get street
      *
-     * @return string 
+     * @return string
      */
     public function getStreet()
     {
@@ -218,7 +217,7 @@ class Employee
     /**
      * Get housenumber
      *
-     * @return string 
+     * @return string
      */
     public function getHousenumber()
     {
@@ -241,7 +240,7 @@ class Employee
     /**
      * Get apartmentnumber
      *
-     * @return string 
+     * @return string
      */
     public function getApartmentNumber()
     {
@@ -264,7 +263,7 @@ class Employee
     /**
      * Get postalcode
      *
-     * @return string 
+     * @return string
      */
     public function getPostalcode()
     {
@@ -287,7 +286,7 @@ class Employee
     /**
      * Get city
      *
-     * @return string 
+     * @return string
      */
     public function getCity()
     {
@@ -310,7 +309,7 @@ class Employee
     /**
      * Get nip
      *
-     * @return string 
+     * @return string
      */
     public function getNip()
     {
@@ -333,7 +332,7 @@ class Employee
     /**
      * Get phonenumber
      *
-     * @return string 
+     * @return string
      */
     public function getPhonenumber()
     {
@@ -341,45 +340,45 @@ class Employee
     }
 
     /**
-     * Set stanowisko
+     * Set position
      *
-     * @param string $stanowisko
+     * @param string $position
      * @return Employee
      */
-    public function setStanowisko($stanowisko)
+    public function setPosition($position)
     {
-        $this->stanowisko = $stanowisko;
+        $this->position = $position;
 
         return $this;
     }
 
     /**
-     * Get stanowisko
+     * Get position
      *
-     * @return string 
+     * @return string
      */
-    public function getStanowisko()
+    public function getPosition()
     {
-        return $this->stanowisko;
+        return $this->position;
     }
 
     /**
-     * Get idpracownik
+     * Get idemployee
      *
      * @return int
      */
-    public function getIdpracownik()
+    public function getIdemployee()
     {
-        return $this->idpracownik;
+        return $this->idemployee;
     }
 
     /**
      * Set idlogin
      *
      * @param \UserBundle\Entity\User $id
-     * @return Client
+     * @return Employee
      */
-    public function setIdlogowanie(\UserBundle\Entity\User $id = null)
+    public function setIdlogin(\UserBundle\Entity\User $id = null)
     {
         $this->idlogin = $id;
 
@@ -391,13 +390,14 @@ class Employee
      *
      * @return \UserBundle\Entity\User
      */
-    public function getIdlogowanie()
+    public function getIdlogin()
     {
         return $this->idlogin;
     }
-    
-    public function __construct() {
+
+    public function __construct()
+    {
         $this->orders = new ArrayCollection();
-    }  
+    }
 
 }
