@@ -126,13 +126,13 @@ class CartTest extends \PHPUnit_Framework_TestCase
         ];
 
         $ks = $this->getMockBuilder(Book::class)
-            ->setMethods(['getIsbn','getTytul','getAuthor','getCena'])
+            ->setMethods(['getIsbn','getTitle','getAuthor','getCena'])
             ->getMock();
         $ks->expects($this->any())
             ->method('getIsbn')
             ->will($this->onConsecutiveCalls($a[0]['isbn'],$a[1]['isbn']));
         $ks->expects($this->any())
-            ->method('getTytul')
+            ->method('getTitle')
             ->will($this->onConsecutiveCalls($a[0]['tytul'],$a[1]['tytul']));
         $ks->expects($this->any())
             ->method('getAuthor')

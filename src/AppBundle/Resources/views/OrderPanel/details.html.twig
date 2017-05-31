@@ -40,12 +40,12 @@
                         <li><span class="greyLeft">autor: </span><span
                                     class="potwierdzenieRight">{{ product.author }}</span></li>
                         <li><span class="greyLeft">cena: </span><span
-                                    class="potwierdzenieRight">{{ product.cenaProduktu }}</span></li>
+                                    class="potwierdzenieRight">{{ product.productPrice }}</span></li>
                         <li><span class="greyLeft">ilość: </span><span
                                     class="potwierdzenieRight">{{ product.quantity }}</span></li>
                     </ul>
                     {% set quantity = quantity + product.quantity %}
-                    {% set kwota = kwota + product.quantity * product.cenaproduktu %}
+                    {% set kwota = kwota + product.quantity * product.productprice %}
 
                 {% endfor %}
                 <h4 class="greyHeader">Kwota</h4>

@@ -22,9 +22,9 @@ class OrderProduct
     /**
      * @var string
      *
-     * @ORM\Column(name="cenaProduktu", type="decimal", precision=10, scale=2, nullable=true)
+     * @ORM\Column(name="productPrice", type="decimal", precision=10, scale=2, nullable=true)
      */
-    private $cenaproduktu;
+    private $productprice;
 
     /**
      * @var string
@@ -50,37 +50,31 @@ class OrderProduct
     /**
      * @var integer
      *
-     * @ORM\Column(name="idOrderProdukt", type="integer")
+     * @ORM\Column(name="idOrderProduct", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idorderprodukt;
-
+    private $idorderproduct;
 
     /**
      * @var \AppBundle\Entity\Book
      *
-     * @ORM\ManyToOne(targetEntity="Book.php", inversedBy="orderProducts")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Book", inversedBy="orderProducts")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="isbn", referencedColumnName="isbn")
      * })
      */
     private $isbn;
 
-
-
-
     /**
      * @var \AppBundle\Entity\Order
      *
-     * @ORM\ManyToOne(targetEntity="Order.php", inversedBy="orderProducts")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Order", inversedBy="orderProducts")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idOrder", referencedColumnName="idOrder")
      * })
      */
     private $idorder;
-
-
 
     /**
      * Set quantity
@@ -106,26 +100,26 @@ class OrderProduct
     }
 
     /**
-     * Set cenaproduktu
+     * Set productprice
      *
-     * @param string $cenaproduktu
+     * @param string $productprice
      * @return OrderProduct
      */
-    public function setCenaproduktu($cenaproduktu)
+    public function setProductprice($productprice)
     {
-        $this->cenaproduktu = $cenaproduktu;
+        $this->productprice = $productprice;
 
         return $this;
     }
 
     /**
-     * Get cenaproduktu
+     * Get productprice
      *
      * @return string 
      */
-    public function getCenaproduktu()
+    public function getProductprice()
     {
-        return $this->cenaproduktu;
+        return $this->productprice;
     }
 
     /**
@@ -157,7 +151,7 @@ class OrderProduct
      * @param string $title
      * @return OrderProduct
      */
-    public function setTytul($title)
+    public function setTitle($title)
     {
         $this->title = $title;
 
@@ -169,7 +163,7 @@ class OrderProduct
      *
      * @return string 
      */
-    public function getTytul()
+    public function getTitle()
     {
         return $this->title;
     }
@@ -198,13 +192,13 @@ class OrderProduct
     }
 
     /**
-     * Get idorderprodukt
+     * Get idorderproduct
      *
      * @return int
      */
     public function getIdorderprodukt()
     {
-        return $this->idorderprodukt;
+        return $this->idorderproduct;
     }
 
     /**

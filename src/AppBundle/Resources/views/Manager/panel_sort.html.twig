@@ -57,7 +57,7 @@
                         {% for orderProduct in zamowieniaProdukty %}
                             {% if orderProduct.idorder.idorder ==  formul.vars.value.idorder %}
                                 {% set quantity = quantity + orderProduct.quantity %}
-                                {% set kwota = kwota + orderProduct.quantity * orderProduct.cenaproduktu %}
+                                {% set kwota = kwota + orderProduct.quantity * orderProduct.productprice %}
                             {% endif %}
                         {% endfor %}
                         <td>{{ quantity }}</td>

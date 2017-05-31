@@ -97,9 +97,9 @@ class OrderManager
             $zm = new OrderProduct();
             $zm->setIdorder($order);
             $zm->setIsbn($ksiazka);
-            $zm->setTytul($ksiazka->getTitle());
+            $zm->setTitle($ksiazka->getTitle());
             $zm->setAuthor($ksiazka->getAuthor());
-            $zm->setCenaproduktu($ksiazka->getPrice());
+            $zm->setProductprice($ksiazka->getPrice());
             $zm->setPublishYear($ksiazka->getPublishYear());
             $zm->setQuantity($quantity);
             $this->em->persist($zm);

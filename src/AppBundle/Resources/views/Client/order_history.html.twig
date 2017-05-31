@@ -32,7 +32,7 @@
                         {% set kwota = 0 %}
                         {% for orderProduct in order.OrderProducts %}
                             {% set quantity = quantity + orderProduct.quantity %}
-                            {% set kwota = kwota + orderProduct.quantity * orderProduct.cenaproduktu %}
+                            {% set kwota = kwota + orderProduct.quantity * orderProduct.productprice %}
                         {% endfor %}
                         <td>{{ quantity }}</td>
                         <td>{{ kwota|number_format(2) }}</td>
