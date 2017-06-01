@@ -30,8 +30,8 @@ class Status
     private $idstatus;
 
     /**
-    * @ORM\OneToMany(targetEntity="Order", mappedBy="idstatus")
-    */
+     * @ORM\OneToMany(targetEntity="Order", mappedBy="idstatus")
+     */
     protected $orders;
 
     /**
@@ -50,7 +50,7 @@ class Status
     /**
      * Get status
      *
-     * @return string 
+     * @return string
      */
     public function getStatus()
     {
@@ -67,9 +67,10 @@ class Status
         return $this->idstatus;
     }
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->orders = new ArrayCollection();
-    } 
+    }
 
     /**
      * Add orders
@@ -97,13 +98,13 @@ class Status
     /**
      * Get orders
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getOrders()
     {
         return $this->orders;
     }
-    
+
     public function __toString()
     {
         return $this->getStatus();

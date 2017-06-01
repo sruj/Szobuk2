@@ -418,24 +418,3 @@ class Book
         return $this->orderProducts;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

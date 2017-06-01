@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * OrderProduct
  *
@@ -115,7 +116,7 @@ class OrderProduct
     /**
      * Get productprice
      *
-     * @return string 
+     * @return string
      */
     public function getProductprice()
     {
@@ -138,7 +139,7 @@ class OrderProduct
     /**
      * Get publishyear
      *
-     * @return string 
+     * @return string
      */
     public function getPublishYear()
     {
@@ -161,7 +162,7 @@ class OrderProduct
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -184,7 +185,7 @@ class OrderProduct
     /**
      * Get author
      *
-     * @return string 
+     * @return string
      */
     public function getAuthor()
     {
