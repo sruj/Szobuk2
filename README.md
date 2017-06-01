@@ -3,12 +3,9 @@ Księgarnia/Sklep - Symfony2.8
 http://test19770.futurehost.pl/
 (domena testowa do 01-06-2017, login/hasło administratora: wazny. 
 
-Projekt zaliczeniowy jako praca dyplomowa inżynierska obroniona 13-11-2015. Do dziś wprowadzane nowe funkcjonalności w ramach nauki. Jest to mój pierwszy i jedyny projekt w Symfony. Celowo nie została wykorzystana platforma eCommerce (np Magento), by samemu jak najwięcej pokodować. Projekt ten nigdy nie powstawał z zamiarem późniejszego udostępniania jako pokaz moich umiejętności, stąd mogą mocno razić np. mieszane polsko-angielskie nazewnictwo klas/metod/zmiennych lub kometarze.
+Projekt zaliczeniowy jako praca dyplomowa inżynierska obroniona 13-11-2015. Dziś poligon doświadczalny, wprowadzane nowe funkcjonalności w ramach nauki. Jest to mój pierwszy projekt w Symfony.
 
-Uwagi:
-----------------------------------
-- projekt nie powstawał z zamiarem późniejszego udostępniania jako pokaz moich umiejętności.
-- mieszane polsko-angielskie nazewnictwo klas/metod/zmiennych wynika z tego, że projekt rozpoczynałem w momencie nauki PHP/Symfony na podstawie polskojęzycznych książek, gdzie stosowano polskie nazwy zmiennych/metod/klas. (Stąd potworki typu "CreateZamowienieFormHandler" wynikały np z konieczności łączenia nazw klas Entity z konwencjami nazewnictwa Symfony, aż przestałem o to dbać i poszło lawinowo). 
+
 
 Zastosowane m.in.:
 ----------------------------------
