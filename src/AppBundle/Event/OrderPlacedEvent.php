@@ -9,23 +9,23 @@
 namespace AppBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
-use AppBundle\Entity\Zamowienie;
+use AppBundle\Entity\Order;
 
 
 class OrderPlacedEvent extends Event
 {
     const NAME = 'order.placed';
 
-    protected $zamowienie;
+    protected $order;
 
-    public function __construct(Zamowienie $zamowienie)
+    public function __construct(Order $order)
     {
-        $this->zamowienie = $zamowienie;
+        $this->order = $order;
     }
 
-    public function getZamowienie()
+    public function getOrder()
     {
-        return $this->zamowienie;
+        return $this->order;
     }
 
 }

@@ -1,19 +1,19 @@
 {% for entity in books %}
     <div class="ProductCard product is-imageLoaded">
         <div class="ProductCard-imageContainer product-img-container">
-            <a href="{{ path('ksiazka_show', { 'id': entity.isbn }) }}">
+            <a href="{{ path('book_show', { 'id': entity.isbn }) }}">
                 <div class="ProductCard-image product-image"
-                     style="opacity: 1; background-image:url({{ asset("bundles/app/images/ilustracje/#{entity.obrazek}" ) }});">
+                     style="opacity: 1; background-image:url({{ asset("bundles/app/images/ilustracje/#{entity.picture}" ) }});">
                 </div>
                 <div class="tlo"></div>
         </div>
         <div class="dolny">
-            <div class="card-autor">{{ entity.autor }}</div>
-            <div class="card-tytul">{{ entity.tytul }}</div>
+            <div class="card-autor">{{ entity.author }}</div>
+            <div class="card-tytul">{{ entity.title }}</div>
         </div>
-        <div class="top-right">{{ entity.cena }}<span> ZŁ</span></div>
+        <div class="top-right">{{ entity.price }}<span> ZŁ</span></div>
         <div class="top-left">
-            <div class="card-AddToBasket"><a href="{{ path('addtocart', {'isbn': entity.isbn }) }}"
+            <div class="card-AddToBasket"><a href="{{ path('add_to_cart', {'isbn': entity.isbn }) }}"
                                              class="card-lockup">
                     <div class="card-basket"></div>
                 </a></div>

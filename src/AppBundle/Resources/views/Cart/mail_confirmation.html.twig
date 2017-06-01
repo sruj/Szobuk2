@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <p>Witaj {{ order.idclient.name|capitalize }}, oto szczegóły zamówienia</p>
+        <div style="width: 400px;">
+            <h3 style="	background-color:#525252 ;
+                border-radius: 5px 5px 0 0;
+                color: #fff;
+                font-size: 14px;
+                padding: 10px;
+                text-align: center;
+                text-transform: uppercase;
+                margin: 0;"
+                >Dane do wysyłki:</h3>
+            <div style="	background: #fff;
+                 border-radius: 0 0 5px 5px;
+                 {#                    padding: 20px;#}
+                 position: relative;
+                 border: none;
+                 margin: 0;">
+                <ul style="list-style-type: none; ">
+                    <li>{{ order.idclient.name }} {{ order.idclient.surname }}</li>
+                    <li>{{ order.idclient.street }} {{ order.idclient.houseNumber }} {{ order.idclient.apartmentnumber }}</li>
+                    <li>{{ order.idclient.postalcode }}, {{ order.idclient.city }} </li>
+                </ul>
+            </div>
+        </div>
+        <div style="width: 400px;">
+            <h3 style="	background-color:#525252 ;
+                border-radius: 5px 5px 0 0;
+                color: #fff;
+                font-size: 14px;
+                padding: 10px;
+                text-align: center;
+                text-transform: uppercase;
+                margin: 0;"
+                >
+                zamówione produkty:</h3>
+            <div style="	background: #fff;
+                 border-radius: 0 0 5px 5px;
+                 {#                    padding: 20px;#}
+                 position: relative;
+                 border: none;
+                 margin: 0;">
+                {% for produkt in produkty  %}
+                    <ul style="list-style-type: none; ">
+                        <li><span class="greyLeft">tytuł: </span><span class="potwierdzenieRight">{{ produkt.title }}</span></li>
+                        <li><span class="greyLeft">autor: </span><span class="potwierdzenieRight">{{ produkt.author }}</span></li>
+                        <li><span class="greyLeft">cena: </span><span class="potwierdzenieRight">{{ produkt.productPrice }}</span></li>
+                        <li><span class="greyLeft">ilość: </span><span class="potwierdzenieRight">{{ produkt.quantity }}</span></li>
+                    </ul>
+                {% endfor %}
+            </div>
+        </div>
+        <div style="width: 400px;">
+            <h3 style="	background-color:#525252 ;
+                border-radius: 5px 5px 0 0;
+                color: #fff;
+                font-size: 14px;
+                padding: 10px;
+                text-align: center;
+                text-transform: uppercase;
+                margin: 0;"
+                >Do zapłaty:</h3>
+            <div style="	background: #fff;
+                 border-radius: 0 0 5px 5px;
+                 {#                    padding: 20px;#}
+                 position: relative;
+                 border: none;
+                 margin: 0;">
+                <p style="padding: 1px 35px; ">{{ suma|number_format(2) }} </p>
+            </div>
+        </div>
+        <div style="width: 400px;">
+            <h3 style="	background-color:#525252 ;
+                border-radius: 5px 5px 0 0;
+                color: #fff;
+                font-size: 14px;
+                padding: 10px;
+                text-align: center;
+                text-transform: uppercase;
+                margin: 0;"
+                >Wpłacić na rachunek:</h3>
+            <div style="	background: #fff;
+                 border-radius: 0 0 5px 5px;
+                 {#                    padding: 20px;#}
+                 position: relative;
+                 border: none;
+                 margin: 0;">
+                <ul style="list-style-type: none; ">
+                    <li>Paweł Szaweł</li>
+                    <li>Księgarnia Szobuk</li>
+                    <li>Bank Zachodni Lubin</li>
+                    <li>123-123-123-123-123-0</li>
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,82 @@
+{% extends '::layout.html.twig' %}
+
+{% block navbar_IsTabActive %}
+    <div class="NavTabs">
+        <a class="NavTab NavTab--home" href="{{ path('index') }}"><span class="NavTab-icon"></span><span
+                    class="NavTab-text">Home</span></a>
+        <a class="NavTab NavTab--katalog" href="{{ path(('book')) }}"><span class="NavTab-icon"></span><span
+                    class="NavTab-text">Katalog</span></a>
+        <a class="NavTab NavTab--kategorie active" href="{{ path('category') }}"><span class="NavTab-icon"></span><span
+                    class="NavTab-text">Kategorie</span></a>
+        {% if app.user and is_granted('ROLE_ADMIN') %}
+            <a class="NavTab NavTab--menu" href="{{ path('manager_menu') }}"><span class="NavTab-icon"></span><span
+                        class="NavTab-text">Menu</span></a>
+            <a class="NavTab NavTab--zamowienia" href="{{ path('panel_sort_from_details') }}"><span
+                        class="NavTab-icon"></span><span class="NavTab-text">Zamówienia</span></a>
+        {% endif %}
+    </div>
+{% endblock navbar_IsTabActive %} 
+
+{% block contents %}
+    <!--start nav-level-->
+    <div class="nav-level">
+        <div class="nav-level-layout wrapper">
+            <div class="PageTabs page-section-tab active">Kategoria: {{ category.name }}</div>
+        </div>
+    </div>
+    <!--end nav-level-->
+    <div class="yield "><!--start yield-->
+        <!--<div class="wrapper">--><!--start wrapper-->
+        <div class="allBooks">
+            <table class="Table-all">
+                <thead>
+                <tr>
+                    <th class="thLeftBorderRadius">Tytuł</th>
+                    <th>Autor</th>
+                    <th>Cena</th>
+                    <th>Wydawnictwo</th>
+                    <th>Rok Wydania</th>
+                    <th>Do Koszyka</th>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <th>Szczególy</th>
+                        <th class="thRightBorderRadius">Edytuj</th>
+                    {% else %}
+                        <th class="thRightBorderRadius">Szczególy</th>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for book in books %}
+                    <tr>
+                        <td><a href="{{ path('book_show', { 'id': book.isbn }) }}">{{ book.title }}</a>
+                        </td>
+                        <td>
+                            <a href="{{ path('show_books_by', { 'findby': 'author','what': book.author }) }}">{{ book.author }}</a>
+                        </td>
+                        <td>{{ book.price }}</td>
+                        <td>
+                            <a href="{{ path('show_books_by', { 'findby': 'print','what': book.print }) }}">{{ book.print }}</a>
+                        </td>
+                        <td>
+                            <a href="{{ path('show_books_by', { 'findby': 'publishyear','what': book.publishyear }) }}">{{ book.publishyear }}</a>
+                        </td>
+                        <td><a href="{{ path('add_to_cart', {'isbn': book.isbn }) }}">do koszyka</a></td>
+                        <td><a href="{{ path('book_show', { 'id': book.isbn }) }}">więcej</a></td>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <td><a href="{{ path('book_edit', { 'id': book.isbn }) }}">edytuj</a></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
+            <div id="margin_top_buttons">
+                <div class="centeredButton kategoria"><a class="OrangeButton" href="{{ path('category') }}">Wróć do
+                        Listy</a></div>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class="centeredButton kategoria"><a class="OrangeButton"
+                                                             href="{{ path('category_edit', { 'id': category.idcategory }) }}">Edytuj
+                            Kategorię</a></div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

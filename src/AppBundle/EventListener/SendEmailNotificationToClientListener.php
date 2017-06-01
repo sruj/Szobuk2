@@ -27,7 +27,7 @@ class SendEmailNotificationToClientListener
     public function onOrderPlaced(OrderPlacedEvent $event)
     {
         $body = $this->renderTemplate($event);
-        $mailTo = $event->getZamowienie()->getIdklient()->getEmail();
+        $mailTo = $event->getOrder()->getIdclient()->getEmail();
         $messageToKlient = $this->setMessage($mailTo, $body);
         $this->mailer->send($messageToKlient);
     }
@@ -35,10 +35,10 @@ class SendEmailNotificationToClientListener
     private function renderTemplate($event)
     {
         return $this->twig->render(
-            'AppBundle:Cart:potwierdzenieMail.html.twig',
+            'AppBundle:Cart:mail_confirmation.html.twig',
             array(
-                'zamowienie'=>$event->getZamowienie(),
-                'produkty'=>$event->getZamowienie()->getZamowienieProdukty(),
+                'order'=>$event->getOrder(),
+                'produkty'=>$event->getOrder()->getOrderProducts(),
                 'suma'=>$this->session->get('sum')
             )
         );

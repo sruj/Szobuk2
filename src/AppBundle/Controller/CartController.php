@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -6,30 +7,29 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Form\DostawaType;
-use AppBundle\Entity\Klient;
-use AppBundle\Entity\Zamowienie;
-use AppBundle\Entity\Ksiazka;
+use AppBundle\Form\DeliveryType;
+use AppBundle\Entity\Client;
+use AppBundle\Entity\Order;
+use AppBundle\Entity\Book;
 use AppBundle\Exception\BookNotFoundException;
 use AppBundle\Exception\CartNotInSessionException;
 use AppBundle\Exception\VariableNotExistInFlashBagException;
 
-
 class CartController extends Controller
 {
-    
     /**
      * Dodaj książkę do koszyka.
-     *
      * (zmienna sesji 'cart' przechowuje tablicę produktów $isbn=>$ilość)
      *
-     * @Route("/addtocart/{isbn}", name="addtocart")
+     * @Route("/add-to-cart/{isbn}", name="add_to_cart")
      */
-    public function addtocartAction(Request $request, $isbn)
+    public function addToCartAction(Request $request, $isbn)
     {
-        $entity = $this->getDoctrine()->getRepository('AppBundle:Ksiazka')->find($isbn);
+        $entity = $this->getDoctrine()->getRepository('Book.php')->find($isbn);
 
-        if (!$entity) { throw new BookNotFoundException('Książka z numerem isbn: '.$isbn.' nie istnieje w bazie'); }
+        if (!$entity) {
+            throw new BookNotFoundException('Książka z numerem isbn: ' . $isbn . ' nie istnieje w bazie');
+        }
 
         $app_cart = $this->get('app.cart');
         $session = $request->getSession();
@@ -38,17 +38,14 @@ class CartController extends Controller
         $cart = $app_cart->addProductToCart($isbn, $cart);
         $session->set('cart', $cart);
 
-        return $this->redirect($this->generateUrl('cartmenu'));
+        return $this->redirect($this->generateUrl('cart_menu'));
     }
-
 
     /**
      * Ilość produktów w koszyku.
-     *
-     * Akcja używana przez layout jako {% render ... %}
-     * Wyswietlane tam gdzie {% extends '::layout.html.twig' %}
+     * Akcja używana przez '::layout.html.twig' jako {% render ..cartContent %}
      */
-    public function cartcontentAction(Request $request)
+    public function cartContentAction(Request $request)
     {
         $app_cart = $this->get('app.cart');
         $session = $request->getSession();
@@ -57,166 +54,155 @@ class CartController extends Controller
 
         return $this->render('AppBundle:Cart:cartcontent.html.twig', ['cartquantity' => $cartquantity]);
     }
-    
-    
+
     /**
      * Czyszczenie koszyka.
      *
-     * @Route("/cartclear", name="cartclear")
+     * @Route("/cart-clear", name="cart_clear")
      */
-    public function cartclearAction(Request $request)
+    public function cartClearAction(Request $request)
     {
         $request->getSession()->invalidate();
 
-        return $this->render('AppBundle:Cart:cartclear.html.twig', []);
+        return $this->render('AppBundle:Cart:cart_clear.html.twig', []);
     }
-    
 
     /**
      * Wybór autoryzacji
      * (zaloguj, zarejestruj, kup bez rejestracji)
-     * 
-     * @Route("/autoryzacja", name="autoryzacja")
+     *
+     * @Route("/authorization", name="authorization")
      */
-    public function autoryzacjaAction()
+    public function authorizationAction()
     {
-        return $this->render('AppBundle:Cart:autoryzacja.html.twig', []);
+        return $this->render('AppBundle:Cart:authorization.html.twig', []);
     }
 
-
-
     /**
-     * - Jeśli nie jestem zalogowany i będąc w cartmenu klikam "zamawiam" to jestem przekierowany do /autoryzacja a
+     * - Jeśli nie jestem zalogowany i będąc w cart_menu klikam "zamawiam" to jestem przekierowany do /authorization a
      *  po wybraniu "zaloguj" lub "zarejestruj" zostaję przeniesiony TU.
-     * - TU ustawiam nową zmienną sesji 'proces_zamowienia', która będzie potrzebna w dalszym etapie by przekierować
+     * - TU ustawiam nową zmienną sesji 'orderingProcess', która będzie potrzebna w dalszym etapie by przekierować
      *  w odpowiedni route po zalogowaniu.
      *
-     * @Route("/przejsciowka/{autoryzacja}", defaults={"autoryzacja" = "zaloguj"}, name="przejsciowka")
+     * @Route("/connector/{authorization}", defaults={"authorization" = "zaloguj"}, name="connector")
      */
-    public function przejsciowkaAction(Request $request, $autoryzacja)
+    public function connectorAction(Request $request, $authorization)
     {
         $app_cart = $this->get('app.cart');
         $session = $request->getSession();
-        $session->set('proces_zamowienia', 'tak');                                                                          // zmianna sesji by w dalszym etapie przekierować w odpowiedni route
-        $route = $app_cart->prepareRoute($autoryzacja);                                                                     // wybiera nazwę route zaloguj lub rejestruj
+        $session->set('orderingProcess', true);                                                                          // zmianna sesji by w dalszym etapie przekierować w odpowiedni route
+        $route = $app_cart->prepareRoute($authorization);                                                                     // wybiera nazwę route zaloguj lub rejestruj
 
         return $this->redirectToRoute($route);
     }
-
-
 
     /**
      * Koszyk.
      * Tu trafiam po dodaniu produktu do koszyka lub po kliknięciu w koszyk.
      * Tu również kierowane jest żądanie gdy wybieram "usuń" chcąc usunąć książkę z koszyka.
      *
-     * @Route("/cartmenu/{deleteisbn}", defaults={"deleteisbn" = false}, name="cartmenu")
-     */    
-    public function cartmenuAction(Request $request, $deleteisbn)
+     * @Route("/cart/{deleteisbn}", defaults={"deleteisbn" = false}, name="cart_menu")
+     */
+    public function cartMenuAction(Request $request, $deleteisbn)
     {
         $app_cart = $this->get('app.cart');
         $session = $request->getSession();
-        
-        if(!$session->has('cart')){
+
+        if (!$session->has('cart')) {
             throw new CartNotInSessionException('Koszyk pusty.');
         }
 
-        if($deleteisbn) { 
-            $updatedCart = $app_cart->removeProductFromCart($deleteisbn,$session->get('cart'));
+        if ($deleteisbn) {
+            $updatedCart = $app_cart->removeProductFromCart($deleteisbn, $session->get('cart'));
             $session->set('cart', $updatedCart);
         }
 
         $sum = $app_cart->getSumOfAllProductsInCart($session->get('cart'));
         $booksInCartDetails = $app_cart->getAllBooksFromCartDetails($session->get('cart'));
 
-        $session->set('sum',$sum);
-        
-        return $this->render('AppBundle:Cart:cartmenu.html.twig',[
-            'ksiazki' => $booksInCartDetails,
-            'suma'=> $sum
+        $session->set('sum', $sum);
+
+        return $this->render('AppBundle:Cart:cart_menu.html.twig', [
+            'books' => $booksInCartDetails,
+            'suma' => $sum
         ]);
     }
-    
-
 
     /**
-     * zmiana ilości w cartmenu prowadzi przez skrypt JavaScript tutaj.
-     *
+     * zmiana ilości w cart_menu prowadzi przez skrypt JavaScript tutaj.
      * Na stronie dane zmieniają się automatycznie dzięki skryptowi JS,
      * ale drugim zadaniem skryptu jest te dane przesłać tutaj (bym i ja wiedział a nie tylko przeglądarka i klikający użytkownik)
      * Więc nowe dane trafiają tu, i na ich podstawie aktualizuję zmienne sesji.
-     * 
-     * @Route("/zmianaQuantity", name="zmianaQuantity", options={"expose"=true})
+     *
+     * @Route("/quantity", name="quantity_update", options={"expose"=true})
      */
-    public function zmianaQuantityAction(Request $request)
+    public function quantityUpdateAction(Request $request)
     {
         $cart = $request->get('data');                                                                                                          //'data' to z JS tablica z zawartością koszyka
-        $app_cart = $this->get('app.cart');  
+        $app_cart = $this->get('app.cart');
         $session = $request->getSession();
-        
-        $session->set('cart',$cart );
-        $session->set('sum',$app_cart->getSumOfAllProductsInCart($cart));
 
-        return []; 
+        $session->set('cart', $cart);
+        $session->set('sum', $app_cart->getSumOfAllProductsInCart($cart));
+
+        return [];
     }
-
-
-
-
 
     /**
      * Formularz danych adresowych klienta.
-     *
      * - jeśli poprawnie wypełniono formularz, zamówienie i dane klienta zapisane w bazie.
      * - wystrzeliwany event a listenery robią robotę (wysyłają maile potwierdzające).
-     * @Route("/zamawiam", name="zamawiam")
+     *
+     * @Route("/personal-data", name="personal_data")
      */
-    public function zamawiamAction(Request $request)
+    public function personalDataAction(Request $request)
     {
         $session = $this->get('session');
-        if(!$session->has('cart')){throw new CartNotInSessionException('Koszyk pusty.');}
+        if (!$session->has('cart')) {
+            throw new CartNotInSessionException('Koszyk pusty.');
+        }
 
-        $klient= $this->getDoctrine()
-            ->getRepository('AppBundle:Klient')
-            ->findOneBy(['idlogowanie' => $this->getUser() ? $this->getUser()->getId() : false]);                                                // zalogowany wypełniał kiedyś formularz
-        if (!$klient){$klient = new Klient();}                                                                                                   // jeśli zalogowany nigdy nie wypełniał formularza dostawy lub jeśli niezalogowany
+        $client = $this->getDoctrine()
+            ->getRepository('Client.php')
+            ->findOneBy(['idlogin' => $this->getUser() ? $this->getUser()->getId() : false]);                                                // zalogowany wypełniał kiedyś formularz
+        if (!$client) {
+            $client = new Client();
+        }                                                                                                   // jeśli zalogowany nigdy nie wypełniał formularza dostawy lub jeśli niezalogowany
 
-        $form= $this->createForm(DostawaType::class, $klient, [
-        'attr' => ['class' => 'form_dostawa']]);
+        $form = $this->createForm(DeliveryType::class, $client, [
+            'attr' => ['class' => 'form_dostawa']]);
 
         $app_form_handler_order = $this->get('app.form_handler.order');
-        if($app_form_handler_order->handleFormAndPlaceOrder($form, $request)){                                                                   
-            return $this->redirectToRoute('potwierdzenie');
+        if ($app_form_handler_order->handleFormAndPlaceOrder($form, $request)) {
+            return $this->redirectToRoute('confirm');
         };
 
-        return $this->render('AppBundle:Cart:zamawiam.html.twig',[
+        return $this->render('AppBundle:Cart:personal_data.html.twig', [
             'form' => $form->createView()
         ]);
     }
-    
 
-    
     /**
      * Potwierdzenie.
-     * 
-     * @Route("/potwierdzenie", name="potwierdzenie")
+     *
+     * @Route("/confirm", name="confirm")
      */
-    public function potwierdzenieAction(Request $request)
+    public function confirmAction(Request $request)
     {
-        $idzamowienie = $request->getSession()->getFlashBag()->get('idzamowienie');
-        if (!$idzamowienie) {
+        $idorder = $request->getSession()->getFlashBag()->get('idorder');
+        if (!$idorder) {
             throw new VariableNotExistInFlashBagException('To jest strona potwierdzająca zamówienie. Aby złożyć zamówienie dodaj produkt do koszyka i tak dalej...');
         }
 
-        $zamowienie = $this->getDoctrine()
-            ->getRepository('AppBundle:Zamowienie')
-            ->find($idzamowienie[0]);
-        $produkty = $zamowienie->getZamowienieProdukty();
-        $suma=$request->getSession()->get('sum');
-        
-        return $this->render('AppBundle:Cart:potwierdzenie.html.twig',[
-            'zamowienie'=>$zamowienie, 'produkty'=>$produkty,
-            'suma'=>$suma
+        $order = $this->getDoctrine()
+            ->getRepository('Order.php')
+            ->find($idorder[0]);
+        $produkty = $order->getOrderProducts();
+        $suma = $request->getSession()->get('sum');
+
+        return $this->render('AppBundle:Cart:confirm.html.twig', [
+            'order' => $order, 'produkty' => $produkty,
+            'suma' => $suma
         ]);
     }
 

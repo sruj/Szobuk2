@@ -11,17 +11,17 @@ class CartControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        //dodaję produkty, sprawdzam czy przekierował do cartmenu
-        $client->request('GET', '/addtocart/978-0010465284');
-        $this->assertTrue($client->getResponse()->isRedirect('/cartmenu'));
-        $client->request('GET', '/addtocart/978-0040892976');
+        //dodaję produkty, sprawdzam czy przekierował do cart_menu
+        $client->request('GET', '/add-to-cart/978-0010465284');
+        $this->assertTrue($client->getResponse()->isRedirect('/cart'));
+        $client->request('GET', '/add-to-cart/978-0040892976');
         $crawler = $client->followRedirect();
 
         //testuję od razu CartController:cartcontentAction(), czyli liczba produktów w koszyku.
         $this->assertTrue($crawler->filter('div.quantityKosz:contains("2")')->count() > 0);
 
-        //testuję od razu usuwanie jednego produktu CartController:cartmenuAction() gdy kliknięto "usuń" przy produkcie.
-        $crawler = $client->request('GET', '/cartmenu/978-0040892976');
+        //testuję od razu usuwanie jednego produktu CartController:cartMenuAction() gdy kliknięto "usuń" przy produkcie.
+        $crawler = $client->request('GET', '/cart/978-0040892976');
         $this->assertTrue($crawler->filter('div.quantityKosz:contains("1")')->count() > 0);
         $this->assertTrue($crawler->filter('td > a:contains("978-0010465284")')->count() > 0);
         $this->assertTrue($crawler->filter('td > a:contains("978-0040892976")')->count() == 0);
@@ -54,7 +54,7 @@ class CartControllerTest extends WebTestCase
         $this->assertTrue($crawler->filter('html:contains("zamówione produkty:")')->count() > 0);
 
         //Testuję od razu CartController:cartclearAction()
-        $crawler = $client->request('GET', '/cartclear');
+        $crawler = $client->request('GET', '/cart-clear');
         $this->assertTrue($crawler->filter('h3.szaryKlocek:contains("Koszyk pusty")')->count() > 0);
         $this->assertTrue($crawler->filter('div.quantityKosz:contains("0")')->count() > 0);
     }
@@ -63,7 +63,7 @@ class CartControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request('GET', '/addtocart/978-0010465284');
+        $client->request('GET', '/add-to-cart/978-0010465284');
         $crawler = $client->followRedirect();
 
         //wybiera "zamawiam" i zostaję przekierowany do wyboru autoryzacji.
@@ -79,33 +79,33 @@ class CartControllerTest extends WebTestCase
         //wypełniam dane, zatwierdzam i dostaję przekierowany do podsumowania zamówienia.
         $form = $crawler->selectButton('dostawa[zapisz]')->form();
         $client->submit($form,[
-            'dostawa[imie]'=>'paweł',
-            'dostawa[nazwisko]'=>'chryplewicz',
+            'dostawa[name]'=>'paweł',
+            'dostawa[surname]'=>'chryplewicz',
             'dostawa[email]'=>'chryplewiczpawel@wp.pl',
-            'dostawa[ulica]'=>'ddd',
-            'dostawa[nrDomu]'=>'22',
-            'dostawa[nrMieszkania]'=>'2',
-            'dostawa[kodPocztowy]'=>'59-300',
-            'dostawa[miasto]'=>'Lubin',
+            'dostawa[street]'=>'ddd',
+            'dostawa[houseNumber]'=>'22',
+            'dostawa[apartmentNumber]'=>'2',
+            'dostawa[postalCode]'=>'59-300',
+            'dostawa[city]'=>'Lubin',
             'dostawa[nip]'=>'1234567890',
-            'dostawa[nrTelefonu]'=>'78687677',
+            'dostawa[phoneNumber]'=>'78687677',
         ]);
         $crawler = $client->followRedirect();
         $this->assertTrue($crawler->filter('html:contains("zamówione produkty:")')->count() > 0);
     }
 
-    public function testAutoryzacja()
+    public function testAuthorization()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/autoryzacja');
+        $crawler = $client->request('GET', '/authorization');
 
         $this->assertTrue($crawler->filter('h3:contains("Wybierz sposób autoryzacji")')->count() > 0);
     }
 
-    public function testCartmenu()
+    public function testCartMenu()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/cartmenu');
+        $crawler = $client->request('GET', '/cart');
 
         //testuję gdy wchodzę do kosza gdy kosz pusty
         $this->assertTrue($crawler->filter('html:contains("Koszyk pusty.")')->count() > 0);

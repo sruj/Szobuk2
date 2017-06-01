@@ -1,6 +1,6 @@
 <?php
 
-// używane w \src\AppBundle\Resources\views\Ksiazka\showBooksBy.html.twig
+// używane w \src\AppBundle\Resources\views\Book\show_books_by.html.twig
 
 namespace AppBundle\Twig;
 

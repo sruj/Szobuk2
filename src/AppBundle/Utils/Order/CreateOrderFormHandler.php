@@ -17,13 +17,12 @@ class CreateOrderFormHandler
     private $orderManager;
 
     /**
-     * CreateZamowienieFormHandler constructor.
+     * CreateOrderFormHandler constructor.
      */
     public function __construct(OrderManager $orderManager)
     {
         $this->orderManager = $orderManager;
     }
-
 
     /**
      * @param FormInterface $form
@@ -31,21 +30,23 @@ class CreateOrderFormHandler
      * @return bool
      * @throws \Exception
      */
-    public function handleFormAndPlaceOrder(FormInterface $form, Request $request )
+    public function handleFormAndPlaceOrder(FormInterface $form, Request $request)
     {
         $form->handleRequest($request);
+
         if (!$form->isValid()) {
             return false;
         }
-        if(!$request->getSession()->has('cart')){
+
+        if (!$request->getSession()->has('cart')) {
             throw new CartNotInSessionException('Koszyk pusty.');
         }
-        $cart = $request->getSession()->get('cart');
 
+        $cart = $request->getSession()->get('cart');
         $deliveryClientData = $form->getData();
         $this->orderManager->placeOrder($deliveryClientData, $cart);
 
         return true;
     }
-    
+
 }

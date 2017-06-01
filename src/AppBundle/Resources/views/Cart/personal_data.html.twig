@@ -1,0 +1,74 @@
+{% extends '::layout.html.twig' %}
+
+{% block contents %}
+    
+<div class="boxMy">
+    <div id="boxMyinside">
+    <h3>Dostawa - formularz</h3>
+    <fieldset>      
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+<div>
+    {{ form_errors(form.name) }}
+    {{ form_widget(form.name, {'attr': {'placeholder': 'Imię'} }) }}
+</div>
+<div>
+    {{ form_errors(form.surname) }}
+    {{ form_widget(form.surname, {'attr': {'placeholder': 'Nazwisko','class': 'border-top-none'} }) }}
+</div>
+<div>
+    {{ form_errors(form.email) }}
+    {{ form_widget(form.email, {'attr': {'placeholder': 'E-mail','class': 'border-top-none'} }) }}
+</div>
+<div>
+    {{ form_errors(form.street) }}
+    {{ form_widget(form.street, {'attr': {'placeholder': 'Ulica','class': 'border-top-none'} }) }}
+</div>
+<div>
+    {{ form_errors(form.houseNumber) }}
+    {{ form_widget(form.houseNumber, {'attr': {'placeholder': 'Nr Domu','class': 'border-top-none'} }) }}
+</div>
+<div>
+    {{ form_errors(form.apartmentNumber) }}
+    {{ form_widget(form.apartmentNumber, {'attr': {'placeholder': 'Nr Mieszkania','class': 'border-top-none'} }) }}
+</div>
+<div>
+    {{ form_errors(form.postalCode) }}
+    {{ form_widget(form.postalCode, {'attr': {'placeholder': 'Kod Pocztowy','class': 'border-top-none'} }) }}
+</div>
+<div>
+    {{ form_errors(form.city) }}
+    {{ form_widget(form.city, {'attr': {'placeholder': 'Miasto','class': 'border-top-none'} }) }}
+</div>
+<div>
+    {{ form_errors(form.nip) }}
+    {{ form_widget(form.nip, {'attr': {'placeholder': 'NIP','class': 'border-top-none'} }) }}
+</div>
+<div>
+    {{ form_errors(form.phoneNumber) }}
+    {{ form_widget(form.phoneNumber, {'attr': {'placeholder': 'Nr Telefonu','class': 'border-top-none'} }) }}
+</div>
+{{ form_end(form) }}    
+ </fieldset>
+    </div>
+</div>
+{% endblock contents %}
+
+
+
+
+
+
+
+
+
+
+{#    wersja pierwsza oryginalna{{ form(form) }}#}
+
+{# wersja najrozsądniejsza niedziałająca bo to inspiracja ze stack
+{% block widget_attributes %}
+{% spaceless %}
+    {% set attr = attr|merge({'placeholder': label}) %}
+    {{ parent() }}
+{% endspaceless %}
+{% endblock widget_attributes %}#}

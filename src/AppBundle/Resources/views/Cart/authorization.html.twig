@@ -1,0 +1,13 @@
+{% extends '::layout.html.twig' %}
+{% block contents %}
+    <div class="boxMy">
+        <div id="boxMyinside">
+          <h3>Wybierz sposób autoryzacji</h3>
+          <div class="AutoryzajcaFlex">
+               <a class="OrangeButton" href="{{ path('connector',{ 'authorization': 'zaloguj' }) }}">zaloguj</a>
+               <a class="OrangeButton" href="{{ path('connector',{ 'authorization': 'zarejestruj' }) }}">zarejestruj</a>
+               <a class="OrangeButton" href="{{ path('personal_data') }}">kup bez rejestracji</a>
+          </div>
+        </div>
+    </div>
+{% endblock contents %}

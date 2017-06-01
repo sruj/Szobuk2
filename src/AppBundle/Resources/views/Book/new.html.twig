@@ -1,0 +1,41 @@
+{% extends '::layout.html.twig' %}
+
+{% block contents %}
+    <div class="boxMy szerokie">
+        <div id="boxMyinside">
+    <h3>Dodaj Książkę</h3>
+    <fieldset>
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+    {{ form_errors(form.isbn) }}
+    {{ form_widget(form.isbn) }}
+    {{ form_errors(form.title) }}
+    {{ form_widget(form.title) }}
+    {{ form_errors(form.author) }}
+    {{ form_widget(form.author) }}
+    {{ form_errors(form.description) }}
+    {{ form_widget(form.description) }}
+    {{ form_errors(form.price) }}
+    {{ form_widget(form.price) }}
+    {{ form_errors(form.picture) }}
+    {{ form_widget(form.picture) }}
+    {{ form_errors(form.print) }}
+    {{ form_widget(form.print) }}
+    {{ form_errors(form.publishyear) }}
+    {{ form_widget(form.publishyear) }}
+    {{ form_errors(form.idcategory) }}
+    {{ form_widget(form.idcategory) }}
+    {{ form_errors(form.quantity) }}
+    {{ form_widget(form.quantity) }}
+    {{ form_end(form) }}
+    
+   {# było pierwotnie 
+   {{ form(form) }}#}
+
+<a class="OrangeButtonSimple" href="{{ path(('book')) }}">Wróć do listy</a
+   ></fieldset>
+
+  </div> <!-- end login-form -->
+
+</div> 
+{% endblock %}

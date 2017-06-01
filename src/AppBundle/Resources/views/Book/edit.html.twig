@@ -1,0 +1,14 @@
+{% extends '::layout.html.twig' %}
+
+{% block contents %}
+    <div class="boxMy bszerokie">
+        <div id="boxMyinside">
+            <h3>edycja KSIAZKI</h3>
+            <fieldset>  
+                {{ form(edit_form) }}
+                <a class="OrangeButtonSimple" href="{{ path(('book')) }}">Wróć do Listy</a>
+                {{ form(delete_form) }}
+            </fieldset>
+        </div> <!-- end login-form -->
+    </div>
+{% endblock %}

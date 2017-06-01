@@ -3,7 +3,7 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: "@AppBundle/Resources/config/services.yml" }
-    - { resource: "@MyUserBundle/Resources/config/services.yml" }
+    - { resource: "@UserBundle/Resources/config/services.yml" }
     - { resource: "@TrenningBundle/Resources/config/services.yml" }
 framework:
     #esi:             ~
@@ -90,11 +90,11 @@ stof_doctrine_extensions:
 fos_user:
     db_driver: orm
     firewall_name: main
-    user_class: My\UserBundle\Entity\User
+    user_class: UserBundle\Entity\User
 #   PONIŻSZE DOTYCZY NADPISANEGO FORMULARZA REJESTRACJI, Z KTÓREGO ZREZYGNOWAŁEM
     registration: 
         form:
-            type: my_user_registration    
+            type: user_registration
 
 knp_paginator:
     # default page range used in pagination control

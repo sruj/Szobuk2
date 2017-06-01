@@ -2,9 +2,9 @@
 ---
 AppBundle\Entity\Klient:
     properties:
-        nrtelefonu:
+        phonenumber:
             - Length:
                 min: 2
                 max: 18
-                minMessage: "Your nrtelefonu must be at least {{ limit }} characters long"
-                maxMessage: "Your nrtelefonu cannot be longer than {{ limit }} characters"
+                minMessage: "Your phonenumber must be at least {{ limit }} characters long"
+                maxMessage: "Your phonenumber cannot be longer than {{ limit }} characters"

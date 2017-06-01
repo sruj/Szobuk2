@@ -228,8 +228,8 @@ class CreateOrderFormHandlerTest extends \PHPUnit_Framework_TestCase
             ->method('getRepository')
             ->withConsecutive(
                 $this->equalTo('AppBundle:Status'),
-                $this->equalTo('AppBundle:Ksiazka'),
-                $this->equalTo('AppBundle:Ksiazka')
+                $this->equalTo('AppBundle:Book'),
+                $this->equalTo('AppBundle:Book')
             )
             ->willReturnOnConsecutiveCalls(
                 $statusRepository,

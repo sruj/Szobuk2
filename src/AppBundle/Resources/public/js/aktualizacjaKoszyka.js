@@ -1,4 +1,4 @@
-var myUrl = Routing.generate('zmianaQuantity');
+var myUrl = Routing.generate('quantity_update');
 
 function aktualizacjaKoszyka() {
     var data = {}; 

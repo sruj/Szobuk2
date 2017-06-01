@@ -1,0 +1,65 @@
+{% extends '::layout.html.twig' %}
+
+{% block contents %}
+    <div class="boxMy szerokie">
+        <div id="boxMyinside">
+            <h3>Dane do wysyłki:</h3>
+            <div class="boxDown">
+                <ul>
+                    <li>{{ order.idclient.name }} {{ order.idclient.surname }}</li>
+                    <li>{{ order.idclient.street }} {{ order.idclient.houseNumber }} {{ order.idclient.apartmentnumber }}</li>
+                    <li>{{ order.idclient.postalcode }}, {{ order.idclient.city }} </li>
+                    <li>{{ order.idclient.email }} </li>
+                    <li>Tel.: {{ order.idclient.phonenumber }} </li>
+                </ul>
+            </div>
+        </div>
+        <div id="boxMyinside">
+            <h3>zamówione produkty:</h3>
+            <div class="boxDown">
+                {% for produkt in produkty  %}
+                    <ul>
+                        <li><span class="greyLeft">tytuł: </span><span class="potwierdzenieRight">{{ produkt.title }}</span></li>
+                        <li><span class="greyLeft">autor: </span><span class="potwierdzenieRight">{{ produkt.author }}</span></li>
+                        <li><span class="greyLeft">cena: </span><span class="potwierdzenieRight">{{ produkt.productPrice }}</span></li>
+                        <li><span class="greyLeft">ilość: </span><span class="potwierdzenieRight">{{ produkt.quantity }}</span></li>
+                    </ul>
+                {% endfor %}
+            </div>
+        </div>
+        <div id="boxMyinside">
+            <h3>Do zapłaty:</h3>
+            <div class="boxDown">
+                <p>{{ suma|number_format(2) }} ( dostawa za darmo )</p>
+            </div>
+        </div>
+        <div id="boxMyinside">
+            <h3>Wpłacić na rachunek:</h3>
+            <div class="boxDown">
+                <ul>
+                    <li>Paweł Szaweł</li>
+                    <li>Księgarnia Szobuk</li>
+                    <li>Bank Zachodni Lubin</li>
+                    <li>123-123-123-123-123-0</li>
+                </ul>
+            </div>
+
+        </div>
+        <div id="boxMyinside">
+            <div class="boxDown">
+                <p>Na adres mailowy {{ order.idclient.email }} przesłano wiadomość ze szczegółami zamówienia.
+                </p>
+            </div>
+        </div>
+        <div id="boxMyinside">
+            <h3>zapłać teraz</h3>
+            <fieldset class="potwierdzenie">
+                <a class="OrangeButtonSimple" href="#">PayU</a>
+                <a class="OrangeButtonSimple" style="float: right" href="#">PayPal</a>
+            </fieldset>
+        </div>
+
+    </div>                
+</div>
+{% endblock contents %}
+

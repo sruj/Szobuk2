@@ -13,5 +13,5 @@ interface IFilterQuery
 
     public function prepareDataFilterQuery(TableDetails $td, FormsManagerExtended $forms);
 
-    public function prepareKlientFilterQuery(TableDetails $td,FormsManagerExtended $forms);
+    public function prepareClientFilterQuery(TableDetails $td,FormsManagerExtended $forms);
 }

@@ -46,7 +46,7 @@ class FilterQueryTest extends \PHPUnit_Framework_TestCase
     public function testPrepareKlientFilterQueryReturnInstanceOfTableDetailsForValidInput($query,$identifier,$expected)
     {
         $fq = new FilterQuery();
-        $res = $fq->prepareKlientFilterQuery(
+        $res = $fq->prepareClientFilterQuery(
             $this->getTableDetails($query,$identifier),
             $this->getFormsManagerExtended());
 

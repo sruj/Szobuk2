@@ -1,14 +1,14 @@
 <?php
+
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Ksiazka;
+use AppBundle\Entity\Book;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Serializer\Serializer;
-
 
 class DefaultController extends Controller
 {
@@ -20,27 +20,29 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $session = $request->getSession();                                                                               //jeśli w trakcie zakupów w wyborze autoryzacji wybrałem zaloguj lub zarejestruj to przenoszę się do *gdzieśtam*
-        $proces_zamowienia=$session->get('proces_zamowienia');
-        if($proces_zamowienia == 'tak'){
-            $session->remove('proces_zamowienia');
-            return $this->redirectToRoute('zamawiam');
+        $orderingProcess = $session->get('orderingProcess');
+        if ($orderingProcess) {
+            $session->remove('orderingProcess');
+
+            return $this->redirectToRoute('personal_data');
         };
-        
-        $ksi_rep = $this->get('app.ksiazka_repository');
-        
+
+        $ksi_rep = $this->get('app.book_repository');
+
         if ($request->isXmlHttpRequest()) {
-            $ksiazki = $ksi_rep->findAllMy($request->query->getInt('page'),12);
-            $ksiazki = $ksiazki->getItems();
+            $books = $ksi_rep->findAllMy($request->query->getInt('page'), 12);
+            $books = $books->getItems();
             $books = [];
             $renderData = [];
-            if (!empty($ksiazki) ) {
+            if (!empty($books)) {
                 $i = 0;
-                foreach ($ksiazki as $ksiazka) {
+                /** @var Book $ksiazka */
+                foreach ($books as $ksiazka) {
                     $books[$i]['isbn'] = $ksiazka->getIsbn();
-                    $books[$i]['autor'] = $ksiazka->getAutor();
-                    $books[$i]['tytul'] = $ksiazka->getTytul();
-                    $books[$i]['cena'] = $ksiazka->getCena();
-                    $books[$i]['obrazek'] = $ksiazka->getObrazek();
+                    $books[$i]['author'] = $ksiazka->getAuthor();
+                    $books[$i]['title'] = $ksiazka->getTitle();
+                    $books[$i]['price'] = $ksiazka->getPrice();
+                    $books[$i]['picture'] = $ksiazka->getPicture();
                     $i++;
                 }
                 $renderData['template'] = $this->renderView('AppBundle:Default:index2.html.twig', array(
@@ -48,45 +50,42 @@ class DefaultController extends Controller
                 ));
                 $renderData['last_page'] = false;
             }
-            if (sizeof($ksiazki)<12){$renderData['last_page'] = true;}
+            if (sizeof($books) < 12) {
+                $renderData['last_page'] = true;
+            }
 
             return new JsonResponse($renderData);
         }
-        
-        $ksiazki = $ksi_rep->findAllMy($request->query->getInt('page', 1),6);
+        $books = $ksi_rep->findAllMy($request->query->getInt('page', 1), 6);
 
-        return $this->render('AppBundle:Default:index.html.twig',[
-            'ksiazki' => $ksiazki
+        return $this->render('AppBundle:Default:index.html.twig', [
+            'books' => $books
         ]);
     }
 
-    
     /**
-     * @Route("/popularne", name="popularne")
+     * @Route("/popular", name="popular")
      */
-    public function popularneAction(Request $request)
+    public function popularAction(Request $request)
     {
-        $ksi_rep = $this->get('app.ksiazka_repository');
-        $ksiazki = $ksi_rep->findPopularne($request->query->getInt('page', 1));
+        $ksi_rep = $this->get('app.book_repository');
+        $books = $ksi_rep->findPopular($request->query->getInt('page', 1));
 
-        return $this->render('AppBundle:Default:popularne.html.twig',[
-            'ksiazki' => $ksiazki
-        ]);        
-        
+        return $this->render('AppBundle:Default:popular.html.twig', [
+            'books' => $books
+        ]);
     }
 
-    
     /**
-     * @Route("/nowosci", name="nowosci")
+     * @Route("/news", name="news")
      */
-    public function nowosciAction(Request $request)
+    public function newsAction(Request $request)
     {
-        $ksi_rep = $this->get('app.ksiazka_repository');
-        $ksiazki = $ksi_rep->findNowosci($request->query->getInt('page', 1));
+        $ksi_rep = $this->get('app.book_repository');
+        $books = $ksi_rep->findNews($request->query->getInt('page', 1));
 
-        return $this->render('AppBundle:Default:nowosci.html.twig',[
-            'ksiazki' => $ksiazki
+        return $this->render('AppBundle:Default:news.html.twig', [
+            'books' => $books
         ]);
-
     }
 }

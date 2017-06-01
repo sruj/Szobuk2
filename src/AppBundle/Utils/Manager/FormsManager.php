@@ -8,10 +8,8 @@
 
 namespace AppBundle\Utils\Manager;
 
-
 class FormsManager
 {
-
     /**
      * @var \Symfony\Component\Form\FormInterface[] $forms
      */
@@ -27,8 +25,8 @@ class FormsManager
 
     public function isAnyFormValid()
     {
-        foreach ($this->forms as $form){
-            if($form->isValid()){
+        foreach ($this->forms as $form) {
+            if ($form->isValid()) {
                 return true;
             };
         }

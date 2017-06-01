@@ -1,0 +1,79 @@
+{% extends '::layout.html.twig' %}
+
+{% block navbar_IsTabActive %}
+    <div class="NavTabs">
+        <a class="NavTab NavTab--home" href="{{ path('index') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Home</span></a>
+        <a class="NavTab NavTab--katalog" href="{{ path(('book')) }}"><span class="NavTab-icon"></span><span class="NavTab-text">Katalog</span></a>
+        <a class="NavTab NavTab--kategorie" href="{{ path('category') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Kategorie</span></a>
+        {% if app.user and is_granted('ROLE_ADMIN') %}
+            <a class="NavTab NavTab--menu" href="{{ path('manager_menu') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Menu</span></a>
+            <a class="NavTab NavTab--zamowienia active" href="{{ path('panel_sort_from_details') }}"><span class="NavTab-icon"></span><span class="NavTab-text">Zamówienia</span></a>
+        {% endif %}
+    </div>
+{% endblock navbar_IsTabActive %}
+{% block contents %}
+    <div class="yield"><!--start yield-->
+        <div class="nav-level-layout wrapper">
+            <div id="justify_content_outer">
+                <div class="s">
+                    {{ form(StatusForm) }}
+                </div>
+                <div class="d">
+                    {{ form(OrderDateForm) }}
+                </div>
+                <div class="k">
+                    {{ form(ClientNumberForm) }}
+                </div>
+            </div>
+            {% if filterField == 'idclient' and identifier is not empty %}
+                <div class="nav-level">
+                    <div class="nav-level-layout wrapper">
+                        Wszystkie zamówienia klienta nr {{ identifier}}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <div class="allBooks">
+            <table class="Table-all">
+                <thead>
+                <tr>
+                    <th style="background-color: #3e3e3e" class="thLeftBorderRadius"><a href="{{ path('panel_sort',{ 'columnsSortOrder':columnsSortOrder.Numer ,'query':query,'filterField':filterField,'columnSort':'idorder'}) }}">nr z.<span class="{{ columnsSortOrder.Numer }}"></span></a></th>
+                    <th><a href="{{ path('panel_sort',{ 'columnsSortOrder':columnsSortOrder.Data ,'query':query,'filterField':filterField,'columnSort':'orderdate'}) }}">Data złożenia<span class="{{ columnsSortOrder.Data }}"></span></a></th>
+                    <th>ilość prod.</th>
+                    <th>kwota razem</th>
+                    <th><a href="{{ path('panel_sort',{ 'columnsSortOrder':columnsSortOrder.Klient ,'query':query,'filterField':filterField, 'columnSort':'idclient'}) }}">nr klienta<span class="{{ columnsSortOrder.Klient }}"></span></a></th>
+                    <th><a href="{{ path('panel_sort',{ 'columnsSortOrder':columnsSortOrder.Status ,'query':query, 'filterField':filterField,'columnSort':'idstatus'}) }}">status z.<span class="{{ columnsSortOrder.Status }}"></span></a></th>
+                    <th class="thRightBorderRadius">Szczególy</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{ form_start(form) }}
+                {% for formul in form.orders %}
+                    <tr>
+                        <td>{{ formul.vars.value.idorder }}</td>
+                        <td>{{ formul.vars.value.orderdate|date('Y-m-d H:i:s') }}</td>
+                        {% set quantity = 0 %}
+                        {% set kwota = 0 %}
+                        {% for orderProduct in zamowieniaProdukty %}
+                            {% if orderProduct.idorder.idorder ==  formul.vars.value.idorder %}
+                                {% set quantity = quantity + orderProduct.quantity %}
+                                {% set kwota = kwota + orderProduct.quantity * orderProduct.productprice %}
+                            {% endif %}
+                        {% endfor %}
+                        <td>{{ quantity }}</td>
+                        <td>{{ kwota|number_format(2) }}</td>
+                        <td>{{ formul.vars.value.idclient.idclient }}</td>
+                        <td>
+                            {{ form_row(formul.idstatus) }}
+                        </td>
+                        <td><a href="{{ path('manager_order_panel',{ 'orderid':formul.vars.value.idorder }) }}">więcej</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <div class="ButtonCenter">
+                {{ form_widget(form.zapisz) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

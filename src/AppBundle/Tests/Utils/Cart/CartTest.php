@@ -10,7 +10,7 @@ namespace AppBundle\Tests\Utils\Cart;
 
 use AppBundle\Utils\Cart\Cart;
 use Doctrine\ORM\EntityManager;
-use AppBundle\Entity\Ksiazka;
+use AppBundle\Entity\Book;
 
 class CartTest extends \PHPUnit_Framework_TestCase
 {
@@ -82,11 +82,11 @@ class CartTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider getDataForPrepareRoute
      */
-    public function testPrepareRoute($autoryzacja,$expected)
+    public function testPrepareRoute($authorization,$expected)
     {
         $em = $this->getEntityManager();
         $obj = new Cart($em);
-        $res = $obj->prepareRoute($autoryzacja);
+        $res = $obj->prepareRoute($authorization);
         $this->assertEquals( $expected, $res );
     }
 
@@ -94,8 +94,8 @@ class CartTest extends \PHPUnit_Framework_TestCase
     {
         $cart = ['111'=>'1','222'=>'1'];
         $expected = [
-            ['isbn'=>'111','tytul'=>'foo1','autor'=>'bar1','cena'=>'1111','quantity'=>'1'],
-            ['isbn'=>'222','tytul'=>'foo2','autor'=>'bar2','cena'=>'2222','quantity'=>'1']
+            ['isbn'=>'111','tytul'=>'foo1','author'=>'bar1','price'=>'1111','quantity'=>'1'],
+            ['isbn'=>'222','tytul'=>'foo2','author'=>'bar2','price'=>'2222','quantity'=>'1']
         ];
         $em = $this->getEntityManager();
         $obj = new Cart($em);
@@ -121,25 +121,25 @@ class CartTest extends \PHPUnit_Framework_TestCase
     public function getEntityManager()
     {
         $a = [
-            ['isbn'=>'111','tytul'=>'foo1','autor'=>'bar1','cena'=>'1111',],
-            ['isbn'=>'222','tytul'=>'foo2','autor'=>'bar2','cena'=>'2222']
+            ['isbn'=>'111','tytul'=>'foo1','author'=>'bar1','price'=>'1111',],
+            ['isbn'=>'222','tytul'=>'foo2','author'=>'bar2','price'=>'2222']
         ];
 
-        $ks = $this->getMockBuilder(Ksiazka::class)
-            ->setMethods(['getIsbn','getTytul','getAutor','getCena'])
+        $ks = $this->getMockBuilder(Book::class)
+            ->setMethods(['getIsbn','getTitle','getAuthor','getCena'])
             ->getMock();
         $ks->expects($this->any())
             ->method('getIsbn')
             ->will($this->onConsecutiveCalls($a[0]['isbn'],$a[1]['isbn']));
         $ks->expects($this->any())
-            ->method('getTytul')
+            ->method('getTitle')
             ->will($this->onConsecutiveCalls($a[0]['tytul'],$a[1]['tytul']));
         $ks->expects($this->any())
-            ->method('getAutor')
-            ->will($this->onConsecutiveCalls($a[0]['autor'],$a[1]['autor']));
+            ->method('getAuthor')
+            ->will($this->onConsecutiveCalls($a[0]['author'],$a[1]['author']));
         $ks->expects($this->any())
             ->method('getCena')
-            ->will($this->onConsecutiveCalls($a[0]['cena'],$a[1]['cena']));
+            ->will($this->onConsecutiveCalls($a[0]['price'],$a[1]['price']));
 
         $repository = $this
             ->getMockBuilder('Doctrine\ORM\EntityRepository')
@@ -159,7 +159,7 @@ class CartTest extends \PHPUnit_Framework_TestCase
         $entityManager
             ->expects($this->any())
             ->method('getRepository')
-            ->with('AppBundle:Ksiazka')
+            ->with('AppBundle:Book')
             ->will($this->returnValue($repository));
 
         return $entityManager;

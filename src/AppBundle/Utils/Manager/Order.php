@@ -12,8 +12,6 @@ use Doctrine\ORM\EntityManager;
 use AppBundle\Utils\Manager\Filter;
 use AppBundle\Exception\OrderNotFoundException;
 
-
-
 class Order
 {
     private $em;
@@ -34,11 +32,11 @@ class Order
 
     public function prepareOrder(TableDetails $td_f)
     {
-        if($td_f->getQuery()){
+        if ($td_f->getQuery()) {
             return $this->prepareOrderRepositoryForFilterSelected($td_f);
         }
-        
-        if(!$td_f->getQuery()) {
+
+        if (!$td_f->getQuery()) {
             return $this->prepareOrderRepositoryUnfiltered($td_f);
         }
     }
@@ -46,12 +44,14 @@ class Order
     private function prepareOrderRepositoryForFilterSelected(TableDetails $td)
     {
         $this->tableDetails = $td;
-        $repo = $this->em->getRepository('AppBundle:Zamowienie')
+        $repo = $this->em->getRepository('AppBundle:Order')
             ->findByXOrderedByY(
                 $td->getQuery(),
                 $td->getColumnsSortOrder(),
                 $td->getColumnSort());
-        if (!$repo) {throw new OrderNotFoundException('Nie można znaleźć zamówień');}
+        if (!$repo) {
+            throw new OrderNotFoundException('Nie można znaleźć zamówień');
+        }
 
         return $repo;
     }
@@ -59,11 +59,13 @@ class Order
     private function prepareOrderRepositoryUnfiltered(TableDetails $td)
     {
         $this->tableDetails = $td;
-        $repo = $this->em->getRepository('AppBundle:Zamowienie')
+        $repo = $this->em->getRepository('AppBundle:Order')
             ->findAllOrderedByY(
                 $td->getColumnsSortOrder(),
                 $td->getColumnSort());
-        if (!$repo) {throw new OrderNotFoundException('Nie można znaleźć zamówień');}
+        if (!$repo) {
+            throw new OrderNotFoundException('Nie można znaleźć zamówień');
+        }
 
         return $repo;
     }

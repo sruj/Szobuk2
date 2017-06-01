@@ -8,13 +8,13 @@
 
 namespace AppBundle\Tests\Utils\Order;
 
-use AppBundle\Entity\Zamowienie;
+use AppBundle\Entity\Order;
 use AppBundle\Utils\Order\OrderManager;
-use AppBundle\Entity\Klient;
+use AppBundle\Entity\Client;
 use AppBundle\Entity\Status;
-use AppBundle\Entity\Ksiazka;
+use AppBundle\Entity\Book;
 use Doctrine\Common\Collections\Collection;
-use My\UserBundle\Entity\User;
+use UserBundle\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -62,7 +62,7 @@ class OrderManagerTest extends \PHPUnit_Framework_TestCase
 
     protected function getKlientMock()
     {
-        return $this->createMock(Klient::class); //stub (wszystko zwraca null)
+        return $this->createMock(Client::class); //stub (wszystko zwraca null)
     }
 
     protected function getUserMock()
@@ -133,10 +133,10 @@ class OrderManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function getEntityManagerMock($exception=false)
     {
-        $ksiazka = $this->createMock(Ksiazka::class); //stub (wszystko zwraca null)
+        $ksiazka = $this->createMock(Book::class); //stub (wszystko zwraca null)
         $status = $this->createMock(Status::class); //stub (wszystko zwraca null)
-        $zamowienie = $this->createMock(Zamowienie::class);
-        if($exception){$zamowienie=null;};
+        $order = $this->createMock(Order::class);
+        if($exception){$order=null;};
 
         $ksiazkaRepository = $this
             ->getMockBuilder('Doctrine\ORM\EntityRepository')
@@ -156,15 +156,15 @@ class OrderManagerTest extends \PHPUnit_Framework_TestCase
             ->expects($this->any())
             ->method('find')
             ->will($this->returnValue($status));
-        $zamowienieRepository = $this
+        $orderRepository = $this
             ->getMockBuilder('Doctrine\ORM\EntityRepository')
             ->disableOriginalConstructor()
             ->setMethods(['find'])
             ->getMock();
-        $zamowienieRepository
+        $orderRepository
             ->expects($this->any())
             ->method('find')
-            ->will($this->returnValue($zamowienie));
+            ->will($this->returnValue($order));
 
         $entityManager = $this
             ->getMockBuilder(EntityManager::class)
@@ -176,15 +176,15 @@ class OrderManagerTest extends \PHPUnit_Framework_TestCase
             ->method('getRepository')
             ->withConsecutive(
                 $this->equalTo('AppBundle:Status'),
-                $this->equalTo('AppBundle:Ksiazka'),
-                $this->equalTo('AppBundle:Ksiazka'),
-                $this->equalTo('AppBundle:Zamowienie')
+                $this->equalTo('AppBundle:Book'),
+                $this->equalTo('AppBundle:Book'),
+                $this->equalTo('AppBundle:Order')
             )
             ->willReturnOnConsecutiveCalls(
                 $statusRepository,
                 $ksiazkaRepository,
                 $ksiazkaRepository,
-                $zamowienieRepository
+                $orderRepository
             );
         $entityManager->expects($this->any())
             ->method('persist')

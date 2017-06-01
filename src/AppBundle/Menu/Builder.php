@@ -2,7 +2,7 @@
 
 namespace AppBundle\Menu;
 
-use AppBundle\Entity\Ksiazka;
+use AppBundle\Entity\Book;
 use Knp\Menu\FactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
@@ -20,12 +20,12 @@ class Builder implements ContainerAwareInterface
         $em = $this->container->get('doctrine')->getManager();
 
 
-        /** @var Ksiazka $book */
-        $book = $em->getRepository('AppBundle:Ksiazka')->findOneBy(['tytul'=>'Accountant']);
+        /** @var Book $book */
+        $book = $em->getRepository('Book.php')->findOneBy(['title'=>'Accountant']);
 
 
         $menu->addChild('Accountant', array(
-            'route' => 'ksiazka_show',
+            'route' => 'book_show',
             'routeParameters' => array('id' => $book->getIsbn())
         ));
 

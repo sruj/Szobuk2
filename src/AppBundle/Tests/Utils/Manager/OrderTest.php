@@ -85,7 +85,7 @@ class OrderTest extends \PHPUnit_Framework_TestCase
         $entityManager
             ->expects($this->once())
             ->method('getRepository')
-            ->with('AppBundle:Zamowienie')
+            ->with('AppBundle:Order')
             ->will($this->returnValue($repository));
 
         return $entityManager;
@@ -118,7 +118,7 @@ class OrderTest extends \PHPUnit_Framework_TestCase
         $entityManager
             ->expects($this->once())
             ->method('getRepository')
-            ->with('AppBundle:Zamowienie')
+            ->with('AppBundle:Order')
             ->will($this->returnValue($repository));
 
         return $entityManager;

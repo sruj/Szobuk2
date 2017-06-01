@@ -1,0 +1,55 @@
+{% extends '::layout.html.twig' %}
+{% block contents %}
+    <!--start nav-level-->
+    <div class="nav-level">
+        <div class="nav-level-layout wrapper">
+            <div class="navigation">
+                {{ knp_pagination_render(orders) }}
+            </div>
+        </div>
+    </div>
+    <!--end nav-level-->
+
+    <div class="yield"><!--start yield-->
+        <div class="allBooks">
+            <table class="Table-all">
+                <thead>
+                <tr>
+                    <th class="thLeftBorderRadius">{{ knp_pagination_sortable(orders, 'nr. Zam', 'z.idorder') }}</th>
+                    <th>{{ knp_pagination_sortable(orders, 'Data złożenia', 'z.orderdate') }}</th>
+                    <th>ilość prod.</th>
+                    <th>kwota razem</th>
+                    <th>{{ knp_pagination_sortable(orders, 'status z.', 's.status') }}</th>
+                    <th class="thRightBorderRadius">Szczególy</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for order in orders %}
+                    <tr>
+                        <td>{{ order.idorder }}</td>
+                        <td>{{ order.orderdate|date('Y-m-d H:i:s') }}</td>
+                        {% set quantity = 0 %}
+                        {% set kwota = 0 %}
+                        {% for orderProduct in order.OrderProducts %}
+                            {% set quantity = quantity + orderProduct.quantity %}
+                            {% set kwota = kwota + orderProduct.quantity * orderProduct.productprice %}
+                        {% endfor %}
+                        <td>{{ quantity }}</td>
+                        <td>{{ kwota|number_format(2) }}</td>
+                        <td>{{ order.idstatus.status }}</td>
+                        <td>
+                            <a href="{{ path('order_panel',{ 'orderid': order.idorder, 'userid': app.user.id }) }}">więcej</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <div class="wrapper">
+                <div class="navigation">
+                    {{ knp_pagination_render(orders) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

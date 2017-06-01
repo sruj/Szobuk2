@@ -42,44 +42,44 @@ class FormsManagerExtendedTest extends \PHPUnit_Framework_TestCase
             ->method('isValid')
             ->willReturn(true);
 
-        $DataZamForm = $this->getMockBuilder(\Symfony\Component\Form\Form::class)
+        $OrderDateForm = $this->getMockBuilder(\Symfony\Component\Form\Form::class)
             ->disableOriginalConstructor()
             ->setMethods(array('get', 'getData', 'format','isValid'))
             ->getMock();
-        $DataZamForm->expects($this->any())
+        $OrderDateForm->expects($this->any())
             ->method('get')
             ->will($this->returnSelf());
-        $DataZamForm->expects($this->any())
+        $OrderDateForm->expects($this->any())
             ->method('getData')
             ->will($this->returnSelf());
-        $DataZamForm->expects($this->any())
+        $OrderDateForm->expects($this->any())
             ->method('format')
             ->will($this->returnValue('2016'));
-        $DataZamForm->expects($this->any())
+        $OrderDateForm->expects($this->any())
             ->method('isValid')
             ->willReturn(true);
 
-        $NrKlientaForm = $this->getMockBuilder(\Symfony\Component\Form\Form::class)
+        $ClientNumberForm = $this->getMockBuilder(\Symfony\Component\Form\Form::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('get', 'getData', 'getIdklient','isValid'))
+            ->setMethods(array('get', 'getData', 'getIdclient','isValid'))
             ->getMock();
-        $NrKlientaForm->expects($this->any())
+        $ClientNumberForm->expects($this->any())
             ->method('get')
             ->will($this->returnSelf());
-        $NrKlientaForm->expects($this->any())
+        $ClientNumberForm->expects($this->any())
             ->method('getData')
             ->will($this->returnSelf());
-        $NrKlientaForm->expects($this->any())
-            ->method('getIdklient')
+        $ClientNumberForm->expects($this->any())
+            ->method('getIdclient')
             ->will($this->returnValue('2'));
-        $NrKlientaForm->expects($this->any())
+        $ClientNumberForm->expects($this->any())
             ->method('isValid')
             ->willReturn(true);
 
         $tmpForms = [
             'StatusForm' => $StatusForm,
-            'DataZamForm' => $DataZamForm,
-            'NrKlientaForm' => $NrKlientaForm,
+            'OrderDateForm' => $OrderDateForm,
+            'ClientNumberForm' => $ClientNumberForm,
         ];
 
         $this->object = new FormsManagerExtended($tmpForms);
@@ -94,11 +94,11 @@ class FormsManagerExtendedTest extends \PHPUnit_Framework_TestCase
     }
 
     public function testIsDataZamFormValid(){
-        $this->assertTrue($this->object->isDataZamFormValid());
+        $this->assertTrue($this->object->isOrderDateFormValid());
     }
 
-    public function testIsNrKlientaFormValid(){
-        $this->assertTrue($this->object->isNrKlientaFormValid());
+    public function testIsClientNumberFormValid(){
+        $this->assertTrue($this->object->isClientNumberFormValid());
     }
 
     public function testGetIdStatusFromStatusForm(){
@@ -106,15 +106,15 @@ class FormsManagerExtendedTest extends \PHPUnit_Framework_TestCase
     }
 
     public function testGetOdFromDataZamForm(){
-        $this->assertEquals('2016',$this->object->getOdFromDataZamForm());
+        $this->assertEquals('2016',$this->object->getFromFromOrderDateForm());
     }
 
     public function testGetDoFromDataZamForm(){
-        $this->assertEquals('2016',$this->object->getDoFromDataZamForm());
+        $this->assertEquals('2016',$this->object->getToFromOrderDateForm());
     }
 
     public function testGetIdKlientFromNrKlientaForm(){
-        $this->assertEquals('2',$this->object->getIdKlientFromNrKlientaForm());
+        $this->assertEquals('2',$this->object->getIdClientFromClientNumberForm());
     }
 
 

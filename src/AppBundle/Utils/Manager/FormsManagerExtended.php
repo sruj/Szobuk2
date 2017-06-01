@@ -18,49 +18,53 @@ class FormsManagerExtended extends FormsManager
         return $this->forms['StatusForm']->isValid();
     }
 
-    public function isDataZamFormValid()
+    public function isOrderDateFormValid()
     {
-        return $this->forms['DataZamForm']->isValid();
+        return $this->forms['OrderDateForm']->isValid();
     }
 
-    public function isNrKlientaFormValid()
+    public function isClientNumberFormValid()
     {
-        return $this->forms['NrKlientaForm']->isValid();
+        return $this->forms['ClientNumberForm']->isValid();
     }
 
     public function getIdStatusFromStatusForm()
     {
         $idstatus = $this->forms['StatusForm']->get('status')->getData()->getIdstatus();
-        if(isset($idstatus)){
+        if (isset($idstatus)) {
             return $idstatus;
         }
+
         throw new NoValidDataInFormException('Nie można odczytać danych z formularza');
     }
 
-    public function getOdFromDataZamForm()
+    public function getFromFromOrderDateForm()
     {
-        $od = $this->forms['DataZamForm']->get('od')->getData()->format('Y-m-d H:i:s');
-        if(isset($od)){
-            return $od;
+        $from = $this->forms['OrderDateForm']->get('od')->getData()->format('Y-m-d H:i:s');
+        if (isset($from)) {
+            return $from;
         }
+
         throw new NoValidDataInFormException('Nie można odczytać danych z formularza');
     }
 
-    public function getDoFromDataZamForm()
+    public function getToFromOrderDateForm()
     {
-        $do = $this->forms['DataZamForm']->get('do')->getData()->format('Y-m-d H:i:s');
-        if(isset($do)){
-            return $do;
+        $to = $this->forms['OrderDateForm']->get('do')->getData()->format('Y-m-d H:i:s');
+        if (isset($to)) {
+            return $to;
         }
+
         throw new NoValidDataInFormException('Nie można odczytać danych z formularza');
     }
 
-    public function getIdKlientFromNrKlientaForm()
+    public function getIdClientFromClientNumberForm()
     {
-        $idklient = $this->forms['NrKlientaForm']->get('idklient')->getData()->getIdklient();
-        if(isset($idklient)){
-            return $idklient;
+        $idclient = $this->forms['ClientNumberForm']->get('idclient')->getData()->getIdclient();
+        if (isset($idclient)) {
+            return $idclient;
         }
+
         throw new NoValidDataInFormException('Nie można odczytać danych z formularza');
     }
 
