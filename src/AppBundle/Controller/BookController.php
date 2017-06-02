@@ -328,7 +328,7 @@ class BookController extends Controller
     }
 
     /**
-     * books wg wybranego parametru. (np /ksiazka/publishyear-1956/show_books_by)
+     * books wg wybranego parametru. (np /book/publishyear-1956/show_books_by)
      *
      * @Route("/{findby}-{what}/show-books-by", name="show_books_by")
      * @Method("GET")

@@ -126,7 +126,7 @@ class CartControllerTest extends WebTestCase
 //    public function testBuyProductByRegisteredCustomer()
 //    {
 //        $client = static::createClient();
-//        $crawler = $client->request('GET', '/ksiazka/');
+//        $crawler = $client->request('GET', '/book/');
 //
 //        $link = $crawler
 //            ->filter('a:contains("Accountant")')

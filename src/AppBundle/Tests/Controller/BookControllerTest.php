@@ -74,16 +74,16 @@ class BookControllerTest extends WebTestCase
 
         // Fill in the form and submit it
         $form = $crawler->selectButton('Dodaj')->form(array(
-            'appbundle_ksiazka[title]' => 'TytułTF',
-            'appbundle_ksiazka[author]' => 'AutorTF',
-            'appbundle_ksiazka[description]' => 'opisTF',
-            'appbundle_ksiazka[isbn]' => '978-1-56619-909-4',
-            'appbundle_ksiazka[price]' => '38.00',
-            'appbundle_ksiazka[picture]' => 'book_nr_101.jpg',
-            'appbundle_ksiazka[print]' => 'Brown',
-            'appbundle_ksiazka[publishyear]' => '1984',
-            'appbundle_ksiazka[idcategory]' => '3',
-            'appbundle_ksiazka[quantity]' => '10',
+            'appbundle_book[title]' => 'TytułTF',
+            'appbundle_book[author]' => 'AutorTF',
+            'appbundle_book[description]' => 'opisTF',
+            'appbundle_book[isbn]' => '978-1-56619-909-4',
+            'appbundle_book[price]' => '38.00',
+            'appbundle_book[picture]' => 'book_nr_101.jpg',
+            'appbundle_book[print]' => 'Brown',
+            'appbundle_book[publishyear]' => '1984',
+            'appbundle_book[idcategory]' => '3',
+            'appbundle_book[quantity]' => '10',
         ));
 
         $client->submit($form);
@@ -95,8 +95,8 @@ class BookControllerTest extends WebTestCase
         $crawler = $client->click($crawler->selectLink('Edycja')->link());
 
         $form = $crawler->selectButton('Zaktualizuj')->form(array(
-            'appbundle_ksiazka[title]' => 'Foo',
-            'appbundle_ksiazka[author]' => 'Bar',
+            'appbundle_book[title]' => 'Foo',
+            'appbundle_book[author]' => 'Bar',
         ));
 
         $client->submit($form);

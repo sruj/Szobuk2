@@ -44,7 +44,7 @@ class BookType extends AbstractType {
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Ksiazka'
+            'data_class' => 'AppBundle\Entity\Book'
         ));
     }
 
@@ -52,7 +52,7 @@ class BookType extends AbstractType {
      * @return string
      */
     public function getName() {
-        return 'appbundle_ksiazka';
+        return 'appbundle_book';
     }
 
 }

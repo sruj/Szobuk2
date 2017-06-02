@@ -34,30 +34,30 @@
         </thead>
         <tbody class="cartmenuTable">
 
-                {% for ksiazka in books %}
+                {% for book in books %}
                     <tr>
                         <td>
-                            <a href="{{ path('book_show',{'id':ksiazka.isbn}) }} ">
-                                {{ ksiazka.isbn}}</a>
+                            <a href="{{ path('book_show',{'id':book.isbn}) }} ">
+                                {{ book.isbn}}</a>
                         </td>
                         <td>
-                            {{ ksiazka.title }}
+                            {{ book.title }}
                         </td>
                         <td>
-                            {{ ksiazka.author }}
+                            {{ book.author }}
                         </td>
                         <td class="cena">
-                            {{ ksiazka.price }}
+                            {{ book.price }}
                         </td>
                         <td>
-                            <input type="number" class="inputISBN inputQuantity" min="1" max="10" size="2" name="{{ ksiazka.isbn }}" 
-                                   value="{{ ksiazka.quantity }}" onchange="aktualizacjaKoszyka()"><br>
+                            <input type="number" class="inputISBN inputQuantity" min="1" max="10" size="2" name="{{ book.isbn }}"
+                                   value="{{ book.quantity }}" onchange="aktualizacjaKoszyka()"><br>
                         </td>
                         <td class="razem" align="right">
-                            {{ (ksiazka.quantity*ksiazka.price)|number_format(2)}}
+                            {{ (book.quantity*book.price)|number_format(2)}}
                         </td>
                         <td>
-                            <a class="tableUsunButton" href="{{ path('cart_menu',{'deleteisbn':ksiazka.isbn}) }} ">
+                            <a class="tableUsunButton" href="{{ path('cart_menu',{'deleteisbn':book.isbn}) }} ">
                                 usuń</a>
                         </td>
                     </tr>

@@ -36,13 +36,13 @@ class DefaultController extends Controller
             $renderData = [];
             if (!empty($books)) {
                 $i = 0;
-                /** @var Book $ksiazka */
-                foreach ($books as $ksiazka) {
-                    $books[$i]['isbn'] = $ksiazka->getIsbn();
-                    $books[$i]['author'] = $ksiazka->getAuthor();
-                    $books[$i]['title'] = $ksiazka->getTitle();
-                    $books[$i]['price'] = $ksiazka->getPrice();
-                    $books[$i]['picture'] = $ksiazka->getPicture();
+                /** @var Book $book */
+                foreach ($books as $book) {
+                    $books[$i]['isbn'] = $book->getIsbn();
+                    $books[$i]['author'] = $book->getAuthor();
+                    $books[$i]['title'] = $book->getTitle();
+                    $books[$i]['price'] = $book->getPrice();
+                    $books[$i]['picture'] = $book->getPicture();
                     $i++;
                 }
                 $renderData['template'] = $this->renderView('AppBundle:Default:index2.html.twig', array(

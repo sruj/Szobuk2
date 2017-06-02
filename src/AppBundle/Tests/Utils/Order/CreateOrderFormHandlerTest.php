@@ -8,6 +8,8 @@
 
 namespace AppBundle\Tests\Utils\Order;
 
+use AppBundle\Entity\Book;
+use AppBundle\Entity\Status;
 use AppBundle\Utils\Order\CreateOrderFormHandler;
 use AppBundle\Utils\Order\OrderManager;
 use Symfony\Component\Form\FormInterface;
@@ -196,18 +198,18 @@ class CreateOrderFormHandlerTest extends \PHPUnit_Framework_TestCase
      */
     public function getEntityManagerMock()
     {
-        $ksiazka = $this->createMock(Ksiazka::class); //stub (wszystko zwraca null)
+        $book = $this->createMock(Book::class); //stub (wszystko zwraca null)
         $status = $this->createMock(Status::class); //stub (wszystko zwraca null)
 
-        $ksiazkaRepository = $this
+        $bookRepository = $this
             ->getMockBuilder('Doctrine\ORM\EntityRepository')
             ->disableOriginalConstructor()
             ->setMethods(['find'])
             ->getMock();
-        $ksiazkaRepository
+        $bookRepository
             ->expects($this->any())
             ->method('find')
-            ->will($this->returnValue($ksiazka));
+            ->will($this->returnValue($book));
         $statusRepository = $this
             ->getMockBuilder('Doctrine\ORM\EntityRepository')
             ->disableOriginalConstructor()
@@ -233,8 +235,8 @@ class CreateOrderFormHandlerTest extends \PHPUnit_Framework_TestCase
             )
             ->willReturnOnConsecutiveCalls(
                 $statusRepository,
-                $ksiazkaRepository,
-                $ksiazkaRepository
+                $bookRepository,
+                $bookRepository
             );
         $entityManager->expects($this->any())
             ->method('persist')

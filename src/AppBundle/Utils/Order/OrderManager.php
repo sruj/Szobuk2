@@ -90,17 +90,17 @@ class OrderManager
     {
         foreach ($cart as $isbn => $quantity)
         {
-            /** @var Book $ksiazka */
-            $ksiazka = $this->em
+            /** @var Book $book */
+            $book = $this->em
                 ->getRepository('AppBundle:Book')
                 ->find($isbn);
             $zm = new OrderProduct();
             $zm->setIdorder($order);
-            $zm->setIsbn($ksiazka);
-            $zm->setTitle($ksiazka->getTitle());
-            $zm->setAuthor($ksiazka->getAuthor());
-            $zm->setProductprice($ksiazka->getPrice());
-            $zm->setPublishYear($ksiazka->getPublishYear());
+            $zm->setIsbn($book);
+            $zm->setTitle($book->getTitle());
+            $zm->setAuthor($book->getAuthor());
+            $zm->setProductprice($book->getPrice());
+            $zm->setPublishYear($book->getPublishYear());
             $zm->setQuantity($quantity);
             $this->em->persist($zm);
         }
