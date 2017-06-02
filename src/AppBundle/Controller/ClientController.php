@@ -13,7 +13,7 @@ class ClientController extends Controller {
     /**
      * @Route("/purchase-history", name="purchase_history")
      */
-    public function historiaPanelAction(Request $request) 
+    public function historyPanelAction(Request $request)
     {
         if
         (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {

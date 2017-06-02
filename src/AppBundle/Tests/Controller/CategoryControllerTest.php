@@ -59,7 +59,7 @@ class CategoryControllerTest extends WebTestCase
         ));
 
         $client->submit($form);
-        $crawler = $client->followRedirect();
+        $crawler = $client->followRedirect(); //todo: nie przechodzi tego , nie wiem dlaczego, w aplikacji nie ma problemu, musi tu byc jakiś błąd w nazwach po refaktoyzacji PL-EN
 
         // Check data in the show view
         $this->assertGreaterThan(0, $crawler->filter('div:contains("Kategoria: Test")')->count(), 'Missing element a:contains("Category: Test")');

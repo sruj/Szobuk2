@@ -20,7 +20,7 @@ services:
         tags:
             -  { name: knp_paginator.injectable, paginator: '@knp_paginator' }
 
-    app.order_repository:
+    app.purchase_repository:
         class: "%app.order.paginator_aware.class%"
         factory: ["@doctrine", getRepository]
         arguments: ["%app.order.entity%"]
