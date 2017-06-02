@@ -79,7 +79,7 @@ class BookRepository extends EntityRepository implements PaginatorAwareInterface
 
     public function queryWyszukiwarka($word)
     {
-        $repository = $this->_em->getRepository('Book.php');
+        $repository = $this->_em->getRepository('AppBundle:Book');
 
         return $query = $repository->createQueryBuilder('a')
             ->where('a.title LIKE :word')

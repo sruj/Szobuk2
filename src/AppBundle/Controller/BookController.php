@@ -136,7 +136,7 @@ class BookController extends Controller
      */
     public function showAction($id)
     {
-        $entity = $this->getDoctrine()->getRepository('Book.php')->find($id);
+        $entity = $this->getDoctrine()->getRepository('AppBundle:Book')->find($id);
         if (!$entity) {
             throw new BookNotFoundException('Nie można znaleźć książki');
         }
@@ -159,7 +159,7 @@ class BookController extends Controller
      */
     public function editAction($id)
     {
-        $entity = $this->getDoctrine()->getRepository('Book.php')->find($id);
+        $entity = $this->getDoctrine()->getRepository('AppBundle:Book')->find($id);
         if (!$entity) {
             throw new BookNotFoundException('Nie można znaleźć książki.');
         }
@@ -204,7 +204,7 @@ class BookController extends Controller
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('Book.php')->find($id);
+        $entity = $em->getRepository('AppBundle:Book')->find($id);
         if (!$entity) {
             throw $this->createNotFoundException('Nie można znaleźć książki.');
         }
@@ -238,7 +238,7 @@ class BookController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('Book.php')->find($id);
+            $entity = $em->getRepository('AppBundle:Book')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Nie można znaleźć książki.');

@@ -15,7 +15,7 @@ class NrKlientaType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('idclient', 'entity', array(
-                    'class' => 'Client.php',
+                    'class' => 'AppBundle\Entity\Client',
                     'placeholder' => 'Nr klienta',
                     'label' => false,
                     'property' => 'idclient',

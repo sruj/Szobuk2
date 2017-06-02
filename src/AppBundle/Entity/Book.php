@@ -331,7 +331,7 @@ class Book
     /**
      * @return int
      */
-    public function getGuantity()
+    public function getQuantity()
     {
         return $this->quantity;
     }

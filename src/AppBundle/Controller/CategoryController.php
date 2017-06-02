@@ -24,7 +24,7 @@ class CategoryController extends Controller
      */
     public function indexAction()
     {
-        $entities = $this->getDoctrine()->getRepository('Category.php')->findAll();
+        $entities = $this->getDoctrine()->getRepository('AppBundle:Category')->findAll();
 
         return $this->render('AppBundle:Category:index.html.twig', [
             'entities' => $entities
@@ -195,7 +195,7 @@ class CategoryController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('Category.php')->find($id);
+            $entity = $em->getRepository('AppBundle:Category')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Nie można znaleźć kategorii.');

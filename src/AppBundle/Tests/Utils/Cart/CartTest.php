@@ -94,8 +94,8 @@ class CartTest extends \PHPUnit_Framework_TestCase
     {
         $cart = ['111'=>'1','222'=>'1'];
         $expected = [
-            ['isbn'=>'111','tytul'=>'foo1','author'=>'bar1','price'=>'1111','quantity'=>'1'],
-            ['isbn'=>'222','tytul'=>'foo2','author'=>'bar2','price'=>'2222','quantity'=>'1']
+            ['isbn'=>'111','title'=>'foo1','author'=>'bar1','price'=>'1111','quantity'=>'1'],
+            ['isbn'=>'222','title'=>'foo2','author'=>'bar2','price'=>'2222','quantity'=>'1']
         ];
         $em = $this->getEntityManager();
         $obj = new Cart($em);
@@ -121,8 +121,8 @@ class CartTest extends \PHPUnit_Framework_TestCase
     public function getEntityManager()
     {
         $a = [
-            ['isbn'=>'111','tytul'=>'foo1','author'=>'bar1','price'=>'1111',],
-            ['isbn'=>'222','tytul'=>'foo2','author'=>'bar2','price'=>'2222']
+            ['isbn'=>'111','title'=>'foo1','author'=>'bar1','price'=>'1111',],
+            ['isbn'=>'222','title'=>'foo2','author'=>'bar2','price'=>'2222']
         ];
 
         $ks = $this->getMockBuilder(Book::class)
@@ -133,7 +133,7 @@ class CartTest extends \PHPUnit_Framework_TestCase
             ->will($this->onConsecutiveCalls($a[0]['isbn'],$a[1]['isbn']));
         $ks->expects($this->any())
             ->method('getTitle')
-            ->will($this->onConsecutiveCalls($a[0]['tytul'],$a[1]['tytul']));
+            ->will($this->onConsecutiveCalls($a[0]['title'],$a[1]['title']));
         $ks->expects($this->any())
             ->method('getAuthor')
             ->will($this->onConsecutiveCalls($a[0]['author'],$a[1]['author']));

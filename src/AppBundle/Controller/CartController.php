@@ -25,7 +25,7 @@ class CartController extends Controller
      */
     public function addToCartAction(Request $request, $isbn)
     {
-        $entity = $this->getDoctrine()->getRepository('Book.php')->find($isbn);
+        $entity = $this->getDoctrine()->getRepository('AppBundle:Book')->find($isbn);
 
         if (!$entity) {
             throw new BookNotFoundException('Książka z numerem isbn: ' . $isbn . ' nie istnieje w bazie');
@@ -163,7 +163,7 @@ class CartController extends Controller
         }
 
         $client = $this->getDoctrine()
-            ->getRepository('Client.php')
+            ->getRepository('AppBundle:Client')
             ->findOneBy(['idlogin' => $this->getUser() ? $this->getUser()->getId() : false]);                                                // zalogowany wypełniał kiedyś formularz
         if (!$client) {
             $client = new Client();
