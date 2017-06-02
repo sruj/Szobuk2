@@ -6,10 +6,10 @@
  * Time: 14:42
  */
 
-namespace AppBundle\Tests\Utils\Order;
+namespace AppBundle\Tests\Utils\Purchase;
 
-use AppBundle\Entity\Order;
-use AppBundle\Utils\Order\OrderManager;
+use AppBundle\Entity\Purchase;
+use AppBundle\Utils\Purchase\PurchaseManager;
 use AppBundle\Entity\Client;
 use AppBundle\Entity\Status;
 use AppBundle\Entity\Book;
@@ -22,40 +22,40 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Doctrine\ORM\EntityManager;
-use AppBundle\Event\OrderPlacedEvent;
-use AppBundle\Exception\OrderNotFoundException;
+use AppBundle\Event\PurchasePlacedEvent;
+use AppBundle\Exception\PurchaseNotFoundException;
 
-class OrderManagerTest extends \PHPUnit_Framework_TestCase
+class PurchaseManagerTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testPlaceOrderReturnOrderForGivenCart()
+    public function testPlacePurchaseReturnPurchaseForGivenCart()
     {
         $em = $this->getEntityManagerMock();
         $storage = $this->getTokenStorageMock();
         $checker = $this->getAuthorizationCheckerMock();
         $session = $this->getSessionMock();
-        $dispatcher = $this->getEventDispatcherMock(OrderPlacedEvent::NAME);
+        $dispatcher = $this->getEventDispatcherMock(PurchasePlacedEvent::NAME);
         
-        $obj = new OrderManager($em,$storage,$checker,$session,$dispatcher);
+        $obj = new PurchaseManager($em,$storage,$checker,$session,$dispatcher);
         $cart = ['111'=>'4','222'=>'3'];
 
-        $this->assertTrue($obj->placeOrder($this->getKlientMock(),$cart));
+        $this->assertTrue($obj->placePurchase($this->getKlientMock(),$cart));
     }
 
 
-    public function testPlaceOrderReturnExceptionForGivenCart()
+    public function testPlacePurchaseReturnExceptionForGivenCart()
     {
-        $this->expectException(OrderNotFoundException::class);
+        $this->expectException(PurchaseNotFoundException::class);
         $em = $this->getEntityManagerMock(true);
         $storage = $this->getTokenStorageMock();
         $checker = $this->getAuthorizationCheckerMock();
         $session = $this->getSessionMock();
-        $dispatcher = $this->getEventDispatcherMock(OrderPlacedEvent::NAME);
+        $dispatcher = $this->getEventDispatcherMock(PurchasePlacedEvent::NAME);
 
-        $obj = new OrderManager($em,$storage,$checker,$session,$dispatcher);
+        $obj = new PurchaseManager($em,$storage,$checker,$session,$dispatcher);
         $cart = ['111'=>'4','222'=>'3'];
 
-        $obj->placeOrder($this->getKlientMock(),$cart);
+        $obj->placePurchase($this->getKlientMock(),$cart);
     }
 
 
@@ -135,7 +135,7 @@ class OrderManagerTest extends \PHPUnit_Framework_TestCase
     {
         $book = $this->createMock(Book::class); //stub (wszystko zwraca null)
         $status = $this->createMock(Status::class); //stub (wszystko zwraca null)
-        $order = $this->createMock(Order::class);
+        $order = $this->createMock(Purchase::class);
         if($exception){$order=null;};
 
         $bookRepository = $this
@@ -178,7 +178,7 @@ class OrderManagerTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo('AppBundle:Status'),
                 $this->equalTo('AppBundle:Book'),
                 $this->equalTo('AppBundle:Book'),
-                $this->equalTo('AppBundle:Order')
+                $this->equalTo('AppBundle:Purchase')
             )
             ->willReturnOnConsecutiveCalls(
                 $statusRepository,

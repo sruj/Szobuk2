@@ -21,10 +21,10 @@ class SortTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider getTableConfigDetails
      */
-    public function testGetColumnsSortOrder($columnSortOrder,$columnSort,$expected)
+    public function testGetColumnsSortPurchase($columnSortPurchase,$columnSort,$expected)
     {
-        $object = new Sort($this->getTableDetails($columnSort, $columnSortOrder));
-        $result = $object->getColumnsSortOrder();
+        $object = new Sort($this->getTableDetails($columnSort, $columnSortPurchase));
+        $result = $object->getColumnsSortPurchase();
         $this->assertEquals( $expected, $result );
     }
 
@@ -40,7 +40,7 @@ class SortTest extends \PHPUnit_Framework_TestCase
             ->method('getColumnSort')
             ->will($this->returnValue($columnSort));
         $TableDetails->expects($this->any())
-            ->method('getColumnsSortOrder')
+            ->method('getColumnsSortPurchase')
             ->will($this->returnValue($columnsSortOrder));
 
         return $TableDetails;

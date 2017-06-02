@@ -27,7 +27,7 @@ class DataZamType extends AbstractType {
             ;
 //        $builder
 //                ->add('orderdate', 'entity', array(
-//                    'class' => 'AppBundle:Order',
+//                    'class' => 'AppBundle:Purchase',
 //                    'placeholder' => 'Od',
 //                    'label' => false,
 //                     'property' => 'orderdate',
@@ -41,7 +41,7 @@ class DataZamType extends AbstractType {
 //     */
 //    public function setDefaultOptions(OptionsResolverInterface $resolver) {
 //        $resolver->setDefaults(array(
-//            'data_class' => 'AppBundle\Entity\Order'
+//            'data_class' => 'AppBundle\Entity\Purchase'
 //        ));
 //    }
 

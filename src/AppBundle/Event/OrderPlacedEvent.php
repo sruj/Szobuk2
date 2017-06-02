@@ -9,21 +9,21 @@
 namespace AppBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
-use AppBundle\Entity\Order;
+use AppBundle\Entity\Purchase;
 
 
-class OrderPlacedEvent extends Event
+class PurchasePlacedEvent extends Event
 {
     const NAME = 'order.placed';
 
     protected $order;
 
-    public function __construct(Order $order)
+    public function __construct(Purchase $order)
     {
         $this->order = $order;
     }
 
-    public function getOrder()
+    public function getPurchase()
     {
         return $this->order;
     }

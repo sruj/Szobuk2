@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Shipment
  *
- * @ORM\Table(name="shipment", indexes={@ORM\Index(name="idOrder_idx", columns={"idOrder"})})
+ * @ORM\Table(name="shipment", indexes={@ORM\Index(name="idPurchase_idx", columns={"idPurchase"})})
  * @ORM\Entity
  */
 class Shipment
@@ -59,11 +59,11 @@ class Shipment
 
 
     /**
-     * @var \AppBundle\Entity\Order
+     * @var \AppBundle\Entity\Purchase
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Order", inversedBy="shipments")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Purchase", inversedBy="shipments")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idOrder", referencedColumnName="idOrder")
+     *   @ORM\JoinColumn(name="idPurchase", referencedColumnName="idPurchase")
      * })
      */
     private $idorder;
@@ -196,10 +196,10 @@ class Shipment
     /**
      * Set idorder
      *
-     * @param \AppBundle\Entity\Order $idorder
+     * @param \AppBundle\Entity\Purchase $idorder
      * @return Shipment
      */
-    public function setIdorder(\AppBundle\Entity\Order $idorder = null)
+    public function setIdorder(\AppBundle\Entity\Purchase $idorder = null)
     {
         $this->idorder = $idorder;
 
@@ -209,7 +209,7 @@ class Shipment
     /**
      * Get idorder
      *
-     * @return \AppBundle\Entity\Order
+     * @return \AppBundle\Entity\Purchase
      */
     public function getIdorder()
     {

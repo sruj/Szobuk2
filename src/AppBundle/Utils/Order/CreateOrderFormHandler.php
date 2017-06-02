@@ -6,20 +6,20 @@
  * Time: 23:29
  */
 
-namespace AppBundle\Utils\Order;
+namespace AppBundle\Utils\Purchase;
 
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Exception\CartNotInSessionException;
 
-class CreateOrderFormHandler
+class CreatePurchaseFormHandler
 {
     private $orderManager;
 
     /**
-     * CreateOrderFormHandler constructor.
+     * CreatePurchaseFormHandler constructor.
      */
-    public function __construct(OrderManager $orderManager)
+    public function __construct(PurchaseManager $orderManager)
     {
         $this->orderManager = $orderManager;
     }
@@ -30,7 +30,7 @@ class CreateOrderFormHandler
      * @return bool
      * @throws \Exception
      */
-    public function handleFormAndPlaceOrder(FormInterface $form, Request $request)
+    public function handleFormAndPlacePurchase(FormInterface $form, Request $request)
     {
         $form->handleRequest($request);
 
@@ -44,7 +44,7 @@ class CreateOrderFormHandler
 
         $cart = $request->getSession()->get('cart');
         $deliveryClientData = $form->getData();
-        $this->orderManager->placeOrder($deliveryClientData, $cart);
+        $this->orderManager->placePurchase($deliveryClientData, $cart);
 
         return true;
     }

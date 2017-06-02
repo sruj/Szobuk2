@@ -6,7 +6,7 @@
  * Time: 23:53
  */
 
-namespace AppBundle\Utils\Order;
+namespace AppBundle\Utils\Purchase;
 
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -14,14 +14,14 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Doctrine\ORM\EntityManager;
 use AppBundle\Entity\Client;
-use AppBundle\Entity\Order;
-use AppBundle\Entity\OrderProduct;
+use AppBundle\Entity\Purchase;
+use AppBundle\Entity\PurchaseProduct;
 use AppBundle\Entity\Status;
 use AppBundle\Entity\Book;
-use AppBundle\Event\OrderPlacedEvent;
-use AppBundle\Exception\OrderNotFoundException;
+use AppBundle\Event\PurchasePlacedEvent;
+use AppBundle\Exception\PurchaseNotFoundException;
 
-class OrderManager
+class PurchaseManager
 {
     private $storage;
     private $checker;
@@ -30,7 +30,7 @@ class OrderManager
     private $dispatcher;
 
     /**
-     * OrderManager constructor.
+     * PurchaseManager constructor.
      */
     public function __construct(EntityManager $em,TokenStorage $storage,AuthorizationCheckerInterface $checker,Session $session,EventDispatcherInterface $dispatcher)
     {
@@ -46,47 +46,47 @@ class OrderManager
      * @return bool
      * @throws
      */
-    public function placeOrder($client, $cart)
+    public function placePurchase($client, $cart)
     {
-        $order = $this->prepareOrderDetailsToPersistInDatabase($client);
-        $this->createOrderProductsAndPersistInDatabase($order,$cart);
+        $order = $this->preparePurchaseDetailsToPersistInDatabase($client);
+        $this->createPurchaseProductsAndPersistInDatabase($order,$cart);
         $this->em->persist($client);
         $this->em->persist($order);
         $this->em->flush();
-        $this->dispatchEventWithOrderToSendConfirmedEmails($order);
-        $this->addFlashBagWithOrderIdVariable($order);
+        $this->dispatchEventWithPurchaseToSendConfirmedEmails($order);
+        $this->addFlashBagWithPurchaseIdVariable($order);
         
-        if (empty($this->em->getRepository('Order.php')->find($order))){
-            throw new OrderNotFoundException('Nie udało się złożyć zamówienia.');
+        if (empty($this->em->getRepository('Purchase.php')->find($order))){
+            throw new PurchaseNotFoundException('Nie udało się złożyć zamówienia.');
         }
         return true;
     }
 
     /**
      * @param Client $client
-     * @return Order
+     * @return Purchase
      */
-    private function prepareOrderDetailsToPersistInDatabase($client)
+    private function preparePurchaseDetailsToPersistInDatabase($client)
     {
         if ($this->checker->isGranted('IS_AUTHENTICATED_FULLY')) {
             $client->setIdlogin($this->getUser());
         }
 
-        $order = new Order();
+        $order = new Purchase();
         $order->setIdclient($client);
         $status = $this->em
             ->getRepository('AppBundle:Status')
             ->find('1');
         $order->setIdstatus($status);
-        $order->setOrderdatecurrent();
+        $order->setPurchasedatecurrent();
         
         return $order;
     }
 
     /**
-     * @param Order $order
+     * @param Purchase $order
      */
-    private function createOrderProductsAndPersistInDatabase($order,$cart)
+    private function createPurchaseProductsAndPersistInDatabase($order,$cart)
     {
         foreach ($cart as $isbn => $quantity)
         {
@@ -94,7 +94,7 @@ class OrderManager
             $book = $this->em
                 ->getRepository('AppBundle:Book')
                 ->find($isbn);
-            $zm = new OrderProduct();
+            $zm = new PurchaseProduct();
             $zm->setIdorder($order);
             $zm->setIsbn($book);
             $zm->setTitle($book->getTitle());
@@ -112,9 +112,9 @@ class OrderManager
     }
     
     /**
-     * @param Order $order
+     * @param Purchase $order
      */
-    private function addFlashBagWithOrderIdVariable($order){
+    private function addFlashBagWithPurchaseIdVariable($order){
         $idzamowienia = $order->getIdorder();
         $this->session->getFlashBag()->add(
             'idorder',
@@ -122,11 +122,11 @@ class OrderManager
     }
 
     /**
-     * @param Order $order
+     * @param Purchase $order
      */
-    private function dispatchEventWithOrderToSendConfirmedEmails($order)
+    private function dispatchEventWithPurchaseToSendConfirmedEmails($order)
     {
-        $this->dispatcher->dispatch(OrderPlacedEvent::NAME, new OrderPlacedEvent($order));
+        $this->dispatcher->dispatch(PurchasePlacedEvent::NAME, new PurchasePlacedEvent($order));
     }
 
 

@@ -119,7 +119,7 @@ class Book
     private $idcategory;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\OrderProduct", mappedBy="isbn")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\PurchaseProduct", mappedBy="isbn")
      */
     protected $orderProducts;
 
@@ -388,10 +388,10 @@ class Book
     /**
      * Add orderProducts
      *
-     * @param \AppBundle\Entity\OrderProduct $orderProducts
+     * @param \AppBundle\Entity\PurchaseProduct $orderProducts
      * @return Book
      */
-    public function addOrderProducts(\AppBundle\Entity\OrderProduct $orderProducts)
+    public function addPurchaseProducts(\AppBundle\Entity\PurchaseProduct $orderProducts)
     {
         $this->orderProducts[] = $orderProducts;
 
@@ -401,9 +401,9 @@ class Book
     /**
      * Remove orderProducts
      *
-     * @param \AppBundle\Entity\OrderProduct $orderProducts
+     * @param \AppBundle\Entity\PurchaseProduct $orderProducts
      */
-    public function removeOrderProducts(\AppBundle\Entity\OrderProduct $orderProducts)
+    public function removePurchaseProducts(\AppBundle\Entity\PurchaseProduct $orderProducts)
     {
         $this->orderProducts->removeElement($orderProducts);
     }
@@ -413,7 +413,7 @@ class Book
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getOrderProducts()
+    public function getPurchaseProducts()
     {
         return $this->orderProducts;
     }

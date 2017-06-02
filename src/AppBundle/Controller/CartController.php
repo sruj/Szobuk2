@@ -9,7 +9,7 @@ use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\DeliveryType;
 use AppBundle\Entity\Client;
-use AppBundle\Entity\Order;
+use AppBundle\Entity\Purchase;
 use AppBundle\Entity\Book;
 use AppBundle\Exception\BookNotFoundException;
 use AppBundle\Exception\CartNotInSessionException;
@@ -173,7 +173,7 @@ class CartController extends Controller
             'attr' => ['class' => 'form_dostawa']]);
 
         $app_form_handler_order = $this->get('app.form_handler.order');
-        if ($app_form_handler_order->handleFormAndPlaceOrder($form, $request)) {
+        if ($app_form_handler_order->handleFormAndPlacePurchase($form, $request)) {
             return $this->redirectToRoute('confirm');
         };
 
@@ -195,9 +195,9 @@ class CartController extends Controller
         }
 
         $order = $this->getDoctrine()
-            ->getRepository('Order.php')
+            ->getRepository('Purchase.php')
             ->find($idorder[0]);
-        $produkty = $order->getOrderProducts();
+        $produkty = $order->getPurchaseProducts();
         $suma = $request->getSession()->get('sum');
 
         return $this->render('AppBundle:Cart:confirm.html.twig', [

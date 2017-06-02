@@ -37,7 +37,7 @@ class BookController extends Controller
         }
 
         //[-Formularz Główny-]Ładowanie $ordersList - zmiennej potrzebnej do głównego formularza.
-        //To kluczowa zmienna. Obiekt OrderList() to kolekcja formularzy
+        //To kluczowa zmienna. Obiekt PurchaseList() to kolekcja formularzy
         //pozwala na stworzenie wielu formularzy z jednym buttonem
         $bookList = new BookList();
         foreach ($books as $book) {

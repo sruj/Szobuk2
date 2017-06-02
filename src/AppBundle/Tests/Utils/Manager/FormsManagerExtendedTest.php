@@ -42,20 +42,20 @@ class FormsManagerExtendedTest extends \PHPUnit_Framework_TestCase
             ->method('isValid')
             ->willReturn(true);
 
-        $OrderDateForm = $this->getMockBuilder(\Symfony\Component\Form\Form::class)
+        $PurchaseDateForm = $this->getMockBuilder(\Symfony\Component\Form\Form::class)
             ->disableOriginalConstructor()
             ->setMethods(array('get', 'getData', 'format','isValid'))
             ->getMock();
-        $OrderDateForm->expects($this->any())
+        $PurchaseDateForm->expects($this->any())
             ->method('get')
             ->will($this->returnSelf());
-        $OrderDateForm->expects($this->any())
+        $PurchaseDateForm->expects($this->any())
             ->method('getData')
             ->will($this->returnSelf());
-        $OrderDateForm->expects($this->any())
+        $PurchaseDateForm->expects($this->any())
             ->method('format')
             ->will($this->returnValue('2016'));
-        $OrderDateForm->expects($this->any())
+        $PurchaseDateForm->expects($this->any())
             ->method('isValid')
             ->willReturn(true);
 
@@ -78,7 +78,7 @@ class FormsManagerExtendedTest extends \PHPUnit_Framework_TestCase
 
         $tmpForms = [
             'StatusForm' => $StatusForm,
-            'OrderDateForm' => $OrderDateForm,
+            'PurchaseDateForm' => $PurchaseDateForm,
             'ClientNumberForm' => $ClientNumberForm,
         ];
 
@@ -94,7 +94,7 @@ class FormsManagerExtendedTest extends \PHPUnit_Framework_TestCase
     }
 
     public function testIsDataZamFormValid(){
-        $this->assertTrue($this->object->isOrderDateFormValid());
+        $this->assertTrue($this->object->isPurchaseDateFormValid());
     }
 
     public function testIsClientNumberFormValid(){
@@ -106,11 +106,11 @@ class FormsManagerExtendedTest extends \PHPUnit_Framework_TestCase
     }
 
     public function testGetOdFromDataZamForm(){
-        $this->assertEquals('2016',$this->object->getFromFromOrderDateForm());
+        $this->assertEquals('2016',$this->object->getFromFromPurchaseDateForm());
     }
 
     public function testGetDoFromDataZamForm(){
-        $this->assertEquals('2016',$this->object->getToFromOrderDateForm());
+        $this->assertEquals('2016',$this->object->getToFromPurchaseDateForm());
     }
 
     public function testGetIdKlientFromNrKlientaForm(){

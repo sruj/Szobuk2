@@ -9,7 +9,7 @@
 namespace AppBundle\Exception;
 
 
-class OrderNotFoundException extends RepositoryNotFoundExeption
+class PurchaseNotFoundException extends RepositoryNotFoundExeption
 {
 
 }

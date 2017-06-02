@@ -10,9 +10,9 @@ namespace AppBundle\Utils\Manager;
 
 use Doctrine\ORM\EntityManager;
 use AppBundle\Utils\Manager\Filter;
-use AppBundle\Exception\OrderNotFoundException;
+use AppBundle\Exception\PurchaseNotFoundException;
 
-class Order
+class Purchase
 {
     private $em;
     private $tableDetails;
@@ -30,41 +30,41 @@ class Order
         return $this->tableDetails;
     }
 
-    public function prepareOrder(TableDetails $td_f)
+    public function preparePurchase(TableDetails $td_f)
     {
         if ($td_f->getQuery()) {
-            return $this->prepareOrderRepositoryForFilterSelected($td_f);
+            return $this->preparePurchaseRepositoryForFilterSelected($td_f);
         }
 
         if (!$td_f->getQuery()) {
-            return $this->prepareOrderRepositoryUnfiltered($td_f);
+            return $this->preparePurchaseRepositoryUnfiltered($td_f);
         }
     }
 
-    private function prepareOrderRepositoryForFilterSelected(TableDetails $td)
+    private function preparePurchaseRepositoryForFilterSelected(TableDetails $td)
     {
         $this->tableDetails = $td;
-        $repo = $this->em->getRepository('AppBundle:Order')
-            ->findByXOrderedByY(
+        $repo = $this->em->getRepository('AppBundle:Purchase')
+            ->findByXPurchasedByY(
                 $td->getQuery(),
-                $td->getColumnsSortOrder(),
+                $td->getColumnsSortPurchase(),
                 $td->getColumnSort());
         if (!$repo) {
-            throw new OrderNotFoundException('Nie można znaleźć zamówień');
+            throw new PurchaseNotFoundException('Nie można znaleźć zamówień');
         }
 
         return $repo;
     }
 
-    private function prepareOrderRepositoryUnfiltered(TableDetails $td)
+    private function preparePurchaseRepositoryUnfiltered(TableDetails $td)
     {
         $this->tableDetails = $td;
-        $repo = $this->em->getRepository('AppBundle:Order')
-            ->findAllOrderedByY(
-                $td->getColumnsSortOrder(),
+        $repo = $this->em->getRepository('AppBundle:Purchase')
+            ->findAllPurchasedByY(
+                $td->getColumnsSortPurchase(),
                 $td->getColumnSort());
         if (!$repo) {
-            throw new OrderNotFoundException('Nie można znaleźć zamówień');
+            throw new PurchaseNotFoundException('Nie można znaleźć zamówień');
         }
 
         return $repo;

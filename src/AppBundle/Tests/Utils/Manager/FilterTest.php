@@ -128,7 +128,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
             ->method('getIdentifier')
             ->will($this->returnValue($identifier));
         $TableDetails->expects($this->any())
-            ->method('getColumnsSortOrder')
+            ->method('getColumnsSortPurchase')
             ->will($this->returnValue($columnsSortOrder));
         $TableDetails->expects($this->any())
             ->method('getColumnSort')
@@ -146,7 +146,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
     protected function getFormsManagerExtended(
         $isAnyValid = true,
         $isStatusFormValid = false,
-        $isOrderDateFormValid = false,
+        $isPurchaseDateFormValid = false,
         $isClientNumberFormValid = false
     )
     {
@@ -160,8 +160,8 @@ class FilterTest extends \PHPUnit_Framework_TestCase
             ->method('isStatusFormValid')
             ->will($this->returnValue($isStatusFormValid));
         $FormsManagerExtended->expects($this->any())
-            ->method('isOrderDateFormValid')
-            ->will($this->returnValue($isOrderDateFormValid));
+            ->method('isPurchaseDateFormValid')
+            ->will($this->returnValue($isPurchaseDateFormValid));
         $FormsManagerExtended->expects($this->any())
             ->method('isClientNumberFormValid')
             ->will($this->returnValue($isClientNumberFormValid));

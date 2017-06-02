@@ -7,12 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use DateTime;
 
 /**
- * Order
+ * Purchase
  *
- * @ORM\Table(name="order", indexes={@ORM\Index(name="idClient_idx", columns={"idClient"}), @ORM\Index(name="idStatus_idx", columns={"idStatus"})})
- * @ORM\Entity(repositoryClass="AppBundle\Repository\OrderRepository")
+ * @ORM\Table(name="`order`", indexes={@ORM\Index(name="idClient_idx", columns={"idClient"}), @ORM\Index(name="idStatus_idx", columns={"idStatus"})})
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\PurchaseRepository")
  */
-class Order
+class Purchase
 {
     /**
      * @var \DateTime
@@ -24,7 +24,7 @@ class Order
     /**
      * @var integer
      *
-     * @ORM\Column(name="idOrder", type="integer")
+     * @ORM\Column(name="idPurchase", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -61,7 +61,7 @@ class Order
     protected $shipments;
 
     /**
-     * @ORM\OneToMany(targetEntity="OrderProduct", mappedBy="idorder")
+     * @ORM\OneToMany(targetEntity="PurchaseProduct", mappedBy="idorder")
      */
     protected $orderProducts;
 
@@ -70,10 +70,10 @@ class Order
      * Ustawienie aktualnej daty-godziny.
      * wystarczy na rzecz instancji zamówienia odpalić te funkcję
      * i w bazie danych  dodana bedzie aktualna data zakupu
-     *  $order = new Order();
-     *  $order->setOrderdatecurrent();
+     *  $order = new Purchase();
+     *  $order->setPurchasedatecurrent();
      */
-    public function setOrderdatecurrent()
+    public function setPurchasedatecurrent()
     {
         $this->orderdate = new DateTime();
 
@@ -84,9 +84,9 @@ class Order
      * Set orderdate
      *
      * @param \DateTime $orderdate
-     * @return Order
+     * @return Purchase
      */
-    public function setOrderdate($orderdate)
+    public function setPurchasedate($orderdate)
     {
         $this->orderdate = $orderdate;
 
@@ -98,7 +98,7 @@ class Order
      *
      * @return \DateTime
      */
-    public function getOrderdate()
+    public function getPurchasedate()
     {
         return $this->orderdate;
     }
@@ -117,7 +117,7 @@ class Order
      * Set idstatus
      *
      * @param \AppBundle\Entity\Status $idstatus
-     * @return Order
+     * @return Purchase
      */
     public function setIdstatus(\AppBundle\Entity\Status $idstatus = null)
     {
@@ -140,7 +140,7 @@ class Order
      * Set idclient
      *
      * @param \AppBundle\Entity\Client $idclient
-     * @return Order
+     * @return Purchase
      */
     public function setIdclient(\AppBundle\Entity\Client $idclient = null)
     {
@@ -169,7 +169,7 @@ class Order
      * Add invoices
      *
      * @param \AppBundle\Entity\Invoice $invoices
-     * @return Order
+     * @return Purchase
      */
     public function addInvoices(\AppBundle\Entity\Invoice $invoices)
     {
@@ -202,7 +202,7 @@ class Order
      * Add shipments
      *
      * @param \AppBundle\Entity\Shipment $shipments
-     * @return Order
+     * @return Purchase
      */
     public function addShipments(\AppBundle\Entity\Shipment $shipments)
     {
@@ -234,10 +234,10 @@ class Order
     /**
      * Add orderProducts
      *
-     * @param \AppBundle\Entity\OrderProduct $orderProducts
-     * @return Order
+     * @param \AppBundle\Entity\PurchaseProduct $orderProducts
+     * @return Purchase
      */
-    public function addOrderProduct(\AppBundle\Entity\OrderProduct $orderProduct)
+    public function addPurchaseProduct(\AppBundle\Entity\PurchaseProduct $orderProduct)
     {
         if (!$this->orderProducts->contains($orderProduct)) {
             $this->orderProducts[] = $orderProduct;
@@ -249,9 +249,9 @@ class Order
     /**
      * Remove orderProducts
      *
-     * @param \AppBundle\Entity\OrderProduct $orderProducts
+     * @param \AppBundle\Entity\PurchaseProduct $orderProducts
      */
-    public function removeOrderProducts(\AppBundle\Entity\OrderProduct $orderProduct)
+    public function removePurchaseProducts(\AppBundle\Entity\PurchaseProduct $orderProduct)
     {
         $this->orderProducts->removeElement($orderProduct);
     }
@@ -261,7 +261,7 @@ class Order
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getOrderProducts()
+    public function getPurchaseProducts()
     {
         return $this->orderProducts;
     }

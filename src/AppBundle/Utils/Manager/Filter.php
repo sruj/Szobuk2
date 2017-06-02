@@ -121,7 +121,7 @@ class Filter
 
             return $td;
         }
-        if ($fms->isOrderDateFormValid()) {
+        if ($fms->isPurchaseDateFormValid()) {
             $td->setFilter('data');
             $td->setFilterField('data');
 

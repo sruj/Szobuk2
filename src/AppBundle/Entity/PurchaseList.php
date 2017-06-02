@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
-class OrderList
+class PurchaseList
 {
     private $orders;
 
@@ -14,7 +14,7 @@ class OrderList
         $this->orders = new ArrayCollection();
     }
 
-    public function getOrders()
+    public function getPurchases()
     {
         return $this->orders;
     }

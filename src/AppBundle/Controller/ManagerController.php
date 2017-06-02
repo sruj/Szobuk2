@@ -10,10 +10,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Form\OrderType;
-use AppBundle\Form\OrderListType;
-use AppBundle\Entity\Order;
-use AppBundle\Entity\OrderList;
+use AppBundle\Form\PurchaseType;
+use AppBundle\Form\PurchaseListType;
+use AppBundle\Entity\Purchase;
+use AppBundle\Entity\PurchaseList;
 use AppBundle\Entity\Status;
 use AppBundle\Form\Filter\StatusType;
 use AppBundle\Form\Filter\DataZamType;
@@ -57,7 +57,7 @@ class ManagerController extends Controller
     public function panelSortAction(Request $request, $columnsSortOrder, $columnSort, $query, $filterField, $filter, $identifier)
     {
         $tableDetails = new TableDetails();
-        $tableDetails->setColumnsSortOrder($columnsSortOrder);
+        $tableDetails->setColumnsSortPurchase($columnsSortOrder);
         $tableDetails->setColumnSort($columnSort);
         $tableDetails->setFilterField($filterField);
         $tableDetails->setQuery($query);
@@ -65,7 +65,7 @@ class ManagerController extends Controller
         $tableDetails->setIdentifier($identifier);
 
         $sort = new Sort($tableDetails);
-        $tableDetails->setColumnsSortOrder($sort->getColumnsSortOrder());
+        $tableDetails->setColumnsSortPurchase($sort->getColumnsSortPurchase());
 
         $statusForm = $this->createForm(StatusType::class, null, array(
             'action' => $this->generateUrl('panel_sort_from_details')));
@@ -80,29 +80,29 @@ class ManagerController extends Controller
 
         $tmpForms = [
             'StatusForm' => $statusForm,
-            'OrderDateForm' => $orderDataorm,
+            'PurchaseDateForm' => $orderDataorm,
             'ClientNumberForm' => $clientaNumberForm,
         ];
 
         $forms = new FormsManagerExtended($tmpForms);
         $fltrqry = new FilterQuery();
         $fltr = new Filter();
-        $managerOrder = $this->get('app.manager_order');
+        $managerPurchase = $this->get('app.manager_order');
 
         $tds = $fltr->prepareFilterAndQuery($tableDetails, $forms, $fltrqry);
-        $orders = $managerOrder->prepareOrder($tds);
-        $tableDetails = $managerOrder->getTableDetails();
+        $orders = $managerPurchase->preparePurchase($tds);
+        $tableDetails = $managerPurchase->getTableDetails();
 
         $ordersProducts = $this->getDoctrine()
-            ->getRepository('OrderProduct.php')
+            ->getRepository('PurchaseProduct.php')
             ->findAll();
 
-        $ordersList = new OrderList();
+        $ordersList = new PurchaseList();
         foreach ($orders as $order) {
-            $ordersList->getOrders()->add($order);
+            $ordersList->getPurchases()->add($order);
         }
 
-        $form = $this->createForm(OrderListType::class, $ordersList);
+        $form = $this->createForm(PurchaseListType::class, $ordersList);
         $form->handleRequest($request);
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -117,10 +117,10 @@ class ManagerController extends Controller
             'filterField' => $tableDetails->getFilterField(),
             'query' => $tableDetails->getQuery(),
             'identifier' => $tableDetails->getIdentifier(),
-            'columnsSortOrder' => $tableDetails->getColumnsSortOrder(),
+            'columnsSortOrder' => $tableDetails->getColumnsSortPurchase(),
             'form' => $form->createView(),
             'StatusForm' => $statusForm->createView(),
-            'OrderDateForm' => $orderDataorm->createView(),
+            'PurchaseDateForm' => $orderDataorm->createView(),
             'ClientNumberForm' => $clientaNumberForm->createView(),
         ]);
     }

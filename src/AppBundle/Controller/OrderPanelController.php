@@ -7,11 +7,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\Filter\StatusType;
-use AppBundle\Form\OrderType;
+use AppBundle\Form\PurchaseType;
 use AppBundle\Entity\Status;
-use AppBundle\Exception\OrderNotFoundException;
+use AppBundle\Exception\PurchaseNotFoundException;
 
-class OrderPanelController extends Controller
+class PurchasePanelController extends Controller
 {
 
     /**
@@ -28,16 +28,16 @@ class OrderPanelController extends Controller
 
         if ($adminLogged) {
             $orderRepo = $this->getDoctrine()
-                ->getRepository('Order.php')
+                ->getRepository('Purchase.php')
                 ->findoneBy(array('idorder' => $orderid));
             if (!$orderRepo) {
-                throw new OrderNotFoundException('Nie ma w bazie danych szukanego zamówienia.');
+                throw new PurchaseNotFoundException('Nie ma w bazie danych szukanego zamówienia.');
             }
         }
 
         if (!$adminLogged) {
             $orderRepo = $this->getDoctrine()
-                ->getRepository('Order.php')
+                ->getRepository('Purchase.php')
                 ->findoneBy(array('idorder' => $orderid, 'idclient' => $userid));
             if (!$orderRepo) {
                 throw $this->createAccessDeniedException();
@@ -45,10 +45,10 @@ class OrderPanelController extends Controller
         }
 
         $products = $this->getDoctrine()
-            ->getRepository('OrderProduct.php')
+            ->getRepository('PurchaseProduct.php')
             ->findBy(array('idorder' => $orderid));
 
-        $statusForm = $this->createForm(OrderType::class, $orderRepo)->add('zmień status', 'submit');
+        $statusForm = $this->createForm(PurchaseType::class, $orderRepo)->add('zmień status', 'submit');
         $statusForm->handleRequest($request);
         if ($statusForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -56,7 +56,7 @@ class OrderPanelController extends Controller
             $em->flush();
         }
 
-        return $this->render('AppBundle:OrderPanel:details.html.twig', [
+        return $this->render('AppBundle:PurchasePanel:details.html.twig', [
             'order' => $orderRepo, 'products' => $products,
             'statusForm' => $statusForm->createView()]);
     }

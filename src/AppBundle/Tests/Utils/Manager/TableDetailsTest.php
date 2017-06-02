@@ -20,8 +20,8 @@ class TableDetailsTest extends \PHPUnit_Framework_TestCase
         $expect = $input = 'foo';
         $o->setIdentifier($input);
         $this->assertEquals($expect,$o->getIdentifier());
-        $o->setColumnsSortOrder($input);
-        $this->assertEquals($expect,$o->getColumnsSortOrder());
+        $o->setColumnsSortPurchase($input);
+        $this->assertEquals($expect,$o->getColumnsSortPurchase());
         $o->setQuery($input);
         $this->assertEquals($expect,$o->getQuery());
         $o->setColumnSort($input);

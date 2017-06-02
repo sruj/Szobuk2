@@ -168,7 +168,7 @@ class Client
 
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Order", mappedBy="idclient")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Purchase", mappedBy="idclient")
      */
     protected $orders;
 
@@ -444,10 +444,10 @@ class Client
     /**
      * Add orders
      *
-     * @param \AppBundle\Entity\Order $orders
+     * @param \AppBundle\Entity\Purchase $orders
      * @return Client
      */
-    public function addOrders(\AppBundle\Entity\Order $orders)
+    public function addPurchases(\AppBundle\Entity\Purchase $orders)
     {
         $this->orders[] = $orders;
 
@@ -457,9 +457,9 @@ class Client
     /**
      * Remove orders
      *
-     * @param \AppBundle\Entity\Order $orders
+     * @param \AppBundle\Entity\Purchase $orders
      */
-    public function removeOrders(\AppBundle\Entity\Order $orders)
+    public function removePurchases(\AppBundle\Entity\Purchase $orders)
     {
         $this->orders->removeElement($orders);
     }
@@ -469,7 +469,7 @@ class Client
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getOrders()
+    public function getPurchases()
     {
         return $this->orders;
     }

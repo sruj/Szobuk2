@@ -2,7 +2,7 @@
 
 namespace AppBundle\Repository;
 
-use AppBundle\Entity\Order;
+use AppBundle\Entity\Purchase;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\EntityManager;
@@ -13,7 +13,7 @@ use Knp\Component\Pager\Paginator;
 /**
  *
  */
-class OrderRepository extends EntityRepository implements PaginatorAwareInterface
+class PurchaseRepository extends EntityRepository implements PaginatorAwareInterface
 {
     /**
      * @var
@@ -31,7 +31,7 @@ class OrderRepository extends EntityRepository implements PaginatorAwareInterfac
 
 
     /**
-     * Łączę entity Order ze Status by móc w szablonie sortować wg Status.
+     * Łączę entity Purchase ze Status by móc w szablonie sortować wg Status.
      * (Muszę tak robić gdyż tradycyjny zapis z.idstatus.status wywala błąd przy próbie sortowania według tegoż).
      *
      * @return Query
@@ -40,7 +40,7 @@ class OrderRepository extends EntityRepository implements PaginatorAwareInterfac
     {
         $query = $this->_em->createQuery('
                 SELECT z,s 
-                FROM AppBundle:Order z 
+                FROM AppBundle:Purchase z 
                 JOIN z.idstatus s 
                 WHERE z.idclient = :idclient 
                 ORDER BY z.idorder ASC
@@ -61,9 +61,9 @@ class OrderRepository extends EntityRepository implements PaginatorAwareInterfac
     }
 
 
-    public function findAllOrderedByY($sortArr,$OrderBy)
+    public function findAllPurchasedByY($sortArr,$PurchaseBy)
     {
-        switch ($OrderBy) {
+        switch ($PurchaseBy) {
             case 'orderdate':
                 $sort=$sortArr['Data'];
                 break;
@@ -79,15 +79,15 @@ class OrderRepository extends EntityRepository implements PaginatorAwareInterfac
 
         return $this->_em
             ->createQuery(
-                'SELECT z FROM AppBundle:Order z ORDER BY z.'.$OrderBy.' '.$sort.''
+                'SELECT z FROM AppBundle:Purchase z ORDER BY z.'.$PurchaseBy.' '.$sort.''
             )
             ->getResult();
     }
 
 
-    public function findByXOrderedByY($query,$sortArr,$OrderBy='idorder')
+    public function findByXPurchasedByY($query,$sortArr,$PurchaseBy='idorder')
     {
-        switch ($OrderBy) {
+        switch ($PurchaseBy) {
             case 'orderdate':
                 $sort=$sortArr['Data'];
                 break;
@@ -104,9 +104,9 @@ class OrderRepository extends EntityRepository implements PaginatorAwareInterfac
         return $this->_em
             ->createQuery(
                 'SELECT z 
-                FROM AppBundle:Order z 
+                FROM AppBundle:Purchase z 
                 WHERE z.'.$query .' 
-                ORDER BY z.'.$OrderBy.' '.$sort.''
+                ORDER BY z.'.$PurchaseBy.' '.$sort.''
             )
             ->getResult();
     }

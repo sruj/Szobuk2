@@ -4,7 +4,7 @@ namespace AppBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class OrderPanelControllerTest extends WebTestCase
+class PurchasePanelControllerTest extends WebTestCase
 {
     public function testHistoriapanelKlient()
     {

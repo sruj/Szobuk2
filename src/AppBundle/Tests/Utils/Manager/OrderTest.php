@@ -10,15 +10,15 @@ namespace AppBundle\Tests\Utils\Manager;
 
 use AppBundle\Utils\Manager\TableDetails;
 use Doctrine\ORM\EntityManagerInterface;
-use AppBundle\Utils\Manager\Order;
+use AppBundle\Utils\Manager\Purchase;
 
-class OrderTest extends \PHPUnit_Framework_TestCase
+class PurchaseTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testPrepareOrderForQueryTrue()
+    public function testPreparePurchaseForQueryTrue()
     {
-        $order = new Order($this->getEntityManagerX());
-        $res = $order->prepareOrder($this->getTableDetails(true));
+        $order = new Purchase($this->getEntityManagerX());
+        $res = $order->preparePurchase($this->getTableDetails(true));
         $expected = 'foo';
 
         $this->assertEquals($expected,$res);
@@ -27,10 +27,10 @@ class OrderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(TableDetails::class,$res2);
     }
 
-    public function testPrepareOrderForQueryFalse()
+    public function testPreparePurchaseForQueryFalse()
     {
-        $order = new Order($this->getEntityManagerAll());
-        $res = $order->prepareOrder($this->getTableDetails(false));
+        $order = new Purchase($this->getEntityManagerAll());
+        $res = $order->preparePurchase($this->getTableDetails(false));
         $expected = 'foo';
 
         $this->assertEquals($expected,$res);
@@ -51,7 +51,7 @@ class OrderTest extends \PHPUnit_Framework_TestCase
             ->method('getColumnSort')
             ->will($this->returnValue('foo'));
         $TableDetails->expects($this->any())
-            ->method('getColumnsSortOrder')
+            ->method('getColumnsSortPurchase')
             ->will($this->returnValue('foo'));
 
         return $TableDetails;
@@ -68,12 +68,12 @@ class OrderTest extends \PHPUnit_Framework_TestCase
         $repository = $this
             ->getMockBuilder('Doctrine\ORM\EntityRepository')
             ->disableOriginalConstructor()
-            ->setMethods(['findByXOrderedByY'])
+            ->setMethods(['findByXPurchasedByY'])
             ->getMock();
 
         $repository
             ->expects($this->once())
-            ->method('findByXOrderedByY')
+            ->method('findByXPurchasedByY')
             ->will($this->returnValue($queryExpectedValue));
 
         $entityManager = $this
@@ -85,7 +85,7 @@ class OrderTest extends \PHPUnit_Framework_TestCase
         $entityManager
             ->expects($this->once())
             ->method('getRepository')
-            ->with('AppBundle:Order')
+            ->with('AppBundle:Purchase')
             ->will($this->returnValue($repository));
 
         return $entityManager;
@@ -101,12 +101,12 @@ class OrderTest extends \PHPUnit_Framework_TestCase
         $repository = $this
             ->getMockBuilder('Doctrine\ORM\EntityRepository')
             ->disableOriginalConstructor()
-            ->setMethods(['findAllOrderedByY'])
+            ->setMethods(['findAllPurchasedByY'])
             ->getMock();
 
         $repository
             ->expects($this->once())
-            ->method('findAllOrderedByY')
+            ->method('findAllPurchasedByY')
             ->will($this->returnValue($queryExpectedValue));
 
         $entityManager = $this
@@ -118,7 +118,7 @@ class OrderTest extends \PHPUnit_Framework_TestCase
         $entityManager
             ->expects($this->once())
             ->method('getRepository')
-            ->with('AppBundle:Order')
+            ->with('AppBundle:Purchase')
             ->will($this->returnValue($repository));
 
         return $entityManager;

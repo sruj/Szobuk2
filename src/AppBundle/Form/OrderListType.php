@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class OrderListType extends AbstractType
+class PurchaseListType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -19,7 +19,7 @@ class OrderListType extends AbstractType
                 'orders',
                 'collection',
                 array(
-                    'type' => new \AppBundle\Form\OrderType(),
+                    'type' => new \AppBundle\Form\PurchaseType(),
                 ))
             ->add('zapisz', 'submit', array('label' => 'Zapisz zmiany'));
     }
@@ -30,7 +30,7 @@ class OrderListType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\OrderList'
+            'data_class' => 'AppBundle\Entity\PurchaseList'
         ));
     }
 

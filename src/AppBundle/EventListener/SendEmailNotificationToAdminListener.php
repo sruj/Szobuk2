@@ -8,7 +8,7 @@
 
 namespace AppBundle\EventListener;
 
-use AppBundle\Event\OrderPlacedEvent;
+use AppBundle\Event\PurchasePlacedEvent;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Swift_Mailer;
 
@@ -24,7 +24,7 @@ class SendEmailNotificationToAdminListener
         $this->session = $session;
     }
 
-    public function onOrderPlaced(OrderPlacedEvent $event)
+    public function onPurchasePlaced(PurchasePlacedEvent $event)
     {
         $body = $this->renderTemplate($event);
         $mailTo='chryplewiczpawel@gmail.com';
@@ -37,8 +37,8 @@ class SendEmailNotificationToAdminListener
         return $this->twig->render(
             'AppBundle:Cart:mail_confirmation_manager.html.twig',
             array(
-                'order'=>$event->getOrder(),
-                'produkty'=>$event->getOrder()->getOrderProducts(),
+                'order'=>$event->getPurchase(),
+                'produkty'=>$event->getPurchase()->getPurchaseProducts(),
                 'suma'=>$this->session->get('sum')
             )
         );

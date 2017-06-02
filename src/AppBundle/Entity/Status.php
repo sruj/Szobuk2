@@ -30,7 +30,7 @@ class Status
     private $idstatus;
 
     /**
-     * @ORM\OneToMany(targetEntity="Order", mappedBy="idstatus")
+     * @ORM\OneToMany(targetEntity="Purchase", mappedBy="idstatus")
      */
     protected $orders;
 
@@ -75,10 +75,10 @@ class Status
     /**
      * Add orders
      *
-     * @param \AppBundle\Entity\Order $orders
+     * @param \AppBundle\Entity\Purchase $orders
      * @return Status
      */
-    public function addOrders(\AppBundle\Entity\Order $orders)
+    public function addPurchases(\AppBundle\Entity\Purchase $orders)
     {
         $this->orders[] = $orders;
 
@@ -88,9 +88,9 @@ class Status
     /**
      * Remove orders
      *
-     * @param \AppBundle\Entity\Order $orders
+     * @param \AppBundle\Entity\Purchase $orders
      */
-    public function removeOrders(\AppBundle\Entity\Order $orders)
+    public function removePurchases(\AppBundle\Entity\Purchase $orders)
     {
         $this->orders->removeElement($orders);
     }
@@ -100,7 +100,7 @@ class Status
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getOrders()
+    public function getPurchases()
     {
         return $this->orders;
     }

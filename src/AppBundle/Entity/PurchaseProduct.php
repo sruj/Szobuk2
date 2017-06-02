@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * OrderProduct
+ * PurchaseProduct
  *
- * @ORM\Table(name="order_product", indexes={@ORM\Index(name="idOrder_idx", columns={"idOrder"}), @ORM\Index(name="isbn_idx", columns={"isbn"})})
+ * @ORM\Table(name="order_product", indexes={@ORM\Index(name="idPurchase_idx", columns={"idPurchase"}), @ORM\Index(name="isbn_idx", columns={"isbn"})})
  * @ORM\Entity
  */
-class OrderProduct
+class PurchaseProduct
 {
     /**
      * @var integer
@@ -51,7 +51,7 @@ class OrderProduct
     /**
      * @var integer
      *
-     * @ORM\Column(name="idOrderProduct", type="integer")
+     * @ORM\Column(name="idPurchaseProduct", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -68,11 +68,11 @@ class OrderProduct
     private $isbn;
 
     /**
-     * @var \AppBundle\Entity\Order
+     * @var \AppBundle\Entity\Purchase
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Order", inversedBy="orderProducts")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Purchase", inversedBy="orderProducts")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idOrder", referencedColumnName="idOrder")
+     *   @ORM\JoinColumn(name="idPurchase", referencedColumnName="idPurchase")
      * })
      */
     private $idorder;
@@ -81,7 +81,7 @@ class OrderProduct
      * Set quantity
      *
      * @param int $quantity
-     * @return OrderProduct
+     * @return PurchaseProduct
      */
     public function setQuantity($quantity)
     {
@@ -104,7 +104,7 @@ class OrderProduct
      * Set productprice
      *
      * @param string $productprice
-     * @return OrderProduct
+     * @return PurchaseProduct
      */
     public function setProductprice($productprice)
     {
@@ -127,7 +127,7 @@ class OrderProduct
      * Set publishyear
      *
      * @param string $publishyear
-     * @return OrderProduct
+     * @return PurchaseProduct
      */
     public function setPublishYear($publishyear)
     {
@@ -150,7 +150,7 @@ class OrderProduct
      * Set title
      *
      * @param string $title
-     * @return OrderProduct
+     * @return PurchaseProduct
      */
     public function setTitle($title)
     {
@@ -173,7 +173,7 @@ class OrderProduct
      * Set author
      *
      * @param string $author
-     * @return OrderProduct
+     * @return PurchaseProduct
      */
     public function setAuthor($author)
     {
@@ -206,7 +206,7 @@ class OrderProduct
      * Set isbn
      *
      * @param \AppBundle\Entity\Book $isbn
-     * @return OrderProduct
+     * @return PurchaseProduct
      */
     public function setIsbn(\AppBundle\Entity\Book $isbn = null)
     {
@@ -228,13 +228,13 @@ class OrderProduct
     /**
      * Set idorder
      *
-     * @param \AppBundle\Entity\Order $idorder
-     * @return OrderProduct
+     * @param \AppBundle\Entity\Purchase $idorder
+     * @return PurchaseProduct
      */
-    public function setIdorder(\AppBundle\Entity\Order $order = null)
+    public function setIdorder(\AppBundle\Entity\Purchase $order = null)
     {
         $this->idorder = $order;
-        $order->addOrderProduct($this);
+        $order->addPurchaseProduct($this);
 
         return $this;
     }
@@ -242,7 +242,7 @@ class OrderProduct
     /**
      * Get idorder
      *
-     * @return \AppBundle\Entity\Order
+     * @return \AppBundle\Entity\Purchase
      */
     public function getIdorder()
     {

@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Invoice - nieużywane
  *
- * @ORM\Table(name="invoice", indexes={@ORM\Index(name="idOrder_idx", columns={"idOrder"}), @ORM\Index(name="idMerchant_idx", columns={"idMerchant"})})
+ * @ORM\Table(name="invoice", indexes={@ORM\Index(name="idPurchase_idx", columns={"idPurchase"}), @ORM\Index(name="idMerchant_idx", columns={"idMerchant"})})
  * @ORM\Entity
  */
 class Invoice
@@ -40,11 +40,11 @@ class Invoice
     private $idmerchant;
 
     /**
-     * @var \AppBundle\Entity\Order
+     * @var \AppBundle\Entity\Purchase
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Order", inversedBy="invoices")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Purchase", inversedBy="invoices")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idOrder", referencedColumnName="idOrder")
+     *   @ORM\JoinColumn(name="idPurchase", referencedColumnName="idPurchase")
      * })
      */
     private $idorder;
@@ -108,10 +108,10 @@ class Invoice
     /**
      * Set idorder
      *
-     * @param \AppBundle\Entity\Order $idorder
+     * @param \AppBundle\Entity\Purchase $idorder
      * @return Invoice
      */
-    public function setIdorder(\AppBundle\Entity\Order $idorder = null)
+    public function setIdorder(\AppBundle\Entity\Purchase $idorder = null)
     {
         $this->idorder = $idorder;
 
@@ -121,7 +121,7 @@ class Invoice
     /**
      * Get idorder
      *
-     * @return \AppBundle\Entity\Order
+     * @return \AppBundle\Entity\Purchase
      */
     public function getIdorder()
     {

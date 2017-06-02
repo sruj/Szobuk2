@@ -18,9 +18,9 @@ class FormsManagerExtended extends FormsManager
         return $this->forms['StatusForm']->isValid();
     }
 
-    public function isOrderDateFormValid()
+    public function isPurchaseDateFormValid()
     {
-        return $this->forms['OrderDateForm']->isValid();
+        return $this->forms['PurchaseDateForm']->isValid();
     }
 
     public function isClientNumberFormValid()
@@ -38,9 +38,9 @@ class FormsManagerExtended extends FormsManager
         throw new NoValidDataInFormException('Nie można odczytać danych z formularza');
     }
 
-    public function getFromFromOrderDateForm()
+    public function getFromFromPurchaseDateForm()
     {
-        $from = $this->forms['OrderDateForm']->get('od')->getData()->format('Y-m-d H:i:s');
+        $from = $this->forms['PurchaseDateForm']->get('od')->getData()->format('Y-m-d H:i:s');
         if (isset($from)) {
             return $from;
         }
@@ -48,9 +48,9 @@ class FormsManagerExtended extends FormsManager
         throw new NoValidDataInFormException('Nie można odczytać danych z formularza');
     }
 
-    public function getToFromOrderDateForm()
+    public function getToFromPurchaseDateForm()
     {
-        $to = $this->forms['OrderDateForm']->get('do')->getData()->format('Y-m-d H:i:s');
+        $to = $this->forms['PurchaseDateForm']->get('do')->getData()->format('Y-m-d H:i:s');
         if (isset($to)) {
             return $to;
         }

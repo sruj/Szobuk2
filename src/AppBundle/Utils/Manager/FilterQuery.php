@@ -47,8 +47,8 @@ class FilterQuery implements IFilterQuery
         }
 
         if (!$td->getQuery()) {
-            $from = $forms->getFromFromOrderDateForm();
-            $to = $forms->getToFromOrderDateForm();
+            $from = $forms->getFromFromPurchaseDateForm();
+            $to = $forms->getToFromPurchaseDateForm();
             $td->setQuery("orderdate BETWEEN '" . $from . "' AND '" . $to . "'");
 
             return $td;

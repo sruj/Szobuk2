@@ -15,13 +15,13 @@ class Sort
 
     function __construct(TableDetails $tableConfigDetails)
     {
-        $this->columnsSortOrder = $tableConfigDetails->getColumnsSortOrder();
+        $this->columnsSortOrder = $tableConfigDetails->getColumnsSortPurchase();
         $this->column = $tableConfigDetails->getColumnSort();
 
-        $this->prepareColumnsSortOrder();
+        $this->prepareColumnsSortPurchase();
     }
 
-    private function prepareColumnsSortOrder()
+    private function prepareColumnsSortPurchase()
     {
         if (!($this->columnsSortOrder)) {
             $this->setAllNullNumerASC();
@@ -60,9 +60,9 @@ class Sort
     }
 
     /**
-     * [-Sortowanie-]W zależności od wartości zmiennej $OrderBy ustawia elementy tablicy
-     * $sortArr na 'null' poza elementem tablicy tożsamym z $OrderBy.
-     * Czyli jeśli $OrderBy=='orderdate' to ustawi $sortArr['Data']
+     * [-Sortowanie-]W zależności od wartości zmiennej $PurchaseBy ustawia elementy tablicy
+     * $sortArr na 'null' poza elementem tablicy tożsamym z $PurchaseBy.
+     * Czyli jeśli $PurchaseBy=='orderdate' to ustawi $sortArr['Data']
      */
     private function AscDescChanger()
     {
@@ -92,7 +92,7 @@ class Sort
     /**
      * @return array
      */
-    public function getColumnsSortOrder()
+    public function getColumnsSortPurchase()
     {
         return $this->columnsSortOrder;
     }

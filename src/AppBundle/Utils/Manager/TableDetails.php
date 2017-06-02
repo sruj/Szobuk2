@@ -20,7 +20,7 @@ class TableDetails
     /**
      * @return mixed
      */
-    public function getColumnsSortOrder()
+    public function getColumnsSortPurchase()
     {
         return $this->columnsSortOrder;
     }
@@ -28,7 +28,7 @@ class TableDetails
     /**
      * @param mixed $columnsSortOrder
      */
-    public function setColumnsSortOrder($columnsSortOrder)
+    public function setColumnsSortPurchase($columnsSortOrder)
     {
         $this->columnsSortOrder = $columnsSortOrder;
     }

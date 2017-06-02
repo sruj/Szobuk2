@@ -8,7 +8,7 @@ use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\DeliveryType;
 use AppBundle\Entity\Client;
-use AppBundle\Entity\Order;
+use AppBundle\Entity\Purchase;
 use AppBundle\Entity\Book;
 use AppBundle\Exception\BookNotFoundException;
 use AppBundle\Exception\CartNotInSessionException;

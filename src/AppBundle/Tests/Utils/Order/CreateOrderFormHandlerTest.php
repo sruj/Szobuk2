@@ -6,47 +6,47 @@
  * Time: 14:42
  */
 
-namespace AppBundle\Tests\Utils\Order;
+namespace AppBundle\Tests\Utils\Purchase;
 
 use AppBundle\Entity\Book;
 use AppBundle\Entity\Status;
-use AppBundle\Utils\Order\CreateOrderFormHandler;
-use AppBundle\Utils\Order\OrderManager;
+use AppBundle\Utils\Purchase\CreatePurchaseFormHandler;
+use AppBundle\Utils\Purchase\PurchaseManager;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 
 
-class CreateOrderFormHandlerTest extends \PHPUnit_Framework_TestCase
+class CreatePurchaseFormHandlerTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testhandleFormAndPlaceOrder()
+    public function testhandleFormAndPlacePurchase()
     {
-        $o = new CreateOrderFormHandler($this->getOrderManagerMock());
-        $this->assertTrue($o->handleFormAndPlaceOrder($this->getFormInterfaceMock(),$this->getRequestMock()));
+        $o = new CreatePurchaseFormHandler($this->getPurchaseManagerMock());
+        $this->assertTrue($o->handleFormAndPlacePurchase($this->getFormInterfaceMock(),$this->getRequestMock()));
     }
 
-    public function testhandleFormAndPlaceOrderReturnFalseForInvalidForm()
+    public function testhandleFormAndPlacePurchaseReturnFalseForInvalidForm()
     {
-        $o = new CreateOrderFormHandler($this->getOrderManagerMock());
-        $this->assertFalse($o->handleFormAndPlaceOrder($this->getFormInterfaceMock(false),$this->getRequestMock()));
+        $o = new CreatePurchaseFormHandler($this->getPurchaseManagerMock());
+        $this->assertFalse($o->handleFormAndPlacePurchase($this->getFormInterfaceMock(false),$this->getRequestMock()));
     }
     
     /**
      * @expectedException \Exception
      */
-    public function testhandleFormAndPlaceOrderThrowExceptionForEmptyCart()
+    public function testhandleFormAndPlacePurchaseThrowExceptionForEmptyCart()
     {
-        $o = new CreateOrderFormHandler($this->getOrderManagerMock());
-        $this->assertTrue($o->handleFormAndPlaceOrder($this->getFormInterfaceMock(),$this->getRequestMock(false)));
+        $o = new CreatePurchaseFormHandler($this->getPurchaseManagerMock());
+        $this->assertTrue($o->handleFormAndPlacePurchase($this->getFormInterfaceMock(),$this->getRequestMock(false)));
     }
 
 
-    protected function getOrderManagerMock($return = true)
+    protected function getPurchaseManagerMock($return = true)
     {
-        $om = $this->createMock(OrderManager::class); //stub (wszystko zwraca null)
-        $om->method('placeOrder')
+        $om = $this->createMock(PurchaseManager::class); //stub (wszystko zwraca null)
+        $om->method('placePurchase')
             ->willReturn($return);
 
         return $om;
