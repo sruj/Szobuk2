@@ -16,7 +16,7 @@ class Book
 {
     public function __construct()
     {
-        $this->orderProducts = new ArrayCollection();
+        $this->purchaseProducts = new ArrayCollection();
     }
 
     /**
@@ -121,7 +121,7 @@ class Book
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\PurchaseProduct", mappedBy="isbn")
      */
-    protected $orderProducts;
+    protected $purchaseProducts;
 
     public function getCreated()
     {
@@ -386,35 +386,35 @@ class Book
     }
 
     /**
-     * Add orderProducts
+     * Add purchaseProducts
      *
-     * @param \AppBundle\Entity\PurchaseProduct $orderProducts
+     * @param \AppBundle\Entity\PurchaseProduct $purchaseProducts
      * @return Book
      */
-    public function addPurchaseProducts(\AppBundle\Entity\PurchaseProduct $orderProducts)
+    public function addPurchaseProducts(\AppBundle\Entity\PurchaseProduct $purchaseProducts)
     {
-        $this->orderProducts[] = $orderProducts;
+        $this->purchaseProducts[] = $purchaseProducts;
 
         return $this;
     }
 
     /**
-     * Remove orderProducts
+     * Remove purchaseProducts
      *
-     * @param \AppBundle\Entity\PurchaseProduct $orderProducts
+     * @param \AppBundle\Entity\PurchaseProduct $purchaseProducts
      */
-    public function removePurchaseProducts(\AppBundle\Entity\PurchaseProduct $orderProducts)
+    public function removePurchaseProducts(\AppBundle\Entity\PurchaseProduct $purchaseProducts)
     {
-        $this->orderProducts->removeElement($orderProducts);
+        $this->purchaseProducts->removeElement($purchaseProducts);
     }
 
     /**
-     * Get orderProducts
+     * Get purchaseProducts
      *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getPurchaseProducts()
     {
-        return $this->orderProducts;
+        return $this->purchaseProducts;
     }
 }

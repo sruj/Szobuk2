@@ -11,7 +11,7 @@ use AppBundle\Exception\ClientHasNoShoppingHistory;
 class ClientController extends Controller {
 
     /**
-     * @Route("/order-history", name="order_history")
+     * @Route("/purchase-history", name="purchase_history")
      */
     public function historiaPanelAction(Request $request) 
     {
@@ -30,11 +30,11 @@ class ClientController extends Controller {
 
         $idClient = $client->getIdclient();
 
-        $rep = $this->get('app.order_repository');
-        $orders = $rep->findAllMy($request->query->getInt('page', 1),$idClient);
+        $rep = $this->get('app.purchase_repository');
+        $purchases = $rep->findAllMy($request->query->getInt('page', 1),$idClient);
 
-        return $this->render('AppBundle:Client:order_history.html.twig',[
-            'orders' => $orders
+        return $this->render('AppBundle:Client:purchase_history.html.twig',[
+            'purchases' => $purchases
         ]);
     }
 }

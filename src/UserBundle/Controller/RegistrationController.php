@@ -142,9 +142,9 @@ class RegistrationController extends BaseController
     public function confirmedAction()
     {
         $session = $this->getRequest()->getSession();
-        $orderingProcess = $session->get('orderingProcess');
-        if ($orderingProcess) {
-            $session->remove('orderingProcess');
+        $purchasingProcess = $session->get('purchasingProcess');
+        if ($purchasingProcess) {
+            $session->remove('purchasingProcess');
             return $this->redirectToRoute('personal_data');
         };
 

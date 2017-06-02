@@ -62,12 +62,12 @@ class Sort
     /**
      * [-Sortowanie-]W zależności od wartości zmiennej $PurchaseBy ustawia elementy tablicy
      * $sortArr na 'null' poza elementem tablicy tożsamym z $PurchaseBy.
-     * Czyli jeśli $PurchaseBy=='orderdate' to ustawi $sortArr['Data']
+     * Czyli jeśli $PurchaseBy=='purchasedate' to ustawi $sortArr['Data']
      */
     private function AscDescChanger()
     {
         switch ($this->column) {
-            case "orderdate":
+            case "purchasedate":
                 $this->columnsSortOrder = ['Status' => 'null', 'Klient' => 'null', 'Numer' => 'null',
                     'Data' => $this->columnsSortOrder];
                 break;
@@ -79,7 +79,7 @@ class Sort
                 $this->columnsSortOrder = ['Data' => 'null', 'Klient' => 'null', 'Numer' => 'null',
                     'Status' => $this->columnsSortOrder];
                 break;
-            case "idorder":
+            case "idpurchase":
                 $this->columnsSortOrder = ['Status' => 'null', 'Klient' => 'null', 'Data' => 'null',
                     'Numer' => $this->columnsSortOrder];
                 break;

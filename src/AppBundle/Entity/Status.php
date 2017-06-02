@@ -32,7 +32,7 @@ class Status
     /**
      * @ORM\OneToMany(targetEntity="Purchase", mappedBy="idstatus")
      */
-    protected $orders;
+    protected $purchases;
 
     /**
      * Set status
@@ -69,40 +69,40 @@ class Status
 
     public function __construct()
     {
-        $this->orders = new ArrayCollection();
+        $this->purchases = new ArrayCollection();
     }
 
     /**
-     * Add orders
+     * Add purchases
      *
-     * @param \AppBundle\Entity\Purchase $orders
+     * @param \AppBundle\Entity\Purchase $purchases
      * @return Status
      */
-    public function addPurchases(\AppBundle\Entity\Purchase $orders)
+    public function addPurchases(\AppBundle\Entity\Purchase $purchases)
     {
-        $this->orders[] = $orders;
+        $this->purchases[] = $purchases;
 
         return $this;
     }
 
     /**
-     * Remove orders
+     * Remove purchases
      *
-     * @param \AppBundle\Entity\Purchase $orders
+     * @param \AppBundle\Entity\Purchase $purchases
      */
-    public function removePurchases(\AppBundle\Entity\Purchase $orders)
+    public function removePurchases(\AppBundle\Entity\Purchase $purchases)
     {
-        $this->orders->removeElement($orders);
+        $this->purchases->removeElement($purchases);
     }
 
     /**
-     * Get orders
+     * Get purchases
      *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getPurchases()
     {
-        return $this->orders;
+        return $this->purchases;
     }
 
     public function __toString()

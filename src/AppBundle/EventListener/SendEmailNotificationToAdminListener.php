@@ -37,7 +37,7 @@ class SendEmailNotificationToAdminListener
         return $this->twig->render(
             'AppBundle:Cart:mail_confirmation_manager.html.twig',
             array(
-                'order'=>$event->getPurchase(),
+                'purchase'=>$event->getPurchase(),
                 'produkty'=>$event->getPurchase()->getPurchaseProducts(),
                 'suma'=>$this->session->get('sum')
             )

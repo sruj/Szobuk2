@@ -1,4 +1,0 @@
-services:
-#    trenning.example:
-#        class: TrenningBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]

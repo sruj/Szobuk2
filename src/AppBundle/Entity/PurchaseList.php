@@ -7,15 +7,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 class PurchaseList
 {
-    private $orders;
+    private $purchases;
 
     public function __construct()
     {
-        $this->orders = new ArrayCollection();
+        $this->purchases = new ArrayCollection();
     }
 
     public function getPurchases()
     {
-        return $this->orders;
+        return $this->purchases;
     }
 }

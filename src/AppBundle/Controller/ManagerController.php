@@ -40,7 +40,7 @@ class ManagerController extends Controller
      *     "filter": false,
      *     "identifier": false,
      *     "columnsSortOrder": false,
-     *     "columnSort": "idorder",
+     *     "columnSort": "idpurchase",
      *     "query": false,
      *     "filterField": false,
      *     })
@@ -49,7 +49,7 @@ class ManagerController extends Controller
      *     "filter": false,
      *     "identifier": false,
      *     "columnsSortOrder": false,
-     *     "columnSort": "idorder",
+     *     "columnSort": "idpurchase",
      *     "query": false,
      *     "filterField": false,
      *     })
@@ -69,40 +69,40 @@ class ManagerController extends Controller
 
         $statusForm = $this->createForm(StatusType::class, null, array(
             'action' => $this->generateUrl('panel_sort_from_details')));
-        $orderDataorm = $this->createForm(DataZamType::class, null, array(
+        $purchaseDataorm = $this->createForm(DataZamType::class, null, array(
             'action' => $this->generateUrl('panel_sort_from_details')));
         $clientaNumberForm = $this->createForm(NrKlientaType::class, null, array(
             'action' => $this->generateUrl('panel_sort_from_details')));
 
         $statusForm->handleRequest($request);
-        $orderDataorm->handleRequest($request);
+        $purchaseDataorm->handleRequest($request);
         $clientaNumberForm->handleRequest($request);
 
         $tmpForms = [
             'StatusForm' => $statusForm,
-            'PurchaseDateForm' => $orderDataorm,
+            'PurchaseDateForm' => $purchaseDataorm,
             'ClientNumberForm' => $clientaNumberForm,
         ];
 
         $forms = new FormsManagerExtended($tmpForms);
         $fltrqry = new FilterQuery();
         $fltr = new Filter();
-        $managerPurchase = $this->get('app.manager_order');
+        $managerPurchase = $this->get('app.manager_purchase');
 
         $tds = $fltr->prepareFilterAndQuery($tableDetails, $forms, $fltrqry);
-        $orders = $managerPurchase->preparePurchase($tds);
+        $purchases = $managerPurchase->preparePurchase($tds);
         $tableDetails = $managerPurchase->getTableDetails();
 
-        $ordersProducts = $this->getDoctrine()
-            ->getRepository('PurchaseProduct.php')
+        $purchasesProducts = $this->getDoctrine()
+            ->getRepository('AppBundle:PurchaseProduct')
             ->findAll();
 
-        $ordersList = new PurchaseList();
-        foreach ($orders as $order) {
-            $ordersList->getPurchases()->add($order);
+        $purchasesList = new PurchaseList();
+        foreach ($purchases as $purchase) {
+            $purchasesList->getPurchases()->add($purchase);
         }
 
-        $form = $this->createForm(PurchaseListType::class, $ordersList);
+        $form = $this->createForm(PurchaseListType::class, $purchasesList);
         $form->handleRequest($request);
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -113,14 +113,14 @@ class ManagerController extends Controller
         }
 
         return $this->render('AppBundle:Manager:panel_sort.html.twig', [
-            'zamowieniaProdukty' => $ordersProducts,
+            'purchasesProducts' => $purchasesProducts,
             'filterField' => $tableDetails->getFilterField(),
             'query' => $tableDetails->getQuery(),
             'identifier' => $tableDetails->getIdentifier(),
             'columnsSortOrder' => $tableDetails->getColumnsSortPurchase(),
             'form' => $form->createView(),
             'StatusForm' => $statusForm->createView(),
-            'PurchaseDateForm' => $orderDataorm->createView(),
+            'PurchaseDateForm' => $purchaseDataorm->createView(),
             'ClientNumberForm' => $clientaNumberForm->createView(),
         ]);
     }

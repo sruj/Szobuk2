@@ -47,7 +47,7 @@ class Invoice
      *   @ORM\JoinColumn(name="idPurchase", referencedColumnName="idPurchase")
      * })
      */
-    private $idorder;
+    private $idpurchase;
 
     /**
      * Set invoicedate
@@ -106,25 +106,25 @@ class Invoice
     }
 
     /**
-     * Set idorder
+     * Set idpurchase
      *
-     * @param \AppBundle\Entity\Purchase $idorder
+     * @param \AppBundle\Entity\Purchase $idpurchase
      * @return Invoice
      */
-    public function setIdorder(\AppBundle\Entity\Purchase $idorder = null)
+    public function setIdpurchase(\AppBundle\Entity\Purchase $idpurchase = null)
     {
-        $this->idorder = $idorder;
+        $this->idpurchase = $idpurchase;
 
         return $this;
     }
 
     /**
-     * Get idorder
+     * Get idpurchase
      *
      * @return \AppBundle\Entity\Purchase
      */
-    public function getIdorder()
+    public function getIdpurchase()
     {
-        return $this->idorder;
+        return $this->idpurchase;
     }
 }

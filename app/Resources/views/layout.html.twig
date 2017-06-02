@@ -86,7 +86,7 @@
                     <div class="Nav-userSection"> <a href="{{ path('fos_user_profile_show') }}" class="Nav-loginButton">Jesteś zalogowany jako: {{ app.user.username }}</a><a href="{{ path('fos_user_security_logout') }}" class="Nav-signupButton">Wyloguj</a></div>
                 {% endif %}
             {% else %}
-            <div class="Nav-userSection"> <a href="{{ path('fos_user_security_login',{ 'orderingProcess': '0' }) }}" class="Nav-loginButton">Zaloguj się</a><a href="{{ path('fos_user_registration_register') }}" class="Nav-signupButton">Załóż konto</a></div>
+            <div class="Nav-userSection"> <a href="{{ path('fos_user_security_login',{ 'purchasingProcess': '0' }) }}" class="Nav-loginButton">Zaloguj się</a><a href="{{ path('fos_user_registration_register') }}" class="Nav-signupButton">Załóż konto</a></div>
             {% endif %}
         </div>
     </div>

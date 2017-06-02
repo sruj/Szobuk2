@@ -23,7 +23,6 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
-            new TrenningBundle\TrenningBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
 
 

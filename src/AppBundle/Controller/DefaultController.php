@@ -20,9 +20,9 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $session = $request->getSession();                                                                               //jeśli w trakcie zakupów w wyborze autoryzacji wybrałem zaloguj lub zarejestruj to przenoszę się do *gdzieśtam*
-        $orderingProcess = $session->get('orderingProcess');
-        if ($orderingProcess) {
-            $session->remove('orderingProcess');
+        $purchasingProcess = $session->get('purchasingProcess');
+        if ($purchasingProcess) {
+            $session->remove('purchasingProcess');
 
             return $this->redirectToRoute('personal_data');
         };

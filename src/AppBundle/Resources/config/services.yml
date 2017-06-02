@@ -2,8 +2,8 @@
 # http://symfony.com/doc/current/book/service_container.html
 parameters:
     app.book.paginator_aware.class: AppBundle\Repository\BookRepository
-    app.order.paginator_aware.class: AppBundle\Repository\OrderRepository
-    app.order.entity: AppBundle\Entity\Order
+    app.order.paginator_aware.class: AppBundle\Repository\PurchaseRepository
+    app.order.entity: AppBundle\Entity\Purchase
     app.book.entity: AppBundle\Entity\Book
 services:
 #    service_name:
@@ -27,12 +27,12 @@ services:
         tags:
             -  { name: knp_paginator.injectable, paginator: '@knp_paginator' }
 
-    app.form_handler.order:
-        class: AppBundle\Utils\Order\CreateOrderFormHandler
+    app.form_handler.purchase:
+        class: AppBundle\Utils\Purchase\CreatePurchaseFormHandler
         arguments: ["@app.order_manager"]
 
     app.order_manager:
-        class: AppBundle\Utils\Order\OrderManager
+        class: AppBundle\Utils\Purchase\PurchaseManager
         arguments: ["@doctrine.orm.entity_manager","@security.token_storage","@security.authorization_checker","@session","@event_dispatcher" ]
 
     app.email_notify_client_listener:
@@ -47,8 +47,8 @@ services:
         tags:
             - { name: kernel.event_listener, event: order.placed }
 
-    app.manager_order:
-        class: AppBundle\Utils\Manager\Order
+    app.manager_purchase:
+        class: AppBundle\Utils\Manager\Purchase
         arguments: ["@doctrine.orm.entity_manager"]
 #        arguments: ["@doctrine.orm.entity_manager","@app.utils_filter"]
 

@@ -4,7 +4,7 @@
     <div class="nav-level">
         <div class="nav-level-layout wrapper">
             <div class="navigation">
-                {{ knp_pagination_render(orders) }}
+                {{ knp_pagination_render(purchases) }}
             </div>
         </div>
     </div>
@@ -15,37 +15,37 @@
             <table class="Table-all">
                 <thead>
                 <tr>
-                    <th class="thLeftBorderRadius">{{ knp_pagination_sortable(orders, 'nr. Zam', 'z.idorder') }}</th>
-                    <th>{{ knp_pagination_sortable(orders, 'Data złożenia', 'z.orderdate') }}</th>
+                    <th class="thLeftBorderRadius">{{ knp_pagination_sortable(purchases, 'nr. Zam', 'z.idpurchase') }}</th>
+                    <th>{{ knp_pagination_sortable(purchases, 'Data złożenia', 'z.purchasedate') }}</th>
                     <th>ilość prod.</th>
                     <th>kwota razem</th>
-                    <th>{{ knp_pagination_sortable(orders, 'status z.', 's.status') }}</th>
+                    <th>{{ knp_pagination_sortable(purchases, 'status z.', 's.status') }}</th>
                     <th class="thRightBorderRadius">Szczególy</th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for order in orders %}
+                {% for purchase in purchases %}
                     <tr>
-                        <td>{{ order.idorder }}</td>
-                        <td>{{ order.orderdate|date('Y-m-d H:i:s') }}</td>
+                        <td>{{ purchase.idpurchase }}</td>
+                        <td>{{ purchase.purchasedate|date('Y-m-d H:i:s') }}</td>
                         {% set quantity = 0 %}
                         {% set kwota = 0 %}
-                        {% for orderProduct in order.OrderProducts %}
-                            {% set quantity = quantity + orderProduct.quantity %}
-                            {% set kwota = kwota + orderProduct.quantity * orderProduct.productprice %}
+                        {% for purchaseProduct in purchase.PurchaseProducts %}
+                            {% set quantity = quantity + purchaseProduct.quantity %}
+                            {% set kwota = kwota + purchaseProduct.quantity * purchaseProduct.productprice %}
                         {% endfor %}
                         <td>{{ quantity }}</td>
                         <td>{{ kwota|number_format(2) }}</td>
-                        <td>{{ order.idstatus.status }}</td>
+                        <td>{{ purchase.idstatus.status }}</td>
                         <td>
-                            <a href="{{ path('order_panel',{ 'orderid': order.idorder, 'userid': app.user.id }) }}">więcej</a>
+                            <a href="{{ path('purchase_panel',{ 'purchaseid': purchase.idpurchase, 'userid': app.user.id }) }}">więcej</a>
                         </td>
                     </tr>
                 {% endfor %}
             </table>
             <div class="wrapper">
                 <div class="navigation">
-                    {{ knp_pagination_render(orders) }}
+                    {{ knp_pagination_render(purchases) }}
                 </div>
             </div>
         </div>

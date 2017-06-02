@@ -9,7 +9,7 @@ use DateTime;
 /**
  * Purchase
  *
- * @ORM\Table(name="`order`", indexes={@ORM\Index(name="idClient_idx", columns={"idClient"}), @ORM\Index(name="idStatus_idx", columns={"idStatus"})})
+ * @ORM\Table(name="purchase", indexes={@ORM\Index(name="idClient_idx", columns={"idClient"}), @ORM\Index(name="idStatus_idx", columns={"idStatus"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PurchaseRepository")
  */
 class Purchase
@@ -17,9 +17,9 @@ class Purchase
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="orderDate", type="datetime", nullable=true)
+     * @ORM\Column(name="purchaseDate", type="datetime", nullable=true)
      */
-    private $orderdate;
+    private $purchasedate;
 
     /**
      * @var integer
@@ -28,12 +28,12 @@ class Purchase
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idorder;
+    private $idpurchase;
 
     /**
      * @var \AppBundle\Entity\Client
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Client", inversedBy="orders")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Client", inversedBy="purchases")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idClient", referencedColumnName="idClient")
      * })
@@ -43,7 +43,7 @@ class Purchase
     /**
      * @var \AppBundle\Entity\Status
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Status", inversedBy="orders")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Status", inversedBy="purchases")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idStatus", referencedColumnName="idStatus")
      * })
@@ -51,66 +51,66 @@ class Purchase
     private $idstatus;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Invoice", mappedBy="idorder")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Invoice", mappedBy="idpurchase")
      */
     protected $invoices;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Shipment", mappedBy="idorder")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Shipment", mappedBy="idpurchase")
      */
     protected $shipments;
 
     /**
-     * @ORM\OneToMany(targetEntity="PurchaseProduct", mappedBy="idorder")
+     * @ORM\OneToMany(targetEntity="PurchaseProduct", mappedBy="idpurchase")
      */
-    protected $orderProducts;
+    protected $purchaseProducts;
 
     /**
-     * Set orderdatecurrent
+     * Set purchasedatecurrent
      * Ustawienie aktualnej daty-godziny.
      * wystarczy na rzecz instancji zamówienia odpalić te funkcję
      * i w bazie danych  dodana bedzie aktualna data zakupu
-     *  $order = new Purchase();
-     *  $order->setPurchasedatecurrent();
+     *  $purchase = new Purchase();
+     *  $purchase->setPurchasedatecurrent();
      */
     public function setPurchasedatecurrent()
     {
-        $this->orderdate = new DateTime();
+        $this->purchasedate = new DateTime();
 
         return $this;
     }
 
     /**
-     * Set orderdate
+     * Set purchasedate
      *
-     * @param \DateTime $orderdate
+     * @param \DateTime $purchasedate
      * @return Purchase
      */
-    public function setPurchasedate($orderdate)
+    public function setPurchasedate($purchasedate)
     {
-        $this->orderdate = $orderdate;
+        $this->purchasedate = $purchasedate;
 
         return $this;
     }
 
     /**
-     * Get orderdate
+     * Get purchasedate
      *
      * @return \DateTime
      */
     public function getPurchasedate()
     {
-        return $this->orderdate;
+        return $this->purchasedate;
     }
 
     /**
-     * Get idorder
+     * Get idpurchase
      *
      * @return int
      */
-    public function getIdorder()
+    public function getIdpurchase()
     {
-        return $this->idorder;
+        return $this->idpurchase;
     }
 
     /**
@@ -162,7 +162,7 @@ class Purchase
     public function __construct()
     {
         $this->invoices = new ArrayCollection();
-        $this->orderProducts = new ArrayCollection();
+        $this->purchaseProducts = new ArrayCollection();
     }
 
     /**
@@ -232,37 +232,37 @@ class Purchase
     }
 
     /**
-     * Add orderProducts
+     * Add purchaseProducts
      *
-     * @param \AppBundle\Entity\PurchaseProduct $orderProducts
+     * @param \AppBundle\Entity\PurchaseProduct $purchaseProducts
      * @return Purchase
      */
-    public function addPurchaseProduct(\AppBundle\Entity\PurchaseProduct $orderProduct)
+    public function addPurchaseProduct(\AppBundle\Entity\PurchaseProduct $purchaseProduct)
     {
-        if (!$this->orderProducts->contains($orderProduct)) {
-            $this->orderProducts[] = $orderProduct;
+        if (!$this->purchaseProducts->contains($purchaseProduct)) {
+            $this->purchaseProducts[] = $purchaseProduct;
         }
 
         return $this;
     }
 
     /**
-     * Remove orderProducts
+     * Remove purchaseProducts
      *
-     * @param \AppBundle\Entity\PurchaseProduct $orderProducts
+     * @param \AppBundle\Entity\PurchaseProduct $purchaseProducts
      */
-    public function removePurchaseProducts(\AppBundle\Entity\PurchaseProduct $orderProduct)
+    public function removePurchaseProducts(\AppBundle\Entity\PurchaseProduct $purchaseProduct)
     {
-        $this->orderProducts->removeElement($orderProduct);
+        $this->purchaseProducts->removeElement($purchaseProduct);
     }
 
     /**
-     * Get orderProducts
+     * Get purchaseProducts
      *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getPurchaseProducts()
     {
-        return $this->orderProducts;
+        return $this->purchaseProducts;
     }
 }

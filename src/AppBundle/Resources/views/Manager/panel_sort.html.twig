@@ -19,7 +19,7 @@
                     {{ form(StatusForm) }}
                 </div>
                 <div class="d">
-                    {{ form(OrderDateForm) }}
+                    {{ form(PurchaseDateForm) }}
                 </div>
                 <div class="k">
                     {{ form(ClientNumberForm) }}
@@ -37,8 +37,8 @@
             <table class="Table-all">
                 <thead>
                 <tr>
-                    <th style="background-color: #3e3e3e" class="thLeftBorderRadius"><a href="{{ path('panel_sort',{ 'columnsSortOrder':columnsSortOrder.Numer ,'query':query,'filterField':filterField,'columnSort':'idorder'}) }}">nr z.<span class="{{ columnsSortOrder.Numer }}"></span></a></th>
-                    <th><a href="{{ path('panel_sort',{ 'columnsSortOrder':columnsSortOrder.Data ,'query':query,'filterField':filterField,'columnSort':'orderdate'}) }}">Data złożenia<span class="{{ columnsSortOrder.Data }}"></span></a></th>
+                    <th style="background-color: #3e3e3e" class="thLeftBorderRadius"><a href="{{ path('panel_sort',{ 'columnsSortOrder':columnsSortOrder.Numer ,'query':query,'filterField':filterField,'columnSort':'idpurchase'}) }}">nr z.<span class="{{ columnsSortOrder.Numer }}"></span></a></th>
+                    <th><a href="{{ path('panel_sort',{ 'columnsSortOrder':columnsSortOrder.Data ,'query':query,'filterField':filterField,'columnSort':'purchasedate'}) }}">Data złożenia<span class="{{ columnsSortOrder.Data }}"></span></a></th>
                     <th>ilość prod.</th>
                     <th>kwota razem</th>
                     <th><a href="{{ path('panel_sort',{ 'columnsSortOrder':columnsSortOrder.Klient ,'query':query,'filterField':filterField, 'columnSort':'idclient'}) }}">nr klienta<span class="{{ columnsSortOrder.Klient }}"></span></a></th>
@@ -48,16 +48,16 @@
                 </thead>
                 <tbody>
                 {{ form_start(form) }}
-                {% for formul in form.orders %}
+                {% for formul in form.purchases %}
                     <tr>
-                        <td>{{ formul.vars.value.idorder }}</td>
-                        <td>{{ formul.vars.value.orderdate|date('Y-m-d H:i:s') }}</td>
+                        <td>{{ formul.vars.value.idpurchase }}</td>
+                        <td>{{ formul.vars.value.purchasedate|date('Y-m-d H:i:s') }}</td>
                         {% set quantity = 0 %}
                         {% set kwota = 0 %}
-                        {% for orderProduct in zamowieniaProdukty %}
-                            {% if orderProduct.idorder.idorder ==  formul.vars.value.idorder %}
-                                {% set quantity = quantity + orderProduct.quantity %}
-                                {% set kwota = kwota + orderProduct.quantity * orderProduct.productprice %}
+                        {% for purchaseProduct in purchasesProducts %}
+                            {% if purchaseProduct.idpurchase.idpurchase ==  formul.vars.value.idpurchase %}
+                                {% set quantity = quantity + purchaseProduct.quantity %}
+                                {% set kwota = kwota + purchaseProduct.quantity * purchaseProduct.productprice %}
                             {% endif %}
                         {% endfor %}
                         <td>{{ quantity }}</td>
@@ -66,7 +66,7 @@
                         <td>
                             {{ form_row(formul.idstatus) }}
                         </td>
-                        <td><a href="{{ path('manager_order_panel',{ 'orderid':formul.vars.value.idorder }) }}">więcej</a></td>
+                        <td><a href="{{ path('manager_purchase_panel',{ 'purchaseid':formul.vars.value.idpurchase }) }}">więcej</a></td>
                     </tr>
                 {% endfor %}
             </table>

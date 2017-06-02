@@ -26,11 +26,11 @@ class DataZamType extends AbstractType {
             
             ;
 //        $builder
-//                ->add('orderdate', 'entity', array(
+//                ->add('purchasedate', 'entity', array(
 //                    'class' => 'AppBundle:Purchase',
 //                    'placeholder' => 'Od',
 //                    'label' => false,
-//                     'property' => 'orderdate',
+//                     'property' => 'purchasedate',
 //                ))
 //                ->add('filtruj', 'submit');
 //            ;

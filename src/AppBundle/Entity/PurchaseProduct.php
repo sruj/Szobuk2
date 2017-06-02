@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * PurchaseProduct
  *
- * @ORM\Table(name="order_product", indexes={@ORM\Index(name="idPurchase_idx", columns={"idPurchase"}), @ORM\Index(name="isbn_idx", columns={"isbn"})})
+ * @ORM\Table(name="purchase_product", indexes={@ORM\Index(name="idPurchase_idx", columns={"idPurchase"}), @ORM\Index(name="isbn_idx", columns={"isbn"})})
  * @ORM\Entity
  */
 class PurchaseProduct
@@ -55,12 +55,12 @@ class PurchaseProduct
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idorderproduct;
+    private $idpurchaseproduct;
 
     /**
      * @var \AppBundle\Entity\Book
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Book", inversedBy="orderProducts")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Book", inversedBy="purchaseProducts")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="isbn", referencedColumnName="isbn")
      * })
@@ -70,12 +70,12 @@ class PurchaseProduct
     /**
      * @var \AppBundle\Entity\Purchase
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Purchase", inversedBy="orderProducts")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Purchase", inversedBy="purchaseProducts")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idPurchase", referencedColumnName="idPurchase")
      * })
      */
-    private $idorder;
+    private $idpurchase;
 
     /**
      * Set quantity
@@ -193,13 +193,13 @@ class PurchaseProduct
     }
 
     /**
-     * Get idorderproduct
+     * Get idpurchaseproduct
      *
      * @return int
      */
-    public function getIdorderprodukt()
+    public function getIdpurchaseprodukt()
     {
-        return $this->idorderproduct;
+        return $this->idpurchaseproduct;
     }
 
     /**
@@ -226,26 +226,26 @@ class PurchaseProduct
     }
 
     /**
-     * Set idorder
+     * Set idpurchase
      *
-     * @param \AppBundle\Entity\Purchase $idorder
+     * @param \AppBundle\Entity\Purchase $idpurchase
      * @return PurchaseProduct
      */
-    public function setIdorder(\AppBundle\Entity\Purchase $order = null)
+    public function setIdpurchase(\AppBundle\Entity\Purchase $purchase = null)
     {
-        $this->idorder = $order;
-        $order->addPurchaseProduct($this);
+        $this->idpurchase = $purchase;
+        $purchase->addPurchaseProduct($this);
 
         return $this;
     }
 
     /**
-     * Get idorder
+     * Get idpurchase
      *
      * @return \AppBundle\Entity\Purchase
      */
-    public function getIdorder()
+    public function getIdpurchase()
     {
-        return $this->idorder;
+        return $this->idpurchase;
     }
 }

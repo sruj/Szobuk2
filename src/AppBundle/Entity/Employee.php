@@ -396,7 +396,7 @@ class Employee
 
     public function __construct()
     {
-        $this->orders = new ArrayCollection();
+        $this->purchases = new ArrayCollection();
     }
 
 }

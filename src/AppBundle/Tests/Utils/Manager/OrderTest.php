@@ -17,20 +17,20 @@ class PurchaseTest extends \PHPUnit_Framework_TestCase
 
     public function testPreparePurchaseForQueryTrue()
     {
-        $order = new Purchase($this->getEntityManagerX());
-        $res = $order->preparePurchase($this->getTableDetails(true));
+        $purchase = new Purchase($this->getEntityManagerX());
+        $res = $purchase->preparePurchase($this->getTableDetails(true));
         $expected = 'foo';
 
         $this->assertEquals($expected,$res);
 
-        $res2 = $order->getTableDetails();
+        $res2 = $purchase->getTableDetails();
         $this->assertInstanceOf(TableDetails::class,$res2);
     }
 
     public function testPreparePurchaseForQueryFalse()
     {
-        $order = new Purchase($this->getEntityManagerAll());
-        $res = $order->preparePurchase($this->getTableDetails(false));
+        $purchase = new Purchase($this->getEntityManagerAll());
+        $res = $purchase->preparePurchase($this->getTableDetails(false));
         $expected = 'foo';
 
         $this->assertEquals($expected,$res);

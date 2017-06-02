@@ -81,7 +81,7 @@ class CartController extends Controller
     /**
      * - Jeśli nie jestem zalogowany i będąc w cart_menu klikam "zamawiam" to jestem przekierowany do /authorization a
      *  po wybraniu "zaloguj" lub "zarejestruj" zostaję przeniesiony TU.
-     * - TU ustawiam nową zmienną sesji 'orderingProcess', która będzie potrzebna w dalszym etapie by przekierować
+     * - TU ustawiam nową zmienną sesji 'purchasingProcess', która będzie potrzebna w dalszym etapie by przekierować
      *  w odpowiedni route po zalogowaniu.
      *
      * @Route("/connector/{authorization}", defaults={"authorization" = "zaloguj"}, name="connector")
@@ -90,7 +90,7 @@ class CartController extends Controller
     {
         $app_cart = $this->get('app.cart');
         $session = $request->getSession();
-        $session->set('orderingProcess', true);                                                                          // zmianna sesji by w dalszym etapie przekierować w odpowiedni route
+        $session->set('purchasingProcess', true);                                                                          // zmianna sesji by w dalszym etapie przekierować w odpowiedni route
         $route = $app_cart->prepareRoute($authorization);                                                                     // wybiera nazwę route zaloguj lub rejestruj
 
         return $this->redirectToRoute($route);
@@ -172,8 +172,8 @@ class CartController extends Controller
         $form = $this->createForm(DeliveryType::class, $client, [
             'attr' => ['class' => 'form_dostawa']]);
 
-        $app_form_handler_order = $this->get('app.form_handler.order');
-        if ($app_form_handler_order->handleFormAndPlacePurchase($form, $request)) {
+        $app_form_handler_purchase = $this->get('app.form_handler.purchase');
+        if ($app_form_handler_purchase->handleFormAndPlacePurchase($form, $request)) {
             return $this->redirectToRoute('confirm');
         };
 
@@ -189,19 +189,19 @@ class CartController extends Controller
      */
     public function confirmAction(Request $request)
     {
-        $idorder = $request->getSession()->getFlashBag()->get('idorder');
-        if (!$idorder) {
+        $idpurchase = $request->getSession()->getFlashBag()->get('idpurchase');
+        if (!$idpurchase) {
             throw new VariableNotExistInFlashBagException('To jest strona potwierdzająca zamówienie. Aby złożyć zamówienie dodaj produkt do koszyka i tak dalej...');
         }
 
-        $order = $this->getDoctrine()
-            ->getRepository('Purchase.php')
-            ->find($idorder[0]);
-        $produkty = $order->getPurchaseProducts();
+        $purchase = $this->getDoctrine()
+            ->getRepository('AppBundle:Purchase')
+            ->find($idpurchase[0]);
+        $produkty = $purchase->getPurchaseProducts();
         $suma = $request->getSession()->get('sum');
 
         return $this->render('AppBundle:Cart:confirm.html.twig', [
-            'order' => $order, 'produkty' => $produkty,
+            'purchase' => $purchase, 'produkty' => $produkty,
             'suma' => $suma
         ]);
     }
