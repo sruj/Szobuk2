@@ -30,14 +30,14 @@ class DefaultController extends Controller
         $ksi_rep = $this->get('app.book_repository');
 
         if ($request->isXmlHttpRequest()) {
-            $books = $ksi_rep->findAllMy($request->query->getInt('page'), 12);
-            $books = $books->getItems();
+            $booksRep = $ksi_rep->findAllMy($request->query->getInt('page'), 12);
+            $items = $booksRep->getItems();
             $books = [];
             $renderData = [];
-            if (!empty($books)) {
+            if (!empty($items)) {
                 $i = 0;
                 /** @var Book $book */
-                foreach ($books as $book) {
+                foreach ($items as $book) {
                     $books[$i]['isbn'] = $book->getIsbn();
                     $books[$i]['author'] = $book->getAuthor();
                     $books[$i]['title'] = $book->getTitle();
